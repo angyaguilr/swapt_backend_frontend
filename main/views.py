@@ -54,8 +54,8 @@ def brand_list(request):
 
 # CmntyListing List
 def product_list(request):
-	total_data=CmntyListing.objects.count()
-	data=CmntyListing.objects.all().order_by('-id')[:3]
+	total_data= SwaptListingModel.objects.count()
+	data=SwaptListingModel.objects.all().order_by('-id')[:3]
 	min_price=ProductAttribute.objects.aggregate(Min('price'))
 	max_price=ProductAttribute.objects.aggregate(Max('price'))
 	return render(request,'product_list.html',
@@ -85,29 +85,29 @@ def brand_product_list(request,brand_id):
 
 # CmntyListing Detail
 def product_detail(request,slug,id):
-	product=CmntyListing.objects.get(id=id)
-	related_products=CmntyListing.objects.filter(category=product.category).exclude(id=id)[:4]
-	colors=ProductAttribute.objects.filter(product=product).values('color__id','color__title','color__color_code').distinct()
-	sizes=ProductAttribute.objects.filter(product=product).values('size__id','size__title','price','color__id').distinct()
-	reviewForm=ReviewAdd()
+    product=SwaptListingModel.objects.get(id=id)
+    related_products=CmntyListing.objects.filter(swaptuser=request.user.swaptuser)
+    colors=ProductAttribute.objects.filter(product=product).values('color__id','color__title','color__color_code').distinct()
+    sizes=ProductAttribute.objects.filter(product=product).values('size__id','size__title','price','color__id').distinct()
+    reviewForm=ReviewAdd()
 
 	# Check
-	canAdd=True
-	reviewCheck=ProductReview.objects.filter(user=request.user,product=product).count()
-	if request.user.is_authenticated:
-		if reviewCheck > 0:
-			canAdd=False
+    canAdd=True
+    reviewCheck=ProductReview.objects.filter(user=request.user,product=product).count()
+    if request.user.is_authenticated:
+        if reviewCheck > 0:
+             canAdd=False
 	# End
 
 	# Fetch reviews
-	reviews=ProductReview.objects.filter(product=product)
+    reviews=ProductReview.objects.filter(product=product)
 	# End
 
 	# Fetch avg rating for reviews
-	avg_reviews=ProductReview.objects.filter(product=product).aggregate(avg_rating=Avg('review_rating'))
+    avg_reviews=ProductReview.objects.filter(product=product).aggregate(avg_rating=Avg('review_rating'))
 	# End
-
-	return render(request, 'product_detail.html',{'data':product,'related':related_products,'colors':colors,'sizes':sizes,'reviewForm':reviewForm,'canAdd':canAdd,'reviews':reviews,'avg_reviews':avg_reviews})
+    
+    return render(request, 'product_detail.html',{'data':product,'related':related_products,'colors':colors,'sizes':sizes,'reviewForm':reviewForm,'canAdd':canAdd,'reviews':reviews,'avg_reviews':avg_reviews})
 
 # Search
 def search(request):
@@ -803,8 +803,8 @@ class SwaptListingCreation(View):
         return render(request, 'swaptlistings/swapt_create_form.html', context)
 
     def post(self, request, *args, **kwargs):
-        name = request.POST.get('title')
-        propertyname = request.POST.get('propertyname')
+        name = request.POST.get('name')
+        email = request.POST.get('email')
         street = request.POST.get('street')
         city = request.POST.get('city')
         state = request.POST.get('state')
@@ -817,11 +817,11 @@ class SwaptListingCreation(View):
         items = request.POST.getlist('items[]')
 
         for item in items:
-            swapt_item = CmntyListing.objects.get(pk__contains=int(item))
+            menu_item = CmntyListing.objects.get(pk__contains=int(item))
             item_data = {
-                'id': swapt_item.pk,
-                'title': swapt_item.title,
-                'price': swapt_item.itemPrice
+                'id': menu_item.pk,
+                'name': menu_item.name,
+                'price': menu_item.price
             }
 
             order_items['items'].append(item_data)
@@ -836,7 +836,7 @@ class SwaptListingCreation(View):
         order = SwaptListingModel.objects.create(
             price=price,
             name=name,
-            propertyname=propertyname,
+            email=email,
             street=street,
             city=city,
             state=state,
@@ -849,20 +849,21 @@ class SwaptListingCreation(View):
                 f'Your total: {price}\n'
                 'Thank you again for your order!')
 
-        # send_mail(
-        #     'Thank You For Your SwaptListing!',
-        #     body,
-        #     'example@example.com',
-        #     [email],
-        #     fail_silently=False
-        # )
+        send_mail(
+            'Thank You For Your Order!',
+            body,
+            'example@example.com',
+            [email],
+            fail_silently=False
+        )
 
         context = {
             'items': order_items['items'],
             'price': price
         }
 
-        return redirect('listings:swapt_confirmation', pk=order.pk)  
+        return redirect('listings:swapt_confirmation', pk=order.pk)
+
       
 class SwaptListingListView(ListView):
     model = SwaptListingModel

@@ -6,7 +6,7 @@ admin.site.register(Brand)
 admin.site.register(Dimension)
 #swapt
 admin.site.register(Swapt_Prices)
-admin.site.register(SwaptListingModel)
+admin.site.register(CmntyListing)
 admin.site.register(SwaptListingTag)
 admin.site.register(SwaptListingTransactionRef)
 admin.site.register(SwaptPaymentHistory)
@@ -32,7 +32,7 @@ admin.site.register(Color,ColorAdmin)
 class ProductAdmin(admin.ModelAdmin):
     list_display=('id','title','category','brand','status','is_featured')
     list_editable=('status','is_featured')
-admin.site.register(CmntyListing,ProductAdmin)
+admin.site.register(SwaptListingModel,ProductAdmin)
 
 # CmntyListing Attribute
 class ProductAttributeAdmin(admin.ModelAdmin):

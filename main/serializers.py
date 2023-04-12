@@ -98,7 +98,7 @@ class SwaptListingSerializer(serializers.ModelSerializer):
     
     # Added fields up here to specify attributes (read_only or write_only)
     title = serializers.CharField(read_only=True)
-    desc = serializers.CharField(read_only=True)
+    detail = serializers.CharField(read_only=True)
     location = serializers.CharField(read_only=True)
     propertyname = serializers.SerializerMethodField(read_only=True)
     stage = serializers.IntegerField(write_only=True)
@@ -109,7 +109,7 @@ class SwaptListingSerializer(serializers.ModelSerializer):
         fields = ('id',
                   'title',
                   'tags',
-                  'desc',
+                  'detail',
                   'url',
                   'quantity',
                   'title',

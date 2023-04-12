@@ -1,32 +1,35 @@
-{% extends "header.html" %}
-{% block header %}
-  <h1> Upload Cmnty Card </h1>
-  <h1>  </h1>
-  <form method="post">
-    {% csrf_token %}
-      {% for field in form %}
-      {% if user.is_admin and field.label == "Stage" %}
-      {% else %}
-      <p align="left">
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">{{ field.label }}</label>
-            <div class="col-sm-9"> {{ field }} </div>
-        </div>
-        {% if field.help_text %}
-          <small style="display: none">{{ field.help_text }}</small>
-        {% endif %}
-        {% for error in field.errors %}
-          <p style="color: red">{{ error }}</p>
-        {% endfor %}
-      </p>
-      {% endif %}
-      {% endfor %}
-      {% if form.non_field_errors %}
-      <ul style="color: red">
-      {{ form.non_field_errors.as_ul }}
-      </ul>
-      {% endif %}
-      <button class="btn btn-success" type="submit">Submit</button>
-      
-  </form>
-{% endblock %}
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% block content %}
+<h1> Upload Cmnty Card </h1>
+<h1>  </h1>
+ 
+<div class="form-group">
+  // first_name is the name by which first name is created in django forms
+  {% render_field form.title class="form-control" placeholder="First Name" type="text" %}
+</div>
+ 
+<div class="form-group">
+   // last_name is the name by which last name is created in django forms
+  {% render_field form.desc type="text" class="form-control" placeholder="Last Name" %}
+</div>
+ 
+<div class="form-group">
+   // username is the default name of username in django forms
+  {% render_field form.title type="text" class="form-control" id="exampleInputUsername" placeholder="Username" %}
+</div>
+ 
+<div class="form-group">
+   // password1 is the default name of password in django forms
+  {% render_field form.desc type="password" class="form-control" id="exampleInputPassword" placeholder="Password" %}
+</div>
+ 
+<div class="form-group">
+   // password2 is the default name of confirm password in django forms
+  {% render_field form.desc type="password" class="form-control" id="exampleInputPassword1" placeholder="Confirm Password" %}
+</div>
+ 
+<div>
+  <button type="submit" value="Submit" > Register </button>
+</div>
+{% endblock content%}

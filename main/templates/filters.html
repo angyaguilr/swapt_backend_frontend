@@ -1,65 +1,65 @@
 {% load static %}
 <script type="text/javascript" src="{% static 'product-filter.js' %}"></script>
-			<h3 class="mb-4 border-bottom pb-1">Filters</h3>
-			<!-- Price Filter -->
-			<div class="card mb-4">
-				<h6 class="card-header">Price</h6>
-				<div class="list-group list-group-flush">
-					<li class="list-group-item">
-						<input type="range" value="{{minMaxPrice.price__min}}" max={{minMaxPrice.price__max}} min={{minMaxPrice.price__min}} id="rangeInput" oninput="maxPrice.value=this.value" />
-						<p>{{minMaxPrice.price__min}}-{{minMaxPrice.price__max}}</p>
-					</li>
-					<li class="list-group-item">
-						Max: <input type="number" value="{{minMaxPrice.price__min}}" max={{minMaxPrice.price__max}} min={{minMaxPrice.price__min}} class="form-control" id="maxPrice" onkeyup="rangeInput.value=this.value" id="maxPrice" />
-						<button id="priceFilterBtn" class="btn btn-info btn-sm mt-1">Filter</button>
-					</li>
-				</div>
-			</div>
-			<!-- Filter 1 -->
-			<div class="card mb-4">
-				<h6 class="card-header">Colors</h6>
-				<div class="list-group list-group-flush">
-					{% for color in colors %}
-					<li class="list-group-item">
-						<input class="filter-checkbox" data-filter="color" value="{{color.color__id}}" type="checkbox" />&nbsp;
-						<button class="btn" style="background-color: {{color.color__color_code}}; margin-top: -5px;"></button>
-					</li>
-					{% endfor %}
-				</div>
-			</div>
-			<!-- Filter 2 -->
-			<div class="card mb-4">
-				<h6 class="card-header">Categories</h6>
-				<div class="list-group list-group-flush">
-					{% for cat in cats %}
-					<li class="list-group-item">
-						<input class="filter-checkbox" data-filter="category" value="{{cat.category__id}}" type="checkbox" />&nbsp;
-						{{cat.category__title}}
-					</li>
-					{% endfor %}
-				</div>
-			</div>
-			<!-- Filter 3 -->
-			<div class="card mb-4">
-				<h6 class="card-header">Brands</h6>
-				<div class="list-group list-group-flush">
-					{% for brand in brands %}
-					<li class="list-group-item">
-						<input class="filter-checkbox" data-filter="brand" value="{{brand.brand__id}}" type="checkbox" />&nbsp;
-						{{brand.brand__title}}
-					</li>
-					{% endfor %}
-				</div>
-			</div>
-			<!-- Filter 3 -->
-			<div class="card mb-4">
-				<h6 class="card-header">Sizes</h6>
-				<div class="list-group list-group-flush">
-					{% for size in sizes %}
-					<li class="list-group-item">
-						<input class="filter-checkbox" data-filter="size" value="{{size.size__id}}" type="checkbox" />&nbsp;
-						{{size.size__title}}
-					</li>
-					{% endfor %}
-				</div>
-			</div>
+<h3 class="mb-4 border-b pb-1">Filters</h3>
+<!-- Price Filter -->
+<div class="relative flex flex-col min-w-0 rounded break-words border bg-white border-1 border-gray-300 mb-4">
+   <h6 class="py-3 px-6 mb-0 bg-gray-200 border-b-1 border-gray-300 text-gray-900">Price</h6>
+   <div class="flex flex-col pl-0 mb-0 border rounded border-gray-300 ">
+      <li class="relative block py-3 px-6 -mb-px border border-r-0 border-l-0 border-gray-300 no-underline">
+         <input type="range" value="{{minMaxPrice.price__min}}" max={{minMaxPrice.price__max}} min={{minMaxPrice.price__min}} id="rangeInput" oninput="maxPrice.value=this.value" />
+         <p>{{minMaxPrice.price__min}}-{{minMaxPrice.price__max}}</p>
+      </li>
+      <li class="relative block py-3 px-6 -mb-px border border-r-0 border-l-0 border-gray-300 no-underline">
+         Max: <input type="number" value="{{minMaxPrice.price__min}}" max={{minMaxPrice.price__max}} min={{minMaxPrice.price__min}} class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" id="maxPrice" onkeyup="rangeInput.value=this.value" id="maxPrice" />
+         <button id="priceFilterBtn" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded  no-underline bg-teal-500 text-white hover:bg-teal-600 py-1 px-2 leading-tight text-xs  mt-1">Filter</button>
+      </li>
+   </div>
+</div>
+<!-- Filter 1 -->
+<div class="relative flex flex-col min-w-0 rounded break-words border bg-white border-1 border-gray-300 mb-4">
+   <h6 class="py-3 px-6 mb-0 bg-gray-200 border-b-1 border-gray-300 text-gray-900">Colors</h6>
+   <div class="flex flex-col pl-0 mb-0 border rounded border-gray-300 ">
+      {% for color in colors %}
+      <li class="relative block py-3 px-6 -mb-px border border-r-0 border-l-0 border-gray-300 no-underline">
+         <input class="filter-checkbox" data-filter="color" value="{{color.color__id}}" type="checkbox" />&nbsp;
+         <button class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline" style="background-color: {{color.color__color_code}}; margin-top: -5px;"></button>
+      </li>
+      {% endfor %}
+   </div>
+</div>
+<!-- Filter 2 -->
+<div class="relative flex flex-col min-w-0 rounded break-words border bg-white border-1 border-gray-300 mb-4">
+   <h6 class="py-3 px-6 mb-0 bg-gray-200 border-b-1 border-gray-300 text-gray-900">Categories</h6>
+   <div class="flex flex-col pl-0 mb-0 border rounded border-gray-300 ">
+      {% for cat in cats %}
+      <li class="relative block py-3 px-6 -mb-px border border-r-0 border-l-0 border-gray-300 no-underline">
+         <input class="filter-checkbox" data-filter="category" value="{{cat.category__id}}" type="checkbox" />&nbsp;
+         {{cat.category__title}}
+      </li>
+      {% endfor %}
+   </div>
+</div>
+<!-- Filter 3 -->
+<div class="relative flex flex-col min-w-0 rounded break-words border bg-white border-1 border-gray-300 mb-4">
+   <h6 class="py-3 px-6 mb-0 bg-gray-200 border-b-1 border-gray-300 text-gray-900">Brands</h6>
+   <div class="flex flex-col pl-0 mb-0 border rounded border-gray-300 ">
+      {% for brand in brands %}
+      <li class="relative block py-3 px-6 -mb-px border border-r-0 border-l-0 border-gray-300 no-underline">
+         <input class="filter-checkbox" data-filter="brand" value="{{brand.brand__id}}" type="checkbox" />&nbsp;
+         {{brand.brand__title}}
+      </li>
+      {% endfor %}
+   </div>
+</div>
+<!-- Filter 3 -->
+<div class="relative flex flex-col min-w-0 rounded break-words border bg-white border-1 border-gray-300 mb-4">
+   <h6 class="py-3 px-6 mb-0 bg-gray-200 border-b-1 border-gray-300 text-gray-900">Sizes</h6>
+   <div class="flex flex-col pl-0 mb-0 border rounded border-gray-300 ">
+      {% for size in sizes %}
+      <li class="relative block py-3 px-6 -mb-px border border-r-0 border-l-0 border-gray-300 no-underline">
+         <input class="filter-checkbox" data-filter="size" value="{{size.size__id}}" type="checkbox" />&nbsp;
+         {{size.size__title}}
+      </li>
+      {% endfor %}
+   </div>
+</div>

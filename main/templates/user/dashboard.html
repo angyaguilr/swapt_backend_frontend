@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<main class="container my-4">
+<main class="container mx-auto sm:px-4 my-4">
 	<!-- Featured Products -->
-	<h3 class="my-4 border-bottom pb-1">My Dashboard</h3>
-	<div class="row">
-		<div class="col-md-3">
+	<h3 class="my-4 border-b pb-1">My Dashboard</h3>
+	<div class="flex flex-wrap ">
+		<div class="md:w-1/4 pr-4 pl-4">
 			{% include 'user/user-sidebar.html' %}
 		</div>
-		<div class="col-md-9">
+		<div class="md:w-3/4 pr-4 pl-4">
 			<div>
 			  <canvas id="myChart"></canvas>
 			</div>

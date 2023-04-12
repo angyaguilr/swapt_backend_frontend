@@ -128,10 +128,10 @@ class CmntyListing(models.Model):
         ('Other Furniture', 'Other Furniture'),
     ]
     CONDITION_CHOICES = [
-        (1, 'New'),
-        (2, 'Used - Like New'),
-        (3, 'Used - Decent'),
-        (4, 'Used - Fair'),
+        ('New', 'New'),
+        ('Used - Like New', 'Used - Like New'),
+        ('Used - Decent', 'Used - Decent'),
+        ('Used - Fair', 'Used - Fair'),
     ]
     DELIVERYMETHOD_CHOICES = [
         (1, 'Local Pickup'),
@@ -165,17 +165,14 @@ class CmntyListing(models.Model):
     slug=models.CharField(max_length=400)
     detail=models.TextField()
     specs=models.TextField()
-    category=models.ForeignKey(Category,on_delete=models.CASCADE)
-    brand=models.ForeignKey(Brand,on_delete=models.CASCADE)
     status=models.BooleanField(default=True)
     is_featured=models.BooleanField(default=False)
-    desc = models.TextField(_("desc"), blank=True)
     preloaded_category = models.CharField(
         max_length=50,
         choices=CATEGORY_CHOICES,
         null=True
     )
-    condition = models.PositiveSmallIntegerField(choices=CONDITION_CHOICES , null=True)
+    condition = models.CharField(max_length=50,choices=CONDITION_CHOICES , null=True)
     #mandatory location details
     location = models.CharField(
         max_length=30,
@@ -204,22 +201,6 @@ class CmntyListing(models.Model):
     def __str__(self):
         return self.title
 
-# CmntyListing Attribute
-class ProductAttribute(models.Model):
-    product=models.ForeignKey(CmntyListing,on_delete=models.CASCADE)
-    color=models.ForeignKey(Color,on_delete=models.CASCADE)
-    size=models.ForeignKey(Dimension,on_delete=models.CASCADE)
-    price=models.PositiveIntegerField(default=0)
-    image=models.ImageField(upload_to="product_imgs/",null=True)
-
-    class Meta:
-        verbose_name_plural='7. Listing Attributes'
-
-    def __str__(self):
-        return self.product.title
-
-    def image_tag(self):
-        return mark_safe('<img src="%s" width="50" height="50" />' % (self.image.url))
 
 # Order
 status_choice=(
@@ -252,34 +233,6 @@ class CartOrderItems(models.Model):
 
     def image_tag(self):
         return mark_safe('<img src="/media/%s" width="50" height="50" />' % (self.image))
-
-# CmntyListing Review
-RATING=(
-    (1,'1'),
-    (2,'2'),
-    (3,'3'),
-    (4,'4'),
-    (5,'5'),
-)
-class ProductReview(models.Model):
-    user=models.ForeignKey(User,on_delete=models.CASCADE)
-    product=models.ForeignKey(CmntyListing,on_delete=models.CASCADE)
-    review_text=models.TextField()
-    review_rating=models.CharField(choices=RATING,max_length=150)
-
-    class Meta:
-        verbose_name_plural='Reviews'
-
-    def get_review_rating(self):
-        return self.review_rating
-
-# WishList
-class Wishlist(models.Model):
-    user=models.ForeignKey(User,on_delete=models.CASCADE)
-    product=models.ForeignKey(CmntyListing,on_delete=models.CASCADE)
-
-    class Meta:
-        verbose_name_plural='Wishlist'
 
 # AddressBook
 class UserAddressBook(models.Model):
@@ -336,6 +289,7 @@ class SwaptListingTag(models.Model):
 class SwaptPropertyManager(models.Model):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
+    companyname = models.CharField(max_length=40, default="company")
     email = models.EmailField(unique= True)
     propertyname = models.CharField(max_length=30)
 
@@ -406,10 +360,10 @@ class SwaptListingModel(models.Model):
         ('Other Furniture', 'Other Furniture'),
     ]
     CONDITION_CHOICES = [
-        (1, 'New'),
-        (2, 'Used - Like New'),
-        (3, 'Used - Decent'),
-        (4, 'Used - Fair'),
+        ('New', 'New'),
+        ('Used - Like New', 'Used - Like New'),
+        ('Used - Decent', 'Used - Decent'),
+        ('Used - Fair', 'Used - Fair'),
     ]
     DELIVERYMETHOD_CHOICES = [
         (1, 'Local Pickup'),
@@ -443,7 +397,7 @@ class SwaptListingModel(models.Model):
     #field identifying seller who posted listing
     swaptuser = models.ForeignKey(SwaptUser, on_delete=CASCADE, null=True)
     listings = models.ManyToManyField(
-        'CmntyListing', blank=True)
+        'CmntyListing', related_name='order', blank=True)
     name = models.CharField(max_length=50, blank=True)
     email = models.CharField(max_length=50, blank=True)
     street = models.CharField(max_length=50, blank=True)
@@ -453,15 +407,20 @@ class SwaptListingModel(models.Model):
     is_paid = models.BooleanField(default=False)
     is_shipped = models.BooleanField(default=False)
     #mandatory fields required with user input
+    detail=models.TextField(default="detail")
+    slug=models.CharField(max_length=400, default=4)
+    specs=models.TextField(default="nospecs")
+    status=models.BooleanField(default=True)
+    category=models.ForeignKey(Category,on_delete=models.CASCADE, default=1)
+    brand=models.ForeignKey(Brand,on_delete=models.CASCADE, default=1)
     title = models.CharField(max_length=250)
-    desc = models.TextField(_("desc"), blank=True)
     thumbnail = models.ImageField(upload_to=get_image_filename, blank=True)
     preloaded_category = models.CharField(
         max_length=50,
         choices=CATEGORY_CHOICES,
         null=True
     )
-    condition = models.PositiveSmallIntegerField(choices=CONDITION_CHOICES , null=True)
+    condition = models.CharField(max_length=50,choices=CONDITION_CHOICES , null=True)
     #mandatory location details
     location = models.CharField(
         max_length=30,
@@ -483,6 +442,7 @@ class SwaptListingModel(models.Model):
     is_featured=models.BooleanField(default=False)
 
     #date/time fields
+    move_out_date = models.DateTimeField(auto_now_add=False, default=timezone.now,)
     publishing_date = models.DateTimeField(
         default=timezone.now,
         blank=True,
@@ -531,6 +491,50 @@ class SwaptCampusPropertyNamePair(models.Model):
         max_length=30,
         choices=PROPERTYNAME_CHOICES,
     )
-    confirmed = models.BooleanField(default=False)  
+    confirmed = models.BooleanField(default=False)
+
+# CmntyListing Attribute
+class ProductAttribute(models.Model):
+    product=models.ForeignKey(SwaptListingModel,on_delete=models.CASCADE)
+    color=models.ForeignKey(Color,on_delete=models.CASCADE)
+    size=models.ForeignKey(Dimension,on_delete=models.CASCADE)
+    price=models.PositiveIntegerField(default=0)
+    image=models.ImageField(upload_to="product_imgs/",null=True)
+
+    class Meta:
+        verbose_name_plural='7. Listing Attributes'
+
+    def __str__(self):
+        return self.product.title
+
+    def image_tag(self):
+        return mark_safe('<img src="%s" width="50" height="50" />' % (self.image.url))
+# CmntyListing Review
+RATING=(
+    (1,'1'),
+    (2,'2'),
+    (3,'3'),
+    (4,'4'),
+    (5,'5'),
+)
+class ProductReview(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    product=models.ForeignKey(SwaptListingModel,on_delete=models.CASCADE)
+    review_text=models.TextField()
+    review_rating=models.CharField(choices=RATING,max_length=150)
+
+    class Meta:
+        verbose_name_plural='Reviews'
+
+    def get_review_rating(self):
+        return self.review_rating
+
+# WishList
+class Wishlist(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    product=models.ForeignKey(SwaptListingModel,on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name_plural='Wishlist'
             
     

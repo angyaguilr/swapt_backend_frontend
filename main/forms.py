@@ -35,7 +35,7 @@ class ListingCreationForm(ModelForm):
 
     class Meta:
         model = SwaptListingModel
-        fields = ("title", "desc", "condition",)
+        fields = ("title", "detail", "condition",)
     
     def save(self, commit=True):
         self.full_clean() # calls clean function
@@ -55,7 +55,7 @@ class CmntyListingCreationForm(ModelForm):
 
     class Meta:
         model = CmntyListing
-        fields = ("title", "desc", "preloaded_category", "condition", "category", "location", "delivery", "pickupmethod", )
+        fields = ("title", "detail", "preloaded_category", "condition", "location", "delivery", "pickupmethod", )
     
     def save(self, commit=True):
         self.full_clean() # calls clean function
@@ -64,9 +64,8 @@ class CmntyListingCreationForm(ModelForm):
 
         if commit:
             fields = self.cleaned_data
-            listing.desc = fields['desc']
+            listing.detail = fields['detail']
             listing.preloaded_category = fields['preloaded_category']
-            listing.category = fields['category']
             listing.location = fields['location']
             listing.pickupmethod = fields['pickupmethod']
             listing.delivery = fields['delivery']
@@ -112,7 +111,7 @@ class ListingEditForm(ModelForm):
     
     class Meta:
         model = SwaptListingModel
-        fields = ("title", "desc", "location")
+        fields = ("title", "detail", "location")
 
     def clean(self):
         data = self.cleaned_data
@@ -234,7 +233,7 @@ class CmntyListingEditForm(ModelForm):
     
     class Meta:
         model = CmntyListing
-        fields = ("title", "desc", "location")
+        fields = ("title", "detail", "location")
 
     def clean(self):
         data = self.cleaned_data

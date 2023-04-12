@@ -15,9 +15,11 @@ from decouple import config
 import django_on_heroku
 import dj_database_url
 from django.core.management.utils import get_random_secret_key
+from django.forms.renderers import TemplatesSetting
 from dotenv import load_dotenv
 
 load_dotenv()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -45,12 +47,17 @@ DEBUG = os.getenv('DEBUG')
 
 ALLOWED_HOSTS = ['swaptmarketplace.herokuapp.com', '127.0.0.1']
 
-
+TAILWIND_APP_NAME = 'theme'
 # Application definition
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
 
+#'accounts.apps.AccountsConfig'
 INSTALLED_APPS = [
     'main',
-    'accounts.apps.AccountsConfig',
+    'accounts',
+    'django_browser_reload',
     'jet.dashboard',
     'jet',
     'django_nextjs',
@@ -63,7 +70,10 @@ INSTALLED_APPS = [
     'paypal.standard.ipn',
     'rest_framework',
     'rest_framework.authtoken',
-    'rest_framework_datatables'
+    'rest_framework_datatables',
+    'tailwind',
+    'theme',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -75,6 +85,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 ROOT_URLCONF = 'swapt_mktplace.urls'
@@ -104,17 +115,8 @@ WSGI_APPLICATION = 'swapt_mktplace.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        'NAME': os.getenv('NAME'),
-
-        'USER': os.getenv('USER'),
-
-        'PASSWORD': os.getenv('PASSWORD'),
-
-        'HOST': os.getenv('HOST'),
-
-        'PORT': os.getenv('PORT')
+    'ENGINE': 'django.db.backends.sqlite3',
+    'NAME': os.path.join(BASE_DIR, 'db.sqlite3')
     }
 }
 AUTH_USER_MODEL = "accounts.User" 

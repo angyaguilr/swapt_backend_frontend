@@ -1,31 +1,384 @@
-{% extends "header.html" %}
-
-{% block header %}
-  <h1> Sign up </h1>
-  <h1>  </h1>
-  <form method="post">
-    {% csrf_token %}
-      {% for field in form %}
-      <p align="left">
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">{{ field.label }}</label>
-          <div class="col-sm-9"> {{ field }} </div>
+{% extends 'base.html' %}
+{% block content %}
+  <div class="w-[1440px] h-[915px] absolute left-0 top-[-7px] overflow-hidden bg-[#232254]">
+    <div class="w-[609px] h-[915px] absolute left-[831px] top-0 overflow-hidden bg-[#fffcfa]">
+      <form method="post">
+        {% csrf_token %}
+      <div
+        class="flex justify-start items-center w-[363px] h-[60px] absolute left-[123px] top-[325px] overflow-hidden gap-2 px-3 py-4 rounded-2xl bg-[#ebebeb]"
+      >
+        <svg
+          width="28"
+          height="28"
+          viewBox="0 0 28 28"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          class="flex-grow-0 flex-shrink-0 w-7 h-7 relative"
+          preserveAspectRatio="xMidYMid meet"
+        >
+          <mask
+            id="mask0_1406_3139"
+            style="mask-type:alpha"
+            maskUnits="userSpaceOnUse"
+            x="0"
+            y="0"
+            width="28"
+            height="28"
+          >
+            <rect width="28" height="28" fill="#D9D9D9"></rect>
+          </mask>
+          <g mask="url(#mask0_1406_3139)">
+            <path
+              d="M4.05438 23.5661C3.52938 23.5661 3.07251 23.3717 2.68378 22.983C2.29458 22.5943 2.09998 22.1374 2.09998 21.6124V6.8536C2.09998 6.3286 2.29458 5.87174 2.68378 5.483C3.07251 5.09427 3.52938 4.8999 4.05438 4.8999H23.4794C24.0044 4.8999 24.4612 5.09427 24.85 5.483C25.2392 5.87174 25.4338 6.3286 25.4338 6.8536V21.6124C25.4338 22.1374 25.2392 22.5943 24.85 22.983C24.4612 23.3717 24.0044 23.5661 23.4794 23.5661H4.05438ZM13.7669 14.9624L4.05438 8.6911V21.6124H23.4794V8.6911L13.7669 14.9624ZM13.7669 13.0374L23.4213 6.8536H4.14188L13.7669 13.0374ZM4.05438 8.6911V6.8536V21.6124V8.6911Z"
+              fill="#807976"
+            ></path>
+          </g>
+        </svg>
+        <p class="flex-grow w-[303px] text-sm font-bold text-left text-[#807976]">{{ form.username }}</p>
+      </div>
+      <div
+        class="flex justify-start items-center w-[363px] h-[60px] absolute left-[123px] top-[405px] overflow-hidden gap-2 px-3 py-4 rounded-2xl bg-[#ebebeb]"
+      >
+        <svg
+          width="28"
+          height="28"
+          viewBox="0 0 28 28"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          class="flex-grow-0 flex-shrink-0 w-7 h-7 relative"
+          preserveAspectRatio="xMidYMid meet"
+        >
+          <mask
+            id="mask0_1406_3205"
+            style="mask-type:alpha"
+            maskUnits="userSpaceOnUse"
+            x="0"
+            y="0"
+            width="28"
+            height="28"
+          >
+            <rect width="28" height="28" fill="#D9D9D9"></rect>
+          </mask>
+          <g mask="url(#mask0_1406_3205)">
+            <path
+              d="M4.05438 23.5661C3.52938 23.5661 3.07251 23.3717 2.68378 22.983C2.29458 22.5943 2.09998 22.1374 2.09998 21.6124V6.8536C2.09998 6.3286 2.29458 5.87174 2.68378 5.483C3.07251 5.09427 3.52938 4.8999 4.05438 4.8999H23.4794C24.0044 4.8999 24.4612 5.09427 24.85 5.483C25.2392 5.87174 25.4338 6.3286 25.4338 6.8536V21.6124C25.4338 22.1374 25.2392 22.5943 24.85 22.983C24.4612 23.3717 24.0044 23.5661 23.4794 23.5661H4.05438ZM13.7669 14.9624L4.05438 8.6911V21.6124H23.4794V8.6911L13.7669 14.9624ZM13.7669 13.0374L23.4213 6.8536H4.14188L13.7669 13.0374ZM4.05438 8.6911V6.8536V21.6124V8.6911Z"
+              fill="#807976"
+            ></path>
+          </g>
+        </svg>
+        <p class="flex-grow w-[303px] text-sm font-bold text-left text-[#807976]">{{ form.email }}</p>
+      </div>
+      <div class="flex justify-start items-start absolute left-[123px] top-[485px]">
+        <div
+          class="flex justify-start items-center flex-grow-0 flex-shrink-0 w-[363px] h-[60px] relative overflow-hidden gap-2 px-3 py-4 rounded-2xl bg-[#ebebeb]"
+        >
+          <div class="flex-grow-0 flex-shrink-0 w-7 h-7 relative">
+            <div class="w-7 h-7 absolute left-[-1px] top-[-1px] bg-[#d9d9d9]"></div>
+          </div>
+          <p class="flex-grow w-[303px] text-sm font-bold text-left text-[#807976]">{{ form.campusSignUp }}</p>
         </div>
-        {% if field.help_text %}
-          <small style="display: none">{{ field.help_text }}</small>
-        {% endif %}
-        {% for error in field.errors %}
-          <p style="color: red">{{ error }}</p>
-        {% endfor %}
-      </p>
-      {% endfor %}
-      <p>
-        <input type="checkbox" id="terms" required>
-        <label for="terms">I've read and agree to the terms and conditions.</label>
-      </p>
-
-      <button class="btn btn-primary" type="submit">Sign up</button>  
-      <a class="nav-link active" aria-current="page" href="{% url 'accounts:login' %}">Already have an account? Log in</a>
-    
-  </form>
-{% endblock %}
+      </div>
+      <div
+        class="flex justify-start items-center w-[172px] h-[60px] absolute left-[123px] top-[565px] overflow-hidden gap-2 px-3 py-4 rounded-2xl bg-[#ebebeb]"
+      >
+        <svg
+          width="28"
+          height="28"
+          viewBox="0 0 28 28"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          class="flex-grow-0 flex-shrink-0 w-7 h-7 relative"
+          preserveAspectRatio="xMidYMid meet"
+        >
+          <mask
+            id="mask0_1406_3114"
+            style="mask-type:alpha"
+            maskUnits="userSpaceOnUse"
+            x="0"
+            y="0"
+            width="28"
+            height="28"
+          >
+            <rect width="28" height="28" fill="#D9D9D9"></rect>
+          </mask>
+          <g mask="url(#mask0_1406_3114)">
+            <path
+              d="M8.40002 7.23324C8.40002 5.61935 8.96897 4.24346 10.1069 3.10557C11.244 1.96846 12.6195 1.3999 14.2334 1.3999C15.8472 1.3999 17.2231 1.96846 18.361 3.10557C19.4981 4.24346 20.0667 5.61935 20.0667 7.23324V9.56657H21.2334C21.875 9.56657 22.4245 9.79485 22.8819 10.2514C23.3384 10.7087 23.5667 11.2582 23.5667 11.8999V23.5666C23.5667 24.2082 23.3384 24.7577 22.8819 25.2151C22.4245 25.6716 21.875 25.8999 21.2334 25.8999H7.23336C6.59169 25.8999 6.04258 25.6716 5.58602 25.2151C5.12869 24.7577 4.90002 24.2082 4.90002 23.5666V11.8999C4.90002 11.2582 5.12869 10.7087 5.58602 10.2514C6.04258 9.79485 6.59169 9.56657 7.23336 9.56657H17.7334V7.23324C17.7334 6.26101 17.3931 5.43462 16.7125 4.75407C16.032 4.07351 15.2056 3.73324 14.2334 3.73324C13.2611 3.73324 12.4347 4.07351 11.7542 4.75407C11.0736 5.43462 10.7334 6.26101 10.7334 7.23324H8.40002ZM7.23336 23.5666H21.2334V11.8999H7.23336V23.5666ZM14.2334 15.3999C13.5917 15.3999 13.0426 15.6282 12.586 16.0847C12.1287 16.5421 11.9 17.0916 11.9 17.7332C11.9 18.3749 12.1287 18.9244 12.586 19.3817C13.0426 19.8383 13.5917 20.0666 14.2334 20.0666C14.875 20.0666 15.4245 19.8383 15.8819 19.3817C16.3384 18.9244 16.5667 18.3749 16.5667 17.7332C16.5667 17.0916 16.3384 16.5421 15.8819 16.0847C15.4245 15.6282 14.875 15.3999 14.2334 15.3999Z"
+              fill="#807976"
+            ></path>
+          </g>
+        </svg>
+        <p class="flex-grow w-[76px] text-sm font-bold text-left text-[#807976]">{{ form.password1 }}</p>
+        <svg
+          width="28"
+          height="28"
+          viewBox="0 0 28 28"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          class="flex-grow-0 flex-shrink-0 w-7 h-7 relative"
+          preserveAspectRatio="xMidYMid meet"
+        >
+          <mask
+            id="mask0_1406_3118"
+            style="mask-type:alpha"
+            maskUnits="userSpaceOnUse"
+            x="0"
+            y="0"
+            width="28"
+            height="28"
+          >
+            <rect width="28" height="28" fill="#D9D9D9"></rect>
+          </mask>
+          <g mask="url(#mask0_1406_3118)">
+            <path
+              d="M10.927 21.2007L8.67419 20.5963L9.59236 17.1675C8.21799 16.6606 6.94066 15.9219 5.81586 14.9835L3.30402 17.4965L1.65319 15.8457L4.16619 13.3338C2.74761 11.6349 1.79446 9.59672 1.40002 7.41883L3.69602 7C4.58152 11.9023 8.87019 15.6217 14.028 15.6217C19.1847 15.6217 23.4745 11.9023 24.36 7L26.656 7.41767C26.2621 9.59585 25.3094 11.6344 23.891 13.3338L26.4029 15.8457L24.752 17.4965L22.2402 14.9835C21.1154 15.9219 19.8381 16.6606 18.4637 17.1675L19.3819 20.5975L17.129 21.2007L16.2097 17.7707C14.7658 18.0181 13.2903 18.0181 11.8464 17.7707L10.927 21.2007Z"
+              fill="#5E2987"
+            ></path>
+          </g>
+        </svg>
+      </div>
+      <div
+        class="flex justify-start items-center w-[172px] h-[60px] absolute left-[314px] top-[565px] overflow-hidden gap-2 px-3 py-4 rounded-2xl bg-[#ebebeb]"
+      >
+        <svg
+          width="28"
+          height="28"
+          viewBox="0 0 28 28"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          class="flex-grow-0 flex-shrink-0 w-7 h-7 relative"
+          preserveAspectRatio="xMidYMid meet"
+        >
+          <mask
+            id="mask0_1406_3154"
+            style="mask-type:alpha"
+            maskUnits="userSpaceOnUse"
+            x="0"
+            y="0"
+            width="28"
+            height="28"
+          >
+            <rect width="28" height="28" fill="#D9D9D9"></rect>
+          </mask>
+          <g mask="url(#mask0_1406_3154)">
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M5.59998 6.53328C5.59998 4.9194 6.16892 3.54351 7.30681 2.40562C8.44392 1.26851 9.81942 0.699951 11.4333 0.699951C13.0472 0.699951 14.4231 1.26851 15.561 2.40562C16.6981 3.54351 17.2666 4.9194 17.2666 6.53328V8.86662H18.4333C19.075 8.86662 19.6245 9.0949 20.0818 9.55145C20.5384 10.0088 20.7666 10.5583 20.7666 11.2V15.98C21.1484 16.0565 21.5178 16.1717 21.8749 16.3257C22.5846 16.6322 23.202 17.0479 23.727 17.5729C24.252 18.0979 24.6675 18.7153 24.9736 19.425C25.28 20.1347 25.4332 20.893 25.4332 21.7C25.4332 22.5069 25.28 23.2653 24.9736 23.975C24.6675 24.6847 24.252 25.3021 23.727 25.8271C23.202 26.3521 22.5846 26.7676 21.8749 27.0736C21.1652 27.3801 20.4068 27.5333 19.5999 27.5333C18.793 27.5333 18.0346 27.3801 17.3249 27.0736C16.6152 26.7676 15.9978 26.3521 15.4728 25.8271C15.2767 25.6309 15.0958 25.4219 14.9302 25.2H4.43331C3.79164 25.2 3.24253 24.9717 2.78598 24.5151C2.32864 24.0578 2.09998 23.5083 2.09998 22.8666V11.2C2.09998 10.5583 2.32864 10.0088 2.78598 9.55145C3.24253 9.0949 3.79164 8.86662 4.43331 8.86662H14.9333V6.53328C14.9333 5.56106 14.593 4.73467 13.9125 4.05412C13.2319 3.37356 12.4055 3.03328 11.4333 3.03328C10.4611 3.03328 9.6347 3.37356 8.95414 4.05412C8.27359 4.73467 7.93331 5.56106 7.93331 6.53328H5.59998ZM13.88 22.8666C13.8044 22.4897 13.7666 22.1009 13.7666 21.7C13.7666 20.893 13.9198 20.1347 14.2262 19.425C14.5323 18.7153 14.9478 18.0979 15.4728 17.5729C15.9978 17.0479 16.6152 16.6322 17.3249 16.3257C17.6821 16.1717 18.0515 16.0564 18.4333 15.9799V11.2H4.43331V22.8666H13.88ZM11.4333 14.7C10.7916 14.7 10.2425 14.9282 9.78598 15.3848C9.32864 15.8421 9.09998 16.3916 9.09998 17.0333C9.09998 17.675 9.32864 18.2245 9.78598 18.6818C10.2425 19.1383 10.7916 19.3666 11.4333 19.3666C12.075 19.3666 12.6245 19.1383 13.0818 18.6818C13.5384 18.2245 13.7666 17.675 13.7666 17.0333C13.7666 16.3916 13.5384 15.8421 13.0818 15.3848C12.6245 14.9282 12.075 14.7 11.4333 14.7ZM22.8957 20.2708L18.7832 24.3833L16.3041 21.9041L17.1207 21.0875L18.7832 22.75L22.0791 19.4541L22.8957 20.2708Z"
+              fill="#807976"
+            ></path>
+          </g>
+        </svg>
+        <p class="flex-grow w-28 text-sm font-bold text-left text-[#807976]">{{ form.password2 }}</p>
+      </div>
+              
+    </form>
+      <div class="flex justify-start items-center w-72 absolute left-32 top-[645px] gap-2">
+        <p class="flex-grow w-64 text-base text-left">
+          <input type="checkbox" id="terms" required>
+            <label class= "flex-grow w-64 text-base font-medium text-left text-[#4d4846]" for="terms">I've read and agree to the terms and conditions.</label>
+        </p>
+        <div
+          class="flex-grow-0 flex-shrink-0 w-0.5 h-0.5 rounded-lg border-2 border-[#4d4846]"
+        ></div>
+      </div>
+      <p class="absolute left-32 top-[142px] text-2xl font-bold text-left text-black">Sign Up</p>
+      <div
+        class="flex justify-between items-center w-[363px] absolute left-[123px] top-[190px] px-4 border-t-0 border-r-0 border-b-[0.2px] border-l-0 border-[#807976]"
+      >
+        <div
+          class="flex flex-col justify-start items-center flex-grow-0 flex-shrink-0 w-[136px] relative gap-2"
+        >
+          <p class="flex-grow-0 flex-shrink-0 text-lg font-bold text-left text-[#957fef]">
+            Student
+          </p>
+          <div class="flex-grow-0 flex-shrink-0 w-[136px] h-1 rounded-[999px] bg-[#957fef]"></div>
+        </div>
+        <div
+          class="flex flex-col justify-start items-center flex-grow-0 flex-shrink-0 h-[35px] w-[136px] relative gap-2"
+        >
+          <p class="flex-grow-0 flex-shrink-0 text-lg font-bold text-left text-[#807976]">
+            PM
+          </p>
+        </div>
+      </div>
+      <div
+        class="flex justify-start items-center w-[172px] h-[60px] absolute left-[123px] top-[245px] overflow-hidden gap-2 px-3 py-4 rounded-2xl bg-[#ebebeb]"
+      >
+        <svg
+          width="28"
+          height="28"
+          viewBox="0 0 28 28"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          class="flex-grow-0 flex-shrink-0 w-7 h-7 relative"
+          preserveAspectRatio="xMidYMid meet"
+        >
+          <mask
+            id="mask0_1406_3222"
+            style="mask-type:alpha"
+            maskUnits="userSpaceOnUse"
+            x="0"
+            y="0"
+            width="28"
+            height="28"
+          >
+            <rect width="28" height="28" fill="#D9D9D9"></rect>
+          </mask>
+          <g mask="url(#mask0_1406_3222)">
+            <path
+              d="M23.5667 25.8999H21.2334V23.5666C21.2334 22.6383 20.8646 21.7481 20.2082 21.0917C19.5519 20.4353 18.6616 20.0666 17.7334 20.0666H10.7334C9.8051 20.0666 8.91486 20.4353 8.25848 21.0917C7.60211 21.7481 7.23336 22.6383 7.23336 23.5666V25.8999H4.90002V23.5666C4.90002 22.0195 5.51461 20.5357 6.60857 19.4418C7.70253 18.3478 9.18626 17.7332 10.7334 17.7332H17.7334C19.2805 17.7332 20.7642 18.3478 21.8581 19.4418C22.9521 20.5357 23.5667 22.0195 23.5667 23.5666V25.8999ZM14.2334 15.3999C13.3141 15.3999 12.4039 15.2188 11.5546 14.8671C10.7053 14.5153 9.93362 13.9997 9.28361 13.3496C8.6336 12.6996 8.11798 11.928 7.7662 11.0787C7.41442 10.2294 7.23336 9.31916 7.23336 8.3999C7.23336 7.48065 7.41442 6.5704 7.7662 5.72112C8.11798 4.87184 8.6336 4.10016 9.28361 3.45015C9.93362 2.80014 10.7053 2.28453 11.5546 1.93275C12.4039 1.58096 13.3141 1.3999 14.2334 1.3999C16.0899 1.3999 17.8704 2.1374 19.1831 3.45015C20.4959 4.76291 21.2334 6.54339 21.2334 8.3999C21.2334 10.2564 20.4959 12.0369 19.1831 13.3496C17.8704 14.6624 16.0899 15.3999 14.2334 15.3999V15.3999ZM14.2334 13.0666C15.471 13.0666 16.658 12.5749 17.5332 11.6997C18.4084 10.8246 18.9 9.63758 18.9 8.3999C18.9 7.16223 18.4084 5.97524 17.5332 5.10007C16.658 4.2249 15.471 3.73324 14.2334 3.73324C12.9957 3.73324 11.8087 4.2249 10.9335 5.10007C10.0584 5.97524 9.56669 7.16223 9.56669 8.3999C9.56669 9.63758 10.0584 10.8246 10.9335 11.6997C11.8087 12.5749 12.9957 13.0666 14.2334 13.0666V13.0666Z"
+              fill="#807976"
+            ></path>
+          </g>
+        </svg>
+        <p class="flex-grow w-28 text-sm font-bold text-left text-[#807976]">{{ form.first_name }}</p>
+      </div>
+      <div
+        class="flex justify-start items-center w-[172px] h-[60px] absolute left-[314px] top-[245px] overflow-hidden gap-2 px-3 py-4 rounded-2xl bg-[#ebebeb]"
+      >
+        <svg
+          width="28"
+          height="28"
+          viewBox="0 0 28 28"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          class="flex-grow-0 flex-shrink-0 w-7 h-7 relative"
+          preserveAspectRatio="xMidYMid meet"
+        >
+          <mask
+            id="mask0_1406_3134"
+            style="mask-type:alpha"
+            maskUnits="userSpaceOnUse"
+            x="0"
+            y="0"
+            width="28"
+            height="28"
+          >
+            <rect width="28" height="28" fill="#D9D9D9"></rect>
+          </mask>
+          <g mask="url(#mask0_1406_3134)">
+            <path
+              d="M23.5667 25.8999H21.2334V23.5666C21.2334 22.6383 20.8646 21.7481 20.2082 21.0917C19.5519 20.4353 18.6616 20.0666 17.7334 20.0666H10.7334C9.8051 20.0666 8.91486 20.4353 8.25848 21.0917C7.60211 21.7481 7.23336 22.6383 7.23336 23.5666V25.8999H4.90002V23.5666C4.90002 22.0195 5.51461 20.5357 6.60857 19.4418C7.70253 18.3478 9.18626 17.7332 10.7334 17.7332H17.7334C19.2805 17.7332 20.7642 18.3478 21.8581 19.4418C22.9521 20.5357 23.5667 22.0195 23.5667 23.5666V25.8999ZM14.2334 15.3999C13.3141 15.3999 12.4039 15.2188 11.5546 14.8671C10.7053 14.5153 9.93362 13.9997 9.28361 13.3496C8.6336 12.6996 8.11798 11.928 7.7662 11.0787C7.41442 10.2294 7.23336 9.31916 7.23336 8.3999C7.23336 7.48065 7.41442 6.5704 7.7662 5.72112C8.11798 4.87184 8.6336 4.10016 9.28361 3.45015C9.93362 2.80014 10.7053 2.28453 11.5546 1.93275C12.4039 1.58096 13.3141 1.3999 14.2334 1.3999C16.0899 1.3999 17.8704 2.1374 19.1831 3.45015C20.4959 4.76291 21.2334 6.54339 21.2334 8.3999C21.2334 10.2564 20.4959 12.0369 19.1831 13.3496C17.8704 14.6624 16.0899 15.3999 14.2334 15.3999V15.3999ZM14.2334 13.0666C15.471 13.0666 16.658 12.5749 17.5332 11.6997C18.4084 10.8246 18.9 9.63758 18.9 8.3999C18.9 7.16223 18.4084 5.97524 17.5332 5.10007C16.658 4.2249 15.471 3.73324 14.2334 3.73324C12.9957 3.73324 11.8087 4.2249 10.9335 5.10007C10.0584 5.97524 9.56669 7.16223 9.56669 8.3999C9.56669 9.63758 10.0584 10.8246 10.9335 11.6997C11.8087 12.5749 12.9957 13.0666 14.2334 13.0666V13.0666Z"
+              fill="#807976"
+            ></path>
+          </g>
+        </svg>
+        <p class="flex-grow w-28 text-sm font-bold text-left text-[#807976]">{{ form.last_name }}</p>
+      </div>
+      <div
+        class="flex justify-center items-center w-[363px] absolute left-[123px] top-[725px] gap-2 px-4 py-3 rounded-[999px] bg-[#b2aaa4]"
+      >
+      <button class="btn btn-primary font-bold text-center text-[#fffcfa]" type="submit">Sign up</button> 
+      </div>
+      <div
+        class="flex justify-center items-center absolute left-[217px] top-[800px] gap-2 px-1 rounded-[999px]"
+      >
+        <p class="flex-grow-0 flex-shrink-0 text-sm font-bold text-center">
+          <span class="flex-grow-0 flex-shrink-0 text-sm font-bold text-center text-[#99928d]"
+            >Have an account? </span
+          ><span class="flex-grow-0 flex-shrink-0 text-sm font-bold text-center text-[#5e2987]"
+            ><a class="nav-link active" aria-current="page" href="{% url 'accounts:login' %}">Log in</a></span
+          >
+        </p>
+      </div>
+      <svg
+        width="28"
+        height="28"
+        viewBox="0 0 28 28"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-7 h-7 absolute left-[135px] top-[501px]"
+        preserveAspectRatio="xMidYMid meet"
+      >
+        <mask
+          id="mask0_1126_6762"
+          style="mask-type:alpha"
+          maskUnits="userSpaceOnUse"
+          x="0"
+          y="0"
+          width="28"
+          height="28"
+        >
+          <rect width="28" height="28" rx="0.3" fill="#D9D9D9"></rect>
+        </mask>
+        <g mask="url(#mask0_1126_6762)">
+          <path
+            d="M21.4247 19.3245L14 26.7491L6.57534 19.3245C5.1069 17.856 4.10688 15.9851 3.70175 13.9483C3.29662 11.9115 3.50456 9.80031 4.29928 7.8817C5.09401 5.96308 6.43982 4.32321 8.16653 3.16946C9.89325 2.01571 11.9233 1.3999 14 1.3999C16.0767 1.3999 18.1068 2.01571 19.8335 3.16946C21.5602 4.32321 22.906 5.96308 23.7007 7.8817C24.4955 9.80031 24.7034 11.9115 24.2983 13.9483C23.8931 15.9851 22.8931 17.856 21.4247 19.3245V19.3245ZM14 14.2331C14.6188 14.2331 15.2123 13.9873 15.6499 13.5497C16.0875 13.1121 16.3333 12.5186 16.3333 11.8998C16.3333 11.281 16.0875 10.6875 15.6499 10.2499C15.2123 9.81231 14.6188 9.56648 14 9.56648C13.3812 9.56648 12.7877 9.81231 12.3501 10.2499C11.9125 10.6875 11.6667 11.281 11.6667 11.8998C11.6667 12.5186 11.9125 13.1121 12.3501 13.5497C12.7877 13.9873 13.3812 14.2331 14 14.2331Z"
+            fill="#807976"
+          ></path>
+        </g>
+      </svg>
+    </div>
+    <p class="absolute left-[133px] top-60 text-[32px] font-bold text-left text-white"></p>
+    <p
+      class="w-[348px] absolute left-[133px] top-[444px] text-[22px] font-bold text-left text-white"
+    >
+      Swapt is a modern online marketplace designed for you to avoid the hassle and expense of the
+      college moving process
+    </p>
+    <p
+      class="w-[698px] absolute left-[133px] top-[262px] text-[52px] font-bold text-left text-white"
+    >
+      The Marketplace for Moving
+    </p>
+  </div>
+  <div
+    class="flex justify-center items-center absolute left-[94px] top-11 gap-[13.3963041305542px]"
+  >
+    <svg
+      width="52"
+      height="61"
+      viewBox="0 0 52 61"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      class="flex-grow-0 flex-shrink-0"
+      preserveAspectRatio="xMidYMid meet"
+    >
+      <path
+        d="M5.74127 60.2834C4.16242 60.2834 2.81035 59.7217 1.68506 58.5983C0.561688 57.473 0 56.1209 0 54.5421V20.0945C0 18.5156 0.561688 17.1645 1.68506 16.0411C2.81035 14.9158 4.16242 14.3532 5.74127 14.3532H11.4825C11.4825 10.3821 12.8825 6.9967 15.6823 4.19687C18.4802 1.39896 21.8647 0 25.8357 0C29.8068 0 33.1922 1.39896 35.992 4.19687C38.79 6.9967 40.1889 10.3821 40.1889 14.3532H45.9302C47.509 14.3532 48.8611 14.9158 49.9864 16.0411C51.1098 17.1645 51.6715 18.5156 51.6715 20.0945V54.5421C51.6715 56.1209 51.1098 57.473 49.9864 58.5983C48.8611 59.7217 47.509 60.2834 45.9302 60.2834H5.74127ZM25.8357 37.3183C29.8068 37.3183 33.1922 35.9184 35.992 33.1185C38.79 30.3206 40.1889 26.9361 40.1889 22.9651H34.4476C34.4476 25.3573 33.6104 27.3907 31.9358 29.0652C30.2613 30.7397 28.2279 31.577 25.8357 31.577C23.4435 31.577 21.4102 30.7397 19.7356 29.0652C18.0611 27.3907 17.2238 25.3573 17.2238 22.9651H11.4825C11.4825 26.9361 12.8825 30.3206 15.6823 33.1185C18.4802 35.9184 21.8647 37.3183 25.8357 37.3183ZM17.2238 14.3532H34.4476C34.4476 11.961 33.6104 9.92762 31.9358 8.25308C30.2613 6.57854 28.2279 5.74127 25.8357 5.74127C23.4435 5.74127 21.4102 6.57854 19.7356 8.25308C18.0611 9.92762 17.2238 11.961 17.2238 14.3532Z"
+        fill="#957FEF"
+      ></path>
+    </svg>
+    <p
+      class="flex-grow-0 flex-shrink-0 text-[40.18891143798828px] font-bold text-left text-[#957fef]"
+    >
+      Swapt
+    </p>
+  </div>
+  <div
+    class="flex flex-col justify-start items-start w-[21px] h-[264px] absolute left-4 top-[200px] gap-2 pr-[596px]"
+  ></div>
+  <div
+    class="flex justify-between items-end w-[1440px] h-11 absolute left-0 top-0 overflow-hidden px-4 py-2.5"
+  >
+    <p class="flex-grow-0 flex-shrink-0 text-sm font-medium text-left text-[#262322]">9:30</p>
+    <svg
+      width="46"
+      height="17"
+      viewBox="0 0 46 17"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      class="flex-grow-0 flex-shrink-0 w-[46px] h-[17px]"
+      preserveAspectRatio="none"
+    >
+      <path
+        opacity="0.1"
+        d="M8.5 1.41675C5.1 1.41675 2.125 2.90425 0 5.24175L8.5 15.5834L17 5.24175C14.875 2.90425 11.9 1.41675 8.5 1.41675Z"
+        fill="#262322"
+      ></path>
+      <path d="M31.5833 1.41675L17.4166 15.5834H31.5833V1.41675V1.41675Z" fill="#262322"></path>
+      <path
+        d="M43.5 1H40.5V2.5H39C38.4477 2.5 38 3.00368 38 3.625V14.875C38 15.4963 38.4477 16 39 16H45C45.5523 16 46 15.4963 46 14.875V3.625C46 3.00368 45.5523 2.5 45 2.5H43.5V1Z"
+        fill="#262322"
+      ></path>
+      <path
+        d="M38 9C38 9.58333 38 14.3667 38 14.95C38 15.5299 38.4477 16 39 16H45C45.5523 16 46 15.5299 46 14.95C46 14.3667 46 9.58333 46 9H38Z"
+        fill="#262322"
+      ></path>
+    </svg>
+  </div>
+  <div class="w-[1440px] h-[34px] absolute left-0 top-[866px]">
+    <div class="w-[72px] h-1 absolute left-[683px] top-[21px] rounded-lg bg-[#262322]"></div>
+  </div>
+  {% endblock content %}
