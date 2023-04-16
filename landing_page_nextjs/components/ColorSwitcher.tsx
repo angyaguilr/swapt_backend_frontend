@@ -1,4 +1,4 @@
-import { ColorModeStyles, useColorModeValue, useColorSwitcher } from 'nextjs-color-mode';
+mport { ColorModeStyles, useColorModeValue, useColorSwitcher } from 'nextjs-color-mode';
 import styled from 'styled-components';
 
 export default function ColorSwitcher() {
@@ -40,7 +40,6 @@ const CustomButton = styled.button`
   width: 4rem;
   height: 4rem;
   background: transparent;
-
   svg {
     color: var(--logoColor);
   }

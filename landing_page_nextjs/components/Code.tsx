@@ -105,7 +105,6 @@ const CopyButton = styled.button<{ copied: boolean }>`
   color: rgb(var(--text));
   z-index: 1;
   line-height: 1;
-
   &::after {
     position: absolute;
     content: 'Copied';
@@ -121,7 +120,6 @@ const CopyButton = styled.button<{ copied: boolean }>`
     color: rgb(var(--primary));
     background-color: rgb(var(--secondary));
   }
-
   &:hover {
     background-color: rgba(var(--secondary), 0.2);
   }
@@ -133,11 +131,9 @@ const CodeWrapper = styled.div<{ language: string }>`
   margin-top: 4.5rem;
   transition: visibility 0.1s;
   font-size: 1.6rem;
-
   &:not(:last-child) {
     margin-bottom: 3rem;
   }
-
   &::after {
     position: absolute;
     height: 2.2em;
@@ -153,7 +149,6 @@ const CodeWrapper = styled.div<{ language: string }>`
     font-weight: bold;
     text-align: center;
   }
-
   &:hover {
     ${CopyButton} {
       visibility: visible;

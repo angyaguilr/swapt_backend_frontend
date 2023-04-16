@@ -58,15 +58,21 @@ export default function Footer() {
         <BottomBar>
           <ShareBar>
             <NextLink href="https://www.twitter.com/my-saas-startup" passHref>
-              <TwitterIcon size={50} round={true} />
+              <a>
+                <TwitterIcon size={50} round={true} />
+              </a>
             </NextLink>
 
             <NextLink href="https://www.facebook.com/my-saas-startup" passHref>
-              <FacebookIcon size={50} round={true} />
+              <a>
+                <FacebookIcon size={50} round={true} />
+              </a>
             </NextLink>
 
             <NextLink href="https://www.linkedin.com/my-saas-startup" passHref>
-              <LinkedinIcon size={50} round={true} />
+              <a>
+                <LinkedinIcon size={50} round={true} />
+              </a>
             </NextLink>
           </ShareBar>
           <Copyright>&copy; Copyright 2021 My Saas Startup</Copyright>
@@ -90,7 +96,9 @@ function FooterList({ title, items }: SingleFooterList) {
 function ListItem({ title, href }: SingleFooterListItem) {
   return (
     <ListItemWrapper>
-      <NextLink href={href} passHref>{title}</NextLink>
+      <NextLink href={href} passHref>
+        <a>{title}</a>
+      </NextLink>
     </ListItemWrapper>
   );
 }
@@ -120,16 +128,13 @@ const ListWrapper = styled.div`
   flex-direction: column;
   margin-bottom: 5rem;
   margin-right: 5rem;
-
   & > *:not(:first-child) {
     margin-top: 1rem;
   }
-
   ${media('<=tablet')} {
     flex: 0 40%;
     margin-right: 1.5rem;
   }
-
   ${media('<=phone')} {
     flex: 0 100%;
     margin-right: 0rem;
@@ -138,7 +143,6 @@ const ListWrapper = styled.div`
 
 const ListItemWrapper = styled.p`
   font-size: 1.6rem;
-
   a {
     text-decoration: none;
     color: rgba(var(--textSecondary), 0.75);
@@ -161,7 +165,6 @@ const BottomBar = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   ${media('<=tablet')} {
     flex-direction: column;
   }

@@ -18,7 +18,6 @@ const Anchor = styled.a`
   display: inline;
   width: fit-content;
   text-decoration: none;
-
   background: linear-gradient(rgb(var(--primary)), rgb(var(--primary)));
   background-position: 0% 100%;
   background-repeat: no-repeat;
@@ -26,13 +25,11 @@ const Anchor = styled.a`
   transition: 100ms;
   transition-property: background-size, text-decoration, color;
   color: rgb(var(--primary));
-
   &:hover {
     background-size: 100% 100%;
     text-decoration: none;
     color: rgb(var(--background));
   }
-
   &:active {
     color: rgb(var(--background));
     background-size: 100% 100%;

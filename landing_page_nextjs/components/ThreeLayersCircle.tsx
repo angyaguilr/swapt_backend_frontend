@@ -16,12 +16,10 @@ const ThreeLayersCircle = styled.div<ThreeLayersCircleProps>`
   background: rgb(${(p) => p.baseColor});
   z-index: 0;
   transition: background 0.2s;
-
   ${media('<=tablet')} {
     width: 4rem;
     height: 4rem;
   }
-
   &:after,
   &:before {
     content: '';
@@ -34,14 +32,12 @@ const ThreeLayersCircle = styled.div<ThreeLayersCircleProps>`
     border-radius: 100rem;
     z-index: -1;
   }
-
   &:after {
     width: 4rem;
     height: 4rem;
     background: rgb(${(p) => p.secondColor});
     z-index: -2;
   }
-
   &:before {
     width: 2rem;
     height: 2rem;

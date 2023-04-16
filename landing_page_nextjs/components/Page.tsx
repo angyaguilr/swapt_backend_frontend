@@ -58,7 +58,6 @@ const Description = styled.div`
   text-align: center;
   max-width: 60%;
   margin: auto;
-
   ${media('<=tablet')} {
     max-width: 100%;
   }

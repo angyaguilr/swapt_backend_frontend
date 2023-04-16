@@ -17,30 +17,24 @@ export default function RichText(props: { content: TinaMarkdownContent | TinaMar
 const Container = styled.div`
   display: flex;
   ${'' /* Opting-out of margin-collapse */}
-
   flex-direction: column;
   width: 100%;
-
   section:not(:last-child) {
     margin-bottom: 3.8rem;
   }
-
   a {
     word-break: break-word;
   }
-
   ${media('<=desktop')} {
     .remark-highlight {
       width: 100%;
       overflow-x: auto;
     }
   }
-
   & > section,
   .footnotes {
     ${'' /* content-visibility: auto; */}
   }
-
   ol,
   ul {
     font-size: 1.8rem;
@@ -52,7 +46,6 @@ const Container = styled.div`
         vertical-align: top;
       }
     }
-
     &:not(:last-child) {
       margin-bottom: 2.7rem;
     }
@@ -63,11 +56,9 @@ const Paragraph = styled.p`
   font-size: 1.8rem;
   line-height: 2.7rem;
   hanging-punctuation: first;
-
   &:not(:last-child) {
     margin-bottom: 2.7rem;
   }
-
   & + ul,
   & + li {
     margin-top: -1.5rem !important;

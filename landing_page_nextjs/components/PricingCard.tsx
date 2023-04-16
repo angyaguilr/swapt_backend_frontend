@@ -43,11 +43,9 @@ const Wrapper = styled.div<{ isOutlined?: boolean }>`
   box-shadow: ${(p) => (p.isOutlined ? 'var(--shadow-lg)' : 'var(--shadow-md)')};
   transform: ${(p) => (p.isOutlined ? 'scale(1.1)' : 'scale(1.0)')};
   text-align: center;
-
   & > *:not(:first-child) {
     margin-top: 1rem;
   }
-
   ${media('<=desktop')} {
     box-shadow: var(--shadow-md);
     transform: none;
@@ -66,7 +64,6 @@ const Description = styled.p`
 
 const PriceContainer = styled.div`
   margin: auto;
-
   & > *:not(:first-child) {
     margin-top: 2rem;
   }
@@ -79,7 +76,6 @@ const Price = styled.div`
   font-size: 4rem;
   line-height: 1;
   font-weight: bold;
-
   span {
     font-size: 2rem;
     font-weight: normal;

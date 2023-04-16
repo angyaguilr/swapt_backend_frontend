@@ -21,14 +21,14 @@ export default function WaveCta() {
       </svg>
       <CtaWrapper>
         <Container>
-          <Title>Swapt Marketplace</Title>
+          <Title>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus delectus?</Title>
           <CustomButtonGroup>
             <Button onClick={() => setIsModalOpened(true)}>
-              Sign up <span>&rarr;</span>
+              Subscribe to the newsletter <span>&rarr;</span>
             </Button>
             <NextLink href="/features" passHref>
               <OutlinedButton transparent>
-                How it Works <span>&rarr;</span>
+                Features <span>&rarr;</span>
               </OutlinedButton>
             </NextLink>
           </CustomButtonGroup>
@@ -42,7 +42,6 @@ const CtaWrapper = styled.div`
   background: rgb(var(--secondary));
   margin-top: -1rem;
   padding-bottom: 16rem;
-
   ${media('<=tablet')} {
     padding-top: 8rem;
   }

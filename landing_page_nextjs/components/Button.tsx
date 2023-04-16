@@ -22,11 +22,9 @@ const Button = styled.a<ButtonProps>`
   backface-visibility: hidden;
   will-change: transform;
   cursor: pointer;
-
   span {
     margin-left: 2rem;
   }
-
   &:hover {
     transform: scale(1.025);
   }
