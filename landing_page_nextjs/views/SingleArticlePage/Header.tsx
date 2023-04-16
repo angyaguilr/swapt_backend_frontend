@@ -13,7 +13,7 @@ interface HeaderProps {
 export default function Header({ title, formattedDate, imageUrl, readTime }: HeaderProps) {
   return (
     <HeaderContainer>
-      <ArticleImage src={imageUrl} alt={'img'} />
+      <ArticleImage src={imageUrl} />
       <Title>{title}</Title>
       <DetailsContainer>
         {formattedDate} <MidDot /> {readTime}
@@ -34,7 +34,6 @@ const Title = styled.h1`
   font-size: 4.8rem;
   line-height: 5.6rem;
   margin-bottom: 28px;
-
   ${media('<=tablet')} {
     font-size: 3.5rem;
     line-height: 4.8rem;

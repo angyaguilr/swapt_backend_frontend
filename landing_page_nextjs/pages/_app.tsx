@@ -20,10 +20,10 @@ import { NewsletterModalContextProvider, useNewsletterModalContext } from 'conte
 import { NavItems } from 'types';
 
 const navItems: NavItems = [
-  { title: 'Swapt Marketplace', href: '/features' },
-  { title: 'About Us', href: '/pricing' },
+  { title: 'Awesome SaaS Features', href: '/features' },
+  { title: 'Pricing', href: '/pricing' },
   { title: 'Contact', href: '/contact' },
-  { title: 'Sign up', href: '/accounts/signup', outlined: true },
+  { title: 'Sign up', href: '/sign-up', outlined: true },
 ];
 
 const TinaCMS = dynamic(() => import('tinacms'), { ssr: false });
@@ -34,6 +34,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link rel="icon" type="image/png" href="/favicon.png" />
         {/* <link rel="alternate" type="application/rss+xml" href={EnvVars.URL + 'rss'} title="RSS 2.0" /> */}
         {/* <script
           dangerouslySetInnerHTML={{
@@ -56,9 +57,9 @@ function MyApp({ Component, pageProps }: AppProps) {
               query={pageProps.query}
               variables={pageProps.variables}
               data={pageProps.data}
-              //isLocalClient={!process.env.NEXT_PUBLIC_TINA_CLIENT_ID}
-              //branch={process.env.NEXT_PUBLIC_EDIT_BRANCH}
-              //clientId={process.env.NEXT_PUBLIC_TINA_CLIENT_ID}
+              isLocalClient={!process.env.NEXT_PUBLIC_TINA_CLIENT_ID}
+              branch={process.env.NEXT_PUBLIC_EDIT_BRANCH}
+              clientId={process.env.NEXT_PUBLIC_TINA_CLIENT_ID}
               {...pageProps}
             >
               {(livePageProps: any) => <Component {...livePageProps} />}

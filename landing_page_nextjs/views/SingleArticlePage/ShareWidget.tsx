@@ -38,15 +38,12 @@ const Wrapper = styled.div`
   top: 50%;
   z-index: var(--z-sticky);
   transform: translateY(-50%);
-
   & > *:not(:first-child) {
     margin-top: 2rem;
   }
-
   ${media('<=largeDesktop')} {
     transform: translateY(-50%) scale(0.8);
   }
-
   ${media('<=desktop')} {
     display: none;
   }
