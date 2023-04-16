@@ -1,4 +1,4 @@
-import NextImage from "next/image";
+import NextImage from 'next/image';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -52,22 +52,11 @@ export default function Testimonials() {
                   alt={`${singleTestimonial.author.name}'s company logo`}
                   width={200}
                   height={40}
-                  style={{
-                    maxWidth: "100%",
-                    height: "auto"
-                  }} />
+                />
                 <Content>“{singleTestimonial.content}”</Content>
                 <AuthorContainer>
                   <AuthorImageContainer>
-                    <NextImage
-                      src={singleTestimonial.author.avatarUrl}
-                      alt={singleTestimonial.author.name}
-                      width={48}
-                      height={48}
-                      style={{
-                        maxWidth: "100%",
-                        height: "auto"
-                      }} />
+                    <NextImage src={singleTestimonial.author.avatarUrl} alt={singleTestimonial.author.name} width={48} height={48} />
                   </AuthorImageContainer>
                   <AuthorContent>
                     <AuthorName>{singleTestimonial.author.name}</AuthorName>
@@ -86,21 +75,17 @@ export default function Testimonials() {
 
 const TestimonialsWrapper = styled(Container)`
   position: relative;
-
   .swiper-button-prev,
   .swiper-button-next {
     color: rgb(var(--secondary));
-
     ${media('<=desktop')} {
       display: none;
     }
   }
-
   .swiper-button-prev {
     color: rgb(var(--textSecondary));
     background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%23currentColor'%2F%3E%3C%2Fsvg%3E");
   }
-
   .swiper-button-next {
     color: rgb(var(--textSecondary));
     background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M27%2C22L27%2C22L5%2C44l-2.1-2.1L22.8%2C22L2.9%2C2.1L5%2C0L27%2C22L27%2C22z'%20fill%3D'%23currentColor'%2F%3E%3C%2Fsvg%3E");
@@ -111,7 +96,6 @@ const TestimonialCard = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
   & > *:not(:first-child) {
     margin-top: 5rem;
   }
@@ -123,7 +107,6 @@ const Content = styled.blockquote`
   font-weight: bold;
   font-style: italic;
   max-width: 60%;
-
   ${media('<=desktop')} {
     max-width: 100%;
   }

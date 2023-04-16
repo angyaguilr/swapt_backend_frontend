@@ -1,4 +1,4 @@
-import NextImage from "next/image";
+import NextImage from 'next/image';
 import React from 'react';
 import styled from 'styled-components';
 import { Autoplay } from 'swiper';
@@ -36,15 +36,7 @@ export default function Partners() {
       >
         {PARTNER_LOGOS.map((logo) => (
           <SwiperSlide key={logo}>
-            <NextImage
-              src={'/partners/' + logo}
-              alt={normalizePartnerLogoName(logo)}
-              width={128}
-              height={128}
-              style={{
-                maxWidth: "100%",
-                height: "auto"
-              }} />
+            <NextImage src={'/partners/' + logo} alt={normalizePartnerLogoName(logo)} width={128} height={128} />
           </SwiperSlide>
         ))}
       </Swiper>
@@ -64,7 +56,6 @@ const Title = styled.h3`
   margin-bottom: 2rem;
   text-align: center;
   opacity: 0.8;
-
   ${media('<=desktop')} {
     line-height: 1.5;
   }
@@ -77,11 +68,9 @@ const PartnersWrapper = styled(Container)`
     margin-top: 0.5rem;
     user-select: none;
   }
-
   .swiper-slide {
     opacity: 0.8;
     transition: opacity 0.2s;
-
     &:hover {
       opacity: 1;
     }

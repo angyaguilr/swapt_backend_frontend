@@ -10,26 +10,26 @@ import { media } from 'utils/media';
 
 const TABS = [
   {
-    title: 'Swapt saves you time and money',
+    title: 'Find relevant media contacts - multiline title',
     description:
-      '<p>Moving companies and storage lockers cost hundreds of dollars; with Swapt, instead of your money going out the window, the furniture you purchase store the value, we only take a small fee.</p>',
-    imageUrl: '/image3.jpg',
+      '<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quidem ipsam ratione dicta quis cupiditate consequuntur laborum ducimus iusto velit.</p>',
+    imageUrl: '/demo-illustration-3.png',
     baseColor: '249,82,120',
     secondColor: '221,9,57',
   },
   {
-    title: 'Swapt makes the moving process as smooth as possible',
+    title: 'Another amazing feature',
     description:
-      '<p>Swapt works with property managers at your campus to make sure your moving process is as smooth as possible.</p>',
-    imageUrl: '/image4.jpg',
+      '<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quidem ipsam ratione dicta quis cupiditate consequuntur laborum ducimus iusto velit.</p>',
+    imageUrl: '/demo-illustration-4.png',
     baseColor: '57,148,224',
     secondColor: '99,172,232',
   },
   {
-    title: 'With Swapt, you can avoid the stress, hassle, and toll of the moving process',
+    title: 'And yet... another truly fascinating feature',
     description:
-      '<p>Moving is more than just moving day. It’s a series of complex decisions made over the course of weeks that culminate on moving day. Each decision can cause stress which may not alleviate until you’re settled in your new home. </p>',
-    imageUrl: '/image2.jpg',
+      '<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quidem ipsam ratione dicta quis cupiditate consequuntur laborum ducimus iusto velit.</p>',
+    imageUrl: '/demo-illustration-5.png',
     baseColor: '88,193,132',
     secondColor: '124,207,158',
   },
@@ -77,7 +77,7 @@ export default function FeaturesGallery() {
     <FeaturesGalleryWrapper>
       <Content>
         <OverTitle>features</OverTitle>
-        <SectionTitle>Why Swapt?</SectionTitle>
+        <SectionTitle>What are you signing in for?</SectionTitle>
       </Content>
       <GalleryWrapper>
         <TabsContainer>{tabsMarkup}</TabsContainer>
@@ -98,7 +98,6 @@ const GalleryWrapper = styled.div`
   display: flex;
   align-items: center;
   margin-top: 4rem;
-
   ${media('<=desktop')} {
     flex-direction: column;
   }
@@ -114,11 +113,9 @@ const Content = styled.div`
 const TabsContainer = styled.div`
   flex: 1;
   margin-right: 4rem;
-
   & > *:not(:first-child) {
     margin-top: 2rem;
   }
-
   ${media('<=desktop')} {
     margin-right: 0;
     margin-bottom: 4rem;
@@ -132,14 +129,12 @@ const ImageContainer = styled.div<{ isActive: boolean }>`
   border-radius: 0.8rem;
   flex: ${(p) => (p.isActive ? '2' : '0')};
   box-shadow: var(--shadow-md);
-
   &:before {
     display: block;
     content: '';
     width: 100%;
     padding-top: calc((9 / 16) * 100%);
   }
-
   & > div {
     position: absolute;
     top: 0;
@@ -147,7 +142,6 @@ const ImageContainer = styled.div<{ isActive: boolean }>`
     bottom: 0;
     left: 0;
   }
-
   ${media('<=desktop')} {
     width: ${(p) => (p.isActive ? '100%' : '0')};
   }
@@ -163,10 +157,8 @@ const Tab = styled.div<{ isActive: boolean }>`
   cursor: pointer;
   border-radius: 0.6rem;
   transition: opacity 0.2s;
-
   font-size: 1.6rem;
   font-weight: bold;
-
   ${media('<=desktop')} {
     width: 100%;
   }
@@ -175,7 +167,6 @@ const Tab = styled.div<{ isActive: boolean }>`
 const TabTitleContainer = styled.div`
   display: flex;
   align-items: center;
-
   h4 {
     flex: 1;
   }
@@ -188,11 +179,9 @@ const TabContent = styled.div`
   margin-top: 0.5rem;
   font-size: 1.5rem;
   padding-left: calc(5rem + 1.5rem);
-
   ${media('<=tablet')} {
     padding-left: calc(4rem + 1.25rem);
   }
-
   p {
     font-weight: normal;
   }
@@ -200,9 +189,7 @@ const TabContent = styled.div`
 
 const CircleContainer = styled.div`
   flex: 0 calc(5rem + 1.5rem);
-
   ${media('<=tablet')} {
     flex: 0 calc(4rem + 1.25rem);
   }
 `;
-
