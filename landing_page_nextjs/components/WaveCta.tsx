@@ -24,11 +24,11 @@ export default function WaveCta() {
           <Title>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus delectus?</Title>
           <CustomButtonGroup>
             <Button onClick={() => setIsModalOpened(true)}>
-              Subscribe to the newsletter <span>&rarr;</span>
+              Sign Up <span>&rarr;</span>
             </Button>
             <NextLink href="/features" passHref>
               <OutlinedButton transparent>
-                Features <span>&rarr;</span>
+                Learn How Swapt Works <span>&rarr;</span>
               </OutlinedButton>
             </NextLink>
           </CustomButtonGroup>

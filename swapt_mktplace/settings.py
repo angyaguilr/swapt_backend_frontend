@@ -15,7 +15,6 @@ from decouple import config
 import django_on_heroku
 import dj_database_url
 from django.core.management.utils import get_random_secret_key
-from django.forms.renderers import TemplatesSetting
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -57,10 +56,8 @@ INTERNAL_IPS = [
 INSTALLED_APPS = [
     'main',
     'accounts',
-    'django_browser_reload',
     'jet.dashboard',
     'jet',
-    'django_nextjs',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -74,6 +71,8 @@ INSTALLED_APPS = [
     'tailwind',
     'theme',
     'widget_tweaks',
+    'django_nextjs.apps.DjangoNextJSConfig',
+    'django_browser_reload'
 ]
 
 MIDDLEWARE = [

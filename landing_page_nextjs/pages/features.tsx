@@ -94,6 +94,3 @@ const CustomAutofitGrid = styled(AutofitGrid)`
     --autofit-grid-item-size: 100%;
   }
 `;
-Footer
-© 2023 GitHub, Inc.
-Footer navigation

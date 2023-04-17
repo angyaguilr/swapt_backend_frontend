@@ -30,7 +30,7 @@ export default function ScrollableBlogPosts({ posts }: ScrollableBlogPostsProps)
       <Container>
         <Content>
           <OverTitle>features</OverTitle>
-          <SectionTitle>What are you signing in for?</SectionTitle>
+          <SectionTitle>Why use Swapt?</SectionTitle>
         </Content>
       </Container>
 
