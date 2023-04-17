@@ -4,7 +4,7 @@ import styled from 'styled-components';
 type ButtonProps = PropsWithChildren<{ transparent?: boolean }>;
 
 const Button = styled.a<ButtonProps>`
-  border: none;
+  border-radius: 999px;;
   background: none;
   display: inline-block;
   text-decoration: none;

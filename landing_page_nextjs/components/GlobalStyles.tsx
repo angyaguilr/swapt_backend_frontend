@@ -41,7 +41,7 @@ export const GlobalStyle = createGlobalStyle`
   --logoColor: #fff;
 }
 :root {
-  --font: 'Poppins', sans-serif;
+  --font: 'Quicksand', sans-serif;
   
   --shadow-md: 0 2px 4px 0 rgb(12 0 46 / 4%);
   --shadow-lg: 0 10px 14px 0 rgb(12 0 46 / 6%);
