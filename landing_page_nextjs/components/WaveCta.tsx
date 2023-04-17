@@ -39,7 +39,7 @@ export default function WaveCta() {
 }
 
 const CtaWrapper = styled.div`
-  background: rgb(var(--secondary));
+  background: rgb(var(--primary));
   margin-top: -1rem;
   padding-bottom: 16rem;
   ${media('<=tablet')} {
@@ -48,7 +48,7 @@ const CtaWrapper = styled.div`
 `;
 
 const Title = styled(SectionTitle)`
-  color: rgb(var(--textSecondary));
+  color: rgb(var(textSecondary));
   margin-bottom: 4rem;
 `;
 
@@ -56,7 +56,10 @@ const OutlinedButton = styled(Button)`
   border: 1px solid rgb(var(--textSecondary));
   color: rgb(var(--textSecondary));
 `;
-
+const SecondaryButton = styled(Button)`
+  border: 1px solid rgb(var(--textSecondary));
+  color: rgb(var(--textSecondary));
+`;
 const CustomButtonGroup = styled(ButtonGroup)`
   justify-content: center;
 `;

@@ -14,7 +14,7 @@ export default function Hero() {
   return (
     <HeroWrapper>
       <Contents>
-        <Heading>Your Marketplace For Moving</Heading>
+        <Heading>Your marketplace for moving</Heading>
         <Description>
           Swapt is a modern online marketplace designed to help college students avoid the hassle of the college moving process
         </Description>

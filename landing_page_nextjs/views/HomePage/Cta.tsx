@@ -13,16 +13,14 @@ export default function Cta() {
     <CtaWrapper>
       <Container>
         <Stack>
-          <OverTitle>Lorem ipsum dolor sit amet</OverTitle>
-          <SectionTitle>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus delectus?</SectionTitle>
+          <SectionTitle>Ready to move into a new home?</SectionTitle>
           <Description>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda beatae accusamus deleniti nihil quas tempora numquam, vitae
-            culpa.
+            Whether you are moving in or moving out, Swapt has the solution to help you stress less.
           </Description>
           <ButtonGroup>
             <NextLink href="#early-access" passHref>
               <Button>
-                Get Started<span>&rarr;</span>
+                Sign Up with Email<span>&rarr;</span>
               </Button>
             </NextLink>
             <NextLink href="#whitepaper" passHref>
@@ -39,14 +37,14 @@ export default function Cta() {
 
 const Description = styled.div`
   font-size: 1.8rem;
-  color: rgba(var(--textSecondary), 0.8);
+  color: rgba(var(--text), 0.8);
 `;
 
 const Stack = styled.div`
   display: flex;
   flex-direction: column;
   padding: 12.5rem 0;
-  color: rgb(var(--textSecondary));
+  color: rgb(var(--text));
   text-align: center;
   align-items: center;
   justify-content: center;
@@ -64,8 +62,9 @@ const Stack = styled.div`
 `;
 
 const OutlinedButton = styled(Button)`
-  border: 1px solid rgb(var(--textSecondary));
-  color: rgb(var(--textSecondary));
+  border: 1px solid rgb(var(--text));
+  color: rgb(var(--text));
+  background: rgb(var(--secondary));
 `;
 
 const CtaWrapper = styled.div`

@@ -76,7 +76,6 @@ export default function FeaturesGallery() {
   return (
     <FeaturesGalleryWrapper>
       <Content>
-        <OverTitle>features</OverTitle>
         <SectionTitle>Why use Swapt?</SectionTitle>
       </Content>
       <GalleryWrapper>

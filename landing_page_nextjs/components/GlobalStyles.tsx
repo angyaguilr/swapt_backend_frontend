@@ -13,10 +13,10 @@ export const GlobalStyle = createGlobalStyle`
 .next-light-theme {
   --background: 251,251,253;
   --secondBackground: 255,255,255;
-  --text: 10,18,30;
+  --text: 94,41,135;
   --textSecondary: 255,255,255;
-  --primary: 22,115,255; 
-  --secondary: 10,18,30;
+  --primary: 94,41,135; 
+  --secondary: 227,214,241;
   --tertiary: 231,241,251;
   --cardBackground: 255,255,255;
   --inputBackground: 255,255,255;
@@ -30,8 +30,8 @@ export const GlobalStyle = createGlobalStyle`
   --secondBackground: 45,55,72;
   --text: 237,237,238;
   --textSecondary: 255,255,255;
-  --primary: 22,115,255; 
-  --secondary: 10,18,30;
+  --primary: 94,41,135; 
+  --secondary: 227,214,241;
   --tertiary: 231,241,251;
   --cardBackground: 45,55,72;
   --inputBackground: 45,55,72;

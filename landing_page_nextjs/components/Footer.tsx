@@ -11,37 +11,32 @@ type FooterItems = SingleFooterList[];
 
 const footerItems: FooterItems = [
   {
-    title: 'Company',
+    title: 'Why Swapt?',
+    items: [
+      { title: 'Features', href: '/features' },
+      { title: 'FAQ', href: '/faq' }
+    ],
+  },
+  {
+    title: 'Explore',
+    items: [
+      { title: 'All Listings', href: '/blog' },
+      { title: 'Listings by Category', href: '/contact' },
+      { title: 'Listings by Brand', href: '/faq' },
+    ],
+  },
+  {
+    title: 'Legal',
     items: [
       { title: 'Privacy Policy', href: '/privacy-policy' },
       { title: 'Cookies Policy', href: '/cookies-policy' },
     ],
   },
   {
-    title: 'Product',
+    title: 'Company',
     items: [
-      { title: 'Features', href: '/features' },
-      { title: 'Something', href: '/something' },
-      { title: 'Something else', href: '/something-else' },
-      { title: 'And something else', href: '/and-something-else' },
-    ],
-  },
-  {
-    title: 'Knowledge',
-    items: [
-      { title: 'Blog', href: '/blog' },
-      { title: 'Contact', href: '/contact' },
-      { title: 'FAQ', href: '/faq' },
-      { title: 'Help Center', href: '/help-center' },
-    ],
-  },
-  {
-    title: 'Something',
-    items: [
-      { title: 'Features2', href: '/features2' },
-      { title: 'Something2', href: '/something2' },
-      { title: 'Something else2', href: '/something-else2' },
-      { title: 'And something else2', href: '/and-something-else2' },
+      { title: 'About Us', href: '/features2' },
+      { title: 'Contact Us', href: '/contact' },
     ],
   },
 ];
@@ -75,7 +70,7 @@ export default function Footer() {
               </a>
             </NextLink>
           </ShareBar>
-          <Copyright>&copy; Copyright 2021 My Saas Startup</Copyright>
+          <Copyright>&copy; Copyright 2023 Swapt Marketplace</Copyright>
         </BottomBar>
       </Container>
     </FooterWrapper>
@@ -106,7 +101,7 @@ function ListItem({ title, href }: SingleFooterListItem) {
 const FooterWrapper = styled.div`
   padding-top: 10rem;
   padding-bottom: 4rem;
-  background: rgb(var(--secondary));
+  background: rgb(var(--primary));
   color: rgb(var(--textSecondary));
 `;
 
