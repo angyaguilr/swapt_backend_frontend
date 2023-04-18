@@ -10,25 +10,25 @@ import { media } from 'utils/media';
 
 const TABS = [
   {
-    title: 'Find relevant media contacts - multiline title',
+    title: 'Swapt saves you time and money',
     description:
-      '<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quidem ipsam ratione dicta quis cupiditate consequuntur laborum ducimus iusto velit.</p>',
+      '<p>Moving companies and storage lockers cost hundreds of dollars; with Swapt, instead of your money going out the window, the furniture you purchase store the value, we only take a small fee.</p>',
     imageUrl: '/demo-illustration-3.png',
     baseColor: '249,82,120',
     secondColor: '221,9,57',
   },
   {
-    title: 'Another amazing feature',
+    title: 'Swapt makes the moving process as smooth as possible',
     description:
-      '<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quidem ipsam ratione dicta quis cupiditate consequuntur laborum ducimus iusto velit.</p>',
+      '<p>Swapt works with property managers at your campus to make sure your moving process is as smooth as possible.</p>',
     imageUrl: '/demo-illustration-4.png',
     baseColor: '57,148,224',
     secondColor: '99,172,232',
   },
   {
-    title: 'And yet... another truly fascinating feature',
+    title: 'With Swapt, you can avoid the stress, hassle, and toll of the moving process',
     description:
-      '<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quidem ipsam ratione dicta quis cupiditate consequuntur laborum ducimus iusto velit.</p>',
+      '<p>Moving is more than just moving day. It’s a series of complex decisions made over the course of weeks that culminate on moving day. Each decision can cause stress which may not alleviate until you’re settled in your new home.</p>',
     imageUrl: '/demo-illustration-5.png',
     baseColor: '88,193,132',
     secondColor: '124,207,158',

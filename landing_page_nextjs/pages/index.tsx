@@ -27,7 +27,7 @@ export default function Homepage({ posts }: InferGetStaticPropsType<typeof getSt
       <HomepageWrapper>
         <WhiteBackgroundContainer>
           <Hero />
-          <BasicSection imageUrl="/demo-illustration-1.svg" title="Innovating the way you move" overTitle="sit amet gogo">
+          <BasicSection imageUrl="/selling.svg" title="Innovating the way you move" overTitle="sit amet gogo">
             <p>
             With Swapt, you can browse for furniture items listed by the current tenants of your next apartment or home. On top of that, you can buy single or bundled furniture pieces directly on our site.
             </p>
