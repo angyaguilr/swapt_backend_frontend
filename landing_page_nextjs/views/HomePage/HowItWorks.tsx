@@ -28,7 +28,26 @@ const TABS = [
     secondColor: '99,172,232',
   },
 ];
-
+const FEATURES = [
+  {
+    imageUrl: '/grid-icons/asset-1.svg',
+    title: 'Search for your next apartment',
+    description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?',
+  },
+  {
+    imageUrl: '/grid-icons/asset-2.svg',
+    title: 'Make an offer.',
+    description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?',
+  },
+  {
+    imageUrl: '/grid-icons/asset-3.svg',
+    title: 'Wait for confirmation.',
+    description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?',
+  },
+];
 export default function HowItWorksGallery() {
   const [currentTab, setCurrentTab] = useState(TABS[0]);
 
@@ -38,9 +57,9 @@ export default function HowItWorksGallery() {
 
     return (
       <Collapse isOpen={isActive} duration={300}>
-      <TabContent isActive={isActive} key={idx}>
+      <TabContent isActive={isActive} key={singleTab.title}>
       <CustomAutofitGrid>
-        {TABS.map((singleFeature, idx) => (
+        {FEATURES.map((singleFeature, idx) => (
           <BasicCard key={singleFeature.title} {...singleFeature} />
         ))}
       </CustomAutofitGrid>

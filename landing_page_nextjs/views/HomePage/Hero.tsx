@@ -61,7 +61,7 @@ const CustomButtonGroup = styled(ButtonGroup)`
 const ImageContainer = styled.div`
   display: flex;
   flex: 1;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: flex-start;
   svg {
     max-width: 45rem;

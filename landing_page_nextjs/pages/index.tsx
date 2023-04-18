@@ -32,7 +32,7 @@ export default function Homepage({ posts }: InferGetStaticPropsType<typeof getSt
             With Swapt, you can browse for furniture items listed by the current tenants of your next apartment or home. On top of that, you can buy single or bundled furniture pieces directly on our site.
             </p>
           </BasicSection>
-          <BasicSection imageUrl="/moving.svg" title="Avoid the stress of moving" overTitle="lorem ipsum" reversed>
+          <BasicSection imageUrl="/buying.svg" title="Avoid the stress of moving" overTitle="lorem ipsum" reversed>
             <p>
             Moving sucks. Avoid the heavy lifting, expensive moving companies and storage lockers, and the insane stress of the moving-process with Swapt.{' '}
               <strong>Are you ready to sit back, relax, and let your listing do the moving for you?</strong> It's simple!
