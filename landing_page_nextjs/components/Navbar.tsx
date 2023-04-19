@@ -143,8 +143,8 @@ const NavItemWrapper = styled.li<Partial<SingleNavItem>>`
     padding: 0.75rem 1.5rem;
     font-weight: 700;
   }
-  &:not(:last-child) {
-    margin-right: 2rem;
+  &:not(:nth-last-child(-n+2)) {
+    margin-right: 4rem;
   }
 `;
 

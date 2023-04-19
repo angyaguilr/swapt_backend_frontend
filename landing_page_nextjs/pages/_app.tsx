@@ -22,7 +22,7 @@ import { NavItems } from 'types';
 const navItems: NavItems = [
   { title: 'Features', href: '/features' },
   { title: 'How It Works', href: '/pricing' },
-  { title: 'Sign in', href: '/accounts/login' },
+  { title: 'Log in', href: '/accounts/login' },
   { title: 'Sign up', href: '/accounts/signup/swapt-user/', outlined: true },
 ];
 

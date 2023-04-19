@@ -13,7 +13,7 @@ const TABS = [
     title: 'Swapt saves you time and money',
     description:
       '<p>Moving companies and storage lockers cost hundreds of dollars; with Swapt, instead of your money going out the window, the furniture you purchase store the value, we only take a small fee.</p>',
-    imageUrl: '/image4.jpg',
+    imageUrl: '/image3.jpg',
     baseColor: '249,82,120',
     secondColor: '221,9,57',
   },
