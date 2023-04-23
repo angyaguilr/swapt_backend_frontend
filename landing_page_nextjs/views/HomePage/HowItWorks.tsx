@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Collapse from 'components/Collapse';
 import BasicCard from 'components/BasicCard';
+import Features from './Features';
 import AutofitGrid from 'components/AutofitGrid';
 import Container from 'components/Container';
 import OverTitle from 'components/OverTitle';
@@ -13,57 +14,75 @@ import { media } from 'utils/media';
 const TABS = [
   {
     title: 'Moving in',
-    description:
-      '1. Search for your next apartment',
-    imageUrl: '/demo-illustration-3.png',
+    description: [
+      {
+        imageUrl: '/grid-icons/asset-1.svg',
+        title: '1',
+        description:
+          'Search for your next apartment',
+      },
+      {
+        imageUrl: '/grid-icons/asset-5.svg',
+        title: '2',
+        description:
+          'Make an offer',
+      },
+      {
+        imageUrl: '/grid-icons/asset-7.svg',
+        title: '3',
+        description:
+          'Wait for confirmation',
+      },],
+    imageUrl: '/image3.jpg',
     baseColor: '249,82,120',
     secondColor: '221,9,57',
   },
   {
     title: 'Moving out',
-    description:
-      '<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quidem ipsam ratione dicta quis cupiditate consequuntur laborum ducimus iusto velit.</p>',
-    imageUrl: '/demo-illustration-4.png',
+    description: [
+      {
+        imageUrl: '/grid-icons/asset-1.svg',
+        title: '1',
+        description:
+          'Add your furniture/items to your account',
+      },
+      {
+        imageUrl: '/grid-icons/asset-4.svg',
+        title: '2',
+        description:
+          'Create your Swapt listing​',
+      },
+      {
+        imageUrl: '/grid-icons/asset-8.svg',
+        title: '3.',
+        description:
+          'Wait for an offer',
+      },],
+    imageUrl: '/image4.jpg',
     baseColor: '57,148,224',
     secondColor: '99,172,232',
   },
 ];
-const FEATURES = [
-  {
-    imageUrl: '/grid-icons/asset-1.svg',
-    title: 'Search for your next apartment',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?',
-  },
-  {
-    imageUrl: '/grid-icons/asset-2.svg',
-    title: 'Make an offer.',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?',
-  },
-  {
-    imageUrl: '/grid-icons/asset-3.svg',
-    title: 'Wait for confirmation.',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?',
-  },
-];
+
+
+
 export default function HowItWorksGallery() {
   const [currentTab, setCurrentTab] = useState(TABS[0]);
 
   const imagesMarkup = TABS.map((singleTab, idx) => {
     const isActive = singleTab.title === currentTab.title;
     const isFirst = idx === 0;
+    const desc = singleTab.description
 
     return (
       <Collapse isOpen={isActive} duration={300}>
-      <TabContent isActive={isActive} key={singleTab.title}>
+      <TabContent key={singleTab.title} isActive={isActive}>
       <CustomAutofitGrid>
-        {FEATURES.map((singleFeature, idx) => (
-          <BasicCard key={singleFeature.title} {...singleFeature} />
+        {desc.map((singleFeature, idx) => (
+          <BasicCard key={idx} {...singleFeature} />
         ))}
       </CustomAutofitGrid>
-    </TabContent>
+      </TabContent>
     </Collapse>
     );
   });
@@ -90,7 +109,6 @@ export default function HowItWorksGallery() {
   return (
     <HowItWorksGalleryWrapper>
       <Content>
-        <OverTitle>features</OverTitle>
         <SectionTitle>How It Works</SectionTitle>
       </Content>
       <GalleryWrapper>
@@ -139,7 +157,7 @@ const TabsContainer = styled.div`
 
 const TabContent = styled.div<{ isActive: boolean }>`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   font-weight: normal;
   margin-top: 0.5rem;
   font-size: 1.5rem;

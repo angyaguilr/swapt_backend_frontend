@@ -48,7 +48,6 @@ export default function Homepage({ posts }: InferGetStaticPropsType<typeof getSt
           <Cta />
           <FeaturesGallery />
           <HowItWorks />
-          <Features />
         </DarkerBackgroundContainer>
       </HomepageWrapper>
     </>

@@ -5,9 +5,8 @@ import PricingTablesSection from 'views/PricingPage/PricingTablesSection';
 
 export default function PricingPage() {
   return (
-    <Page title="Pricing" description="Cupidatat et reprehenderit ullamco aute ullamco anim tempor.">
+    <Page title="How Swapt Works" description="Swapt is a modern marketplace designed to help college students find their next home without the stress">
       <Wrapper>
-        <PricingTablesSection />
         <FaqSection />
       </Wrapper>
     </Page>

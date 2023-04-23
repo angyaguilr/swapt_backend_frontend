@@ -13,17 +13,17 @@ export default function Cta() {
     <CtaWrapper>
       <Container>
         <Stack>
-          <SectionTitle>Ready to move into a new home?</SectionTitle>
+          <SectionTitle>Ready to move?</SectionTitle>
           <Description>
             Whether you are moving in or moving out, Swapt has the solution to help you stress less.
           </Description>
           <ButtonGroup>
-            <NextLink href="#early-access" passHref>
+            <NextLink href="/accounts/signup/swapt-user/" passHref>
               <Button>
                 Sign Up with Email<span>&rarr;</span>
               </Button>
             </NextLink>
-            <NextLink href="#whitepaper" passHref>
+            <NextLink href="/pricing" passHref>
               <OutlinedButton transparent>
               Learn How Swapt Works <span>&rarr;</span>
               </OutlinedButton>
