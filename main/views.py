@@ -941,7 +941,7 @@ class CmntyReviewListingsAPI(viewsets.ModelViewSet):
 class CmntyListingCreationView(CreateView):
     model = CmntyListing
     form_class = CmntyListingCreationForm
-    template_name ="listings/cmnty_create_form.html"
+    template_name ="form_snippet.html"
 
     def form_valid(self, form):
         listing = form.save()

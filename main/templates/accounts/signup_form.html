@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load widget_tweaks %}
 {% block content %}
   <div class="w-[1440px] h-[915px] absolute left-0 top-[-7px] overflow-hidden bg-[#232254]">
     <div class="w-[609px] h-[915px] absolute left-[831px] top-0 overflow-hidden bg-[#fffcfa]">
@@ -34,7 +35,7 @@
             ></path>
           </g>
         </svg>
-        <p class="flex-grow w-[303px] text-sm font-bold text-left text-[#807976]">{{ form.username }}</p>
+        <p class="flex-grow w-[303px] text-sm font-bold text-left text-[#807976]">{%render_field form.username class="flex-grow w-[303px] text-sm font-bold text-left text-[#807976]"%}</p>
       </div>
       <div
         class="flex justify-start items-center w-[363px] h-[60px] absolute left-[123px] top-[405px] overflow-hidden gap-2 px-3 py-4 rounded-2xl bg-[#ebebeb]"
