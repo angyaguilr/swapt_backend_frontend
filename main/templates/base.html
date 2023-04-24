@@ -9,15 +9,15 @@
 	{% tailwind_css %}
 	<!-- Main Jquery -->
 	<script type="text/javascript" src="{% static 'jquery.min.js' %}"></script>
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet" />
 	<!-- Bootstrap 4 JS -->
 	<script type="text/javascript" src="{% static 'bs4/bootstrap.min.js' %}"></script>
 	<!-- CustomJs -->
 	<link rel="stylesheet" type="text/css" href="{% static 'custom.css' %}" />
 	<script type="text/javascript" src="{% static 'custom.js' %}"></script>
-	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet" />
 </head>
-<body>
-    
+<body class="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
     {% block content %}
     {% endblock %}
 </body>

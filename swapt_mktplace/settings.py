@@ -67,10 +67,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_datatables',
-    'tailwind',
-    'realtheme',
     'widget_tweaks',
     'django_nextjs.apps.DjangoNextJSConfig',
+    'tailwind',
+    'realtheme',
     'django_browser_reload'
 ]
 
