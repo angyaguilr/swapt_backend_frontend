@@ -45,7 +45,7 @@ DEBUG = os.getenv('DEBUG')
 
 ALLOWED_HOSTS = ['swaptmarketplace.herokuapp.com', '127.0.0.1']
 
-TAILWIND_APP_NAME = 'theme'
+TAILWIND_APP_NAME = 'realtheme'
 # Application definition
 INTERNAL_IPS = [
     "127.0.0.1",
@@ -68,7 +68,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_framework_datatables',
     'tailwind',
-    'theme',
+    'realtheme',
     'widget_tweaks',
     'django_nextjs.apps.DjangoNextJSConfig',
     'django_browser_reload'

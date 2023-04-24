@@ -19,7 +19,7 @@ module.exports = {
          * Main templates directory of the project (BASE_DIR/templates).
          * Adjust the following line to match your project structure.
          */
-        '../../main/templates/**/*.html',
+        '../../templates/**/*.html',
 
         /*
          * Templates in other django apps (BASE_DIR/<any_app_name>/templates).
@@ -45,7 +45,7 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-              jakarta: ["Plus Jakarta Display", ...defaultTheme.fontFamily.sans],
+              quicksand: ["Quicksand", ...defaultTheme.fontFamily.sans],
               roboto: ["Roboto", , ...defaultTheme.fontFamily.sans],
             },
             colors: {
