@@ -686,6 +686,36 @@ select {
   width: 100%;
 }
 
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1536px;
+  }
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -1031,6 +1061,30 @@ select {
   margin-top: 2rem;
 }
 
+.mr-2 {
+  margin-right: 0.5rem;
+}
+
+.mr-9 {
+  margin-right: 2.25rem;
+}
+
+.ml-9 {
+  margin-left: 2.25rem;
+}
+
+.ml-2 {
+  margin-left: 0.5rem;
+}
+
+.ml-0 {
+  margin-left: 0px;
+}
+
+.ml-10 {
+  margin-left: 2.5rem;
+}
+
 .block {
   display: block;
 }
@@ -1267,12 +1321,24 @@ select {
   width: 100%;
 }
 
+.w-10 {
+  width: 2.5rem;
+}
+
+.w-2\/3 {
+  width: 66.666667%;
+}
+
 .min-w-0 {
   min-width: 0px;
 }
 
 .max-w-full {
   max-width: 100%;
+}
+
+.max-w-screen-xl {
+  max-width: 1280px;
 }
 
 .max-w-xs {
@@ -1358,6 +1424,10 @@ select {
 
 .justify-start {
   justify-content: flex-start;
+}
+
+.justify-end {
+  justify-content: flex-end;
 }
 
 .justify-center {
@@ -1648,6 +1718,11 @@ select {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
+.bg-input-bg-color {
+  --tw-bg-opacity: 1;
+  background-color: rgb(235 235 235 / var(--tw-bg-opacity));
+}
+
 .bg-\[url\(\&\#x27\;image\.jpeg\&\#x27\;\)\] {
   background-image: url(&#x27;image.jpeg&#x27;);
 }
@@ -1845,6 +1920,10 @@ select {
 
 .align-middle {
   vertical-align: middle;
+}
+
+.font-quicksand {
+  font-family: Quicksand, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 .font-serif {
@@ -2086,6 +2165,16 @@ select {
   color: rgb(107 114 128 / var(--tw-placeholder-opacity));
 }
 
+.placeholder-input-text-color::-moz-placeholder {
+  --tw-placeholder-opacity: 1;
+  color: rgb(128 121 118 / var(--tw-placeholder-opacity));
+}
+
+.placeholder-input-text-color::placeholder {
+  --tw-placeholder-opacity: 1;
+  color: rgb(128 121 118 / var(--tw-placeholder-opacity));
+}
+
 .opacity-50 {
   opacity: 0.5;
 }
@@ -2252,70 +2341,30 @@ select {
   }
 }
 
-@media (max-width: 1545px) {
-  .\32xl\:flex {
-    display: flex;
-  }
-
-  .\32xl\:w-1\/2 {
-    width: 50%;
-  }
-
-  .\32xl\:w-5\/12 {
-    width: 41.666667%;
-  }
-}
-
-@media (max-width: 1279px) {
-  .xl\:m-16 {
-    margin: 4rem;
-  }
-
-  .xl\:flex {
-    display: flex;
-  }
-
-  .xl\:w-5\/12 {
-    width: 41.666667%;
-  }
-
-  .xl\:w-1\/2 {
-    width: 50%;
-  }
-
-  .xl\:text-3xl {
-    font-size: 1.875rem;
-    line-height: 2.25rem;
-  }
-}
-
-@media (max-width: 1023px) {
-  .lg\:mb-0 {
-    margin-bottom: 0px;
-  }
-
-  .lg\:flex {
-    display: flex;
-  }
-
-  .lg\:w-1\/2 {
-    width: 50%;
-  }
-
-  .lg\:w-1\/3 {
-    width: 33.333333%;
-  }
-}
-
-@media (max-width: 767px) {
-  .md\:m-20 {
+@media (min-width: 640px) {
+  .sm\:m-20 {
     margin: 5rem;
   }
 
-  .md\:flex {
-    display: flex;
+  .sm\:w-full {
+    width: 100%;
   }
 
+  .sm\:rounded-lg {
+    border-radius: 0.5rem;
+  }
+
+  .sm\:p-12 {
+    padding: 3rem;
+  }
+
+  .sm\:px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
   .md\:w-1\/2 {
     width: 50%;
   }
@@ -2339,39 +2388,37 @@ select {
   .md\:w-3\/4 {
     width: 75%;
   }
+}
 
-  .md\:p-12 {
-    padding: 3rem;
+@media (min-width: 1024px) {
+  .lg\:mb-0 {
+    margin-bottom: 0px;
+  }
+
+  .lg\:flex {
+    display: flex;
+  }
+
+  .lg\:w-1\/2 {
+    width: 50%;
+  }
+
+  .lg\:w-1\/3 {
+    width: 33.333333%;
   }
 }
 
-@media (max-width: 639px) {
-  .sm\:m-20 {
-    margin: 5rem;
+@media (min-width: 1280px) {
+  .xl\:m-16 {
+    margin: 4rem;
   }
 
-  .sm\:w-full {
-    width: 100%;
+  .xl\:w-5\/12 {
+    width: 41.666667%;
   }
 
-  .sm\:rounded-lg {
-    border-radius: 0.5rem;
-  }
-
-  .sm\:rounded-2xl {
-    border-radius: 1rem;
-  }
-
-  .sm\:rounded-xl {
-    border-radius: 0.75rem;
-  }
-
-  .sm\:p-12 {
-    padding: 3rem;
-  }
-
-  .sm\:px-4 {
-    padding-left: 1rem;
-    padding-right: 1rem;
+  .xl\:text-3xl {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
   }
 }
