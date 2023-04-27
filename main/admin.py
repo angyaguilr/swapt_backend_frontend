@@ -12,7 +12,7 @@ admin.site.register(SwaptListingTransactionRef)
 admin.site.register(SwaptPaymentHistory)
 admin.site.register(SwaptCampusPropertyNamePair)
 admin.site.register(SwaptPropertyManager)
-#community listings
+#Inventory listings
 admin.site.register(InventoryListingTag)
 admin.site.register(InventoryCampusPropertyNamePair)
 

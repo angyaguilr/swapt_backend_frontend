@@ -14,15 +14,15 @@ const footerItems: FooterItems = [
     title: 'Why Swapt?',
     items: [
       { title: 'Features', href: '/features' },
-      { title: 'FAQ', href: '/faq' }
+      { title: 'FAQ', href: '/about' }
     ],
   },
   {
     title: 'Explore',
     items: [
-      { title: 'All Listings', href: '/blog' },
-      { title: 'Listings by Category', href: '/contact' },
-      { title: 'Listings by Brand', href: '/faq' },
+      { title: 'All Listings', href: '/product-list' },
+      { title: 'Listings by Category', href: '/category-list' },
+      { title: 'Listings by Brand', href: '/brand-list' },
     ],
   },
   {
@@ -35,7 +35,7 @@ const footerItems: FooterItems = [
   {
     title: 'Company',
     items: [
-      { title: 'About Us', href: '/features2' },
+      { title: 'About Us', href: '/aboutcompany' },
       { title: 'Contact Us', href: '/contact' },
     ],
   },

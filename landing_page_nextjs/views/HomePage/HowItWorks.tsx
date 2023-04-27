@@ -69,7 +69,7 @@ const TABS = [
 export default function HowItWorksGallery() {
   const [currentTab, setCurrentTab] = useState(TABS[0]);
 
-  const imagesMarkup = TABS.map((singleTab, idx) => {
+  const sectionMarkup = TABS.map((singleTab, idx) => {
     const isActive = singleTab.title === currentTab.title;
     const isFirst = idx === 0;
     const desc = singleTab.description
@@ -113,7 +113,7 @@ export default function HowItWorksGallery() {
       </Content>
       <GalleryWrapper>
         <TabsContainer>{tabsMarkup} </TabsContainer>
-        {imagesMarkup}
+        {sectionMarkup}
       </GalleryWrapper>
     </HowItWorksGalleryWrapper>
   );

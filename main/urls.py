@@ -51,12 +51,11 @@ urlpatterns=[
     path('edit-profile',views.edit_profile, name='edit-profile'),
     #all 
     path('index', views.Index2.as_view(), name='index2'),
-    path('about/', views.About.as_view(), name='about'),
     path("create-checkout-session/<int:pk>/", swapt_user_required()(views.CreateStripeCheckoutSessionView.as_view()),name="create-checkout-session",),
     path('success/', swapt_user_required()(views.SuccessView.as_view()),name='success'),
     path('cancel/', swapt_user_required()(views.CancelView.as_view()),name='cancel'),
     path("webhooks/stripe/", views.StripeWebhookView.as_view(), name="stripe_webhook"), #updated line
-    #community listings:
+    #Inventory listings:
     path('inventory-create-listing/', views.InventoryListingCreationView.as_view(), name="inventory_create"),
     path('inventory-confirm/', swapt_user_required()(views.InventoryListingsConfirmationView.as_view()), name="inventory_confirm"),
     path('inventory-review/', login_required()(views.InventoryListingsReviewView.as_view()), name="inventory_review"),

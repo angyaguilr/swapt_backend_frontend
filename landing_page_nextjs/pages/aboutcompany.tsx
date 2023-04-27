@@ -5,10 +5,7 @@ import InformationSection from 'views/ContactPage/InformationSection';
 
 export default function ContactPage() {
   return (
-    <Page title="Contact" description="For any questions, please contact us!">
-      <ContactContainer>
-        <InformationSection />
-      </ContactContainer>
+    <Page title="About Us" description="Swapt was founded by Alex and Sam Nordheimer">
     </Page>
   );
 }

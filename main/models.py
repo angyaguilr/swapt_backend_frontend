@@ -157,8 +157,8 @@ class InventoryListing(models.Model):
         ('Wood', 'Wood'),
     ]
     LOCATION_CHOICES = [
-        ('ElonNC', 'ElonNC'),
-        ('BurlingtonNC', 'BurlingtonNC'),
+        ('Elon, NC', 'Elon NC'),
+        ('Burlington, NC', 'Burlington, NC'),
     ]
     swaptuser = models.ForeignKey(SwaptUser, on_delete=CASCADE, null=True)
     title=models.CharField(max_length=200)
@@ -495,14 +495,14 @@ class SwaptCampusPropertyNamePair(models.Model):
 
 # InventoryListing Attribute
 class ProductAttribute(models.Model):
-    product=models.ForeignKey(SwaptListingModel,on_delete=models.CASCADE)
+    product=models.ForeignKey(InventoryListing,on_delete=models.CASCADE)
     color=models.ForeignKey(Color,on_delete=models.CASCADE)
     size=models.ForeignKey(Dimension,on_delete=models.CASCADE)
     price=models.PositiveIntegerField(default=0)
     image=models.ImageField(upload_to="product_imgs/",null=True)
 
     class Meta:
-        verbose_name_plural='7. Listing Attributes'
+        verbose_name_plural='7. Inventory Item Attributes'
 
     def __str__(self):
         return self.product.title

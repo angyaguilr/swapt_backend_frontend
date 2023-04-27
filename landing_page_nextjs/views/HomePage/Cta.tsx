@@ -23,7 +23,7 @@ export default function Cta() {
                 Sign Up with Email<span>&rarr;</span>
               </Button>
             </NextLink>
-            <NextLink href="/pricing" passHref>
+            <NextLink href="/about" passHref>
               <OutlinedButton transparent>
               Learn How Swapt Works <span>&rarr;</span>
               </OutlinedButton>
