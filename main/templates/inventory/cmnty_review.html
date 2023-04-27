@@ -2,16 +2,16 @@
 {% block header %}
 <ul class="nav nav-tabs" id="nav-tab" role="tablist">
     <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="nav-cmntyreview-tab" data-bs-toggle="tab" data-bs-target="#nav-cmntyreview" type="button" role="tab" aria-controls="nav-cmntyreview" aria-selected="true">Awaiting Review</button>
+        <button class="nav-link active" id="nav-inventoryreview-tab" data-bs-toggle="tab" data-bs-target="#nav-inventoryreview" type="button" role="tab" aria-controls="nav-inventoryreview" aria-selected="true">Awaiting Review</button>
     </li>
     <li class="nav-item" role="presentation">
-        <button class="nav-link" id="nav-cmnty-approved-tab" data-bs-toggle="tab" data-bs-target="#nav-cmntyapproved" type="button" role="tab" aria-controls="nav-cmntyapproved" aria-selected="false">Approved</button>
+        <button class="nav-link" id="nav-inventory-approved-tab" data-bs-toggle="tab" data-bs-target="#nav-inventoryapproved" type="button" role="tab" aria-controls="nav-inventoryapproved" aria-selected="false">Approved</button>
     </li>
     <li class="nav-item" role="presentation">
-        <button class="nav-link" id="nav-cmnty-reported-tab" data-bs-toggle="tab" data-bs-target="#nav-cmntyreported" type="button" role="tab" aria-controls="nav-cmntyreported" aria-selected="false">Reported</button>
+        <button class="nav-link" id="nav-inventory-reported-tab" data-bs-toggle="tab" data-bs-target="#nav-inventoryreported" type="button" role="tab" aria-controls="nav-inventoryreported" aria-selected="false">Reported</button>
     </li>
     <li class="nav-item" role="presentation">
-        <button class="nav-link" id="nav-cmnty-rejected-tab" data-bs-toggle="tab" data-bs-target="#nav-cmntyrejected" type="button" role="tab" aria-controls="nav-cmntyrejected" aria-selected="false">Rejected</button>
+        <button class="nav-link" id="nav-inventory-rejected-tab" data-bs-toggle="tab" data-bs-target="#nav-inventoryrejected" type="button" role="tab" aria-controls="nav-inventoryrejected" aria-selected="false">Rejected</button>
     </li>
 </ul>
 <div class="form-check form-check-inline">
@@ -79,7 +79,7 @@
 
 <button class="btn btn-success apply-filter">Filter</button>
 <div class="tab-content" id="nav-tabContent">   
-    <div class="tab-pane fade show active" id="nav-cmntyreview" role="tabpanel" aria-labelledby="nav-cmntyreview-tab">
+    <div class="tab-pane fade show active" id="nav-inventoryreview" role="tabpanel" aria-labelledby="nav-inventoryreview-tab">
         <div class="row row-cols-1 row-cols-md-3 g-4">
         {% for listing in review %}
         <div class="col">
@@ -98,7 +98,7 @@
                     {% if listing.issue != None %}
                     <li class="list-group-item">Reported/rejected issue: {{ listing.issue }}</li>
                     {% endif %}
-                    {% for pair in listing.cmntycampuspropertynamepair_set.all %}
+                    {% for pair in listing.inventorycampuspropertynamepair_set.all %}
                     <li class="list-group-item card-propertyname">Campus/propertyname pair {{ forloop.counter }}: {{ pair.campus }}/{{ pair.propertyname }}</li>
                     {% endfor %}
                     </ul>
@@ -109,13 +109,13 @@
                             {% endif %}
                             {% if listing.stage == 1 %}
                             {% comment %} <button type="submit" value="3" class="btn btn-danger" name="status">Reject</button> {% endcomment %}
-                            <a class="btn btn-danger" href="{% url 'cmnty_reject' listing.id %}?next={% url 'cmnty_review'%}#nav-cmntyreview-tab" role="button">Reject</a>
+                            <a class="btn btn-danger" href="{% url 'inventory_reject' listing.id %}?next={% url 'inventory_review'%}#nav-inventoryreview-tab" role="button">Reject</a>
                             {% else %}
                             <button type="submit" value="delete" class="btn btn-danger" name="status">Delete</button>
                             {% endif %}
-                        <a class="btn btn-primary" href="{% url 'cmnty_edit' listing.id %}?next={% url 'cmnty_review'%}#nav-cmntyreview-tab" role="button">Edit</a>
+                        <a class="btn btn-primary" href="{% url 'inventory_edit' listing.id %}?next={% url 'inventory_review'%}#nav-inventoryreview-tab" role="button">Edit</a>
                         {% elif listing.stage != 2 and user.is_swapt_user %}
-                        <a class="btn btn-primary" href="{% url 'cmnty_edit' listing.id %}?next={% url 'cmnty_review'%}#nav-cmntyreview-tab" role="button">Edit</a>
+                        <a class="btn btn-primary" href="{% url 'inventory_edit' listing.id %}?next={% url 'inventory_review'%}#nav-inventoryreview-tab" role="button">Edit</a>
                         <button type="submit" value="delete" class="btn btn-danger" name="status">Delete</button>
                         {% endif %}
                         <input type="hidden" name="id" value={{ listing.id }}>
@@ -126,8 +126,8 @@
         {% endfor %}
         </div>
     </div>
-    <div class="tab-pane fade" id="nav-cmntyapproved" role="tabpanel" aria-labelledby="nav-cmnty-approved-tab">
-        <table id="cmnty-approved-table" class="table table-bordered">
+    <div class="tab-pane fade" id="nav-inventoryapproved" role="tabpanel" aria-labelledby="nav-inventory-approved-tab">
+        <table id="inventory-approved-table" class="table table-bordered">
             <thead>
                 <tr>
                     <th scope="col">Name</th>
@@ -144,9 +144,9 @@
             </thead>
         </table>
     </div>
-    <div class="tab-pane fade" id="nav-cmntyreported" role="tabpanel" aria-labelledby="nav-
-    cmnty-reported-tab">
-        <table id="cmnty-reported-table" class="table table-bordered">
+    <div class="tab-pane fade" id="nav-inventoryreported" role="tabpanel" aria-labelledby="nav-
+    inventory-reported-tab">
+        <table id="inventory-reported-table" class="table table-bordered">
             <thead>
                 <tr>
                     <th scope="col">Name</th>
@@ -164,8 +164,8 @@
             </thead>
         </table>
     </div> 
-    <div class="tab-pane fade" id="nav-cmntyrejected" role="tabpanel" aria-labelledby="nav-cmnty-rejected-tab">
-        <table id="cmnty-rejected-table" class="table table-bordered">
+    <div class="tab-pane fade" id="nav-inventoryrejected" role="tabpanel" aria-labelledby="nav-inventory-rejected-tab">
+        <table id="inventory-rejected-table" class="table table-bordered">
             <thead>
                 <tr>
                     <th scope="col">Name</th>
@@ -184,11 +184,11 @@
         </table>
     </div>
     {% if user.is_admin %}
-    <div class="tab-pane fade" id="nav-cmnty" role="tabpanel" aria-labelledby="nav-cmnty-tab">
-        <table id="cmnty-table" class="table table-bordered">
+    <div class="tab-pane fade" id="nav-inventory" role="tabpanel" aria-labelledby="nav-inventory-tab">
+        <table id="inventory-table" class="table table-bordered">
             <thead>
                 <tr>
-                    <th scope="col">Cmnty</th>
+                    <th scope="col">Inventory</th>
                 </tr>
             </thead>
         </table>
@@ -218,13 +218,13 @@ $(document).ready(function () {
         });
     }
 
-    var approvedTable = $('#cmnty-approved-table').DataTable({
+    var approvedTable = $('#inventory-approved-table').DataTable({
         "serverSide": true,
         "processing": true,
         "autoWidth": false,
         "stateSave": true,
         "ajax": {
-            "url": "/listings/api/cmnty-review/?format=datatables&stage=2" + filter,
+            "url": "/listings/api/inventory-review/?format=datatables&stage=2" + filter,
             "credentials": 'include',
         },
         "columns": [
@@ -236,31 +236,31 @@ $(document).ready(function () {
             },
             {
                 "searchable": false,
-                "data": 'cmntycampuspropertynamepair_set.0.campus'
+                "data": 'inventorycampuspropertynamepair_set.0.campus'
             },
             {
                 "searchable": false,
-                "data": 'cmntycampuspropertynamepair_set.0.propertyname'
-            },
-            {
-                "searchable": false,
-                "defaultContent": "",
-                "data": 'cmntycampuspropertynamepair_set.1.campus',
+                "data": 'inventorycampuspropertynamepair_set.0.propertyname'
             },
             {
                 "searchable": false,
                 "defaultContent": "",
-                "data": 'cmntycampuspropertynamepair_set.1.propertyname',
+                "data": 'inventorycampuspropertynamepair_set.1.campus',
             },
             {
                 "searchable": false,
                 "defaultContent": "",
-                "data": 'cmntycampuspropertynamepair_set.2.campus',
+                "data": 'inventorycampuspropertynamepair_set.1.propertyname',
             },
             {
                 "searchable": false,
                 "defaultContent": "",
-                "data": 'cmntycampuspropertynamepair_set.2.propertyname',
+                "data": 'inventorycampuspropertynamepair_set.2.campus',
+            },
+            {
+                "searchable": false,
+                "defaultContent": "",
+                "data": 'inventorycampuspropertynamepair_set.2.propertyname',
             },
             {
                 "searchable": false,
@@ -276,18 +276,18 @@ $(document).ready(function () {
     var column = approvedTable.column(10);
     column.visible({% if user.is_admin %} true {% else %} false {% endif %});
 
-    $('#cmnty-approved-table tbody').on('click', 'a', function () {
+    $('#inventory-approved-table tbody').on('click', 'a', function () {
         var data = approvedTable.row( $(this).parents('tr') ).data();
-        window.location.href = window.location.origin + "/listings/edit/" + data["id"] + "?next=/listings/cmnty-review/#nav-cmnty-approved-tab";
+        window.location.href = window.location.origin + "/listings/edit/" + data["id"] + "?next=/listings/inventory-review/#nav-inventory-approved-tab";
     } );
 
-    var reportedTable = $('#cmnty-reported-table').DataTable({
+    var reportedTable = $('#inventory-reported-table').DataTable({
         "serverSide": true,
         "processing": true,
         "autoWidth": false,
         "stateSave": true,
         "ajax": {
-            "url": "/listings/api/cmnty-review/?format=datatables&stage=4" + filter,
+            "url": "/listings/api/inventory-review/?format=datatables&stage=4" + filter,
             "credentials": 'include',
         },
         "columns": [
@@ -300,31 +300,31 @@ $(document).ready(function () {
             {"data": "issue"},
             {
                 "searchable": false,
-                "data": 'cmntycampuspropertynamepair_set.0.campus',
+                "data": 'inventorycampuspropertynamepair_set.0.campus',
             },
             {
                 "searchable": true,
-                "data": 'cmntycampuspropertynamepair_set.0.propertyname',
+                "data": 'inventorycampuspropertynamepair_set.0.propertyname',
             },
             {
                 "searchable": false,
                 "defaultContent": "",
-                "data": 'cmntycampuspropertynamepair_set.1.campus',
+                "data": 'inventorycampuspropertynamepair_set.1.campus',
             },
             {
                 "searchable": false,
                 "defaultContent": "",
-                "data": 'cmntycampuspropertynamepair_set.1.propertyname',
+                "data": 'inventorycampuspropertynamepair_set.1.propertyname',
             },
             {
                 "searchable": false,
                 "defaultContent": "",
-                "data": 'cmntycampuspropertynamepair_set.2.campus',
+                "data": 'inventorycampuspropertynamepair_set.2.campus',
             },
             {
                 "searchable": false,
                 "defaultContent": "",
-                "data": 'cmntycampuspropertynamepair_set.2.propertyname',
+                "data": 'inventorycampuspropertynamepair_set.2.propertyname',
             },
             {
                 "data": null,
@@ -336,19 +336,19 @@ $(document).ready(function () {
         ],
     });
 
-    $('#cmnty-reported-table tbody').on('click', 'a', function () {
+    $('#inventory-reported-table tbody').on('click', 'a', function () {
         console.log("Test");
         var data = reportedTable.row( $(this).parents('tr') ).data();
-        window.location.href = window.location.origin + "/listings/edit/" + data["id"] + "?next=/listings/cmnty-review/#nav-cmnty-reported-tab";
+        window.location.href = window.location.origin + "/listings/edit/" + data["id"] + "?next=/listings/inventory-review/#nav-inventory-reported-tab";
     } );
 
-    var rejectedTable = $('#cmnty-rejected-table').DataTable({
+    var rejectedTable = $('#inventory-rejected-table').DataTable({
         "serverSide": true,
         "processing": true,
         "autoWidth": false,
         "stateSave": true,
         "ajax": {
-            "url": "/listings/api/cmnty-review/?format=datatables&stage=3" + filter,
+            "url": "/listings/api/inventory-review/?format=datatables&stage=3" + filter,
             "credentials": 'include',
         },
         "columns": [
@@ -361,31 +361,31 @@ $(document).ready(function () {
             {"data": "issue"},
             {
                 "searchable": false,
-                "data": 'cmntycampuspropertynamepair_set.0.campus'
+                "data": 'inventorycampuspropertynamepair_set.0.campus'
             },
             {
                 "searchable": false,
-                "data": 'cmntycampuspropertynamepair_set.0.propertyname'
-            },
-            {
-                "searchable": false,
-                "defaultContent": "",
-                "data": 'cmntycampuspropertynamepair_set.1.campus',
+                "data": 'inventorycampuspropertynamepair_set.0.propertyname'
             },
             {
                 "searchable": false,
                 "defaultContent": "",
-                "data": 'cmntycampuspropertynamepair_set.1.propertyname',
+                "data": 'inventorycampuspropertynamepair_set.1.campus',
             },
             {
                 "searchable": false,
                 "defaultContent": "",
-                "data": 'cmntycampuspropertynamepair_set.2.campus',
+                "data": 'inventorycampuspropertynamepair_set.1.propertyname',
             },
             {
                 "searchable": false,
                 "defaultContent": "",
-                "data": 'cmntycampuspropertynamepair_set.2.propertyname',
+                "data": 'inventorycampuspropertynamepair_set.2.campus',
+            },
+            {
+                "searchable": false,
+                "defaultContent": "",
+                "data": 'inventorycampuspropertynamepair_set.2.propertyname',
             },
             {
                 "data": null,
@@ -397,18 +397,18 @@ $(document).ready(function () {
         ],
     });
 
-    $('#cmnty-rejected-table tbody').on('click', 'a', function () {
+    $('#inventory-rejected-table tbody').on('click', 'a', function () {
         var data = rejectedTable.row( $(this).parents('tr') ).data();
-        window.location.href = window.location.origin + "/listings/edit/" + data["id"] + "?next=/listings/cmnty-review/#nav-cmnty-rejected-tab";
+        window.location.href = window.location.origin + "/listings/edit/" + data["id"] + "?next=/listings/inventory-review/#nav-inventory-rejected-tab";
     } );
 
-    var cmntyTable = $('#cmnty-table').DataTable({
+    var inventoryTable = $('#inventory-table').DataTable({
         "serverSide": true,
         "processing": true,
         "autoWidth": false,
         "stateSave": true,
         "ajax": {
-            "url": "/listings/api/cmnty-review/?format=datatables&stage=5",
+            "url": "/listings/api/inventory-review/?format=datatables&stage=5",
             "credentials": 'include',
         },
         "columns": [

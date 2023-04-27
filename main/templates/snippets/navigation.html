@@ -4,7 +4,7 @@
       <!-- Required meta tags -->
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title> CmntyListing Web Portal</title>
+      <title> InventoryListing Web Portal</title>
    </head>
    <body>
       <nav class="relative flex flex-wrap items-center content-between py-3 px-4  text-white indigo">
@@ -24,13 +24,13 @@
                   </a>
                   <ul class=" absolute left-0 z-50 float-left hidden list-reset	 py-2 mt-1 text-base bg-white border border-gray-300 rounded" aria-labelledby="navbarDropdown">
                      {% if user.is_swapt_user %}
-                     <li><a class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" href="{% url 'cmnty_listing_list' %}">Old Shop Community Listings</a></li>
-                     <li><a class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" href="{% url 'cmnty_listings' %}">Shop Community Listings</a></li>
-                     <li><a class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" href="{% url 'cmnty_create' %}">Create a Community Swapt</a></li>
+                     <li><a class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" href="{% url 'inventory_listing_list' %}">Old Shop Community Listings</a></li>
+                     <li><a class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" href="{% url 'inventory_listings' %}">Shop Community Listings</a></li>
+                     <li><a class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" href="{% url 'inventory_create' %}">Create a Community Swapt</a></li>
                      {% elif user.is_admin %}
-                     <li><a class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" href="{% url 'cmnty_review' %}">Upload</a></li>
+                     <li><a class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" href="{% url 'inventory_review' %}">Upload</a></li>
                      {% endif %}
-                     <li><a class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" href="{% url 'cmnty_review' %}">My Community Listings</a></li>
+                     <li><a class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" href="{% url 'inventory_review' %}">My Community Listings</a></li>
                   </ul>
                </li>
                <li class=" relative">
@@ -40,7 +40,7 @@
                   <ul class=" absolute left-0 z-50 float-left hidden list-reset	 py-2 mt-1 text-base bg-white border border-gray-300 rounded" aria-labelledby="navbarDropdown">
                      {% if user.is_swapt_user %}
                      <li><a class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" href="{% url 'swapt_listings' %}">Shop Campus Swapts</a></li>
-                     <li><a class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" href="{% url 'swapt_create' %}">Create a Swapt CmntyListing</a></li>
+                     <li><a class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" href="{% url 'swapt_create' %}">Create a Swapt InventoryListing</a></li>
                      <li><a class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" href="{% url 'swapt_listing_list' %}">Old Shop Campus Swapts</a></li>
                      {% elif user.is_admin %}
                      <li><a class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" href="{% url 'swapt_review' %}">Upload</a></li>
@@ -92,7 +92,7 @@
          </ul>
          <ul class="flex flex-wrap list-reset pl-0 mb-0">
             <li class="">
-               <a class="inline-block py-2 px-4 no-underline" href="{% url 'swapt_create' %}">Create A Swapt CmntyListing!</a>
+               <a class="inline-block py-2 px-4 no-underline" href="{% url 'swapt_create' %}">Create A Swapt InventoryListing!</a>
             </li>
          </ul>
          </div>

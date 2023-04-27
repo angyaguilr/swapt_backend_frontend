@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
   
-    <title> CmntyListing Web Portal</title>
+    <title> InventoryListing Web Portal</title>
   </head>
   <body>
       	<!-- Links -->
@@ -27,8 +27,8 @@
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                     {% if user.is_swapt_user %}
-                    <li><a class="dropdown-item" href="{% url 'cmnty_listing_list' %}">Shop</a></li>
-                    <li><a class="dropdown-item" href="{% url 'cmnty_create' %}">Create a Community Swapt</a></li>
+                    <li><a class="dropdown-item" href="{% url 'inventory_listing_list' %}">Shop</a></li>
+                    <li><a class="dropdown-item" href="{% url 'inventory_create' %}">Create a Community Swapt</a></li>
                     {% elif user.is_admin %}
                     <li><a class="dropdown-item" href="{% url 'swapt_review' %}">Upload</a></li>
                     {% endif %}

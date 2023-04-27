@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	$(".ajaxLoader").hide();
-	// CmntyListing Filter Start
+	// InventoryListing Filter Start
 	$(".filter-checkbox,#priceFilterBtn").on('click',function(){
 		var _filterObj={};
 		var _minPrice=$('#maxPrice').attr('min');
@@ -32,7 +32,7 @@ $(document).ready(function(){
 	});
 	// End
 
-	// Filter CmntyListing According to the price
+	// Filter InventoryListing According to the price
 	$("#maxPrice").on('blur',function(){
 		var _min=$(this).attr('min');
 		var _max=$(this).attr('max');

@@ -14,8 +14,8 @@ def get_image_filename(instance, filename):
     slug = slugify(title)
     return f"listings/{slug}-{filename}"
 
-#Cmnty Listing Tag
-class CmntyListingTag(models.Model):
+#Inventory Listing Tag
+class InventoryListingTag(models.Model):
     name = models.CharField(
         max_length=100
     )
@@ -25,7 +25,7 @@ class CmntyListingTag(models.Model):
     def __str__(self) -> str:
         return self.name
     
-class CmntyListingManager(models.Manager):
+class InventoryListingManager(models.Manager):
     # Only shows the user rejected listings within last 30 days or listings from other stages
     # This is so that when listings are >= 30 days old, but daily cleansing hasn't run yet,
     # user still can't see those listings
@@ -100,8 +100,8 @@ class Dimension(models.Model):
         return self.title
 
 
-# CmntyListing Model
-class CmntyListing(models.Model):
+# InventoryListing Model
+class InventoryListing(models.Model):
     PICKUP_CHOICES = [
         (1, 'Public Pickup'),
         (2, 'Door Pickup'),
@@ -188,7 +188,7 @@ class CmntyListing(models.Model):
     issue = models.CharField(max_length=250, blank=True, null=True) # Currently only using one field for both rejected and reported issues
     #optional
     quantity = models.IntegerField(default=1, null=True)
-    tags = models.ManyToManyField(CmntyListingTag, blank=True)
+    tags = models.ManyToManyField(InventoryListingTag, blank=True)
     publishing_date = models.DateTimeField(
         default=timezone.now,
         blank=True,
@@ -244,8 +244,8 @@ class UserAddressBook(models.Model):
     class Meta:
         verbose_name_plural='AddressBook'
 
-class CmntyCampusPropertyNamePair(models.Model):
-    listings = models.ManyToManyField('CmntyListing')
+class InventoryCampusPropertyNamePair(models.Model):
+    listings = models.ManyToManyField('InventoryListing')
     CAMPUS_CHOICES = [
         ('Elon', 'Elon'),
         ('UMD', 'UMD'),
@@ -266,8 +266,8 @@ class CmntyCampusPropertyNamePair(models.Model):
         choices=PROPERTYNAME_CHOICES,
     )
     confirmed = models.BooleanField(default=False)  
-class CmntyListingPrice(models.Model):
-    listing = models.ForeignKey(CmntyListing, on_delete=models.CASCADE)
+class InventoryListingPrice(models.Model):
+    listing = models.ForeignKey(InventoryListing, on_delete=models.CASCADE)
     price = models.DecimalField(decimal_places=2, max_digits=10)
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -317,7 +317,7 @@ class SwaptPaymentHistory(models.Model):
     )
 
     email = models.EmailField(unique=True)
-    listing = models.ForeignKey(CmntyListing, on_delete=models.CASCADE)
+    listing = models.ForeignKey(InventoryListing, on_delete=models.CASCADE)
     payment_status = models.CharField(
         max_length=1, choices=STATUS_CHOICES, default=PENDING
     )
@@ -397,7 +397,7 @@ class SwaptListingModel(models.Model):
     #field identifying seller who posted listing
     swaptuser = models.ForeignKey(SwaptUser, on_delete=CASCADE, null=True)
     listings = models.ManyToManyField(
-        'CmntyListing', related_name='order', blank=True)
+        'InventoryListing', related_name='order', blank=True)
     name = models.CharField(max_length=50, blank=True)
     email = models.CharField(max_length=50, blank=True)
     street = models.CharField(max_length=50, blank=True)
@@ -493,7 +493,7 @@ class SwaptCampusPropertyNamePair(models.Model):
     )
     confirmed = models.BooleanField(default=False)
 
-# CmntyListing Attribute
+# InventoryListing Attribute
 class ProductAttribute(models.Model):
     product=models.ForeignKey(SwaptListingModel,on_delete=models.CASCADE)
     color=models.ForeignKey(Color,on_delete=models.CASCADE)
@@ -509,7 +509,7 @@ class ProductAttribute(models.Model):
 
     def image_tag(self):
         return mark_safe('<img src="%s" width="50" height="50" />' % (self.image.url))
-# CmntyListing Review
+# InventoryListing Review
 AMOUNT=(
     (1,'1'),
     (2,'2'),

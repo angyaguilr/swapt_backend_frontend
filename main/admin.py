@@ -1,20 +1,20 @@
 from django.contrib import admin
-from .models import CmntyCampusPropertyNamePair, Banner,Category,Brand,Color,Dimension,CmntyListing,ProductAttribute,CartOrder,CartOrderItems,ProductOffers,Wishlist,UserAddressBook, Swapt_Prices, SwaptCampusPropertyNamePair, SwaptListingModel, SwaptListingTag, SwaptPropertyManager, SwaptListingTransactionRef, SwaptPaymentHistory, CmntyListingTag, CmntyListingPrice
+from .models import InventoryCampusPropertyNamePair, Banner,Category,Brand,Color,Dimension,InventoryListing,ProductAttribute,CartOrder,CartOrderItems,ProductOffers,Wishlist,UserAddressBook, Swapt_Prices, SwaptCampusPropertyNamePair, SwaptListingModel, SwaptListingTag, SwaptPropertyManager, SwaptListingTransactionRef, SwaptPaymentHistory, InventoryListingTag, InventoryListingPrice
 
 # admin.site.register(Banner)
 admin.site.register(Brand)
 admin.site.register(Dimension)
 #swapt
 admin.site.register(Swapt_Prices)
-admin.site.register(CmntyListing)
+admin.site.register(InventoryListing)
 admin.site.register(SwaptListingTag)
 admin.site.register(SwaptListingTransactionRef)
 admin.site.register(SwaptPaymentHistory)
 admin.site.register(SwaptCampusPropertyNamePair)
 admin.site.register(SwaptPropertyManager)
 #community listings
-admin.site.register(CmntyListingTag)
-admin.site.register(CmntyCampusPropertyNamePair)
+admin.site.register(InventoryListingTag)
+admin.site.register(InventoryCampusPropertyNamePair)
 
 
 class BannerAdmin(admin.ModelAdmin):
@@ -34,7 +34,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_editable=('status','is_featured')
 admin.site.register(SwaptListingModel,ProductAdmin)
 
-# CmntyListing Attribute
+# InventoryListing Attribute
 class ProductAttributeAdmin(admin.ModelAdmin):
     list_display=('id','image_tag','product','price','color','size')
 admin.site.register(ProductAttribute,ProductAttributeAdmin)
@@ -63,10 +63,10 @@ class UserAddressBookAdmin(admin.ModelAdmin):
 admin.site.register(UserAddressBook,UserAddressBookAdmin)
 
 class PriceAdmin(admin.StackedInline):
-    model = CmntyListingPrice
+    model = InventoryListingPrice
 
 class ListingAdmin(admin.ModelAdmin):
     inlines = (PriceAdmin,)
 
     class Meta:
-        model = CmntyListing
+        model = InventoryListing

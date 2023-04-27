@@ -8,7 +8,7 @@ from django.conf.urls.static import static
 
 router = routers.DefaultRouter()
 router.register(r'review', views.SwaptReviewListingsAPI)
-router.register(r'cmnty-review', views.CmntyReviewListingsAPI)
+router.register(r'inventory-review', views.InventoryReviewListingsAPI)
 
 urlpatterns=[
     #path('',views.home,name='home'),
@@ -57,17 +57,17 @@ urlpatterns=[
     path('cancel/', swapt_user_required()(views.CancelView.as_view()),name='cancel'),
     path("webhooks/stripe/", views.StripeWebhookView.as_view(), name="stripe_webhook"), #updated line
     #community listings:
-    path('cmnty-create-listing/', views.CmntyListingCreationView.as_view(), name="cmnty_create"),
-    path('cmnty-confirm/', swapt_user_required()(views.CmntyListingsConfirmationView.as_view()), name="cmnty_confirm"),
-    path('cmnty-review/', login_required()(views.CmntyListingsReviewView.as_view()), name="cmnty_review"),
-    path('cmnty-edit/<int:pk>/', swapt_user_required()(views.CmntyListingEditView.as_view()), name="cmnty_edit"),
-    path('cmnty-reject/<int:pk>/', Swapt_admin_required()(views.CmntyListingRejectView.as_view()), name="cmnty_reject"),
-    path('cmnty-list/', views.CmntyListingListAPIView.as_view(), name="cmnty_list"),
-    path('cmnty-report/', views.CmntyReportListingView.as_view(), name="cmnty_report"),
-    path('cmnty-Listings/', views.CmntyListingsUploaded.as_view(), name='cmnty_listings'),
-    path('cmnty-Listings/search/', views.CmntyListingsUploadedSearch.as_view(), name='cmnty_listings_search'),
-    path("cmnty-listing", views.CmntyListingListView.as_view(), name="cmnty_listing_list"),
-    path("cmnty-<int:pk>/", swapt_user_required()(views.CmntyListingDetailView.as_view()), name="cmnty_listing_detail"),
+    path('inventory-create-listing/', views.InventoryListingCreationView.as_view(), name="inventory_create"),
+    path('inventory-confirm/', swapt_user_required()(views.InventoryListingsConfirmationView.as_view()), name="inventory_confirm"),
+    path('inventory-review/', login_required()(views.InventoryListingsReviewView.as_view()), name="inventory_review"),
+    path('inventory-edit/<int:pk>/', swapt_user_required()(views.InventoryListingEditView.as_view()), name="inventory_edit"),
+    path('inventory-reject/<int:pk>/', Swapt_admin_required()(views.InventoryListingRejectView.as_view()), name="inventory_reject"),
+    path('inventory-list/', views.InventoryListingListAPIView.as_view(), name="inventory_list"),
+    path('inventory-report/', views.InventoryReportListingView.as_view(), name="inventory_report"),
+    path('inventory-Listings/', views.InventoryListingsUploaded.as_view(), name='inventory_listings'),
+    path('inventory-Listings/search/', views.InventoryListingsUploadedSearch.as_view(), name='inventory_listings_search'),
+    path("inventory-listing", views.InventoryListingListView.as_view(), name="inventory_listing_list"),
+    path("inventory-<int:pk>/", swapt_user_required()(views.InventoryListingDetailView.as_view()), name="inventory_listing_detail"),
 
     #swapt listings:
     path('swapt-confirm/', swapt_user_required()(views.SwaptListingsConfirmationView.as_view()), name="swapt_confirm"),

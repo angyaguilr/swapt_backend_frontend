@@ -4,7 +4,7 @@ import json
 from django.shortcuts import render,redirect
 from django.urls import reverse_lazy, reverse
 from django.http import JsonResponse,HttpResponse
-from .models import Banner,Category,Brand,CmntyListing, CmntyCampusPropertyNamePair, ProductAttribute,CartOrder,CartOrderItems,ProductOffers,Wishlist,UserAddressBook,  SwaptCampusPropertyNamePair, SwaptListingModel, SwaptListingTag, SwaptPropertyManager, SwaptPaymentHistory, Swapt_Prices, SwaptListingTransactionRef, CmntyListingPrice
+from .models import Banner,Category,Brand,InventoryListing, InventoryCampusPropertyNamePair, ProductAttribute,CartOrder,CartOrderItems,ProductOffers,Wishlist,UserAddressBook,  SwaptCampusPropertyNamePair, SwaptListingModel, SwaptListingTag, SwaptPropertyManager, SwaptPaymentHistory, Swapt_Prices, SwaptListingTransactionRef, InventoryListingPrice
 from django.db.models import Max,Min,Count,Avg
 from django.utils.decorators import method_decorator
 from django.shortcuts import render, get_object_or_404
@@ -15,8 +15,8 @@ from django.views.generic import View, UpdateView, CreateView, DetailView, ListV
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
 from django.template.loader import render_to_string
-from .forms import SignupForm,OffersAdd,AddressBookForm,ProfileForm, ListingEditForm, ListingRejectForm, CmntyListingCreationForm
-from .serializers import CmntyListingSerializer, SwaptListingSerializer, SwaptCampusPropertyNamePairSerializer, CampusPropertyNamePairSerializer, CampusPropertyNamePairSerializer, CmntyListingReviewSerializer, SwaptListingReviewSerializer
+from .forms import SignupForm,OffersAdd,AddressBookForm,ProfileForm, ListingEditForm, ListingRejectForm, InventoryListingCreationForm
+from .serializers import InventoryListingSerializer, SwaptListingSerializer, SwaptCampusPropertyNamePairSerializer, CampusPropertyNamePairSerializer, CampusPropertyNamePairSerializer, InventoryListingReviewSerializer, SwaptListingReviewSerializer
 from django.contrib.auth import login,authenticate
 from django.contrib.auth.decorators import login_required
 from rest_framework import generics, viewsets
@@ -39,7 +39,7 @@ def index(request):
 
 def home(request):
 	banners=Banner.objects.all().order_by('-id')
-	data=CmntyListing.objects.filter(is_featured=True).order_by('-id')
+	data=InventoryListing.objects.filter(is_featured=True).order_by('-id')
 	return render(request,'index.html',{'data':data,'banners':banners})
 
 # Category
@@ -52,7 +52,7 @@ def brand_list(request):
     data=Brand.objects.all().order_by('-id')
     return render(request,'brand_list.html',{'data':data})
 
-# CmntyListing List
+# InventoryListing List
 def product_list(request):
 	total_data= SwaptListingModel.objects.count()
 	data=SwaptListingModel.objects.all().order_by('-id')[:3]
@@ -67,26 +67,26 @@ def product_list(request):
 		}
 		)
 
-# CmntyListing List According to Category
+# InventoryListing List According to Category
 def category_product_list(request,cat_id):
 	category=Category.objects.get(id=cat_id)
-	data=CmntyListing.objects.filter(category=category).order_by('-id')
+	data=InventoryListing.objects.filter(category=category).order_by('-id')
 	return render(request,'category_product_list.html',{
 			'data':data,
 			})
 
-# CmntyListing List According to Brand
+# InventoryListing List According to Brand
 def brand_product_list(request,brand_id):
 	brand=Brand.objects.get(id=brand_id)
-	data=CmntyListing.objects.filter(brand=brand).order_by('-id')
+	data=InventoryListing.objects.filter(brand=brand).order_by('-id')
 	return render(request,'category_product_list.html',{
 			'data':data,
 			})
 
-# CmntyListing Detail
+# InventoryListing Detail
 def product_detail(request,slug,id):
     product=SwaptListingModel.objects.get(id=id)
-    related_products=CmntyListing.objects.filter(swaptuser=request.user.swaptuser)
+    related_products=InventoryListing.objects.filter(swaptuser=request.user.swaptuser)
     colors=ProductAttribute.objects.filter(product=product).values('color__id','color__title','color__color_code').distinct()
     sizes=ProductAttribute.objects.filter(product=product).values('size__id','size__title','price','color__id').distinct()
     offersForm=OffersAdd()
@@ -112,7 +112,7 @@ def product_detail(request,slug,id):
 # Search
 def search(request):
 	q=request.GET['q']
-	data=CmntyListing.objects.filter(title__icontains=q).order_by('-id')
+	data=InventoryListing.objects.filter(title__icontains=q).order_by('-id')
 	return render(request,'search.html',{'data':data})
 
 # Filter Data
@@ -123,7 +123,7 @@ def filter_data(request):
 	sizes=request.GET.getlist('size[]')
 	minPrice=request.GET['minPrice']
 	maxPrice=request.GET['maxPrice']
-	allProducts=CmntyListing.objects.all().order_by('-id').distinct()
+	allProducts=InventoryListing.objects.all().order_by('-id').distinct()
 	allProducts=allProducts.filter(productattribute__price__gte=minPrice)
 	allProducts=allProducts.filter(productattribute__price__lte=maxPrice)
 	if len(colors)>0:
@@ -141,7 +141,7 @@ def filter_data(request):
 def load_more_data(request):
 	offset=int(request.GET['offset'])
 	limit=int(request.GET['limit'])
-	data=CmntyListing.objects.all().order_by('-id')[offset:offset+limit]
+	data=InventoryListing.objects.all().order_by('-id')[offset:offset+limit]
 	t=render_to_string('ajax/product-list.html',{'data':data})
 	return JsonResponse({'data':t}
 )
@@ -281,7 +281,7 @@ def payment_canceled(request):
 
 # Save Offer
 def save_offer(request,pid):
-	product=CmntyListing.objects.get(pk=pid)
+	product=InventoryListing.objects.get(pk=pid)
 	user=request.user
 	offers=ProductOffers.objects.create(
 		user=user,
@@ -326,7 +326,7 @@ def my_order_items(request,id):
 # Wishlist
 def add_wishlist(request):
 	pid=request.GET['product']
-	product=CmntyListing.objects.get(pk=pid)
+	product=InventoryListing.objects.get(pk=pid)
 	data={}
 	checkw=Wishlist.objects.filter(product=product,user=request.user).count()
 	if checkw > 0:
@@ -411,10 +411,6 @@ class Index2(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'listings/index.html')
     
-class About(View):
-    def get(self, request, *args, **kwargs):
-        return render(request, 'about.html')
-
 
 #Checkout with Stripe
 class SuccessView(TemplateView):
@@ -712,7 +708,7 @@ class SwaptListingListAPIView(generics.ListAPIView):
         queryset = queryset.filter(confirmed=True, stage=2, location__in=locations) # Make sure cards returned in request are approved and confirmed
         queryset = sorted(queryset, key=lambda x: random.random()) # Randomize order as to not give same cards in same order every time to the app
         queryset = queryset[:int(int(number) * .85)] # Only give up to 85% number of cards specified
-        queryset = sorted(queryset + sorted(SwaptListingModel.objects.filter(stage=5), key=lambda x: random.random())[:int(int(number) * .15)], key=lambda x: random.random()) # Other 15% of cards are cmnty cards
+        queryset = sorted(queryset + sorted(SwaptListingModel.objects.filter(stage=5), key=lambda x: random.random())[:int(int(number) * .15)], key=lambda x: random.random()) # Other 15% of cards are inventory cards
        
         return queryset
 
@@ -785,11 +781,11 @@ class SwaptListingsUploadedSearch(View):
 class SwaptListingCreation(View):
     def get(self, request, *args, **kwargs):
         # get every item from each category
-        DiningFurnitureSets = CmntyListing.objects.filter(swaptuser=request.user.swaptuser, 
+        DiningFurnitureSets = InventoryListing.objects.filter(swaptuser=request.user.swaptuser, 
             category__title__contains='DiningFurniture')
-        BedroomFurnitureSets = CmntyListing.objects.filter(swaptuser=request.user.swaptuser, category__title__contains='BedroomFurniture')
-        OutdoorFurnituresSets = CmntyListing.objects.filter(swaptuser=request.user.swaptuser, category__title__contains='OutdoorFurniture')
-        LivingRmFurnitureSets = CmntyListing.objects.filter(swaptuser=request.user.swaptuser, category__title__contains='LivingRmFurniture')
+        BedroomFurnitureSets = InventoryListing.objects.filter(swaptuser=request.user.swaptuser, category__title__contains='BedroomFurniture')
+        OutdoorFurnituresSets = InventoryListing.objects.filter(swaptuser=request.user.swaptuser, category__title__contains='OutdoorFurniture')
+        LivingRmFurnitureSets = InventoryListing.objects.filter(swaptuser=request.user.swaptuser, category__title__contains='LivingRmFurniture')
 
         # pass into context
         context = {
@@ -817,7 +813,7 @@ class SwaptListingCreation(View):
         items = request.POST.getlist('items[]')
 
         for item in items:
-            menu_item = CmntyListing.objects.get(pk__contains=int(item))
+            menu_item = InventoryListing.objects.get(pk__contains=int(item))
             item_data = {
                 'id': menu_item.pk,
                 'name': menu_item.name,
@@ -907,9 +903,9 @@ class SwaptListingPayConfirmation(View):
         return render(request, 'swaptlistings/swapt_pay_confirmation.html')
 
 #Community Listings
-class CmntyReviewListingsAPI(viewsets.ModelViewSet):
-    queryset = CmntyListing.objects.filter(confirmed=True)
-    serializer_class = CmntyListingReviewSerializer
+class InventoryReviewListingsAPI(viewsets.ModelViewSet):
+    queryset = InventoryListing.objects.filter(confirmed=True)
+    serializer_class = InventoryListingReviewSerializer
 
     def get_queryset(self):
 
@@ -917,7 +913,7 @@ class CmntyReviewListingsAPI(viewsets.ModelViewSet):
         stage = int(self.request.GET.get('stage'))
 
         if(stage == 5): 
-            return CmntyListing.objects.filter(stage=5)
+            return InventoryListing.objects.filter(stage=5)
         
         locations = self.request.GET.getlist('location', ['ElonNC', 'CollegeParkMD', 'BurlingtonNC', 'ColumbiaMD'])
         propertynames = self.request.GET.getlist('propertyname', ['Oaks', 'MillPoint', 'OakHill'])
@@ -925,22 +921,22 @@ class CmntyReviewListingsAPI(viewsets.ModelViewSet):
         showNA = self.request.GET.get('showNA', 'true')
 
         # Same filtering as in the regular review view
-        pairs = CmntyCampusPropertyNamePair.objects.filter(propertyname__in=propertynames,campus__in=campuses)
-        queryset = CmntyListing.objects.filter(stage=stage, location__in=locations, 
-            cmntycampuspropertynamepair__in=pairs, confirmed=True).distinct()
+        pairs = InventoryCampusPropertyNamePair.objects.filter(propertyname__in=propertynames,campus__in=campuses)
+        queryset = InventoryListing.objects.filter(stage=stage, location__in=locations, 
+            inventorycampuspropertynamepair__in=pairs, confirmed=True).distinct()
         
         if(showNA == "true"):
-            queryset = queryset | CmntyListing.objects.filter(stage=stage, location__in=locations, 
-            cmntycampuspropertynamepair__in=pairs, confirmed=True).distinct()
+            queryset = queryset | InventoryListing.objects.filter(stage=stage, location__in=locations, 
+            inventorycampuspropertynamepair__in=pairs, confirmed=True).distinct()
         
         if self.request._request.user.is_swapt_user:
             return queryset.filter(swaptuser=self.request._request.user.swaptuser)
         else:
             return queryset
         
-class CmntyListingCreationView(CreateView):
-    model = CmntyListing
-    form_class = CmntyListingCreationForm
+class InventoryListingCreationView(CreateView):
+    model = InventoryListing
+    form_class = InventoryListingCreationForm
     template_name ="form_snippet.html"
 
     def form_valid(self, form):
@@ -953,54 +949,54 @@ class CmntyListingCreationView(CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse("listings:cmnty_review") + "#nav-cmnty-tab"
+        return reverse("listings:inventory_review") + "#nav-inventory-tab"
 
-class CmntyListingsConfirmationView(View):
+class InventoryListingsConfirmationView(View):
 
     # Returns view of swapt_user's unconfirmed listings (this page is redirected to right after the upload page if successful)
     # swapt_user can delete or edit listings
     def get(self, request):
         
-        listings = CmntyListing.objects.filter(swaptuser=request.user.swaptuser, confirmed=False)
+        listings = InventoryListing.objects.filter(swaptuser=request.user.swaptuser, confirmed=False)
 
         # Can't access page without unconfirmed listings
         if not listings:
-            return redirect("listings:cmnty_create")
+            return redirect("listings:inventory_create")
 
-        template = "listings/cmnty_confirm.html"
-        context = {"listings": CmntyListing.objects.filter(swaptuser=request.user.swaptuser, confirmed=False)}
+        template = "listings/inventory_confirm.html"
+        context = {"listings": InventoryListing.objects.filter(swaptuser=request.user.swaptuser, confirmed=False)}
         return render(request, template, context)
     
     def post(self, request):
 
-        listings = CmntyListing.objects.filter(swaptuser=request.user.swaptuser, confirmed=False)
+        listings = InventoryListing.objects.filter(swaptuser=request.user.swaptuser, confirmed=False)
 
         # Sets listings' and pairs' confirm fields to true if swapt_user selected the confirm button
         if request.POST.get('status') == "confirm":
             for listing in listings:
                 listing.confirmed = True
-                for pair in listing.cmntycampuspropertynamepair_set.all():
+                for pair in listing.inventorycampuspropertynamepair_set.all():
                     pair.confirmed = True
                     pair.save()
 
-            CmntyListing.objects.bulk_update(listings, ['confirmed'])
-            return redirect("listings:cmnty_review")
+            InventoryListing.objects.bulk_update(listings, ['confirmed'])
+            return redirect("listings:inventory_review")
 
         # If selected the delete button for a specific card, deletes that cards
         elif request.POST.get('status') == "delete":
             id = request.POST['id']
             listings.get(id=id).delete()
-            return redirect("listings:cmnty_confirm")
+            return redirect("listings:inventory_confirm")
 
         # The only other button that results in a post request is the cancel button, which deletes all unconfirmed cards
         else:
             listings.delete()
-            return redirect("listings:cmnty_create")['ElonNC', 'CollegeParkMD', 'BurlingtonNC', 'ColumbiaMD']
+            return redirect("listings:inventory_create")['ElonNC', 'CollegeParkMD', 'BurlingtonNC', 'ColumbiaMD']
 
-class CmntyListingsReviewView(View):
+class InventoryListingsReviewView(View):
 
     def get(self, request):
-        template = "listings/cmnty_review.html"
+        template = "listings/inventory_review.html"
     
         # Gets different attributes from the query string, but by default will be the most expansive possible
         locations = self.request.GET.getlist('location', ['ElonNC', 'CollegeParkMD', 'BurlingtonNC', 'ColumbiaMD'])
@@ -1010,14 +1006,14 @@ class CmntyListingsReviewView(View):
 
         # Filters to relevant pairs, then when filtering listings filters by those pairs and other attributes
         # Also stage 1 is the review stage
-        pairs = CmntyCampusPropertyNamePair.objects.filter(campus__in=campuses, propertyname__in=propertynames)
-        queryset = CmntyListing.objects.filter(stage=1, location__in=locations, 
-            cmntycampuspropertynamepair__in=pairs, confirmed=True).distinct()
+        pairs = InventoryCampusPropertyNamePair.objects.filter(campus__in=campuses, propertyname__in=propertynames)
+        queryset = InventoryListing.objects.filter(stage=1, location__in=locations, 
+            inventorycampuspropertynamepair__in=pairs, confirmed=True).distinct()
         
         # If the user wants to see cards that have 0 in/itemsSold, add those into the queryset too
         if(showNA == "true"):
-            queryset = queryset | CmntyListing.objects.filter(stage=1, location__in=locations, 
-            cmntycampuspropertynamepair__in=pairs, confirmed=True).distinct()
+            queryset = queryset | InventoryListing.objects.filter(stage=1, location__in=locations, 
+            inventorycampuspropertynamepair__in=pairs, confirmed=True).distinct()
 
         if request.user.is_swapt_user:
             context = {"user": request.user, "review": queryset.filter(swaptuser=request.user.swaptuser)}
@@ -1027,7 +1023,7 @@ class CmntyListingsReviewView(View):
 
     def post(self, request):
         id = request.POST['id']
-        listing = CmntyListing.objects.get(id=id)
+        listing = InventoryListing.objects.get(id=id)
 
         # Deletes listings or changes stage (i.e. if approve or reject button is pressed)
         if request.POST.get('status'):
@@ -1039,22 +1035,22 @@ class CmntyListingsReviewView(View):
                     listing.issue = None # If the card is approved again, don't keep previous issue in the database
                 listing.save()
         
-        return redirect("listings:cmnty_review")
+        return redirect("listings:inventory_review")
 
-class CmntyListingEditView(UpdateView):
+class InventoryListingEditView(UpdateView):
     form_class = ListingEditForm
-    model = CmntyListing
-    template_name = 'listings/cmnty_edit_form.html'
+    model = InventoryListing
+    template_name = 'listings/inventory_edit_form.html'
 
     def get(self, request, *args, **kwargs):
         pk = self.kwargs['pk']
-        listing = CmntyListing.objects.get(id=pk)
+        listing = InventoryListing.objects.get(id=pk)
 
         # Conditionals to make sure user has access to review page for the listing with the particular id requested
         if request.user.is_admin:
             return super().get(self, request, *args, **kwargs)
         if listing.swaptuser != request.user.swaptuser or (request.user.is_swapt_user and listing.stage == 2):
-            return redirect('listings:cmnty_review')
+            return redirect('listings:inventory_review')
         return super().get(self, request, *args, **kwargs)
     
     # This function is used to get the initial values of form fields
@@ -1062,8 +1058,8 @@ class CmntyListingEditView(UpdateView):
     # are for the most part automatically filled in with proper intial values
     def get_initial(self):
         pk = self.kwargs['pk']
-        listing = CmntyListing.objects.get(id=pk)
-        pairs = listing.cmntycampuspropertynamepair_set.all()
+        listing = InventoryListing.objects.get(id=pk)
+        pairs = listing.inventorycampuspropertynamepair_set.all()
         
         intial = {'stage': listing.stage, 'campusOne': "", 'propertynameOne': "", 'campusTwo': "", 'propertynameTwo': "", 'campusThree': "", 'propertynameThree': ""}
         
@@ -1087,13 +1083,13 @@ class CmntyListingEditView(UpdateView):
     def get_success_url(self):
         pk = self.kwargs['pk']
         # self.request
-        listing = CmntyListing.objects.get(id=pk)
+        listing = InventoryListing.objects.get(id=pk)
 
         # Go back to confirmation page if editing an unconfirmed card, otherwise return to the review page
         if self.request.user.is_swapt_user and not listing.confirmed:
-            return reverse_lazy("listings:cmnty_confirm")
+            return reverse_lazy("listings:inventory_confirm")
         if (self.request.user.is_swapt_user and listing.confirmed) or self.request.user.is_admin:
-            return reverse_lazy("listings:cmnty_review")
+            return reverse_lazy("listings:inventory_review")
 
     def form_valid(self, form):
         listing = form.save()
@@ -1107,10 +1103,10 @@ class CmntyListingEditView(UpdateView):
 
         return super().form_valid(form)
 
-class CmntyListingRejectView(UpdateView):
+class InventoryListingRejectView(UpdateView):
     form_class = ListingRejectForm
-    model = CmntyListing
-    template_name = 'listings/cmnty_reject.html'
+    model = InventoryListing
+    template_name = 'listings/inventory_reject.html'
 
     def form_valid(self, form):
         listing = form.save()
@@ -1118,11 +1114,11 @@ class CmntyListingRejectView(UpdateView):
         return super().form_valid(form)
     
     def get_success_url(self):
-        return reverse("listings:cmnty_review") + "#nav-cmntyreview-tab" # Go back to the review tab after rejecting since can only reject from that tab
+        return reverse("listings:inventory_review") + "#nav-inventoryreview-tab" # Go back to the review tab after rejecting since can only reject from that tab
 
-class CmntyListingListAPIView(generics.ListAPIView):
-    queryset = CmntyListing.objects.filter(confirmed=True)
-    serializer_class = CmntyListingSerializer
+class InventoryListingListAPIView(generics.ListAPIView):
+    queryset = InventoryListing.objects.filter(confirmed=True)
+    serializer_class = InventoryListingSerializer
 
     def get_queryset(self):
 
@@ -1132,12 +1128,12 @@ class CmntyListingListAPIView(generics.ListAPIView):
         number = self.request.GET.get('number')
 
         # Get pairs with  levels specified, then narrow down listings based on those pairs and other attributes
-        pairs = CmntyCampusPropertyNamePair.objects.filter(campus__in=campuss)
-        queryset = CmntyListing.objects.filter(cmntycampuspropertynamepair__in=pairs).distinct()
+        pairs = InventoryCampusPropertyNamePair.objects.filter(campus__in=campuss)
+        queryset = InventoryListing.objects.filter(inventorycampuspropertynamepair__in=pairs).distinct()
         queryset = queryset.filter(confirmed=True, stage=2, location__in=locations) # Make sure cards returned in request are approved and confirmed
         queryset = sorted(queryset, key=lambda x: random.random()) # Randomize order as to not give same cards in same order every time to the app
         queryset = queryset[:int(int(number) * .85)] # Only give up to 85% number of cards specified
-        queryset = sorted(queryset + sorted(CmntyListing.objects.filter(stage=5), key=lambda x: random.random())[:int(int(number) * .15)], key=lambda x: random.random()) # Other 15% of cards are cmnty cards
+        queryset = sorted(queryset + sorted(InventoryListing.objects.filter(stage=5), key=lambda x: random.random())[:int(int(number) * .15)], key=lambda x: random.random()) # Other 15% of cards are inventory cards
        
         return queryset
 
@@ -1146,7 +1142,7 @@ class CmntyListingListAPIView(generics.ListAPIView):
         # Note the use of `get_queryset()` instead of `self.queryset`
         queryset = self.get_queryset()
         # Passes  list in so that serializer can randomly pick the propertyname levels to return in the request for the cards
-        serializer = CmntyListingSerializer(queryset, many=True, context={'campuss': self.request.GET.getlist('')})  
+        serializer = InventoryListingSerializer(queryset, many=True, context={'campuss': self.request.GET.getlist('')})  
         data = serializer.data
 
         # This is for the animations in the app to work
@@ -1157,13 +1153,13 @@ class CmntyListingListAPIView(generics.ListAPIView):
             i -= 1
         return Response(serializer.data)
 
-class CmntyReportListingView(generics.UpdateAPIView):
-    queryset = CmntyListing.objects.filter(stage=2, confirmed=True)
-    serializer_class = CmntyListingSerializer
+class InventoryReportListingView(generics.UpdateAPIView):
+    queryset = InventoryListing.objects.filter(stage=2, confirmed=True)
+    serializer_class = InventoryListingSerializer
     permission_classes = (AllowAny,)
 
     def get_queryset(self):
-        return CmntyListing.objects.filter(stage=2, confirmed=True)
+        return InventoryListing.objects.filter(stage=2, confirmed=True)
 
     def get_object(self):
         queryset = self.get_queryset()
@@ -1182,21 +1178,21 @@ class CmntyReportListingView(generics.UpdateAPIView):
         return Response(serializer.data)
 
 
-class CmntyListingsUploaded(View):
+class InventoryListingsUploaded(View):
     def get(self, request, *args, **kwargs):
-        swapt_items = CmntyListing.objects.all()
+        swapt_items = InventoryListing.objects.all()
 
         context = {
             'swapt_items': swapt_items
         }
 
-        return render(request, 'listings/cmnty_listings.html', context)
+        return render(request, 'listings/inventory_listings.html', context)
 
-class CmntyListingsUploadedSearch(View):
+class InventoryListingsUploadedSearch(View):
     def get(self, request, *args, **kwargs):
         query = self.request.GET.get("q")
 
-        swapt_items = CmntyListing.objects.filter(
+        swapt_items = InventoryListing.objects.filter(
             Q(title__icontains=query) |
             Q(desc__icontains=query)
         )
@@ -1205,19 +1201,19 @@ class CmntyListingsUploadedSearch(View):
             'swapt_items': swapt_items
         }
 
-        return render(request, 'listings/cmnty_listings.html', context)
+        return render(request, 'listings/inventory_listings.html', context)
     
-class CmntyListingListView(ListView):
-    model = CmntyListing
+class InventoryListingListView(ListView):
+    model = InventoryListing
     context_object_name = "listings"
-    template_name = "listings/cmnty_listing_list.html"
+    template_name = "listings/inventory_listing_list.html"
 
-class CmntyListingDetailView(DetailView):
-    model = CmntyListing
+class InventoryListingDetailView(DetailView):
+    model = InventoryListing
     context_object_name = "listing"
-    template_name = "listings/cmnty_listing_detail.html"
+    template_name = "listings/inventory_listing_detail.html"
 
     def get_context_data(self, **kwargs):
-        context = super(CmntyListingDetailView, self).get_context_data()
-        context["prices"] = CmntyListingPrice.objects.filter(listing=self.get_object())
+        context = super(InventoryListingDetailView, self).get_context_data()
+        context["prices"] = InventoryListingPrice.objects.filter(listing=self.get_object())
         return context 

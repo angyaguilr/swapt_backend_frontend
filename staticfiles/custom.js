@@ -29,7 +29,7 @@ $(document).ready(function(){
 		// End
 	});
 
-	// CmntyListing Variation
+	// InventoryListing Variation
 	$(".choose-size").hide();
 
 	// Show size according to selected color
@@ -200,7 +200,7 @@ $(document).ready(function(){
 });
 // End Document.Ready
 
-// CmntyListing Offers Save
+// InventoryListing Offers Save
 $("#addForm").submit(function(e){
 	$.ajax({
 		data:$(this).serialize(),

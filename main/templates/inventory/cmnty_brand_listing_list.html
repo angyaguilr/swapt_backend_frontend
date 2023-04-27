@@ -19,7 +19,7 @@
 					  <a href="/{{listing.slug}}/{{listing.id}}"><img src="/media/{{category.categoryattribute_set.first.image}}" class="card-img-top" alt="{{category.title}}"></a>
 					  <div class="card-body">
 					    <h5 class="card-text"><a href="/listing/{{category.slug}}/{{listing.id}}">{{category.title}}</a></h5>
-					    <h6>$ <span class="listing-price-{{listing.id}}">{{listing.cmntylistingattribute_set.first.price}}</span></h6>
+					    <h6>$ <span class="listing-price-{{listing.id}}">{{listing.inventorylistingattribute_set.first.price}}</span></h6>
 					  </div>
 					  	<div class="card-footer">
 				          <input type="hidden" value="1" class="form-control category-qty-{{category.id}}" id="categoryQty" />

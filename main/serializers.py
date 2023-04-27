@@ -1,16 +1,16 @@
 from rest_framework import serializers 
-from .models import Banner, Category, Brand, Color, Dimension, CmntyListingPrice, CmntyListingTag, CmntyListing, CmntyCampusPropertyNamePair, ProductAttribute, Swapt_Prices, SwaptCampusPropertyNamePair, SwaptListingModel, SwaptListingTag, SwaptPropertyManager, SwaptPaymentHistory, SwaptListingTransactionRef
+from .models import Banner, Category, Brand, Color, Dimension, InventoryListingPrice, InventoryListingTag, InventoryListing, InventoryCampusPropertyNamePair, ProductAttribute, Swapt_Prices, SwaptCampusPropertyNamePair, SwaptListingModel, SwaptListingTag, SwaptPropertyManager, SwaptPaymentHistory, SwaptListingTransactionRef
 import random
  
 
 class CampusPropertyNamePairSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = CmntyCampusPropertyNamePair
+        model = InventoryCampusPropertyNamePair
         fields = ('campus',
                   'propertyname',
                   )
-class CmntyListingSerializer(serializers.ModelSerializer):
+class InventoryListingSerializer(serializers.ModelSerializer):
     
     # Added fields up here to specify attributes (read_only or write_only)
     title = serializers.CharField(read_only=True)
@@ -21,7 +21,7 @@ class CmntyListingSerializer(serializers.ModelSerializer):
     issue = serializers.CharField(write_only=True)
     
     class Meta:
-        model = CmntyListing
+        model = InventoryListing
         fields = ('id',
                   'title',
                   'tags',
@@ -47,7 +47,7 @@ class CmntyListingSerializer(serializers.ModelSerializer):
     # requested and campus levels that are in a campus/propertyname pair of the card
     def get_propertyname(self, obj):
         if(obj.stage == 5): 
-            return "Cmnty"
+            return "Inventory"
             
         campuses = self.context.get("campuses")
 
@@ -71,15 +71,15 @@ class CmntyListingSerializer(serializers.ModelSerializer):
             return "+2"
         else:
             return "+3"
-class CmntyListingReviewSerializer(serializers.ModelSerializer):
+class InventoryListingReviewSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = CmntyListing
+        model = InventoryListing
         fields = ('title',
                   'desc',
                   'location',
                   'id',
-                  'cmntycampuspropertynamepair_set',
+                  'inventorycampuspropertynamepair_set',
                   'issue'
                   )
         depth=1 # Allows user to see campus and propertyname pairs from the set
@@ -131,7 +131,7 @@ class SwaptListingSerializer(serializers.ModelSerializer):
     # requested and campus levels that are in a campus/propertyname pair of the card
     def get_propertyname(self, obj):
         if(obj.stage == 5): 
-            return "Cmnty"
+            return "Inventory"
             
         campuses = self.context.get("campuses")
 
