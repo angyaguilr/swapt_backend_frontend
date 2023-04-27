@@ -45,9 +45,15 @@ module.exports = {
   ],
   theme: {
       extend: {
+        fontSize: {
+            'xxs': '.65rem'
+        },
           fontFamily: {
               quicksand: ["Quicksand", ...defaultTheme.fontFamily.sans],
               roboto: ["Roboto", , ...defaultTheme.fontFamily.sans],
+              'montserrat': ['Montserrat','sans-serif'],
+              'poppins': ['Poppins','sans-serif'],
+              'inter': ['Inter','sans-serif'],
           },
           colors: {
               "primary-color": "#5E2987",
