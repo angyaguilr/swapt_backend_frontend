@@ -125,7 +125,6 @@ const HowItWorksGalleryWrapper = styled(Container)`
   flex-direction: column;
   justify-content: center;
 `;
-
 const GalleryWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -135,14 +134,12 @@ const GalleryWrapper = styled.div`
     flex-direction: column;
   }
 `;
-
 const Content = styled.div`
   & > *:not(:first-child) {
     margin-top: 1rem;
   }
   text-align: center;
 `;
-
 const TabsContainer = styled.div`
   flex: 1;
   display: flex;
@@ -154,7 +151,6 @@ const TabsContainer = styled.div`
     width: 100%;
   }
 `;
-
 const TabContent = styled.div<{ isActive: boolean }>`
   display: flex;
   flex-direction: row;
@@ -169,7 +165,6 @@ const TabContent = styled.div<{ isActive: boolean }>`
     font-weight: normal;
   }
 `;
-
 const Tab = styled.div<{ isActive: boolean }>`
   display: flex;
   flex-direction: column;
@@ -185,7 +180,6 @@ const Tab = styled.div<{ isActive: boolean }>`
     width: 100%;
   }
 `;
-
 const TabTitleContainer = styled.div`
   display: flex;
   align-items: center;
@@ -195,8 +189,6 @@ const TabTitleContainer = styled.div`
     white-space: nowrap;
   }
 `;
-
-
 const CircleContainer = styled.div`
   flex: 0 calc(5rem + 1.5rem);
   ${media('<=tablet')} {
