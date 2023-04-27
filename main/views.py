@@ -37,6 +37,12 @@ YOUR_DOMAIN = 'http://127.0.0.1:8000'
 def index(request):
     return render_nextjs_page_sync(request)
 
+def privacy_policy(request):
+    return render_nextjs_page_sync(request)
+
+def cookies_policy(request):
+    return render_nextjs_page_sync(request)
+
 def home(request):
 	banners=Banner.objects.all().order_by('-id')
 	data=InventoryListing.objects.filter(is_featured=True).order_by('-id')

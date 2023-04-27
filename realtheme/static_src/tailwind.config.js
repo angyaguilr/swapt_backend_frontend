@@ -58,6 +58,8 @@ module.exports = {
           colors: {
               "primary-color": "#5E2987",
               "secondary-color": "#E3D6F1",
+              "button-second-color": "#7060AE",
+              "login-bg": "#232254",
               "input-bg-color": "#EBEBEB",
               "input-text-color": "#807976",
               "background-grayec": "#ececec",
