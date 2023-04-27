@@ -93,9 +93,9 @@ def product_detail(request,slug,id):
 
 	# Check
     canAdd=True
-    reviewCheck=ProductOffers.objects.filter(user=request.user,product=product).count()
+    offersCheck=ProductOffers.objects.filter(user=request.user,product=product).count()
     if request.user.is_authenticated:
-        if reviewCheck > 0:
+        if offersCheck > 0:
              canAdd=False
 	# End
 
@@ -283,7 +283,7 @@ def payment_canceled(request):
 def save_offer(request,pid):
 	product=CmntyListing.objects.get(pk=pid)
 	user=request.user
-	review=ProductOffers.objects.create(
+	offers=ProductOffers.objects.create(
 		user=user,
 		product=product,
 		offers_text=request.POST['offers_text'],

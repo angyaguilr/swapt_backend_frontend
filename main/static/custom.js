@@ -231,7 +231,7 @@ $("#addForm").submit(function(e){
 				$(".no-data").hide();
 
 				// Prepend Data
-				$(".review-list").prepend(_html);
+				$(".offers-list").prepend(_html);
 
 				// Hide Modal
 				$("#productOffers").modal('hide');
