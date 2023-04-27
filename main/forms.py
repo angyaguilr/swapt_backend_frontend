@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm,UserChangeForm
-from .models import ProductReview,UserAddressBook, SwaptListingModel, CmntyListing, CmntyCampusPropertyNamePair, SwaptCampusPropertyNamePair
+from .models import ProductOffers,UserAddressBook, SwaptListingModel, CmntyListing, CmntyCampusPropertyNamePair, SwaptCampusPropertyNamePair
 from django.forms import ModelForm
 
 class SignupForm(UserCreationForm):
@@ -9,11 +9,11 @@ class SignupForm(UserCreationForm):
 		model=User
 		fields=('first_name','last_name','email','username','password1','password2')
 
-# Review Add Form
-class ReviewAdd(forms.ModelForm):
+# Offers Add Form
+class OffersAdd(forms.ModelForm):
 	class Meta:
-		model=ProductReview
-		fields=('review_text','review_rating')
+		model=ProductOffers
+		fields=('offers_text','offers_amount')
 
 # AddressBook Add Form
 class AddressBookForm(forms.ModelForm):

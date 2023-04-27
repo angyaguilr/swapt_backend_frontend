@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import CmntyCampusPropertyNamePair, Banner,Category,Brand,Color,Dimension,CmntyListing,ProductAttribute,CartOrder,CartOrderItems,ProductReview,Wishlist,UserAddressBook, Swapt_Prices, SwaptCampusPropertyNamePair, SwaptListingModel, SwaptListingTag, SwaptPropertyManager, SwaptListingTransactionRef, SwaptPaymentHistory, CmntyListingTag, CmntyListingPrice
+from .models import CmntyCampusPropertyNamePair, Banner,Category,Brand,Color,Dimension,CmntyListing,ProductAttribute,CartOrder,CartOrderItems,ProductOffers,Wishlist,UserAddressBook, Swapt_Prices, SwaptCampusPropertyNamePair, SwaptListingModel, SwaptListingTag, SwaptPropertyManager, SwaptListingTransactionRef, SwaptPaymentHistory, CmntyListingTag, CmntyListingPrice
 
 # admin.site.register(Banner)
 admin.site.register(Brand)
@@ -50,9 +50,9 @@ class CartOrderItemsAdmin(admin.ModelAdmin):
 admin.site.register(CartOrderItems,CartOrderItemsAdmin)
 
 
-class ProductReviewAdmin(admin.ModelAdmin):
-	list_display=('user','product','review_text','get_review_rating')
-admin.site.register(ProductReview,ProductReviewAdmin)
+class ProductOffersAdmin(admin.ModelAdmin):
+	list_display=('user','product','offers_text','get_offers_amount')
+admin.site.register(ProductOffers,ProductOffersAdmin)
 
 
 admin.site.register(Wishlist)

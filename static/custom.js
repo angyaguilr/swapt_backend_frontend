@@ -200,7 +200,7 @@ $(document).ready(function(){
 });
 // End Document.Ready
 
-// CmntyListing Review Save
+// CmntyListing Offers Save
 $("#addForm").submit(function(e){
 	$.ajax({
 		data:$(this).serialize(),
@@ -212,15 +212,15 @@ $("#addForm").submit(function(e){
 				$(".ajaxRes").html('Data has been added.');
 				$("#reset").trigger('click');
 				// Hide Button
-				$(".reviewBtn").hide();
+				$(".offersBtn").hide();
 				// End
 
-				// create data for review
+				// create data for offer
 				var _html='<blockquote class="blockquote text-right">';
-				_html+='<small>'+res.data.review_text+'</small>';
+				_html+='<small>'+res.data.offers_text+'</small>';
 				_html+='<footer class="blockquote-footer">'+res.data.user;
 				_html+='<cite title="Source Title">';
-				for(var i=1; i<=res.data.review_rating; i++){
+				for(var i=1; i<=res.data.offers_amount; i++){
 					_html+='<i class="fa fa-star text-warning"></i>';
 				}
 				_html+='</cite>';
@@ -234,10 +234,10 @@ $("#addForm").submit(function(e){
 				$(".review-list").prepend(_html);
 
 				// Hide Modal
-				$("#productReview").modal('hide');
+				$("#productOffers").modal('hide');
 
-				// AVg Rating
-				$(".avg-rating").text(res.avg_reviews.avg_rating.toFixed(1))
+				// AVg Amount
+				$(".avg-amount").text(res.avg_offers.avg_amount.toFixed(1))
 			}
 		}
 	});

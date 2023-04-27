@@ -3,7 +3,7 @@
 {% block content %}
 <main class="container mx-auto sm:px-4 my-4">
    <!-- Featured Products -->
-   <h3 class="my-4 border-b pb-1">Reviews Items</h3>
+   <h3 class="my-4 border-b pb-1">Offerss Items</h3>
    <div class="flex flex-wrap ">
       <div class="md:w-1/4 pr-4 pl-4">
          {% include 'user/user-sidebar.html' %}
@@ -16,20 +16,20 @@
                      <th>Title</th>
                      <th>Image</th>
                      <th>Price</th>
-                     <th>ReviewText</th>
-                     <th>ReviewRating</th>
+                     <th>OffersText</th>
+                     <th>OffersAmount</th>
                   </tr>
                </thead>
                <tbody>
-                  {% for review in reviews %}
+                  {% for offer in offers %}
                   <tr>
-                     <td><a href="/product/{{review.product.slug}}/{{review.product.id}}">{{review.product.title}}</a></td>
+                     <td><a href="/product/{{offers.product.slug}}/{{offers.product.id}}">{{offers.product.title}}</a></td>
                      <td>
-                        <img width="100" src="/media/{{review.product.productattribute_set.first.image}}" alt="{{review.product.title}}">
+                        <img width="100" src="/media/{{offers.product.productattribute_set.first.image}}" alt="{{offers.product.title}}">
                      </td>
-                     <td>{{review.product.productattribute_set.first.price}}</td>
-                     <td>{{review.review_text}}</td>
-                     <td>{{review.review_rating}}</td>
+                     <td>{{offers.product.productattribute_set.first.price}}</td>
+                     <td>{{offers.offers_text}}</td>
+                     <td>{{offers.offers_amount}}</td>
                   </tr>
                   {% endfor %}
                </tbody>

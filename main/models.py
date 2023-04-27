@@ -510,24 +510,24 @@ class ProductAttribute(models.Model):
     def image_tag(self):
         return mark_safe('<img src="%s" width="50" height="50" />' % (self.image.url))
 # CmntyListing Review
-RATING=(
+AMOUNT=(
     (1,'1'),
     (2,'2'),
     (3,'3'),
     (4,'4'),
     (5,'5'),
 )
-class ProductReview(models.Model):
+class ProductOffers(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     product=models.ForeignKey(SwaptListingModel,on_delete=models.CASCADE)
-    review_text=models.TextField()
-    review_rating=models.CharField(choices=RATING,max_length=150)
+    offers_text=models.TextField()
+    offers_amount=models.CharField(choices=AMOUNT,max_length=150)
 
     class Meta:
-        verbose_name_plural='Reviews'
+        verbose_name_plural='Offers'
 
-    def get_review_rating(self):
-        return self.review_rating
+    def get_offers_amount(self):
+        return self.offers_amount
 
 # WishList
 class Wishlist(models.Model):

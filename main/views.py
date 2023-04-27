@@ -4,7 +4,7 @@ import json
 from django.shortcuts import render,redirect
 from django.urls import reverse_lazy, reverse
 from django.http import JsonResponse,HttpResponse
-from .models import Banner,Category,Brand,CmntyListing, CmntyCampusPropertyNamePair, ProductAttribute,CartOrder,CartOrderItems,ProductReview,Wishlist,UserAddressBook,  SwaptCampusPropertyNamePair, SwaptListingModel, SwaptListingTag, SwaptPropertyManager, SwaptPaymentHistory, Swapt_Prices, SwaptListingTransactionRef, CmntyListingPrice
+from .models import Banner,Category,Brand,CmntyListing, CmntyCampusPropertyNamePair, ProductAttribute,CartOrder,CartOrderItems,ProductOffers,Wishlist,UserAddressBook,  SwaptCampusPropertyNamePair, SwaptListingModel, SwaptListingTag, SwaptPropertyManager, SwaptPaymentHistory, Swapt_Prices, SwaptListingTransactionRef, CmntyListingPrice
 from django.db.models import Max,Min,Count,Avg
 from django.utils.decorators import method_decorator
 from django.shortcuts import render, get_object_or_404
@@ -15,7 +15,7 @@ from django.views.generic import View, UpdateView, CreateView, DetailView, ListV
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
 from django.template.loader import render_to_string
-from .forms import SignupForm,ReviewAdd,AddressBookForm,ProfileForm, ListingEditForm, ListingRejectForm, CmntyListingCreationForm
+from .forms import SignupForm,OffersAdd,AddressBookForm,ProfileForm, ListingEditForm, ListingRejectForm, CmntyListingCreationForm
 from .serializers import CmntyListingSerializer, SwaptListingSerializer, SwaptCampusPropertyNamePairSerializer, CampusPropertyNamePairSerializer, CampusPropertyNamePairSerializer, CmntyListingReviewSerializer, SwaptListingReviewSerializer
 from django.contrib.auth import login,authenticate
 from django.contrib.auth.decorators import login_required
@@ -89,25 +89,25 @@ def product_detail(request,slug,id):
     related_products=CmntyListing.objects.filter(swaptuser=request.user.swaptuser)
     colors=ProductAttribute.objects.filter(product=product).values('color__id','color__title','color__color_code').distinct()
     sizes=ProductAttribute.objects.filter(product=product).values('size__id','size__title','price','color__id').distinct()
-    reviewForm=ReviewAdd()
+    offersForm=OffersAdd()
 
 	# Check
     canAdd=True
-    reviewCheck=ProductReview.objects.filter(user=request.user,product=product).count()
+    reviewCheck=ProductOffers.objects.filter(user=request.user,product=product).count()
     if request.user.is_authenticated:
         if reviewCheck > 0:
              canAdd=False
 	# End
 
-	# Fetch reviews
-    reviews=ProductReview.objects.filter(product=product)
+	# Fetch offers
+    offers=ProductOffers.objects.filter(product=product)
 	# End
 
-	# Fetch avg rating for reviews
-    avg_reviews=ProductReview.objects.filter(product=product).aggregate(avg_rating=Avg('review_rating'))
+	# Fetch avg amount for offers
+    avg_offers=ProductOffers.objects.filter(product=product).aggregate(avg_amount=Avg('offers_amount'))
 	# End
     
-    return render(request, 'product_detail.html',{'data':product,'related':related_products,'colors':colors,'sizes':sizes,'reviewForm':reviewForm,'canAdd':canAdd,'reviews':reviews,'avg_reviews':avg_reviews})
+    return render(request, 'product_detail.html',{'data':product,'related':related_products,'colors':colors,'sizes':sizes,'offersForm':offersForm,'canAdd':canAdd,'offers':offers,'avg_offers':avg_offers})
 
 # Search
 def search(request):
@@ -279,27 +279,27 @@ def payment_canceled(request):
 	return render(request, 'payment-fail.html')
 
 
-# Save Review
-def save_review(request,pid):
+# Save Offer
+def save_offer(request,pid):
 	product=CmntyListing.objects.get(pk=pid)
 	user=request.user
-	review=ProductReview.objects.create(
+	review=ProductOffers.objects.create(
 		user=user,
 		product=product,
-		review_text=request.POST['review_text'],
-		review_rating=request.POST['review_rating'],
+		offers_text=request.POST['offers_text'],
+		offers_amount=request.POST['offers_amount'],
 		)
 	data={
 		'user':user.username,
-		'review_text':request.POST['review_text'],
-		'review_rating':request.POST['review_rating']
+		'offers_text':request.POST['offers_text'],
+		'offers_amount':request.POST['offers_amount']
 	}
 
-	# Fetch avg rating for reviews
-	avg_reviews=ProductReview.objects.filter(product=product).aggregate(avg_rating=Avg('review_rating'))
+	# Fetch avg amount for offers
+	avg_offers=ProductOffers.objects.filter(product=product).aggregate(avg_amount=Avg('offers_amount'))
 	# End
 
-	return JsonResponse({'bool':True,'data':data,'avg_reviews':avg_reviews})
+	return JsonResponse({'bool':True,'data':data,'avg_offers':avg_offers})
 
 # User Dashboard
 import calendar
@@ -348,10 +348,10 @@ def my_wishlist(request):
 	wlist=Wishlist.objects.filter(user=request.user).order_by('-id')
 	return render(request, 'user/wishlist.html',{'wlist':wlist})
 
-# My Reviews
-def my_reviews(request):
-	reviews=ProductReview.objects.filter(user=request.user).order_by('-id')
-	return render(request, 'user/reviews.html',{'reviews':reviews})
+# My Offers
+def my_offers(request):
+	offers=ProductOffers.objects.filter(user=request.user).order_by('-id')
+	return render(request, 'user/offers.html',{'offers':offers})
 
 # My AddressBook
 def my_addressbook(request):
