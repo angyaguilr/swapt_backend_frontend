@@ -14,7 +14,6 @@ admin.site.register(SwaptCampusPropertyNamePair)
 admin.site.register(SwaptPropertyManager)
 #Inventory listings
 admin.site.register(InventoryListingTag)
-admin.site.register(InventoryItemAttribute)
 admin.site.register(InventoryCampusPropertyNamePair)
 
 
@@ -37,8 +36,13 @@ admin.site.register(SwaptListingModel,ProductAdmin)
 
 # InventoryListing Attribute
 class ProductAttributeAdmin(admin.ModelAdmin):
-    list_display=('id','image_tag','product','price','color','size')
+    list_display=('id','image_tag','product','price')
 admin.site.register(ProductAttribute,ProductAttributeAdmin)
+
+# InventoryListing Attribute
+class InventoryItemAttributeAdmin(admin.ModelAdmin):
+    list_display=('id','image_tag','product','price','color','size')
+admin.site.register( InventoryItemAttribute, InventoryItemAttributeAdmin)
 
 # Order
 class CartOrderAdmin(admin.ModelAdmin):
