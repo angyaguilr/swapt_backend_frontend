@@ -494,7 +494,7 @@ class SwaptCampusPropertyNamePair(models.Model):
     confirmed = models.BooleanField(default=False)
 
 # InventoryListing Attribute
-class SwaptProductAttribute(models.Model):
+class InventoryItemAttribute(models.Model):
     product=models.ForeignKey(SwaptListingModel,on_delete=models.CASCADE)
     price=models.PositiveIntegerField(default=0)
     image=models.ImageField(upload_to="product_imgs/",null=True)
@@ -507,6 +507,7 @@ class SwaptProductAttribute(models.Model):
 
     def image_tag(self):
         return mark_safe('<img src="%s" width="50" height="50" />' % (self.image.url))
+
 # InventoryListing Attribute
 class ProductAttribute(models.Model):
     product=models.ForeignKey(InventoryListing,on_delete=models.CASCADE)

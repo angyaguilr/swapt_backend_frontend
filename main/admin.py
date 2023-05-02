@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import InventoryCampusPropertyNamePair, Banner,Category,Brand,Color,Dimension,InventoryListing,ProductAttribute,CartOrder,CartOrderItems,ProductOffers,Wishlist,UserAddressBook, Swapt_Prices, SwaptCampusPropertyNamePair, SwaptListingModel, SwaptListingTag, SwaptPropertyManager, SwaptListingTransactionRef, SwaptPaymentHistory, InventoryListingTag, InventoryListingPrice
+from .models import InventoryItemAttribute, InventoryCampusPropertyNamePair, Banner,Category,Brand,Color,Dimension,InventoryListing,ProductAttribute,CartOrder,CartOrderItems,ProductOffers,Wishlist,UserAddressBook, Swapt_Prices, SwaptCampusPropertyNamePair, SwaptListingModel, SwaptListingTag, SwaptPropertyManager, SwaptListingTransactionRef, SwaptPaymentHistory, InventoryListingTag, InventoryListingPrice
 
 # admin.site.register(Banner)
 admin.site.register(Brand)
@@ -14,6 +14,7 @@ admin.site.register(SwaptCampusPropertyNamePair)
 admin.site.register(SwaptPropertyManager)
 #Inventory listings
 admin.site.register(InventoryListingTag)
+admin.site.register(InventoryItemAttribute)
 admin.site.register(InventoryCampusPropertyNamePair)
 
 
