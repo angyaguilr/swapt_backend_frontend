@@ -11,7 +11,7 @@ router.register(r'review', views.SwaptReviewListingsAPI)
 router.register(r'inventory-review', views.InventoryReviewListingsAPI)
 
 urlpatterns=[
-    #path('',views.home,name='home'),
+    path('',views.home,name='home'),
     path('', views.index, name="index"),
     path('privacy-policy', views.privacy_policy, name="privacy_policy"),
     path('cookies-policy', views.cookies_policy, name="cookies_policy"),

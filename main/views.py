@@ -93,8 +93,8 @@ def brand_product_list(request,brand_id):
 def product_detail(request,slug,id):
     product=SwaptListingModel.objects.get(id=id)
     related_products=InventoryListing.objects.filter(swaptuser=request.user.swaptuser)
-    colors=ProductAttribute.objects.filter(product=product).values('color__id','color__title','color__color_code').distinct()
-    sizes=ProductAttribute.objects.filter(product=product).values('size__id','size__title','price','color__id').distinct()
+    #colors=ProductAttribute.objects.filter(product=product).values('color__id','color__title','color__color_code').distinct()
+    #sizes=ProductAttribute.objects.filter(product=product).values('size__id','size__title','price','color__id').distinct()
     offersForm=OffersAdd()
 
 	# Check
@@ -112,8 +112,8 @@ def product_detail(request,slug,id):
 	# Fetch avg amount for offers
     avg_offers=ProductOffers.objects.filter(product=product).aggregate(avg_amount=Avg('offers_amount'))
 	# End
-    
-    return render(request, 'product_detail.html',{'data':product,'related':related_products,'colors':colors,'sizes':sizes,'offersForm':offersForm,'canAdd':canAdd,'offers':offers,'avg_offers':avg_offers})
+    #return 'colors':colors,'sizes':sizes
+    return render(request, 'product_detail.html',{'data':product,'related':related_products,'offersForm':offersForm,'canAdd':canAdd,'offers':offers,'avg_offers':avg_offers})
 
 # Search
 def search(request):
