@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Django Tailwind</title>
+	<title>Swapt Marketplace</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -17,7 +17,8 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'custom.css' %}" />
 	<script type="text/javascript" src="{% static 'custom.js' %}"></script>
 </head>
-<body class="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
+<body class="min-h-screen bg-gray-100 text-gray-900 flex flex-col justify-center">
+	{% include 'snippets/navbar.html' %}
     {% block content %}
     {% endblock %}
 </body>

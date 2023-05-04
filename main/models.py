@@ -353,15 +353,6 @@ class SwaptListingModel(models.Model):
         (2, 'Pending'),
         (3, 'Sold'),
     ]
-    CATEGORY_CHOICES = [
-        ('Bedroom Furniture', 'Bedroom Furniture'),
-        ('Dining Room Furniture', 'Dining Room Furniture'),
-        ('Living Room Furniture', 'Living Room Furniture'),
-        ('Office Furniture', 'Office Furniture'),
-        ('Bathroom Furniture', 'Bathroom Furniture'),
-        ('Outdoor Furniture', 'Outdoor Furniture'),
-        ('Other Furniture', 'Other Furniture'),
-    ]
     CONDITION_CHOICES = [
         ('New', 'New'),
         ('Used - Like New', 'Used - Like New'),
@@ -401,12 +392,6 @@ class SwaptListingModel(models.Model):
     swaptuser = models.ForeignKey(SwaptUser, on_delete=CASCADE, null=True)
     listings = models.ManyToManyField(
         'InventoryListing', related_name='order', blank=True)
-    name = models.CharField(max_length=50, blank=True)
-    email = models.CharField(max_length=50, blank=True)
-    street = models.CharField(max_length=50, blank=True)
-    city = models.CharField(max_length=50, blank=True)
-    state = models.CharField(max_length=15, blank=True)
-    zip_code = models.IntegerField(blank=True, null=True)
     is_paid = models.BooleanField(default=False)
     is_shipped = models.BooleanField(default=False)
     #mandatory fields required with user input
@@ -418,11 +403,6 @@ class SwaptListingModel(models.Model):
     brand=models.ForeignKey(Brand,on_delete=models.CASCADE, default=1)
     title = models.CharField(max_length=250)
     thumbnail = models.ImageField(upload_to=get_image_filename, blank=True)
-    preloaded_category = models.CharField(
-        max_length=50,
-        choices=CATEGORY_CHOICES,
-        null=True
-    )
     condition = models.CharField(max_length=50,choices=CONDITION_CHOICES , null=True)
     #mandatory location details
     location = models.CharField(
