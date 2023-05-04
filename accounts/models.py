@@ -28,6 +28,11 @@ class Swapt_admin(models.Model):
 
 class propManager(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)    
+    first_name = models.CharField(max_length=30, default="Jenny")
+    last_name = models.CharField(max_length=30, default="smith")
+    companyname = models.CharField(max_length=40, default="company")
+    email = models.EmailField(unique= True, default='aaguilar@gmai.com')
+    propertyname = models.CharField(max_length=30, default="Property")
 
 class PropNameSignUp(models.Model):
     propertyName = models.CharField(

@@ -19,7 +19,7 @@ class OffersAdd(forms.ModelForm):
 class AddressBookForm(forms.ModelForm):
 	class Meta:
 		model=UserAddressBook
-		fields=('address','mobile','status')
+		fields=('address','propertyname','status')
 
 # ProfileEdit
 class ProfileForm(UserChangeForm):

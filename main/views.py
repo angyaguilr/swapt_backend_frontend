@@ -310,13 +310,17 @@ def save_offer(request,pid):
 # User Dashboard
 import calendar
 def my_dashboard(request):
-	orders=CartOrder.objects.annotate(month=ExtractMonth('order_dt')).values('month').annotate(count=Count('id')).values('month','count')
-	monthNumber=[]
-	totalOrders=[]
-	for d in orders:
-		monthNumber.append(calendar.month_name[d['month']])
-		totalOrders.append(d['count'])
-	return render(request, 'user/dashboard.html',{'monthNumber':monthNumber,'totalOrders':totalOrders})
+    addbook=UserAddressBook.objects.filter(user=request.user).order_by('-id')
+    data=SwaptListingModel.objects.filter(swaptuser=request.user.swaptuser).order_by('-id')[:3]
+    inventorydata=InventoryListing.objects.filter(swaptuser=request.user.swaptuser).order_by('-id')[:3]
+    propmanagerdata=SwaptListingModel.objects.filter(propertymanager=request.user.propmanager).order_by('-id')[:3]
+    orders=CartOrder.objects.annotate(month=ExtractMonth('order_dt')).values('month').annotate(count=Count('id')).values('month','count')
+    monthNumber=[]
+    totalOrders=[]
+    for d in orders:
+        monthNumber.append(calendar.month_name[d['month']])
+        totalOrders.append(d['count'])
+    return render(request, 'user/dashboard.html',{'propmanagerdata': propmanagerdata, 'monthNumber':monthNumber,'totalOrders':totalOrders,'inventorydata':inventorydata, 'data':data, 'addbook':addbook})
 
 # My Orders
 def my_orders(request):
@@ -811,6 +815,7 @@ class SwaptListingCreation(View):
         city = request.POST.get('city')
         state = request.POST.get('state')
         zip_code = request.POST.get('zip')
+        images = request.FILES.getlist('images')
 
         order_items = {
             'items': []
@@ -830,6 +835,8 @@ class SwaptListingCreation(View):
 
             price = 0
             item_ids = []
+        for image in images:
+            SwaptListingModel.objects.create(images=image)
 
         for item in order_items['items']:
             price += item['price']

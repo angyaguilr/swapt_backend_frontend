@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.deletion import CASCADE
 from django.utils.html import mark_safe
 from accounts.models import SwaptUser
+from accounts.models import propManager
 from django.utils import timezone
 #from django.contrib.auth.models import User
 from django.conf import settings
@@ -21,7 +22,8 @@ class InventoryListingTag(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
+    class Meta:
+        verbose_name_plural='1: Inventory Listing Tags'
     def __str__(self) -> str:
         return self.name
     
@@ -42,7 +44,7 @@ class Banner(models.Model):
     alt_text=models.CharField(max_length=300)
 
     class Meta:
-        verbose_name_plural='1. Banners'
+        verbose_name_plural='0: Image Banners'
 
     def image_tag(self):
         return mark_safe('<img src="%s" width="100" />' % (self.img.url))
@@ -56,7 +58,7 @@ class Category(models.Model):
     image=models.ImageField(upload_to="cat_imgs/")
 
     class Meta:
-        verbose_name_plural='2. Categories'
+        verbose_name_plural='7. Swapt Listing Categories'
 
     def image_tag(self):
         return mark_safe('<img src="%s" width="50" height="50" />' % (self.image.url))
@@ -70,7 +72,7 @@ class Brand(models.Model):
     image=models.ImageField(upload_to="brand_imgs/")
 
     class Meta:
-        verbose_name_plural='3. Brands'
+        verbose_name_plural='8. Swapt Listing Brands'
 
     def __str__(self):
         return self.title
@@ -81,7 +83,7 @@ class Color(models.Model):
     color_code=models.CharField(max_length=100)
 
     class Meta:
-        verbose_name_plural='4. Colors'
+        verbose_name_plural='2. Inventory Item Colors'
 
     def color_bg(self):
         return mark_safe('<div style="width:30px; height:30px; background-color:%s"></div>' % (self.color_code))
@@ -94,7 +96,7 @@ class Dimension(models.Model):
     title=models.CharField(max_length=100)
 
     class Meta:
-        verbose_name_plural='5. Dimensions'
+        verbose_name_plural='3. Inventory Item Dimensions'
 
     def __str__(self):
         return self.title
@@ -196,7 +198,7 @@ class InventoryListing(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     class Meta:
-        verbose_name_plural='6. Listings'
+        verbose_name_plural='4. Inventory Items'
 
     def __str__(self):
         return self.title
@@ -216,7 +218,7 @@ class CartOrder(models.Model):
     order_status=models.CharField(choices=status_choice,default='process',max_length=150)
 
     class Meta:
-        verbose_name_plural='8. Orders'
+        verbose_name_plural='Swapt Orders'
 
 # OrderItems
 class CartOrderItems(models.Model):
@@ -229,7 +231,7 @@ class CartOrderItems(models.Model):
     total=models.FloatField()
 
     class Meta:
-        verbose_name_plural='9. Order Items'
+        verbose_name_plural='Swapt Order Items'
 
     def image_tag(self):
         return mark_safe('<img src="/media/%s" width="50" height="50" />' % (self.image))
@@ -237,12 +239,12 @@ class CartOrderItems(models.Model):
 # AddressBook
 class UserAddressBook(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
-    mobile=models.CharField(max_length=50,null=True)
+    propertyname=models.CharField(max_length=50,null=True)
     address=models.TextField()
     status=models.BooleanField(default=False)
 
     class Meta:
-        verbose_name_plural='AddressBook'
+        verbose_name_plural='User: AddressBook'
 
 class InventoryCampusPropertyNamePair(models.Model):
     listings = models.ManyToManyField('InventoryListing')
@@ -286,6 +288,7 @@ class SwaptListingTag(models.Model):
 
     def __str__(self) -> str:
         return self.name
+    
 class SwaptPropertyManager(models.Model):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
@@ -393,7 +396,7 @@ class SwaptListingModel(models.Model):
         ('BurlingtonNC', 'BurlingtonNC'),
     ]
     #unique fields for swaptlistingsmodel
-    propertymanager = models.ForeignKey(SwaptPropertyManager, on_delete=models.CASCADE )
+    propertymanager = models.ForeignKey(propManager, on_delete=CASCADE, null=True)
     #field identifying seller who posted listing
     swaptuser = models.ForeignKey(SwaptUser, on_delete=CASCADE, null=True)
     listings = models.ManyToManyField(
@@ -452,6 +455,7 @@ class SwaptListingModel(models.Model):
 
     class Meta:
         ordering = ("-created_at",)
+        verbose_name_plural='6. Swapt Listings'
   
     objects = SwaptListingManager() # Using manager above for reasons in comment
 
@@ -500,7 +504,7 @@ class ProductAttribute(models.Model):
     image=models.ImageField(upload_to="product_imgs/",null=True)
 
     class Meta:
-        verbose_name_plural='7. Product Attributes'
+        verbose_name_plural='9. Swapt Listing Item Attributes'
 
     def __str__(self):
         return self.product.title
@@ -517,7 +521,7 @@ class InventoryItemAttribute(models.Model):
     image=models.ImageField(upload_to="product_imgs/",null=True)
 
     class Meta:
-        verbose_name_plural='8. Inventory Item Attributes'
+        verbose_name_plural='5. Inventory Item Attributes'
 
     def __str__(self):
         return self.product.title
@@ -539,7 +543,7 @@ class ProductOffers(models.Model):
     offers_amount=models.CharField(choices=AMOUNT,max_length=150)
 
     class Meta:
-        verbose_name_plural='Offers'
+        verbose_name_plural='User: Offers'
 
     def get_offers_amount(self):
         return self.offers_amount
@@ -550,6 +554,6 @@ class Wishlist(models.Model):
     product=models.ForeignKey(SwaptListingModel,on_delete=models.CASCADE)
 
     class Meta:
-        verbose_name_plural='Wishlist'
+        verbose_name_plural='User: Wishlist'
             
     
