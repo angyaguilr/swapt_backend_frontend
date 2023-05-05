@@ -118,7 +118,7 @@ def product_detail(request,slug,id):
 # Search
 def search(request):
 	q=request.GET['q']
-	data=InventoryListing.objects.filter(title__icontains=q).order_by('-id')
+	data=SwaptListingModel.objects.filter(location__icontains=q, title__icontains=q).order_by('-id')
 	return render(request,'search.html',{'data':data})
 
 # Filter Data

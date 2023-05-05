@@ -55,7 +55,7 @@ class InventoryListingCreationForm(ModelForm):
 
     class Meta:
         model = InventoryListing
-        fields = ("title", "detail", "preloaded_category", "condition", "location", "delivery", "pickupmethod", )
+        fields = ("title", "detail", "category", "condition", "location", "delivery", "pickupmethod", )
     
     def save(self, commit=True):
         self.full_clean() # calls clean function
@@ -65,10 +65,9 @@ class InventoryListingCreationForm(ModelForm):
         if commit:
             fields = self.cleaned_data
             listing.detail = fields['detail']
-            listing.preloaded_category = fields['preloaded_category']
+            listing.category = fields['category']
             listing.location = fields['location']
             listing.pickupmethod = fields['pickupmethod']
-            listing.delivery = fields['delivery']
             listing.title = fields['title']
             listing.condition = fields['condition']
         

@@ -23,7 +23,7 @@ class InventoryListingTag(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     class Meta:
-        verbose_name_plural='1: Inventory Listing Tags'
+        verbose_name_plural='1A: Inventory Listing Tags'
     def __str__(self) -> str:
         return self.name
     
@@ -58,7 +58,7 @@ class Category(models.Model):
     image=models.ImageField(upload_to="cat_imgs/")
 
     class Meta:
-        verbose_name_plural='7. Swapt Listing Categories'
+        verbose_name_plural='2C: Swapt Listing Categories'
 
     def image_tag(self):
         return mark_safe('<img src="%s" width="50" height="50" />' % (self.image.url))
@@ -72,7 +72,7 @@ class Brand(models.Model):
     image=models.ImageField(upload_to="brand_imgs/")
 
     class Meta:
-        verbose_name_plural='8. Swapt Listing Brands'
+        verbose_name_plural='2B: Swapt Listing Brands'
 
     def __str__(self):
         return self.title
@@ -83,7 +83,7 @@ class Color(models.Model):
     color_code=models.CharField(max_length=100)
 
     class Meta:
-        verbose_name_plural='2. Inventory Item Colors'
+        verbose_name_plural='1B: Inventory Item Colors'
 
     def color_bg(self):
         return mark_safe('<div style="width:30px; height:30px; background-color:%s"></div>' % (self.color_code))
@@ -96,7 +96,7 @@ class Dimension(models.Model):
     title=models.CharField(max_length=100)
 
     class Meta:
-        verbose_name_plural='3. Inventory Item Dimensions'
+        verbose_name_plural='1C: Inventory Item Dimensions'
 
     def __str__(self):
         return self.title
@@ -135,10 +135,6 @@ class InventoryListing(models.Model):
         ('Used - Decent', 'Used - Decent'),
         ('Used - Fair', 'Used - Fair'),
     ]
-    DELIVERYMETHOD_CHOICES = [
-        (1, 'Local Pickup'),
-        (2, 'Swapt Delivery'),
-    ]
     COLOR_CHOICES = [
         ('Beige', 'Beige'),
         ('Black', 'Black'),
@@ -168,8 +164,7 @@ class InventoryListing(models.Model):
     detail=models.TextField()
     specs=models.TextField()
     status=models.BooleanField(default=True)
-    is_featured=models.BooleanField(default=False)
-    preloaded_category = models.CharField(
+    category = models.CharField(
         max_length=50,
         choices=CATEGORY_CHOICES,
         null=True
@@ -181,12 +176,12 @@ class InventoryListing(models.Model):
         choices=LOCATION_CHOICES,
         null=True
     )
-    delivery = models.PositiveSmallIntegerField(choices=DELIVERYMETHOD_CHOICES, null=True)
     pickupmethod = models.PositiveSmallIntegerField(choices= PICKUP_CHOICES, null=True)
     #fields used to review listingscts
     stage = models.PositiveSmallIntegerField(choices=APPROVAL_STAGES, null=True)
     selling_stage = models.PositiveSmallIntegerField(choices=SELLING_STAGES, null=True)
     confirmed = models.BooleanField(default=False)
+    isBundled = models.BooleanField(default=False)
     issue = models.CharField(max_length=250, blank=True, null=True) # Currently only using one field for both rejected and reported issues
     #optional
     quantity = models.IntegerField(default=1, null=True)
@@ -198,7 +193,7 @@ class InventoryListing(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     class Meta:
-        verbose_name_plural='4. Inventory Items'
+        verbose_name_plural='1D. Inventory Items'
 
     def __str__(self):
         return self.title
@@ -285,6 +280,9 @@ class SwaptListingTag(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name_plural='2A: Swapt Listing Tags'
 
     def __str__(self) -> str:
         return self.name
@@ -393,7 +391,7 @@ class SwaptListingModel(models.Model):
     listings = models.ManyToManyField(
         'InventoryListing', related_name='order', blank=True)
     is_paid = models.BooleanField(default=False)
-    is_shipped = models.BooleanField(default=False)
+    is_MoveInReady = models.BooleanField(default=False)
     #mandatory fields required with user input
     detail=models.TextField(default="detail")
     slug=models.CharField(max_length=400, default=4)
@@ -435,7 +433,7 @@ class SwaptListingModel(models.Model):
 
     class Meta:
         ordering = ("-created_at",)
-        verbose_name_plural='6. Swapt Listings'
+        verbose_name_plural='2D. Swapt Listings'
   
     objects = SwaptListingManager() # Using manager above for reasons in comment
 
@@ -484,7 +482,7 @@ class ProductAttribute(models.Model):
     image=models.ImageField(upload_to="product_imgs/",null=True)
 
     class Meta:
-        verbose_name_plural='9. Swapt Listing Item Attributes'
+        verbose_name_plural='2E: Swapt Listing Item Attributes'
 
     def __str__(self):
         return self.product.title
@@ -501,7 +499,7 @@ class InventoryItemAttribute(models.Model):
     image=models.ImageField(upload_to="product_imgs/",null=True)
 
     class Meta:
-        verbose_name_plural='5. Inventory Item Attributes'
+        verbose_name_plural='1E: Inventory Item Attributes'
 
     def __str__(self):
         return self.product.title
