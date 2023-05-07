@@ -10,6 +10,7 @@ const {
 const defaultTheme = require("tailwindcss/defaultTheme");
 module.exports = {
   content: [
+     "./node_modules/flowbite/**/*.js",
       /**
        * HTML. Paths to Django template files that will contain Tailwind CSS classes.
        */
@@ -134,5 +135,6 @@ module.exports = {
       require('@tailwindcss/typography'),
       require('@tailwindcss/line-clamp'),
       require('@tailwindcss/aspect-ratio'),
+      require('flowbite/plugin'),
   ],
 }

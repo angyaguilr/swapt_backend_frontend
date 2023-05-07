@@ -44,15 +44,6 @@ $(document).ready(function(){
 		fSection.classList.add("hidden");
 		// End
 	});	
-	$("#user-menu-button").on('click',function(){
-		var userdropdownSection = document.getElementById("user-dropdown");
-    if (userdropdownSection.classList.contains("hidden")) {
-        userdropdownSection.classList.remove("hidden");
-    } else {
-        userdropdownSection.classList.add("hidden");
-    }
-		// End
-	});	
 
 	// InventoryListing Variation
 	$(".choose-size").hide();
