@@ -45,7 +45,7 @@ def cookies_policy(request):
 
 def home(request):
 	banners=Banner.objects.all().order_by('-id')
-	data=InventoryListing.objects.filter(is_featured=True).order_by('-id')
+	data=SwaptListingModel.objects.filter(is_featured=True).order_by('-id')
 	return render(request,'index.html',{'data':data,'banners':banners})
 
 # Category
@@ -76,7 +76,7 @@ def product_list(request):
 # InventoryListing List According to Category
 def category_product_list(request,cat_id):
 	category=Category.objects.get(id=cat_id)
-	data=InventoryListing.objects.filter(category=category).order_by('-id')
+	data=SwaptListingModel.objects.filter(category=category).order_by('-id')
 	return render(request,'category_product_list.html',{
 			'data':data,
 			})
@@ -84,7 +84,7 @@ def category_product_list(request,cat_id):
 # InventoryListing List According to Brand
 def brand_product_list(request,brand_id):
 	brand=Brand.objects.get(id=brand_id)
-	data=InventoryListing.objects.filter(brand=brand).order_by('-id')
+	data=SwaptListingModel.objects.filter(brand=brand).order_by('-id')
 	return render(request,'category_product_list.html',{
 			'data':data,
 			})
@@ -118,7 +118,7 @@ def product_detail(request,slug,id):
 # Search
 def search(request):
 	q=request.GET['q']
-	data=SwaptListingModel.objects.filter(location__icontains=q, title__icontains=q).order_by('-id')
+	data=SwaptListingModel.objects.filter(location__icontains=q).order_by('-id')
 	return render(request,'search.html',{'data':data})
 
 # Filter Data
@@ -147,7 +147,7 @@ def filter_data(request):
 def load_more_data(request):
 	offset=int(request.GET['offset'])
 	limit=int(request.GET['limit'])
-	data=InventoryListing.objects.all().order_by('-id')[offset:offset+limit]
+	data=SwaptListingModel.objects.all().order_by('-id')[offset:offset+limit]
 	t=render_to_string('ajax/product-list.html',{'data':data})
 	return JsonResponse({'data':t}
 )
@@ -287,7 +287,7 @@ def payment_canceled(request):
 
 # Save Offer
 def save_offer(request,pid):
-	product=InventoryListing.objects.get(pk=pid)
+	product=SwaptListingModel.objects.get(pk=pid)
 	user=request.user
 	offers=ProductOffers.objects.create(
 		user=user,
@@ -336,7 +336,7 @@ def my_order_items(request,id):
 # Wishlist
 def add_wishlist(request):
 	pid=request.GET['product']
-	product=InventoryListing.objects.get(pk=pid)
+	product=SwaptListingModel.objects.get(pk=pid)
 	data={}
 	checkw=Wishlist.objects.filter(product=product,user=request.user).count()
 	if checkw > 0:

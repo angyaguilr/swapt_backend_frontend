@@ -28,6 +28,31 @@ $(document).ready(function(){
 		});
 		// End
 	});
+	$("#showFilterSection").on('click',function(){
+		var fSection = document.getElementById("filterSection");
+    if (fSection.classList.contains("hidden")) {
+        fSection.classList.remove("hidden");
+        fSection.classList.add("block");
+    } else {
+        fSection.classList.add("hidden");
+    }
+		// End
+	});	
+
+	$("#closeFilterSection").on('click',function(){
+		var fSection = document.getElementById("filterSection");
+		fSection.classList.add("hidden");
+		// End
+	});	
+	$("#user-menu-button").on('click',function(){
+		var userdropdownSection = document.getElementById("user-dropdown");
+    if (userdropdownSection.classList.contains("hidden")) {
+        userdropdownSection.classList.remove("hidden");
+    } else {
+        userdropdownSection.classList.add("hidden");
+    }
+		// End
+	});	
 
 	// InventoryListing Variation
 	$(".choose-size").hide();

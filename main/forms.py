@@ -55,7 +55,7 @@ class InventoryListingCreationForm(ModelForm):
 
     class Meta:
         model = InventoryListing
-        fields = ("title", "detail", "category", "condition", "location", "delivery", "pickupmethod", )
+        fields = ("title", "detail", "category", "condition", "location", "pickupmethod", )
     
     def save(self, commit=True):
         self.full_clean() # calls clean function
