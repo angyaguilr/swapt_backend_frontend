@@ -43,10 +43,10 @@ def privacy_policy(request):
 def cookies_policy(request):
     return render_nextjs_page_sync(request)
 
-def home(request):
+def featuredListings(request):
 	banners=Banner.objects.all().order_by('-id')
 	data=SwaptListingModel.objects.filter(is_featured=True).order_by('-id')
-	return render(request,'index.html',{'data':data,'banners':banners})
+	return render(request,'featured_list.html',{'data':data,'banners':banners})
 
 # Category
 def category_list(request):
@@ -313,14 +313,14 @@ def my_dashboard(request):
     addbook=UserAddressBook.objects.filter(user=request.user).order_by('-id')
     data=SwaptListingModel.objects.filter(swaptuser=request.user.swaptuser).order_by('-id')[:3]
     inventorydata=InventoryListing.objects.filter(swaptuser=request.user.swaptuser).order_by('-id')[:3]
-    propmanagerdata=SwaptListingModel.objects.filter(propertymanager=request.user.propmanager).order_by('-id')[:3]
+    #propmanagerdata=SwaptListingModel.objects.filter(propertymanager=request.user.propmanager).order_by('-id')[:3]
     orders=CartOrder.objects.annotate(month=ExtractMonth('order_dt')).values('month').annotate(count=Count('id')).values('month','count')
     monthNumber=[]
     totalOrders=[]
     for d in orders:
         monthNumber.append(calendar.month_name[d['month']])
         totalOrders.append(d['count'])
-    return render(request, 'user/dashboard.html',{'propmanagerdata': propmanagerdata, 'monthNumber':monthNumber,'totalOrders':totalOrders,'inventorydata':inventorydata, 'data':data, 'addbook':addbook})
+    return render(request, 'user/dashboard.html',{ 'monthNumber':monthNumber,'totalOrders':totalOrders,'inventorydata':inventorydata, 'data':data, 'addbook':addbook})
 
 # My Orders
 def my_orders(request):

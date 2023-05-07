@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
 <body class="font-inter grid grid-cols-5 max-w-screen-2xl mx-auto border-x-2 border-gray-100">
+    {% if user.is_authenticated %}
     <!--Sidebar-->
     {% include 'user/user-sidebar.html' %}
     <!-- Main -->
-    {% if user.is_authenticated %}
     <div class="col-span-4 bg-gray-100 ">
         <!-- Nav -->
         <nav class="px-8 py-6 bg-white flex items-center justify-between">
@@ -181,7 +181,7 @@
                             {% if user.is_admin %}
                             <div class="text-xxs text-gray-400 mt-1.5">Swapt Admin</div>
                             {% elif user.is_swapt_user %}
-                            div class="text-xxs text-gray-400 mt-1.5">Student</div>
+                            <div class="text-xxs text-gray-400 mt-1.5">Student</div>
                             {% endif %}
                         </div>
                     </div>
@@ -235,7 +235,6 @@
     </div>
     {% endif %}
     <!-- /Main -->
-
 </body>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

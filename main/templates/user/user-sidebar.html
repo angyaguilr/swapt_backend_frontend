@@ -1,5 +1,4 @@
 <!-- sidebar -->
-{% if user.is_authenticated %}
 {% if user.is_swapt_user %}
 <div class="col-span-1 h-screen px-7 py-8 bg-white border-r border-r-gray-100">
    <div class="font-bold text-lg pl-6 flex items-center space-x-3">
@@ -209,7 +208,6 @@
             <span>Address Book</span>
             </a>
          </li>
-        
          {% elif request.path == '/my-orders' %}
          <li class="flex space-x-3 items-center px-6 py-3 rounded-lg">
             <a href="{% url 'my_dashboard' %}" class=" {% if request.path == '/my-dashboard' %}active {% endif %}">
@@ -308,7 +306,6 @@
             <span>Address Book</span>
             </a>
          </li>
-         
          {% elif request.path == '/my-wishlist' %}
          <li class="flex space-x-3 items-center px-6 py-3 rounded-lg">
             <a href="{% url 'my_dashboard' %}" class=" {% if request.path == '/my-dashboard' %}active {% endif %}">
@@ -407,7 +404,6 @@
             <span>Address Book</span>
             </a>
          </li>
-         
          {% elif request.path == '/my-offers' %}
          <li class="flex space-x-3 items-center px-6 py-3 rounded-lg">
             <a href="{% url 'my_dashboard' %}" class=" {% if request.path == '/my-dashboard' %}active {% endif %}">
@@ -506,7 +502,6 @@
             <span>Address Book</span>
             </a>
          </li>
-        
          {% elif request.path == '/my-addressbook' %}
          <li class="flex space-x-3 items-center px-6 py-3 rounded-lg">
             <a href="{% url 'my_dashboard' %}" class=" {% if request.path == '/my-dashboard' %}active {% endif %}">
@@ -610,7 +605,6 @@
    </div>
 </div>
 {% elif user.is_admin %}
-
 <div class="col-span-1 h-screen px-7 py-8 bg-white border-r border-r-gray-100">
    <div class="font-bold text-lg pl-6 flex items-center space-x-3">
       <span hidden>
@@ -662,7 +656,7 @@
                </span>
             </a>
             <a href="{% url 'my_orders' %}" class=" {% if request.path == '/my-orders' %}active {% endif %}">
-            <span>Manage Listings</span>
+            <span>My Listings</span>
             </a>
          </li>
          <li class="flex space-x-3 items-center px-6 py-3 rounded-lg">
@@ -760,7 +754,7 @@
                </span>
             </a>
             <a href="{% url 'my_orders' %}" class=" {% if request.path == '/my-orders' %}active {% endif %}">
-            <span>Manage Listings</span>
+            <span>My Listings</span>
             </a>
          </li>
          <li class="flex space-x-3 items-center px-6 py-3 rounded-lg">
@@ -819,7 +813,6 @@
             <span>Address Book</span>
             </a>
          </li>
-        
          {% elif request.path == '/my-orders' %}
          <li class="flex space-x-3 items-center px-6 py-3 rounded-lg">
             <a href="{% url 'my_dashboard' %}" class=" {% if request.path == '/my-dashboard' %}active {% endif %}">
@@ -859,7 +852,7 @@
                </span>
             </a>
             <a href="{% url 'my_orders' %}" class=" {% if request.path == '/my-orders' %}active {% endif %}">
-            <span>Manage Listings</span>
+            <span>My Listings</span>
             </a>
          </li>
          <li class="flex space-x-3 items-center font-medium text-indigo-600 bg-indigo-100 px-6 py-3 rounded-lg">
@@ -918,7 +911,6 @@
             <span>Address Book</span>
             </a>
          </li>
-         
          {% elif request.path == '/my-wishlist' %}
          <li class="flex space-x-3 items-center px-6 py-3 rounded-lg">
             <a href="{% url 'my_dashboard' %}" class=" {% if request.path == '/my-dashboard' %}active {% endif %}">
@@ -958,7 +950,7 @@
                </span>
             </a>
             <a href="{% url 'my_orders' %}" class=" {% if request.path == '/my-orders' %}active {% endif %}">
-            <span>Manage Listings</span>
+            <span>My Listings</span>
             </a>
          </li>
          <li class="flex space-x-3 items-center px-6 py-3 rounded-lg">
@@ -1017,7 +1009,6 @@
             <span>Address Book</span>
             </a>
          </li>
-         
          {% elif request.path == '/my-offers' %}
          <li class="flex space-x-3 items-center px-6 py-3 rounded-lg">
             <a href="{% url 'my_dashboard' %}" class=" {% if request.path == '/my-dashboard' %}active {% endif %}">
@@ -1057,7 +1048,7 @@
                </span>
             </a>
             <a href="{% url 'my_orders' %}" class=" {% if request.path == '/my-orders' %}active {% endif %}">
-            <span>Manage Listings</span>
+            <span>My Listings</span>
             </a>
          </li>
          <li class="flex space-x-3 items-center px-6 py-3 rounded-lg">
@@ -1116,7 +1107,6 @@
             <span>Address Book</span>
             </a>
          </li>
-        
          {% elif request.path == '/my-addressbook' %}
          <li class="flex space-x-3 items-center px-6 py-3 rounded-lg">
             <a href="{% url 'my_dashboard' %}" class=" {% if request.path == '/my-dashboard' %}active {% endif %}">
@@ -1156,7 +1146,7 @@
                </span>
             </a>
             <a href="{% url 'my_orders' %}" class=" {% if request.path == '/my-orders' %}active {% endif %}">
-            <span>Manage Listings</span>
+            <span>My Listings</span>
             </a>
          </li>
          <li class="flex space-x-3 items-center px-6 py-3 rounded-lg">
@@ -1220,5 +1210,4 @@
    </div>
 </div>
 {% endif %}
-{% endif %}   
 <!-- /sidebar -->

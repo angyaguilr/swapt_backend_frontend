@@ -19,7 +19,9 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet" />
 </head>
 <body class="min-h-screen bg-gray-100 text-gray-900 flex flex-col justify-center">
+	{% if user.is_authenticated %}
 	{% include 'snippets/navbar.html' %}
+	{% endif %}   
     {% block content %}
     {% endblock %}
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
