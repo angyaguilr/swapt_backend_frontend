@@ -11,29 +11,42 @@ router.register(r'review', views.SwaptReviewListingsAPI)
 router.register(r'inventory-review', views.InventoryReviewListingsAPI)
 
 urlpatterns=[
+    #Next JS landing page -- if user is not logged in
+    #to-do -- add if user is authenticated
+    #to-do -- add all next.js pages
     path('', views.index, name="index"),
-    path('featured',views.featuredListings,name='featured'),
     path('privacy-policy', views.privacy_policy, name="privacy_policy"),
     path('cookies-policy', views.cookies_policy, name="cookies_policy"),
-    path('search',views.search,name='search'),
+    #product-lists 
+    #features is the first page user sees if logged in -- if user is not logged in --> redirect to login
+    path('featured',views.featuredListings,name='featured'),
+    path('product-list',views.product_list,name='product-list'),
     path('category-list',views.category_list,name='category-list'),
     path('brand-list',views.brand_list,name='brand-list'),
-    path('product-list',views.product_list,name='product-list'),
     path('category-product-list/<int:cat_id>',views.category_product_list,name='category-product-list'),
     path('brand-product-list/<int:brand_id>',views.brand_product_list,name='brand-product-list'),
-    path('product/<str:slug>/<int:id>',views.product_detail,name='product_detail'),
+    path('search',views.search,name='search'),
     path('filter-data',views.filter_data,name='filter_data'),
     path('load-more-data',views.load_more_data,name='load_more_data'),
+    #product details page
+    path('product/<str:slug>/<int:id>',views.product_detail,name='product_detail'),
+    #cart
     path('add-to-cart',views.add_to_cart,name='add_to_cart'),
     path('cart',views.cart_list,name='cart'),
     path('delete-from-cart',views.delete_cart_item,name='delete-from-cart'),
     path('update-cart',views.update_cart_item,name='update-cart'),
+    #accounts to-do -- remove accounts/signup ??
     path('accounts/signup',views.signup,name='signup'),
+    
+    #checkout to-do -- remove paypal views??
     path('checkout',views.checkout,name='checkout'),
     path('paypal/', include('paypal.standard.ipn.urls')),
     path('payment-done/', views.payment_done, name='payment_done'),
     path('payment-cancelled/', views.payment_canceled, name='payment_cancelled'),
-    path('save-review/<int:pid>',views.save_offer, name='save-review'),
+
+    #make an offer
+    path('save-offer/<int:pid>',views.save_offer, name='save-offer'),
+
     # User Section Start
     path('my-dashboard',views.my_dashboard, name='my_dashboard'),
     path('my-orders',views.my_orders, name='my_orders'),
@@ -42,17 +55,19 @@ urlpatterns=[
 
     # Wishlist
     path('add-wishlist',views.add_wishlist, name='add_wishlist'),
-    path('my-wishlist',views.my_wishlist, name='my_wishlist'),
+    path('my-wishlist',views.my_wishlist, name='my_wishlist'),\
+    
     # My Offerss
     path('my-offers',views.my_offers, name='my-offers'),
+    
     # My AddressBook
     path('my-addressbook',views.my_addressbook, name='my-addressbook'),
     path('add-address',views.save_address, name='add-address'),
     path('activate-address',views.activate_address, name='activate-address'),
     path('update-address/<int:id>',views.update_address, name='update-address'),
     path('edit-profile',views.edit_profile, name='edit-profile'),
-    #all 
-    path('index', views.Index2.as_view(), name='index2'),
+    
+    #stripe 
     path("create-checkout-session/<int:pk>/", swapt_user_required()(views.CreateStripeCheckoutSessionView.as_view()),name="create-checkout-session",),
     path('success/', swapt_user_required()(views.SuccessView.as_view()),name='success'),
     path('cancel/', swapt_user_required()(views.CancelView.as_view()),name='cancel'),
@@ -77,7 +92,6 @@ urlpatterns=[
     path('swapt-reject/<int:pk>/', Swapt_admin_required()(views.SwaptListingRejectView.as_view()), name="swapt_reject"),
     path('swapt-list/', views.SwaptListingListAPIView.as_view(), name="swapt_list"),
     re_path('^api/', include(router.urls)),
-    #TBD: url('^api/', include(router.urls)),
     path('swapt-report/', views.SwaptReportListingView.as_view(), name="swapt_report"),
     path('swapt-Listings/', views.SwaptListingsUploaded.as_view(), name='swapt_listings'),
     path('swapt-Listings/search/', views.SwaptListingsUploadedSearch.as_view(), name='swapt_listings_search'),

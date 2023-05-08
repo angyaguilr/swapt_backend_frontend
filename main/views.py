@@ -417,17 +417,13 @@ def update_address(request,id):
 	form=AddressBookForm(instance=address)
 	return render(request, 'user/update-address.html',{'form':form,'msg':msg})
 
-class Index2(View):
-    def get(self, request, *args, **kwargs):
-        return render(request, 'listings/index.html')
-    
 
 #Checkout with Stripe
 class SuccessView(TemplateView):
-    template_name = "listings/success.html"
+    template_name = "/stripe/success.html"
 
 class CancelView(TemplateView):
-    template_name = "listings/cancel.html"
+    template_name = "/stripe/cancel.html"
 
 class CreateStripeCheckoutSessionView(View):
     """
@@ -548,7 +544,7 @@ class SwaptListingsConfirmationView(View):
         if not listings:
             return redirect("swapt_create")
 
-        template = "swaptlistings/swapt_confirm.html"
+        template = "/swaptlistings/create_swaptlistings/swapt_confirm.html"
         context = {"listings": SwaptListingModel.objects.filter(swaptuser=request.user.swaptuser, confirmed=False)}
         return render(request, template, context)
      def post(self, request):
@@ -580,7 +576,7 @@ class SwaptListingsConfirmationView(View):
 class SwaptListingsReviewView(View):
 
     def get(self, request):
-        template = "swaptlistings/swapt_review.html"
+        template = "/swaptlistings/review_swaptlistings/swapt_review.html"
     
         # Gets different attributes from the query string, but by default will be the most expansive possible
         locations = self.request.GET.getlist('location', ['ElonNC', 'CollegeParkMD', 'BurlingtonNC', 'ColumbiaMD'])
@@ -625,7 +621,7 @@ class SwaptListingsReviewView(View):
 class SwaptListingEditView(UpdateView):
     form_class = ListingEditForm
     model = SwaptListingModel
-    template_name = 'swaptlistings/swapt_edit_form.html'
+    template_name = '/Users/angyaguilar/Desktop/swapt_backend_frontend/main/templates/swaptlistings/review_swaptlistings/swapt_edit_form.html'
 
     def get(self, request, *args, **kwargs):
         pk = self.kwargs['pk']
@@ -691,7 +687,7 @@ class SwaptListingEditView(UpdateView):
 class SwaptListingRejectView(UpdateView):
     form_class = ListingRejectForm
     model = SwaptListingModel
-    template_name = 'swaptlistings/swapt_reject.html'
+    template_name = '/Users/angyaguilar/Desktop/swapt_backend_frontend/main/templates/swaptlistings/review_swaptlistings/swapt_reject.html'
 
     def form_valid(self, form):
         listing = form.save()
