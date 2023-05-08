@@ -122,6 +122,13 @@
         </div>
       </div>
     </div>
+    <form
+          action="{% url 'create-checkout-session' price.id %}"
+          method="POST"
+        >
+          {% csrf_token %}
+          <button type="submit" class="btn btn-primary">Checkout</button>
+        </form>
 <!-- Image Zoom -->
 <script src="{% static 'jquery.ez-plus.js' %}"></script>
 <script type="text/javascript">

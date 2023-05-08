@@ -13,11 +13,11 @@
     <div class="row justify-content-center mt-5">
         <div class="col-md-5 col-sm-12 text-center">
             <h3 class="pb-3">SwaptListing Summary:</h3>
-            {% for item in items.all %}
-                <p>{{ item.name }} <span class="pl-3">{{ item.price }}</span></p>
+            {% for item in listings.all %}
+                <p>{{ item.title }} <span class="pl-3">{{ item.inventoryitemattribute_set.first.price }}</span></p>
             {% endfor %}
 
-            <p class="font-weight-bold pt-4">Total: {{ price }}</p>
+            <p class="font-weight-bold pt-4">Total:</p>
         </div>
     </div>
     <div class="row justify-content-center pb-2 pt-5">

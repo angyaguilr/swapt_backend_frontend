@@ -546,7 +546,7 @@ class SwaptListingsConfirmationView(View):
 
         # Can't access page without unconfirmed listings
         if not listings:
-            return redirect("listings:swapt_create")
+            return redirect("swapt_create")
 
         template = "swaptlistings/swapt_confirm.html"
         context = {"listings": SwaptListingModel.objects.filter(swaptuser=request.user.swaptuser, confirmed=False)}
@@ -564,18 +564,18 @@ class SwaptListingsConfirmationView(View):
                     pair.save()
 
             SwaptListingModel.objects.bulk_update(listings, ['confirmed'])
-            return redirect("listings:swapt_review")
+            return redirect("swapt_review")
 
         # If selected the delete button for a specific card, deletes that cards
         elif request.POST.get('status') == "delete":
             id = request.POST['id']
             listings.get(id=id).delete()
-            return redirect("listings:swapt_confirm")
+            return redirect("swapt_confirm")
 
         # The only other button that results in a post request is the cancel button, which deletes all unconfirmed cards
         else:
             listings.delete()
-            return redirect("listings:swapt__create")['ElonNC', 'CollegeParkMD', 'BurlingtonNC', 'ColumbiaMD']
+            return redirect("swapt__create")['ElonNC', 'CollegeParkMD', 'BurlingtonNC', 'ColumbiaMD']
         
 class SwaptListingsReviewView(View):
 
@@ -620,7 +620,7 @@ class SwaptListingsReviewView(View):
                 listing.save()
         
         
-        return redirect("listings:swapt_review")
+        return redirect("swapt_review")
 
 class SwaptListingEditView(UpdateView):
     form_class = ListingEditForm
@@ -804,7 +804,7 @@ class SwaptListingCreation(View):
     def post(self, request, *args, **kwargs):
         title = request.POST.get('title')
         detail = request.POST.get('detail')
-        slug = request.POST.get('slug')
+        specs = request.POST.get('specs')
 
         order_listings = {
             'listings': []
@@ -818,7 +818,6 @@ class SwaptListingCreation(View):
             item_data = {
                 'id': InventoryListing_item.pk,
                 'title': InventoryListing_item.title,
-                'price': InventoryListing_item.inventoryitemattribute_set.first.price
             }
 
             order_listings['listings'].append(item_data)
@@ -827,36 +826,23 @@ class SwaptListingCreation(View):
             item_ids = []
 
         for item in order_listings['listings']:
-            price += item['price']
+            #price += item['price']
             item_ids.append(item['id'])
 
         order = SwaptListingModel.objects.create(
-            price=price,
+            #price=price,
             title=title,
             detail=detail,
-            slug=slug,
+            specs=specs,
         )
         order.listings.add(*item_ids)
 
-        # After everything is done, send confirmation email to the user
-        body = ('Thank you for your order! Your food is being made and will be delivered soon!\n'
-                f'Your total: {price}\n'
-                'Thank you again for your order!')
-
-        send_mail(
-            'Thank You For Your Order!',
-            body,
-            'example@example.com',
-            [email],
-            fail_silently=False
-        )
 
         context = {
             'listings': order_listings['listings'],
-            'price': price
         }
 
-        return redirect('order-confirmation', pk=order.pk) 
+        return redirect('swaptlistings/create_swaptlistings/swapt_create_confirmation.html', pk=order.pk) 
 
       
 class SwaptListingListView(ListView):
@@ -959,7 +945,7 @@ class InventoryListingsConfirmationView(View):
 
         # Can't access page without unconfirmed listings
         if not listings:
-            return redirect("listings:inventory_create")
+            return redirect("inventory_create")
 
         template = "listings/inventory_confirm.html"
         context = {"listings": InventoryListing.objects.filter(swaptuser=request.user.swaptuser, confirmed=False)}
@@ -978,18 +964,18 @@ class InventoryListingsConfirmationView(View):
                     pair.save()
 
             InventoryListing.objects.bulk_update(listings, ['confirmed'])
-            return redirect("listings:inventory_review")
+            return redirect("inventory_review")
 
         # If selected the delete button for a specific card, deletes that cards
         elif request.POST.get('status') == "delete":
             id = request.POST['id']
             listings.get(id=id).delete()
-            return redirect("listings:inventory_confirm")
+            return redirect("inventory_confirm")
 
         # The only other button that results in a post request is the cancel button, which deletes all unconfirmed cards
         else:
             listings.delete()
-            return redirect("listings:inventory_create")['ElonNC', 'CollegeParkMD', 'BurlingtonNC', 'ColumbiaMD']
+            return redirect("inventory_create")['ElonNC', 'CollegeParkMD', 'BurlingtonNC', 'ColumbiaMD']
 
 class InventoryListingsReviewView(View):
 
@@ -1033,7 +1019,7 @@ class InventoryListingsReviewView(View):
                     listing.issue = None # If the card is approved again, don't keep previous issue in the database
                 listing.save()
         
-        return redirect("listings:inventory_review")
+        return redirect("inventory_review")
 
 class InventoryListingEditView(UpdateView):
     form_class = ListingEditForm
