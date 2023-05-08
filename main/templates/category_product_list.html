@@ -2,13 +2,13 @@
 {% load static %}
 {% block content %}
 <main class="container mx-auto sm:px-4 my-4">
-   <div class="flex flex-wrap ">
+   <div class="flex flex-wrap flex-col">
       <!-- Filters -->
       <div class="justify-self-end pr-4 pl-4">
          {% include 'filters.html' %}
       </div>
       <!-- ✅ Grid Section - Starts Here 👇 -->
-      <section class="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5" id="filteredProducts">
+      <section class="w-fit mx-auto grid grid-cols-1 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5" id="filteredProducts">
          <p class="ajaxLoader">Loading...</p>
          {% for product in data %}
          <!--   ✅ Product card 1 - Starts Here 👇 -->
