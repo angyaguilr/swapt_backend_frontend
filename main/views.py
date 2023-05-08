@@ -791,22 +791,35 @@ class SwaptListingsUploadedSearch(View):
 class SwaptListingCreation(View):
     def get(self, request, *args, **kwargs):
         # get every item from each category
-        DiningFurnitureSets = InventoryListing.objects.filter(swaptuser=request.user.swaptuser, 
-            category__title__contains='DiningFurniture')
-        BedroomFurnitureSets = InventoryListing.objects.filter(swaptuser=request.user.swaptuser, category__title__contains='BedroomFurniture')
-        OutdoorFurnituresSets = InventoryListing.objects.filter(swaptuser=request.user.swaptuser, category__title__contains='OutdoorFurniture')
-        LivingRmFurnitureSets = InventoryListing.objects.filter(swaptuser=request.user.swaptuser, category__title__contains='LivingRmFurniture')
+        livingRmFurniture = InventoryListing.objects.filter(category__contains='Living')
+        entrywayRmFurniture= InventoryListing.objects.filter(category__contains='Entryway')
+        bedroomRmFurniture = InventoryListing.objects.filter(category__contains='Bedroom')
+        kitchenRmFurniture = InventoryListing.objects.filter(category__contains='Kitchen')
+        diningRmFurniture = InventoryListing.objects.filter(category__contains='Dining')
+        officeRmFurniture = InventoryListing.objects.filter(category__contains='Office')
+        laundryRmFurniture = InventoryListing.objects.filter(category__contains='Laundry')
+        bathRmFurniture = InventoryListing.objects.filter(category__contains='Bathroom')
+        storageRmFurniture= InventoryListing.objects.filter(category__contains='Storage')
+        outdoorRmFurniture = InventoryListing.objects.filter(category__contains='Outdoor')
+        otherRmFurniture = InventoryListing.objects.filter(category__contains='Other')
 
         # pass into context
         context = {
-            'DiningFurnitureSets': DiningFurnitureSets,
-            'BedroomFurnitureSets': BedroomFurnitureSets,
-            'OutdoorFurnituresSets': OutdoorFurnituresSets,
-            'LivingRmFurnitureSets': LivingRmFurnitureSets,
+            'livingRmFurnitureItems': livingRmFurniture,
+            'entrywayRmFurnitureItems': entrywayRmFurniture,
+            'bedroomRmFurnitureItems': bedroomRmFurniture ,
+            'kitchenRmFurnitureItems': kitchenRmFurniture,
+            'diningRmFurnitureItems': diningRmFurniture,
+            'officeRmFurnitureItems': officeRmFurniture,
+            'laundryRmFurnitureItems': laundryRmFurniture,
+            'bathRmFurnitureItems': bathRmFurniture,
+            'storageRmFurnitureItems':  storageRmFurniture ,
+            'outdoorRmFurnitureItems': outdoorRmFurniture,
+            'otherRmFurnitureItems': otherRmFurniture,
         }
 
         # render the template
-        return render(request, 'swaptlistings/swapt_create_form.html', context)
+        return render(request, 'swapt_create_form.html', context)
 
     def post(self, request, *args, **kwargs):
         name = request.POST.get('name')
@@ -815,7 +828,6 @@ class SwaptListingCreation(View):
         city = request.POST.get('city')
         state = request.POST.get('state')
         zip_code = request.POST.get('zip')
-        images = request.FILES.getlist('images')
 
         order_items = {
             'items': []
@@ -835,8 +847,6 @@ class SwaptListingCreation(View):
 
             price = 0
             item_ids = []
-        for image in images:
-            SwaptListingModel.objects.create(images=image)
 
         for item in order_items['items']:
             price += item['price']
@@ -870,6 +880,7 @@ class SwaptListingCreation(View):
             'items': order_items['items'],
             'price': price
         }
+
 
         return redirect('listings:swapt_confirmation', pk=order.pk)
 

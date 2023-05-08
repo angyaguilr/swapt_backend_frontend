@@ -121,13 +121,17 @@ class InventoryListing(models.Model):
         (3, 'Sold'),
     ]
     CATEGORY_CHOICES = [
-        ('Bedroom Furniture', 'Bedroom Furniture'),
-        ('Dining Room Furniture', 'Dining Room Furniture'),
         ('Living Room Furniture', 'Living Room Furniture'),
+        ('Entryway Furniture', 'Entryway Furniture'),
+        ('Kitchen Furniture', 'Kitchen Furniture'),
+        ('Dining Room Furniture', 'Dining Room Furniture'),
         ('Office Furniture', 'Office Furniture'),
+        ('Bedroom Furniture', 'Bedroom Furniture'),
         ('Bathroom Furniture', 'Bathroom Furniture'),
+        ('Laundry Furniture', 'Laundry Furniture'),
+        ('Storage Room Furniture', 'Storage Room Furniture'),
         ('Outdoor Furniture', 'Outdoor Furniture'),
-        ('Other Furniture', 'Other Furniture'),
+        ('Other Furniture', 'Other Furniture')
     ]
     CONDITION_CHOICES = [
         ('New', 'New'),
