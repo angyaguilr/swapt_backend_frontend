@@ -28,7 +28,6 @@ $(document).ready(function(){
 		});
 		// End
 	});
-
 	$("#showFilterSection").on('click',function(){
 		var fSection = document.getElementById("filterSection");
     if (fSection.classList.contains("hidden")) {

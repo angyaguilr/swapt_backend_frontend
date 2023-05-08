@@ -28,6 +28,26 @@ $(document).ready(function(){
 		});
 		// End
 	});
+	show = (id) => {
+		document.getElementById(id).classList.toggle("hidden");
+		document.getElementById(id+"Rotate").classList.toggle("rotate-180");
+		document.getElementById(id+"Icon").classList.toggle("hidden");
+		
+		
+	
+	}
+	
+	
+	let menu = document.querySelectorAll("[data]");
+	for(i=0 ; i< menu.length ; i++){
+		let main = menu[i];
+		main.addEventListener('click', () => {
+			let svg = main.children[0]
+			svg.classList.toggle("bg-gray-800");
+			svg.classList.toggle("dark:bg-white");
+			svg.classList.toggle("border")
+		})
+	}
 	$("#showFilterSection").on('click',function(){
 		var fSection = document.getElementById("filterSection");
     if (fSection.classList.contains("hidden")) {
