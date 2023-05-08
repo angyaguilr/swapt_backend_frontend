@@ -2,9 +2,13 @@
 {% load static %}
 {% block content %}
 <main class="container mx-auto sm:px-4 my-4">
-   <div class="flex flex-wrap ">
+   <div class="flex flex-wrap flex-col">
+      <div class="justify-self-end pr-4 pl-4">
+         <!-- Filters -->
+       {% include 'filters.html' %}
+      </div>
       <!-- ✅ Grid Section - Starts Here 👇 -->
-      <section class="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5" id="filteredProducts">
+      <section class="w-fit mx-auto grid grid-cols-1 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5" id="filteredProducts">
          <p class="ajaxLoader">Loading...</p>
          {% for product in data %}
          <!--   ✅ Product card 1 - Starts Here 👇 -->
@@ -57,11 +61,12 @@
          </div>
          {% endfor %}
          <!--   🛑 Product card 1 - Ends Here  -->
-         <p class="my-4 text-center"><button id="loadMore" data-total="{{total_data}}" data-limit="3" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded  no-underline bg-gray-900 text-white hover:bg-gray-900 py-1 px-2 leading-tight text-xs ">Load More</button></p>
       </section>
       <!-- 🛑 Grid Section - Ends Here -->
-       <!-- Filters -->
-       {% include 'filters.html' %}
+      <div class="justify-self-end pr-4 pl-4">
+         <!-- Filters -->
+         <p class="my-4 text-center"><button id="loadMore" data-total="{{total_data}}" data-limit="3" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded  no-underline bg-gray-900 text-white hover:bg-gray-900 py-1 px-2 leading-tight text-xs ">Load More</button></p>
+      </div>
    </div>
 </main>
 {% endblock %}
