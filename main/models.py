@@ -109,9 +109,9 @@ class InventoryListing(models.Model):
         (2, 'Door Pickup'),
     ]
     APPROVAL_STAGES = [
-        (1, 'Under Review'),
-        (2, 'Approved'),
-        (3, 'Rejected'),
+        (1, 'Draft'),
+        (2, 'Published'),
+        (3, 'Unpublished'),
         (4, 'Reported'),
         (5, 'Closed'),
     ]

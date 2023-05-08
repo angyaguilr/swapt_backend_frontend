@@ -3,33 +3,24 @@
 {% block content %}
 <h1> Upload Inventory Card </h1>
 <h1>  </h1>
- 
-<div class="form-group">
-  // first_name is the name by which first name is created in django forms
-  {% render_field form.title class="form-control" placeholder="First Name" type="text" %}
-</div>
- 
-<div class="form-group">
-   // last_name is the name by which last name is created in django forms
-  {% render_field form.desc type="text" class="form-control" placeholder="Last Name" %}
-</div>
- 
-<div class="form-group">
-   // username is the default name of username in django forms
-  {% render_field form.title type="text" class="form-control" id="exampleInputUsername" placeholder="Username" %}
-</div>
- 
-<div class="form-group">
-   // password1 is the default name of password in django forms
-  {% render_field form.desc type="password" class="form-control" id="exampleInputPassword" placeholder="Password" %}
-</div>
- 
-<div class="form-group">
-   // password2 is the default name of confirm password in django forms
-  {% render_field form.desc type="password" class="form-control" id="exampleInputPassword1" placeholder="Confirm Password" %}
-</div>
- 
-<div>
-  <button type="submit" value="Submit" > Register </button>
-</div>
+<form action="" method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  <h1>Instructions</h1>
+  </br>
+  <div class="mb-3">
+      <!-- <label for="formFile" class="form-label">Default file input example</label> -->
+      <input class="form-control" type="image" id="image1" name="image">
+
+      <!-- <input class="form-control" type="file" id="formFile" name="file"> -->
+  </div>
+  {% if messages %}
+  {% for message in messages %}
+      <div>
+          <p style="color: red">{{ message }}</p>
+      </div>
+  {% endfor %}
+  {% endif %}
+  <button type="submit">Upload</button>
+</form>
+
 {% endblock content%}

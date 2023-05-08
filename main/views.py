@@ -4,7 +4,7 @@ import json
 from django.shortcuts import render,redirect
 from django.urls import reverse_lazy, reverse
 from django.http import JsonResponse,HttpResponse
-from .models import Banner,Category,Brand,InventoryListing, InventoryCampusPropertyNamePair, ProductAttribute,CartOrder,CartOrderItems,ProductOffers,Wishlist,UserAddressBook,  SwaptCampusPropertyNamePair, SwaptListingModel, SwaptListingTag, SwaptPropertyManager, SwaptPaymentHistory, Swapt_Prices, SwaptListingTransactionRef, InventoryListingPrice
+from .models import Banner,Category,Brand,InventoryListing, InventoryItemAttribute, InventoryCampusPropertyNamePair, ProductAttribute,CartOrder,CartOrderItems,ProductOffers,Wishlist,UserAddressBook,  SwaptCampusPropertyNamePair, SwaptListingModel, SwaptListingTag, SwaptPropertyManager, SwaptPaymentHistory, Swapt_Prices, SwaptListingTransactionRef, InventoryListingPrice
 from django.db.models import Max,Min,Count,Avg
 from django.utils.decorators import method_decorator
 from django.shortcuts import render, get_object_or_404
@@ -791,77 +791,52 @@ class SwaptListingsUploadedSearch(View):
 class SwaptListingCreation(View):
     def get(self, request, *args, **kwargs):
         # get every item from each category
-        livingRmFurniture = InventoryListing.objects.filter(category__contains='Living')
-        entrywayRmFurniture= InventoryListing.objects.filter(category__contains='Entryway')
-        bedroomRmFurniture = InventoryListing.objects.filter(category__contains='Bedroom')
-        kitchenRmFurniture = InventoryListing.objects.filter(category__contains='Kitchen')
-        diningRmFurniture = InventoryListing.objects.filter(category__contains='Dining')
-        officeRmFurniture = InventoryListing.objects.filter(category__contains='Office')
-        laundryRmFurniture = InventoryListing.objects.filter(category__contains='Laundry')
-        bathRmFurniture = InventoryListing.objects.filter(category__contains='Bathroom')
-        storageRmFurniture= InventoryListing.objects.filter(category__contains='Storage')
-        outdoorRmFurniture = InventoryListing.objects.filter(category__contains='Outdoor')
-        otherRmFurniture = InventoryListing.objects.filter(category__contains='Other')
+        InventoryFurnitureItems = InventoryListing.objects.filter(swaptuser=request.user.swaptuser, stage=2, selling_stage= 1, isBundled=False, confirmed=True)
 
         # pass into context
         context = {
-            'livingRmFurnitureItems': livingRmFurniture,
-            'entrywayRmFurnitureItems': entrywayRmFurniture,
-            'bedroomRmFurnitureItems': bedroomRmFurniture ,
-            'kitchenRmFurnitureItems': kitchenRmFurniture,
-            'diningRmFurnitureItems': diningRmFurniture,
-            'officeRmFurnitureItems': officeRmFurniture,
-            'laundryRmFurnitureItems': laundryRmFurniture,
-            'bathRmFurnitureItems': bathRmFurniture,
-            'storageRmFurnitureItems':  storageRmFurniture ,
-            'outdoorRmFurnitureItems': outdoorRmFurniture,
-            'otherRmFurnitureItems': otherRmFurniture,
+            'InventoryFurnitureItems': InventoryFurnitureItems,
         }
 
         # render the template
         return render(request, 'swapt_create_form.html', context)
-
+    
     def post(self, request, *args, **kwargs):
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        street = request.POST.get('street')
-        city = request.POST.get('city')
-        state = request.POST.get('state')
-        zip_code = request.POST.get('zip')
+        title = request.POST.get('title')
+        detail = request.POST.get('detail')
+        slug = request.POST.get('slug')
 
-        order_items = {
-            'items': []
+        order_listings = {
+            'listings': []
         }
 
-        items = request.POST.getlist('items[]')
+        listings = request.POST.getlist('listings[]')
 
-        for item in items:
-            menu_item = InventoryListing.objects.get(pk__contains=int(item))
+        for item in listings:
+            InventoryListing_item = InventoryListing.objects.get(pk__contains=int(item))
+            InventoryListing_item_attr = InventoryItemAttribute.objects.get(pk__contains=int(item))
             item_data = {
-                'id': menu_item.pk,
-                'name': menu_item.name,
-                'price': menu_item.price
+                'id': InventoryListing_item.pk,
+                'title': InventoryListing_item.title,
+                'price': InventoryListing_item.inventoryitemattribute_set.first.price
             }
 
-            order_items['items'].append(item_data)
+            order_listings['listings'].append(item_data)
 
             price = 0
             item_ids = []
 
-        for item in order_items['items']:
+        for item in order_listings['listings']:
             price += item['price']
             item_ids.append(item['id'])
 
         order = SwaptListingModel.objects.create(
             price=price,
-            name=name,
-            email=email,
-            street=street,
-            city=city,
-            state=state,
-            zip_code=zip_code
+            title=title,
+            detail=detail,
+            slug=slug,
         )
-        order.items.add(*item_ids)
+        order.listings.add(*item_ids)
 
         # After everything is done, send confirmation email to the user
         body = ('Thank you for your order! Your food is being made and will be delivered soon!\n'
@@ -877,12 +852,11 @@ class SwaptListingCreation(View):
         )
 
         context = {
-            'items': order_items['items'],
+            'listings': order_listings['listings'],
             'price': price
         }
 
-
-        return redirect('listings:swapt_confirmation', pk=order.pk)
+        return redirect('order-confirmation', pk=order.pk) 
 
       
 class SwaptListingListView(ListView):
@@ -961,7 +935,7 @@ class InventoryReviewListingsAPI(viewsets.ModelViewSet):
 class InventoryListingCreationView(CreateView):
     model = InventoryListing
     form_class = InventoryListingCreationForm
-    template_name ="form_snippet.html"
+    template_name ="/inventory/cmnty_create_form.html"
 
     def form_valid(self, form):
         listing = form.save()
