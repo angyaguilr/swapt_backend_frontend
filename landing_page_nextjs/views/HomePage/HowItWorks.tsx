@@ -77,11 +77,11 @@ export default function HowItWorksGallery() {
     return (
       <Collapse isOpen={isActive} duration={300}>
       <TabContent key={singleTab.title} isActive={isActive}>
-      <CustomAutofitGrid>
-        {desc.map((singleFeature, idx) => (
+        <CustomAutofitGrid>
+          {desc.map((singleFeature, idx) => (
           <BasicCard key={idx} {...singleFeature} />
-        ))}
-      </CustomAutofitGrid>
+          ))}
+        </CustomAutofitGrid>
       </TabContent>
     </Collapse>
     );
@@ -155,9 +155,8 @@ const TabContent = styled.div<{ isActive: boolean }>`
   display: flex;
   flex-direction: row;
   font-weight: normal;
-  margin-top: 0.5rem;
+  margin-top: 1.5rem;
   font-size: 1.5rem;
-  padding-left: calc(5rem + 1.5rem);
   ${media('<=tablet')} {
     padding-left: calc(4rem + 1.25rem);
   }
@@ -196,9 +195,9 @@ const CircleContainer = styled.div`
   }
 `;
 const CustomAutofitGrid = styled(AutofitGrid)`
-  --autofit-grid-item-size: 40rem;
+  --autofit-grid-item-size: 70rem;
   ${media('<=tablet')} {
-    --autofit-grid-item-size: 30rem;
+    --autofit-grid-item-size: 50rem;
   }
   ${media('<=phone')} {
     --autofit-grid-item-size: 100%;

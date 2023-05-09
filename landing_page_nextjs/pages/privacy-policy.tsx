@@ -8,108 +8,42 @@ export default function ContactPage() {
       <PrivacyPolicyContainer>
         <RichText>
           <p>
-            Deserunt culpa consequat non nostrud esse cillum pariatur velit consequat. Est fugiat voluptate deserunt sint culpa sint.
-            Laboris irure veniam quis ea voluptate. Nulla ad proident ex excepteur. Sunt sint ex laborum dolor quis magna aliquip qui amet
-            nulla. Laboris proident aute exercitation irure esse id eu occaecat ad ipsum est. Dolor cillum Lorem occaecat enim veniam
-            ullamco cupidatat qui dolore exercitation Lorem eu quis magna. Esse cillum aliqua et laborum eu dolore consectetur. Exercitation
-            id non quis ex qui in dolore est est proident. Laborum nisi commodo fugiat nulla et magna veniam aliquip. Aliqua duis non
-            nostrud ea velit incididunt. Laboris nostrud incididunt laborum enim eu dolor. Culpa anim sit sit ea. Labore laborum et aute ex
-            est est excepteur labore voluptate deserunt. Amet ea laboris ea culpa dolor laborum consequat aliquip reprehenderit voluptate
-            non laboris ipsum. Quis excepteur pariatur est enim duis consectetur nulla cupidatat ipsum dolor nisi ipsum. Dolore dolor
-            nostrud aute dolore. Excepteur reprehenderit aliquip amet pariatur excepteur. Aliqua commodo nulla dolor ex nisi duis
-            reprehenderit sint aliqua in minim. Lorem amet quis non veniam ut reprehenderit aliquip mollit do ullamco pariatur.
+          This Privacy Policy describes how Swapt ("we" or "our") collects, uses, and shares your personal information when you visit our website at swaptmoving.com (the “Site”) or use our services.
+          <br />
+          <br />
+          <strong>PERSONAL INFORMATION WE COLLECT  </strong><br />
+
+We automatically collect certain information about your device when you visit the Site, such as your web browser, IP address, time zone, and cookies. We also collect information about the web pages or products that you view, the websites or search terms that referred you to our Site, and how you interact with our Site. We use various technologies such as cookies, log files, web beacons, tags, and pixels to collect this information.
+
+When you make a purchase through the Site, we collect your name, billing address, shipping address, payment information (including credit card numbers or other payment types accepted), email address, and phone number. We also collect any other information that you voluntarily provide to us, such as your product preferences or reviews. We refer to this information as “Order Information.”
+
+<br /><strong>HOW DO WE USE YOUR PERSONAL INFORMATION? </strong><br />
+
+We use the Order Information to process your payment information, better your user experience, and provide you with invoices and/or order confirmations. We also use this information to communicate with you, screen orders for potential risk or fraud, and provide you with information or advertising relating to our products or services when in line with your preferences.
+
+We use the Device Information to help us improve and optimize our Site, generate analytics about how our customers browse and interact with our Site, and assess the success of our marketing and advertising campaigns.
+
+<br /><strong>SHARING YOUR PERSONAL INFORMATION </strong><br />
+
+We share your Personal Information with third-party service providers that help us use your Personal Information, as described above. For example, we use Google Analytics to understand how our customers use the Site. We may also share your Personal Information to comply with applicable laws and regulations, to respond to a subpoena, search warrant, or other lawful request for information we receive, or to otherwise protect our rights.
+
+<br /><strong>BEHAVIOURAL ADVERTISING </strong><br />
+
+We use your Personal Information to provide you with targeted advertisements or marketing communications we believe may be of interest to you. You can opt-out of targeted advertising by visiting the opt-out links provided by the services being used.
+
+<br /><strong>YOUR RIGHTS </strong><br />
+
+If you are a European resident, you have the right to access your personal information, request that your personal information be corrected, updated, or deleted. If you would like to exercise this right, please contact us through the contact information provided below.
+
+<br /><strong>DATA RETENTION </strong><br />
+
+We retain your Order Information for our records unless and until you ask us to delete this information.
+
           </p>
           <br />
           <strong>
-            Reprehenderit aliquip minim commodo magna occaecat dolore labore mollit mollit do esse deserunt. Aliquip eu reprehenderit aute{' '}
+          If you have any questions or concerns about our Privacy Policy, please contact us at [help@swaptmoving.com].{' '}
           </strong>
-          <ul>
-            <li>
-              Ipsum cillum amet aliqua laboris ut excepteur enim laborum veniam officia officia esse. Anim et voluptate qui quis cillum
-              labore ipsum incididunt consequat est ea exercitation et commodo. Consequat consequat amet officia sit non id occaecat
-              occaecat duis irure.
-            </li>
-            <li>Nostrud dolor pariatur dolore Lorem in aliqua sunt aliqua excepteur laboris exercitation proident officia.</li>
-            <li>Ut et voluptate consequat elit amet minim.</li>
-            <li>Reprehenderit et consequat ea minim est proident eu incididunt non laboris proident culpa consequat sint.</li>
-          </ul>
-
-          <table>
-            <tr>
-              <th>Column 1</th>
-              <th>Column 2</th>
-              <th>Column 3</th>
-              <th>Column 4</th>
-            </tr>
-            <tr>
-              <td>Dolor do culpa excepteur proident anim duis deserunt nulla dolor et tempor.</td>
-              <td>Eu enim qui ea nostrud minim.</td>
-              <td>Proident officia velit ut in est culpa non adipisicing excepteur exercitation aliqua.</td>
-              <td>Duis proident adipisicing magna aute sint adipisicing sit deserunt minim eu.</td>
-            </tr>
-            <tr>
-              <td>Nisi cillum culpa adipisicing cillum.</td>
-              <td>Proident nulla cillum aute occaecat mollit labore.</td>
-              <td>Non ex eiusmod tempor cupidatat consequat anim et veniam nisi sint fugiat pariatur irure.</td>
-              <td>Consectetur nisi culpa non ex ipsum deserunt magna est est magna.</td>
-            </tr>
-            <tr>
-              <td>Officia laboris anim voluptate incididunt mollit mollit.</td>
-              <td>Adipisicing est consectetur id esse nostrud culpa non exercitation cupidatat pariatur dolore amet.</td>
-              <td>Dolor ex est ad ut adipisicing irure nulla esse aliqua nisi ipsum id aliqua.</td>
-              <td>Proident anim consequat enim sit sint pariatur.</td>
-            </tr>
-            <tr>
-              <td>Sint anim sint deserunt in elit ad Lorem dolore tempor.</td>
-              <td>Consequat nostrud irure anim do ex dolor amet ea dolore incididunt esse et cupidatat.</td>
-              <td>Eu nostrud occaecat incididunt deserunt Lorem ad Lorem elit.</td>
-              <td>Id ullamco in ad adipisicing magna elit ea minim sunt esse adipisicing.</td>
-            </tr>
-            <tr>
-              <td>Ea adipisicing ut nulla aute dolore quis in reprehenderit qui ipsum Lorem magna.</td>
-              <td>Irure ex dolore consequat mollit Lorem nostrud velit irure.</td>
-              <td>Dolore minim ad esse occaecat.</td>
-              <td>Qui id tempor ut culpa.</td>
-            </tr>
-            <tr>
-              <td>Ea ut esse non dolor do cupidatat.</td>
-              <td>Deserunt pariatur minim nisi elit ipsum officia irure id culpa ipsum.</td>
-              <td>Ea cillum voluptate consectetur et reprehenderit mollit ut excepteur exercitation do fugiat duis qui.</td>
-              <td>Id laborum officia aliqua ut nulla mollit.</td>
-            </tr>
-            <tr>
-              <td>Laborum et et sint ad incididunt amet aliqua commodo esse proident.</td>
-              <td>Velit aute proident aliqua consequat minim laborum reprehenderit reprehenderit eiusmod amet in aute.</td>
-              <td>Adipisicing adipisicing consequat incididunt officia in eu minim non cupidatat nulla nostrud sint.</td>
-              <td>Excepteur minim ea ex commodo nisi aute nostrud cupidatat consectetur.</td>
-            </tr>
-            <tr>
-              <td>Anim elit aliquip elit mollit pariatur consectetur commodo.</td>
-              <td>Consequat cupidatat sit sit quis labore culpa in duis duis amet elit.</td>
-              <td>Laborum Lorem pariatur id adipisicing minim.</td>
-              <td>Deserunt Lorem do id ea aliquip sunt.</td>
-            </tr>
-            <tr>
-              <td>Laborum aute laborum elit adipisicing velit commodo occaecat amet laborum.</td>
-              <td>Dolor voluptate duis elit id.</td>
-              <td>Excepteur sunt duis id officia id reprehenderit enim exercitation dolor.</td>
-              <td>Et excepteur duis adipisicing laboris labore adipisicing id dolor adipisicing exercitation eu nisi.</td>
-            </tr>
-            <tr>
-              <td>Esse consequat commodo irure elit nostrud esse ut magna commodo ipsum.</td>
-              <td>Exercitation exercitation ipsum qui aute ad commodo exercitation aliquip nisi aute Lorem in nulla.</td>
-              <td>Sint cillum esse quis mollit fugiat incididunt officia adipisicing do sint eu.</td>
-              <td>Consectetur aute ad aliquip eu Lorem proident irure aliqua aliqua officia reprehenderit reprehenderit amet.</td>
-            </tr>
-            <tr>
-              <td>Est Lorem exercitation eiusmod sit et.</td>
-              <td>Quis aliqua irure dolor do reprehenderit non id excepteur voluptate eiusmod veniam nostrud et elit.</td>
-              <td>Minim id sit officia consectetur irure id deserunt excepteur eu.</td>
-              <td>
-                Reprehenderit pariatur reprehenderit voluptate cillum minim tempor elit sint eiusmod ullamco id incididunt officia dolore.
-              </td>
-            </tr>
-          </table>
         </RichText>
       </PrivacyPolicyContainer>
     </Page>

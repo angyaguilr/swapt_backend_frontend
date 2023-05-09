@@ -30,7 +30,7 @@ const FEATURES = [
 
 export default function FeaturesPage() {
   return (
-    <Page title="Why Swapt?" description="Swapt is innovating the way you move">
+    <Page title="Swapt Features" description="Moving sucks. Avoid the heavy lifting, expensive moving companies and storage lockers, and the insane stress of the moving-process with Swapt. Are you ready to sit back, relax, and let your listing do the moving for you? It's simple! Learn more below">
       <Wrapper>
         <FeaturesGallery />
       </Wrapper>

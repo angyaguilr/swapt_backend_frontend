@@ -2,6 +2,7 @@ import { PropsWithChildren } from 'react';
 import styled from 'styled-components';
 import { media } from 'utils/media';
 import Button from './Button';
+import NextLink from 'next/link';
 import RichText from './RichText';
 
 interface PricingCardProps {
@@ -30,7 +31,11 @@ export default function PricingCard({ title, description, benefits, isOutlined, 
           </CustomRichText>
         )}
       </PriceContainer>
-      <CustomButton>Get started</CustomButton>
+      <NextLink href="/accounts/signup/swapt-user/" passHref>
+        <Button>
+          Get Started<span>&rarr;</span>
+          </Button>
+      </NextLink>
     </Wrapper>
   );
 }

@@ -48,13 +48,13 @@ const HeaderContainer = styled.div`
 `;
 
 const Title = styled(SectionTitle)`
-  color: rgb(var(--textSecondary));
+  color: rgb(var(--primary));
   margin-bottom: 2rem;
 `;
 
 const Description = styled.div`
   font-size: 1.8rem;
-  color: rgba(var(--textSecondary), 0.8);
+  color: rgba(var(--primary), 0.8);
   text-align: center;
   max-width: 60%;
   margin: auto;

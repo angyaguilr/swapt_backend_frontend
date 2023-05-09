@@ -14,6 +14,7 @@ const footerItems: FooterItems = [
     title: 'Why Swapt?',
     items: [
       { title: 'Features', href: '/features' },
+      { title: 'About', href: '/about' },
       { title: 'FAQ', href: '/about' }
     ],
   },
@@ -29,7 +30,7 @@ const footerItems: FooterItems = [
     title: 'Legal',
     items: [
       { title: 'Privacy Policy', href: '/privacy-policy' },
-      { title: 'Cookies Policy', href: '/cookies-policy' },
+      { title: 'Terms and Conditions', href: '/terms' },
     ],
   },
   {

@@ -7,37 +7,13 @@ import SectionTitle from 'components/SectionTitle';
 export default function PricingTablesSection() {
   return (
     <Wrapper>
-      <SectionTitle>Flexible pricing for agile teams</SectionTitle>
+      <SectionTitle></SectionTitle>
       <AutofitGrid>
         <PricingCard
-          title="free"
-          description="Give us a try for free"
-          benefits={['1 seat', '1 active project', 'Ulimited viewers', '10 blocks']}
+          title="How Swapt Works"
+          description="With Swapt, you can browse for furniture items listed by the current tenants of your next apartment or home. On top of that, you can buy single or bundled furniture pieces directly on our site."
+          benefits={['Add your images and items to your account.', 'Bundle them together to create your listing.', 'Wait for the incoming tenant to make an offer and done.', 'Moving solved.']}
         >
-          $0<span>/month</span>
-        </PricingCard>
-        <PricingCard
-          title="Starter"
-          description="Best for individual desginers"
-          benefits={['1 seat', '3 active project', 'Ulimited viewers', '100 blocks', 'CSV Downloader', 'Password protection']}
-          isOutlined
-        >
-          $29<span>/month</span>
-        </PricingCard>
-        <PricingCard
-          title="Premium"
-          description="Get your team together"
-          benefits={[
-            '10 seat',
-            '10 active project',
-            'Ulimited viewers',
-            'Unlimited blocks',
-            'CSV Downloader',
-            'Password protection',
-            'Customization',
-          ]}
-        >
-          $79<span>/month</span>
         </PricingCard>
       </AutofitGrid>
     </Wrapper>

@@ -5,7 +5,10 @@ import PricingTablesSection from 'views/AboutPage/PricingTablesSection';
 
 export default function AboutPage() {
   return (
-    <Page title="About Swapt" description="Swapt is a modern marketplace designed to help college students find their next home without the stress">
+    <Page title="About Swapt" description="Swapt is a modern marketplace designed to help college students find their next home by eliminating the stress associated with the moving process.">
+      <Wrapper>
+        <PricingTablesSection />
+      </Wrapper>
       <Wrapper>
         <FaqSection />
       </Wrapper>
