@@ -24,5 +24,5 @@ urlpatterns = [
     path('',include('main.urls')),
     #path('accounts/',include('django.contrib.auth.urls')),
     path("", include("django_nextjs.urls")),
-    path("__reload__/", include("django_browser_reload.urls")),
+    path("__reload__/", include("django_browser_reload.urls"))
 ]

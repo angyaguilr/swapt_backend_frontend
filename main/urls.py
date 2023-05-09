@@ -82,9 +82,7 @@ urlpatterns=[
     path('inventory-report/', views.InventoryReportListingView.as_view(), name="inventory_report"),
     path('inventory-Listings/', views.InventoryListingsUploaded.as_view(), name='inventory_listings'),
     path('inventory-Listings/search/', views.InventoryListingsUploadedSearch.as_view(), name='inventory_listings_search'),
-    path("inventory-listing", views.InventoryListingListView.as_view(), name="inventory_listing_list"),
-    path("inventory-<int:pk>/", swapt_user_required()(views.InventoryListingDetailView.as_view()), name="inventory_listing_detail"),
-
+    
     #swapt listings:
     path('swapt-confirm/', swapt_user_required()(views.SwaptListingsConfirmationView.as_view()), name="swapt_confirm"),
     path('swapt-review/', login_required()(views.SwaptListingsReviewView.as_view()), name="swapt_review"),
