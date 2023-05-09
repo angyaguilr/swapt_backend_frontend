@@ -621,7 +621,7 @@ class SwaptListingsReviewView(View):
 class SwaptListingEditView(UpdateView):
     form_class = ListingEditForm
     model = SwaptListingModel
-    template_name = '/Users/angyaguilar/Desktop/swapt_backend_frontend/main/templates/swaptlistings/review_swaptlistings/swapt_edit_form.html'
+    template_name = '/swaptlistings/review_swaptlistings/swapt_edit_form.html'
 
     def get(self, request, *args, **kwargs):
         pk = self.kwargs['pk']
@@ -668,9 +668,9 @@ class SwaptListingEditView(UpdateView):
 
         # Go back to confirmation page if editing an unconfirmed card, otherwise return to the review page
         if self.request.user.is_swapt_user and not listing.confirmed:
-            return reverse_lazy("listings:swapt_confirm")
+            return reverse_lazy("swapt_confirm")
         if (self.request.user.is_swapt_user and listing.confirmed) or self.request.user.is_admin:
-            return reverse_lazy("listings:swapt_review")
+            return reverse_lazy("swapt_review")
 
     def form_valid(self, form):
         listing = form.save()
@@ -687,7 +687,7 @@ class SwaptListingEditView(UpdateView):
 class SwaptListingRejectView(UpdateView):
     form_class = ListingRejectForm
     model = SwaptListingModel
-    template_name = '/Users/angyaguilar/Desktop/swapt_backend_frontend/main/templates/swaptlistings/review_swaptlistings/swapt_reject.html'
+    template_name = '/swaptlistings/review_swaptlistings/swapt_reject.html'
 
     def form_valid(self, form):
         listing = form.save()
@@ -695,7 +695,7 @@ class SwaptListingRejectView(UpdateView):
         return super().form_valid(form)
     
     def get_success_url(self):
-        return reverse("listings:swapt_review") + "#nav-review-tab" # Go back to the review tab after rejecting since can only reject from that tab
+        return reverse("swapt_review") + "#nav-review-tab" # Go back to the review tab after rejecting since can only reject from that tab
 
 class SwaptListingListAPIView(generics.ListAPIView):
     queryset = SwaptListingModel.objects.filter(confirmed=True)
@@ -866,7 +866,7 @@ class SwaptListingConfirmation(View):
             'price': order.price,
         }
 
-        return render(request, 'swaptlistings/swapt_create_confirmation.html', context)
+        return render(request, '/swaptlistings/create_swaptlistings/swapt_create_confirmation.html', context)
 
     def post(self, request, pk, *args, **kwargs):
         data = json.loads(request.body)
@@ -880,7 +880,7 @@ class SwaptListingConfirmation(View):
 
 class SwaptListingPayConfirmation(View):
     def get(self, request, *args, **kwargs):
-        return render(request, 'swaptlistings/swapt_pay_confirmation.html')
+        return render(request, '/swaptlistings/swapt_pay_confirmation.html')
 
 #Community Listings
 class InventoryReviewListingsAPI(viewsets.ModelViewSet):
@@ -917,7 +917,7 @@ class InventoryReviewListingsAPI(viewsets.ModelViewSet):
 class InventoryListingCreationView(CreateView):
     model = InventoryListing
     form_class = InventoryListingCreationForm
-    template_name ="/inventory/cmnty_create_form.html"
+    template_name ="/inventoryitems/create_inventoryitems/inventory_create_form.html"
 
     def form_valid(self, form):
         listing = form.save()
@@ -943,7 +943,7 @@ class InventoryListingsConfirmationView(View):
         if not listings:
             return redirect("inventory_create")
 
-        template = "listings/inventory_confirm.html"
+        template = "/inventoryitems/create_inventoryitems/inventory_confirm.html"
         context = {"listings": InventoryListing.objects.filter(swaptuser=request.user.swaptuser, confirmed=False)}
         return render(request, template, context)
     
@@ -976,7 +976,7 @@ class InventoryListingsConfirmationView(View):
 class InventoryListingsReviewView(View):
 
     def get(self, request):
-        template = "listings/inventory_review.html"
+        template = "/inventoryitems/review_inventoryitems/inventory_review.html"
     
         # Gets different attributes from the query string, but by default will be the most expansive possible
         locations = self.request.GET.getlist('location', ['ElonNC', 'CollegeParkMD', 'BurlingtonNC', 'ColumbiaMD'])
@@ -1020,7 +1020,7 @@ class InventoryListingsReviewView(View):
 class InventoryListingEditView(UpdateView):
     form_class = ListingEditForm
     model = InventoryListing
-    template_name = 'listings/inventory_edit_form.html'
+    template_name = '/inventoryitems/review_inventoryitems/inventory_edit_form.html'
 
     def get(self, request, *args, **kwargs):
         pk = self.kwargs['pk']
@@ -1086,7 +1086,7 @@ class InventoryListingEditView(UpdateView):
 class InventoryListingRejectView(UpdateView):
     form_class = ListingRejectForm
     model = InventoryListing
-    template_name = 'listings/inventory_reject.html'
+    template_name = '/inventoryitems/review_inventoryitems/inventory_reject.html'
 
     def form_valid(self, form):
         listing = form.save()
@@ -1183,17 +1183,3 @@ class InventoryListingsUploadedSearch(View):
 
         return render(request, 'listings/inventory_listings.html', context)
     
-class InventoryListingListView(ListView):
-    model = InventoryListing
-    context_object_name = "listings"
-    template_name = "listings/inventory_listing_list.html"
-
-class InventoryListingDetailView(DetailView):
-    model = InventoryListing
-    context_object_name = "listing"
-    template_name = "listings/inventory_listing_detail.html"
-
-    def get_context_data(self, **kwargs):
-        context = super(InventoryListingDetailView, self).get_context_data()
-        context["prices"] = InventoryListingPrice.objects.filter(listing=self.get_object())
-        return context 
