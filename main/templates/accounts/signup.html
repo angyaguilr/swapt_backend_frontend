@@ -1,9 +1,14 @@
-{% extends "header.html" %}
+{% extends "base.html" %}
 
-{% block header %}
-  <h2>Sign up for a free account</h2>
-  <p class="lead">Select below the type of account you want to create</p>
-  <a href="{% url 'accounts:swaptuser_signup' %}" class="btn btn-primary">I'm a SWAPT User</a>
-  <a href="{% url 'accounts:Swapt_admin_signup' %}" class="btn btn-primary">I'm a SWAPT Admin</a>
-  <a href="{% url 'accounts:propertymanager_signup' %}" class="btn btn-primary">I'm a Property Manager</a>
-{% endblock %}
+{% block  content  %}
+<div class="mb-4 border-b border-gray-200 dark:border-gray-700 ">
+    <ul class="flex flex-wrap justify-center -mb-px text-sm font-medium text-center" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
+        <li class="mr-2" role="presentation">
+            <a href="{% url 'accounts:swaptuser_signup' %}"><button class="inline-block p-4 border-b-2 rounded-t-lg" id="swapt-user-tab" data-tabs-target="#swapt-user" type="button" role="tab" aria-controls="swapt-user" aria-selected="false">Student</button></a>
+        </li>
+        <li class="mr-2" role="presentation">
+            <a href="{% url 'accounts:propertymanager_signup' %}"><button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="prop-manager-tab" data-tabs-target="#prop-manager" type="button" role="tab" aria-controls="prop-manager" aria-selected="false">Property Manager</button></a>
+        </li>
+    </ul>
+</div>
+{% endblock content %}

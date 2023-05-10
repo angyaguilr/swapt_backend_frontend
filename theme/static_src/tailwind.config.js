@@ -10,7 +10,7 @@ const {
   const defaultTheme = require("tailwindcss/defaultTheme");
   module.exports = {
     content: [
-       "./node_modules/flowbite/**/*.js",
+        './node_modules/flowbite/**/*.js',
         /**
          * HTML. Paths to Django template files that will contain Tailwind CSS classes.
          */
@@ -59,11 +59,13 @@ const {
             colors: {
                 "primary-color": "#5E2987",
                 "secondary-color": "#E3D6F1",
+                "button-primary-color": "#5E2987",
                 "button-second-color": "#7060AE",
-                "login-bg": "#232254",
+                "login-bg": "#242154",
                 "input-bg-color": "#EBEBEB",
                 "input-text-color": "#807976",
                 "background-grayec": "#ececec",
+                "background-body": "#F8F9FA",
                 "background-grayfa": "#fafafa",
                 rede7: "#e72b2b",
             },
@@ -135,7 +137,7 @@ const {
         require('@tailwindcss/typography'),
         require('@tailwindcss/line-clamp'),
         require('@tailwindcss/aspect-ratio'),
-        require('flowbite/plugin'),
+        require('flowbite/plugin')
     ],
   }
   

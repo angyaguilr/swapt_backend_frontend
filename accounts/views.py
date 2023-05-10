@@ -45,12 +45,12 @@ class SignUpView(TemplateView):
 class UserEditView(UpdateView):
     form_class = UserEditForm
     template_name = 'accounts/edit_profile.html'
-    success_url = reverse_lazy('accounts:profile')
+    success_url = reverse_lazy('my-dashboard')
 
     def get_object(self):
         return self.request.user
 
-# SwaptUser signup page (don't need Swapt email address, do need sign up code)
+# SwaptUser signup page 
 class SwaptUserSignUpView(CreateView):
     model = User
     # The sign up code requirement comes from this form
@@ -109,7 +109,7 @@ class Activate(View):
             user.save()
             user.backend = 'django.contrib.auth.backends.ModelBackend'
             login(request, user)
-            return redirect("index")
+            return redirect("featured")
         else:
             return HttpResponse("Error, invalid link.")
 

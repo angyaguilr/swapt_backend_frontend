@@ -21,6 +21,7 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+NPM_BIN_PATH = '/usr/local/bin/npm'
 
 # Stripe
 STRIPE_PUBLISHABLE_KEY = os.getenv('STRIPE_PUBLISHABLE_KEY')
@@ -167,7 +168,7 @@ STATICFILES_DIRS = (
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-LOGIN_REDIRECT_URL='home'
+LOGIN_REDIRECT_URL='featured'
 LOGOUT_REDIRECT_URL='login'
 
 PAYPAL_RECEIVER_EMAIL = 'sb-c5xgx6555500@business.example.com'

@@ -226,7 +226,7 @@ def signup(request):
 			pwd=form.cleaned_data.get('password1')
 			user=authenticate(username=username,password=pwd)
 			login(request, user)
-			return redirect('home')
+			return redirect('featured')
 	form=SignupForm
 	return render(request, 'registration/signup.html',{'form':form})
 
