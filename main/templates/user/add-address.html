@@ -3,7 +3,7 @@
 {% block content %}
 <main class="container mx-auto sm:px-4 my-4">
    <!-- Featured Products -->
-   <h3 class="my-4 border-b pb-1">Address Book <a href="{% url 'add-address' %}" class="float-right inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded  no-underline py-1 px-2 leading-tight text-xs  bg-green-500 text-white hover:green-600"><i class="fa fa-plus"></i></a></h3>
+   <h3 class="my-4 border-b pb-1">Address Book <a href="{% url 'add-address' %}" class="float-right inline-block align-middle text-center select-none border font-quicksand font-normal whitespace-no-wrap rounded  no-underline py-1 px-2 leading-tight text-xs  bg-green-500 text-white hover:green-600"><i class="fa fa-plus"></i></a></h3>
    <div class="flex flex-wrap ">
       <div class="md:w-1/4 pr-4 pl-4">
          {% include 'user/user-sidebar.html' %}
@@ -18,7 +18,7 @@
                {{form.as_table}}
                <tr>
                   <td colspan="2">
-                     <input type="submit" value="Save" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline bg-blue-600 text-white hover:bg-blue-600" />
+                     <input type="submit" value="Save" class="inline-block align-middle text-center select-none border font-quicksand font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline bg-blue-600 text-white hover:bg-blue-600" />
                   </td>
                </tr>
             </form>

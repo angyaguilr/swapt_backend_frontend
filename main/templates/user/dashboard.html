@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<body class="font-inter grid grid-cols-5 max-w-screen-2xl mx-auto border-x-2 border-gray-100">
+<body class="font-quicksand grid grid-cols-5 max-w-screen-2xl mx-auto border-x-2 border-gray-100">
     {% if user.is_authenticated %}
     <!--Sidebar-->
     {% include 'user/user-sidebar.html' %}
@@ -9,9 +9,9 @@
         <!-- Nav -->
         <nav class="px-8 py-6 bg-white flex items-center justify-between">
             <div class="">
-                <span class="text-gray-600">Hi</span>
-                <span class="text-gray-800 font-bold ml-1"> {{ user.first_name }}</span>
-                <div hidden class="text-indigo-500 text-xs mt-1 font-semibold">Swapt</div>
+                <span class="text-gray-600 font-quicksand">Hi</span>
+                <span class="text-gray-800 font-quicksand font-bold ml-1"> {{ user.first_name }}</span>
+                <div hidden class="text-indigo-500 text-xs mt-1 font-quicksand font-semibold">Swapt</div>
             </div>
             <div class="flex items-center text-gray-500 space-x-8">
                 <div class="relative items-center content-center flex">
@@ -60,14 +60,14 @@
                 <!-- Members -->
                 <section class="col-span-2">
                     <div class="text-xs flex items-center justify-between w-full">
-                        <span class="font-semibold">Inventory Items</span>
-                        <a href="/product-list" class="text-indigo-400 font-medium text-xs">View all</a>
+                        <span class="font-semibold font-quicksand">Inventory Items</span>
+                        <a href="/product-list" class="text-indigo-400 font-medium font-quicksand text-xs">View all</a>
                     </div>
 
                     <div class="grid grid-cols-4 gap-x-4 mt-4 ">
                         <div
                             class="aspect-square rounded-2xl bg-white flex justify-center items-center flex-col text-indigo-400 text-sm
-                            hover:shadow hover:text-indigo-500 hover:font-medium cursor-pointer group">
+                            hover:shadow hover:text-indigo-500 hover:font-medium font-quicksand cursor-pointer group">
                             <span
                                 class="bg-indigo-100 rounded-full group-hover:text-indigo-500  text-indigo-400 p-2.5 border border-indigo-300  border-dashed mb-3">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
@@ -97,7 +97,7 @@
                     <div class="grid grid-cols-5 gap-x-4 mt-6 ">
                         <!-- activities -->
                         <div class="col-span-3 ">
-                            <div class="font-semibold text-xs ">Your Purchases</div>
+                            <div class="font-semibold font-quicksand text-xs ">Your Purchases</div>
                             <div class="relative mt-4 bg-white w-full rounded-2xl">
                                 <div
                                     class="absolute top-4 right-4 inline-flex items-center text-xs text-gray-500 space-x-1">
@@ -119,13 +119,13 @@
 
                         <!-- meetings -->
                         <div class="col-span-2">
-                            <div class="font-semibold text-xs justify-between text-start">Swapt Listings
-                                <a href="/product-list" class="text-indigo-400 font-medium text-xs text-end">View all</a>
+                            <div class="font-semibold font-quicksand text-xs justify-between text-start">Swapt Listings
+                                <a href="/product-list" class="text-indigo-400 font-quicksand font-medium text-xs text-end">View all</a>
                             </div>
                             <div class="mt-4 flex flex-col space-y-4 overflow-hidden h-72 overflow-y-auto no-scrollbar">
 
-                                <div class="bg-white rounded-2xl p-5 flex space-x-4 items-center text-indigo-400 text-sm
-                                hover:shadow hover:text-indigo-500 hover:font-medium cursor-pointer group">
+                                <div class="bg-white rounded-2xl p-5 flex space-x-4 items-center text-indigo-400 text-sm font-quicksand
+                                hover:shadow hover:text-indigo-500 hover: font-quicksand hover:font-medium cursor-pointer group">
                                     <span
                                     class="bg-indigo-100 rounded-full group-hover:text-indigo-500  text-indigo-400 p-2.5 border border-indigo-300  border-dashed mb-3">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
@@ -177,7 +177,7 @@
                                 <img src="media/userprofileimg.svg" class="w-20 h-20 rounded-full mb-4 border border-blue-200"
                                     alt="" srcset="">
                             </span>
-                            <div class="font-semibold"> {{ user.first_name }}<span>   </span>{{ user.last_name }}</div>
+                            <div class="font-semibold font-quicksand"> {{ user.first_name }}<span>   </span>{{ user.last_name }}</div>
                             {% if user.is_admin %}
                             <div class="text-xxs text-gray-400 mt-1.5">Swapt Admin</div>
                             {% elif user.is_swapt_user %}
@@ -199,7 +199,7 @@
                                     class="w-12 h-12" alt="" srcset="">
                             </span>
                             <div class="flex-1">
-                                <div class="font-semibold text-sm">{{add.address}}</div>
+                                <div class="font-semibold font-quicksand text-sm">{{add.address}}</div>
                                 <div class="text-xxs text-gray-400 mt-1">{{add.propertyname}}</div>
                             </div>
                             <a href="#" class="text-gray-500 hover:text-indigo-500">
@@ -217,13 +217,13 @@
 
                     <div class="mt-8 text-xs">
                         <div class="text-gray-500">Email</div>
-                        <div class="mt-1.5 font-semibold "> {{ user.email }}</div>
+                        <div class="mt-1.5 font-quicksand font-semibold "> {{ user.email }}</div>
 
                         <div class="text-gray-500 mt-5">Username</div>
-                        <div class="mt-1.5 font-semibold">{{ user.username }}</div>
+                        <div class="mt-1.5 font-quicksand font-semibold">{{ user.username }}</div>
 
                         <div class="text-gray-500 mt-5">University Campus</div>
-                        <div class="mt-1.5 font-semibold"> {{ user.campusSignUp }}</div>
+                        <div class="mt-1.5 font-quicksand font-semibold"> {{ user.campusSignUp }}</div>
 
                     </div>
                 </section>

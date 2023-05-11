@@ -22,7 +22,7 @@
                <tbody>
                   {% for order in orders %}
                   <tr>
-                     <td><a href="{% url 'my_order_items' order.id %}" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded  no-underline py-1 px-2 leading-tight text-xs  bg-gray-900 text-white hover:bg-gray-900">{{order.id}}</a></td>
+                     <td><a href="{% url 'my_order_items' order.id %}" class="inline-block align-middle text-center select-none border font-quicksand font-normal whitespace-no-wrap rounded  no-underline py-1 px-2 leading-tight text-xs  bg-gray-900 text-white hover:bg-gray-900">{{order.id}}</a></td>
                      <td>{{order.total_amt}}</td>
                      <td>{{order.paid_status}}</td>
                      <td>{{order.order_dt}}</td>

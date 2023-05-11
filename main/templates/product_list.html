@@ -16,11 +16,11 @@
             <a href="/product/{{product.slug}}/{{product.id}}">
                <img src="/media/{{product.productattribute_set.first.image}}" alt="{{product.title}}" class="h-80 w-72 object-cover rounded-t-xl" />
                <div class="px-4 py-3 w-72">
-                  <p class="text-lg font-bold text-black truncate block capitalize">
+                  <p class="text-lg font-bold font-quicksand text-black truncate block capitalize">
             <a href="/product/{{product.slug}}/{{product.id}}">{{product.title}}</a></p>
-            <p class="text-lg font-bold text-gray-700 truncate block"><a href="/product/{{product.slug}}/{{product.id}}">{{product.location}}</a></p>
+            <p class="text-lg font-bold font-quicksand text-gray-700 truncate block"><a href="/product/{{product.slug}}/{{product.id}}">{{product.location}}</a></p>
             <div class="flex items-center">
-            <p class="text-lg font-normal text-black cursor-auto my-3">
+            <p class="text-lg font-normal font-quicksand text-black cursor-auto my-3">
             $ <span class="product-price-{{product.id}}">{{product.productattribute_set.first.price}}</span>
             </p>
             <p class="text-sm text-gray-600 cursor-auto ml-2">USD</p>
@@ -29,13 +29,13 @@
             <input type="hidden" class="product-image-{{product.id}}" value="{{product.productattribute_set.first.image}}" />
             <input type="hidden" class="product-id-{{product.id}}" value="{{product.id}}" />
             <input type="hidden" class="product-title-{{product.id}}" value="{{product.title}}" />
-            <button class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded  no-underline py-1 px-2 leading-tight text-xs text-black add-to-cart" data-index="{{product.id}}">
+            <button class="inline-block align-middle text-center select-none border font-normal font-quicksand whitespace-no-wrap rounded  no-underline py-1 px-2 leading-tight text-xs text-black add-to-cart" data-index="{{product.id}}">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bag-plus" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z" />
             <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
             </svg>
             </button>
-            <button class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded  no-underline py-1 px-2 leading-tight text-xs text-white hover:bg-red-700">
+            <button class="inline-block align-middle text-center select-none border font-normal font-quicksand whitespace-no-wrap rounded  no-underline py-1 px-2 leading-tight text-xs text-white hover:bg-red-700">
             <svg
                width="24"
                height="24"
@@ -65,7 +65,7 @@
       <!-- 🛑 Grid Section - Ends Here -->
       <div class="justify-self-end pr-4 pl-4">
          <!-- Filters -->
-         <p class="my-4 text-center"><button id="loadMore" data-total="{{total_data}}" data-limit="3" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded  no-underline bg-gray-900 text-white hover:bg-gray-900 py-1 px-2 leading-tight text-xs ">Load More</button></p>
+         <p class="my-4 text-center"><button id="loadMore" data-total="{{total_data}}" data-limit="3" class="inline-block align-middle text-center select-none border font-normal font-quicksand whitespace-no-wrap rounded  no-underline bg-gray-900 text-white hover:bg-gray-900 py-1 px-2 leading-tight text-xs ">Load More</button></p>
       </div>
    </div>
 </main>

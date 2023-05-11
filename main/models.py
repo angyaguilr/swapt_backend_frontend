@@ -385,8 +385,8 @@ class SwaptListingModel(models.Model):
         ('Wood', 'Wood'),
     ]
     LOCATION_CHOICES = [
-        ('ElonNC', 'ElonNC'),
-        ('BurlingtonNC', 'BurlingtonNC'),
+        ('Elon, NC', 'Elon, NC'),
+        ('Burlington, NC', 'Burlington, NC'),
     ]
     #unique fields for swaptlistingsmodel
     propertymanager = models.ForeignKey(propManager, on_delete=CASCADE, null=True)

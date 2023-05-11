@@ -13,7 +13,7 @@
             <div
                class="flex justify-start items-start flex-grow-0 flex-shrink-0 relative gap-2.5 px-2 py-1 rounded-md"
                >
-               <p class="flex-grow-0 flex-shrink-0 text-sm font-semibold text-center text-[#636b75]">
+               <p class="flex-grow-0 flex-shrink-0 text-sm font-semibold font-quicksand text-center text-[#636b75]">
                   LISTING DETAILS
                </p>
             </div>
@@ -23,14 +23,14 @@
                class="flex flex-col justify-start items-start self-stretch flex-grow-0 flex-shrink-0 relative overflow-hidden pb-4"
                >
                <p
-                  class="self-stretch flex-grow-0 flex-shrink-0 w-[532px] text-4xl font-semibold text-center"
+                  class="self-stretch flex-grow-0 flex-shrink-0 w-[532px] text-4xl font-semibold font-quicksand text-center"
                   >
                   <span
-                     class="self-stretch flex-grow-0 flex-shrink-0 w-[532px] text-4xl font-semibold text-center text-[#0e0f11]"
+                     class="self-stretch flex-grow-0 flex-shrink-0 w-[532px] text-4xl font-semibold font-quicksand text-center text-[#0e0f11]"
                      >
                   Location &#x26; </span
                      ><span
-                     class="self-stretch flex-grow-0 flex-shrink-0 w-[532px] text-4xl font-semibold text-center text-[#957fef]"
+                     class="self-stretch flex-grow-0 flex-shrink-0 w-[532px] text-4xl font-semibold font-quicksand text-center text-[#957fef]"
                      >Details</span
                      >
                </p>
@@ -60,7 +60,7 @@
                   <div
                      class="flex justify-start items-start flex-grow-0 flex-shrink-0 relative gap-2.5 py-1 rounded-md"
                      >
-                     <p class="flex-grow-0 flex-shrink-0 text-md font-semibold text-center text-[#636b75]">
+                     <p class="flex-grow-0 flex-shrink-0 text-md font-semibold font-quicksand text-center text-[#636b75]">
                         DETAILS
                      </p>
                   </div>
@@ -70,7 +70,7 @@
                      class="flex flex-col justify-start items-start self-stretch flex-grow-0 flex-shrink-0 relative overflow-hidden pb-4"
                      >
                      <p
-                        class="self-stretch flex-grow-0 flex-shrink-0 w-[398px] text-2xl font-medium text-left text-[#0e0f11]"
+                        class="self-stretch flex-grow-0 flex-shrink-0 w-[398px] text-2xl font-medium font-quicksand text-left text-[#0e0f11]"
                         >
                         {{data.title}}
                      </p>
@@ -216,7 +216,7 @@
                   <div
                      class="flex justify-start items-start flex-grow-0 flex-shrink-0 relative gap-2.5 py-1 rounded-md"
                      >
-                     <p class="flex-grow-0 flex-shrink-0 text-md font-semibold text-center text-[#636b75]">
+                     <p class="flex-grow-0 flex-shrink-0 text-md font-semibold font-quicksand text-center text-[#636b75]">
                         SPECIFICATIONS
                      </p>
                   </div>
@@ -232,7 +232,7 @@
                      <tr>
                         <th class="flex-grow w-[366px] text-base text-left text-[#636b75]">Color</th>
                         <td>  {% for color in colors %}
-                           <button class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded  no-underline py-3 px-4 leading-tight text-xl choose-color" data-color="{{color.color__id}}" style="background-color: {{color.color__color_code}}"></button>
+                           <button class="inline-block align-middle text-center select-none border font-normal font-quicksand whitespace-no-wrap rounded  no-underline py-3 px-4 leading-tight text-xl choose-color" data-color="{{color.color__id}}" style="background-color: {{color.color__color_code}}"></button>
                            {% endfor %}
                         </td>
                      </tr>
@@ -240,7 +240,7 @@
                   <div
                      class="flex flex-row justify-end items-end w-72 h-11  gap-2 px-4 py-3 rounded-[999px] bg-[#d5ceff]"
                      >
-                     <p class="flex-grow w-64 text-base font-bold text-center text-[#5e2987]">Add to Cart</p>
+                     <p class="flex-grow w-64 text-base font-bold font-quicksand text-center text-[#5e2987]">Add to Cart</p>
                      <div class="relative flex items-stretch w-full my-3" style="width:30%;">
                         <input type="hidden" type="number" value="1" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded product-qty-{{data.id}}" id="productQty" />
                         <div class="input-group-append">

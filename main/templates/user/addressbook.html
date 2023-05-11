@@ -3,7 +3,7 @@
 {% block content %}
 <main class="container mx-auto sm:px-4 my-4">
    <!-- Featured Products -->
-   <h3 class="my-4 border-b pb-1">Address Book <a href="{% url 'add-address' %}" class="float-right inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded  no-underline py-1 px-2 leading-tight text-xs  bg-green-500 text-white hover:green-600"><i class="fa fa-plus"></i></a></h3>
+   <h3 class="my-4 border-b pb-1">Address Book <a href="{% url 'add-address' %}" class="float-right inline-block align-middle text-center select-none border font-quicksand font-normal whitespace-no-wrap rounded  no-underline py-1 px-2 leading-tight text-xs  bg-green-500 text-white hover:green-600"><i class="fa fa-plus"></i></a></h3>
    <div class="flex flex-wrap ">
       <div class="md:w-1/4 pr-4 pl-4">
          {% include 'user/user-sidebar.html' %}
@@ -20,13 +20,13 @@
                   {% if add.status %}
                   <div class="py-3 px-6 bg-gray-200 border-t-1 border-gray-300">
                      <i class="fa fa-check-circle text-green-500 check{{add.id}} check"></i>
-                     <button style="display:none;" data-address="{{add.id}}" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded  no-underline  text-xs  bg-teal-500 text-white hover:bg-teal-600 activate-address inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline{{add.id}} actbtn">Activate</button>
+                     <button style="display:none;" data-address="{{add.id}}" class="inline-block align-middle text-center select-none border font-quicksand font-normal whitespace-no-wrap rounded text-xs  bg-teal-500 text-white hover:bg-teal-600 activate-address  py-1 px-3 leading-normal no-underline{{add.id}} actbtn">Activate</button>
                      <a href="{% url 'update-address' add.id %}" class="float-right"><i class="fa fa-edit"></i></a>
                   </div>
                   {% else %}
                   <div class="py-3 px-6 bg-gray-200 border-t-1 border-gray-300 footer{{add.id}}">
                      <i style="display:none;" class="fa fa-check-circle text-green-500 check{{add.id}} check"></i>
-                     <button data-address="{{add.id}}" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded  no-underline  text-xs  bg-teal-500 text-white hover:bg-teal-600 activate-address inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline{{add.id}} actbtn">Activate</button>
+                     <button data-address="{{add.id}}" class="inline-block align-middle text-center select-none border font-quicksand font-normal whitespace-no-wrap rounded text-xs  bg-teal-500 text-white hover:bg-teal-600 activate-address py-1 px-3 leading-normal no-underline{{add.id}} actbtn">Activate</button>
                      <a href="{% url 'update-address' add.id %}" class="float-right"><i class="fa fa-edit"></i></a>
                   </div>
                   {% endif %}

@@ -1,7 +1,7 @@
 <!-- sidebar -->
 {% if user.is_swapt_user %}
 <div class="col-span-1 h-screen px-7 py-8 bg-white border-r border-r-gray-100">
-   <div class="font-bold text-lg pl-6 flex items-center space-x-3">
+   <div class="font-bold font-quicksand text-lg pl-6 flex items-center space-x-3">
       <span hidden>
          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-indigo-600" viewBox="0 0 20 20" fill="currentColor">
             <path
@@ -13,7 +13,7 @@
    <div class="mt-12">
       <ul class="flex flex-col space-y-3 text-gray-500  text-sm sidebar-menu">
          {% if request.path == '/my-dashboard' %}
-         <li class="flex space-x-3 items-center font-medium text-indigo-600 bg-indigo-100 px-6 py-3 rounded-lg">
+         <li class="flex space-x-3 items-center font-medium font-quicksand text-indigo-600 bg-indigo-100 px-6 py-3 rounded-lg">
             <a href="{% url 'my_dashboard' %}" class=" {% if request.path == '/my-dashboard' %}active {% endif %}">
                <span>
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
@@ -125,7 +125,7 @@
             <span>Dashboard</span>
             </a>
          </li>
-         <li class="flex space-x-3 items-center font-medium text-indigo-600 bg-indigo-100 px-6 py-3 rounded-lg">
+         <li class="flex space-x-3 items-center font-medium font-quicksand text-indigo-600 bg-indigo-100 px-6 py-3 rounded-lg">
             <a href="{% url 'edit-profile' %}" class=" {% if request.path == '/edit-profile' %}active {% endif %}">
                <span>
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -250,7 +250,7 @@
             <span>My Listings</span>
             </a>
          </li>
-         <li class="flex space-x-3 items-center font-medium text-indigo-600 bg-indigo-100 px-6 py-3 rounded-lg">
+         <li class="flex space-x-3 items-center font-medium font-quicksand text-indigo-600 bg-indigo-100 px-6 py-3 rounded-lg">
             <a href="{% url 'my_orders' %}" class=" {% if request.path == '/my-orders' %}active {% endif %}">
                <span>
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
@@ -362,7 +362,7 @@
             <span>My Purchases</span>
             </a>
          </li>
-         <li class="flex space-x-3 items-center font-medium text-indigo-600 bg-indigo-100 px-6 py-3 rounded-lg">
+         <li class="flex space-x-3 items-center font-medium font-quicksand text-indigo-600 bg-indigo-100 px-6 py-3 rounded-lg">
             <a href="{% url 'my_wishlist' %}" class=" {% if request.path == '/my-wishlist' %}active {% endif %}">
                <span>
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
@@ -474,7 +474,7 @@
             <span>My Likes</span>
             </a>
          </li>
-         <li class="flex space-x-3 items-center font-medium text-indigo-600 bg-indigo-100 px-6 py-3 rounded-lg">
+         <li class="flex space-x-3 items-center font-medium font-quicksand text-indigo-600 bg-indigo-100 px-6 py-3 rounded-lg">
             <a href="{% url 'my-offers' %}" class=" {% if request.path == '/my-offers' %}active {% endif %}">
                <span>
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
@@ -586,7 +586,7 @@
             <span>My Offers</span>
             </a>
          </li>
-         <li class="flex space-x-3 items-center font-medium text-indigo-600 bg-indigo-100 px-6 py-3 rounded-lg">
+         <li class="flex space-x-3 items-center font-medium font-quicksand text-indigo-600 bg-indigo-100 px-6 py-3 rounded-lg">
             <a href="{% url 'my-addressbook' %}" class=" {% if request.path == '/my-addressbook' %}active {% endif %}">
                <span>
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
@@ -606,7 +606,7 @@
 </div>
 {% elif user.is_admin %}
 <div class="col-span-1 h-screen px-7 py-8 bg-white border-r border-r-gray-100">
-   <div class="font-bold text-lg pl-6 flex items-center space-x-3">
+   <div class="font-bold  font-quicksand text-lg pl-6 flex items-center space-x-3">
       <span hidden>
          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-indigo-600" viewBox="0 0 20 20" fill="currentColor">
             <path
@@ -618,7 +618,7 @@
    <div class="mt-12">
       <ul class="flex flex-col space-y-3 text-gray-500  text-sm sidebar-menu">
          {% if request.path == '/my-dashboard' %}
-         <li class="flex space-x-3 items-center font-medium text-indigo-600 bg-indigo-100 px-6 py-3 rounded-lg">
+         <li class="flex space-x-3 items-center font-medium  font-quicksand text-indigo-600 bg-indigo-100 px-6 py-3 rounded-lg">
             <a href="{% url 'my_dashboard' %}" class=" {% if request.path == '/my-dashboard' %}active {% endif %}">
                <span>
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
@@ -730,7 +730,7 @@
             <span>Dashboard</span>
             </a>
          </li>
-         <li class="flex space-x-3 items-center font-medium text-indigo-600 bg-indigo-100 px-6 py-3 rounded-lg">
+         <li class="flex space-x-3 items-center font-medium font-quicksand text-indigo-600 bg-indigo-100 px-6 py-3 rounded-lg">
             <a href="{% url 'edit-profile' %}" class=" {% if request.path == '/edit-profile' %}active {% endif %}">
                <span>
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -855,7 +855,7 @@
             <span>My Listings</span>
             </a>
          </li>
-         <li class="flex space-x-3 items-center font-medium text-indigo-600 bg-indigo-100 px-6 py-3 rounded-lg">
+         <li class="flex space-x-3 items-center font-medium font-quicksand text-indigo-600 bg-indigo-100 px-6 py-3 rounded-lg">
             <a href="{% url 'my_orders' %}" class=" {% if request.path == '/my-orders' %}active {% endif %}">
                <span>
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
@@ -967,7 +967,7 @@
             <span>My Purchases</span>
             </a>
          </li>
-         <li class="flex space-x-3 items-center font-medium text-indigo-600 bg-indigo-100 px-6 py-3 rounded-lg">
+         <li class="flex space-x-3 items-center font-medium font-quicksand text-indigo-600 bg-indigo-100 px-6 py-3 rounded-lg">
             <a href="{% url 'my_wishlist' %}" class=" {% if request.path == '/my-wishlist' %}active {% endif %}">
                <span>
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
@@ -1079,7 +1079,7 @@
             <span>My Likes</span>
             </a>
          </li>
-         <li class="flex space-x-3 items-center font-medium text-indigo-600 bg-indigo-100 px-6 py-3 rounded-lg">
+         <li class="flex space-x-3 items-center font-medium font-quicksand text-indigo-600 bg-indigo-100 px-6 py-3 rounded-lg">
             <a href="{% url 'my-offers' %}" class=" {% if request.path == '/my-offers' %}active {% endif %}">
                <span>
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
@@ -1191,7 +1191,7 @@
             <span>My Offers</span>
             </a>
          </li>
-         <li class="flex space-x-3 items-center font-medium text-indigo-600 bg-indigo-100 px-6 py-3 rounded-lg">
+         <li class="flex space-x-3 items-center font-medium font-quicksand text-indigo-600 bg-indigo-100 px-6 py-3 rounded-lg">
             <a href="{% url 'my-addressbook' %}" class=" {% if request.path == '/my-addressbook' %}active {% endif %}">
                <span>
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
