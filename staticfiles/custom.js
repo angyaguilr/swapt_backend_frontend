@@ -36,7 +36,7 @@ $(document).ready(function(){
 		
 	
 	}
-	
+	  
 	
 	let menu = document.querySelectorAll("[data]");
 	for(i=0 ; i< menu.length ; i++){

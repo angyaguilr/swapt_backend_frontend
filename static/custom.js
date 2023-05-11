@@ -48,7 +48,7 @@ $(document).ready(function(){
 			svg.classList.toggle("border")
 		})
 	}
-	
+	  
 	$("#showFilterSection").on('click',function(){
 		var fSection = document.getElementById("filterSection");
     if (fSection.classList.contains("hidden")) {

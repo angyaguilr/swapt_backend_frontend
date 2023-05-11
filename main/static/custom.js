@@ -45,7 +45,7 @@ $(document).ready(function(){
 		// End
 	});	
 
-
+	  
 	// InventoryListing Variation
 	$(".choose-size").hide();
 
