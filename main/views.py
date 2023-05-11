@@ -43,6 +43,21 @@ def privacy_policy(request):
 def cookies_policy(request):
     return render_nextjs_page_sync(request)
 
+def terms(request):
+    return render_nextjs_page_sync(request)
+
+def features(request):
+    return render_nextjs_page_sync(request)
+
+def about(request):
+    return render_nextjs_page_sync(request)
+
+def aboutcompany(request):
+    return render_nextjs_page_sync(request)
+
+def contact(request):
+    return render_nextjs_page_sync(request)
+
 def featuredListings(request):
 	banners=Banner.objects.all().order_by('-id')
 	data=SwaptListingModel.objects.filter(is_featured=True).order_by('-id')

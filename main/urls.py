@@ -17,6 +17,11 @@ urlpatterns=[
     path('', views.index, name="index"),
     path('privacy-policy', views.privacy_policy, name="privacy_policy"),
     path('cookies-policy', views.cookies_policy, name="cookies_policy"),
+    path('terms', views.terms, name="terms"),
+    path('features', views.features, name="features"),
+    path('about', views.terms, name="about"),
+    path('aboutcompany', views.aboutcompany, name="aboutcompany"),
+    path('contact', views.contact, name="contact"),
     #product-lists 
     #features is the first page user sees if logged in -- if user is not logged in --> redirect to login
     path('featured',views.featuredListings,name='featured'),

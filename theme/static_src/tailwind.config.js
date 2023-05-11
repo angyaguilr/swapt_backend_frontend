@@ -46,9 +46,9 @@ const {
     ],
     theme: {
         extend: {
-          fontSize: {
-              'xxs': '.65rem'
-          },
+            fontSize: {
+                'xxs': '.65rem'
+            },
             fontFamily: {
                 quicksand: ["Quicksand", ...defaultTheme.fontFamily.sans],
                 roboto: ["Roboto", , ...defaultTheme.fontFamily.sans],
