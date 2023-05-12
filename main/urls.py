@@ -79,7 +79,8 @@ urlpatterns=[
     path("webhooks/stripe/", views.StripeWebhookView.as_view(), name="stripe_webhook"), #updated line
     #Inventory listings:
     path('inventory-create-item/', views.InventoryListingCreationView.as_view(), name="inventory_create"),
-    path('inventory-add-attributes/', views.InventoryListingAttributesCreationView.as_view(), name="inventory_add_attribute"),
+    path('inventory-add-attributes2/', views.InventoryListingAttributesCreationView.as_view(), name="inventory_add_attribute"),
+    path('inventory-add-attributes/',views.InventoryListingAttributesCreation_request, name='InventoryListingAttributes'),
     path('inventory-confirm/', swapt_user_required()(views.InventoryListingsConfirmationView.as_view()), name="inventory_confirm"),
     path('inventory-review/', login_required()(views.InventoryListingsReviewView.as_view()), name="inventory_review"),
     path('inventory-edit/<int:pk>/', swapt_user_required()(views.InventoryListingEditView.as_view()), name="inventory_edit"),

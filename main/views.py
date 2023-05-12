@@ -15,7 +15,7 @@ from django.views.generic import View, UpdateView, CreateView, DetailView, ListV
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
 from django.template.loader import render_to_string
-from .forms import InventoryListingAttributeCreationForm, SignupForm, ListingCreationForm, OffersAdd,AddressBookForm,ProfileForm, ListingEditForm, ListingRejectForm, InventoryListingCreationForm
+from .forms import InventoryListingAttributeCreationForm, SignupForm, SwaptListingCreationForm, OffersAdd,AddressBookForm,ProfileForm, ListingEditForm, ListingRejectForm, InventoryListingCreationForm
 from .serializers import InventoryListingSerializer, SwaptListingSerializer, SwaptCampusPropertyNamePairSerializer, CampusPropertyNamePairSerializer, CampusPropertyNamePairSerializer, InventoryListingReviewSerializer, SwaptListingReviewSerializer
 from django.contrib.auth import login,authenticate
 from django.contrib.auth.decorators import login_required
@@ -800,9 +800,9 @@ class SwaptListingsUploadedSearch(View):
         return render(request, 'swaptlistings/swapt_listings.html', context)
 
 class SwaptListingCreation(View):
-    form_class = ListingCreationForm
     model = SwaptListingModel
-    template_name = 'swaptlistings/swapt_create_form.html'
+    form_class = SwaptListingCreationForm
+    template_name ="swaptlistings/swapt_create_form.html"
 
     def get(self, request, *args, **kwargs):
         # get every item from each category
@@ -859,7 +859,6 @@ class SwaptListingCreation(View):
 
         order = SwaptListingModel.objects.create(
             #price=price,
-            user=user,
             listings=InventoryListing_item,
             title=title,
             detail=detail,
@@ -963,7 +962,7 @@ class InventoryListingCreationView(CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse("inventory_review") + "#nav-inventory-tab"
+        return reverse("inventory_add_attribute")
 
 class InventoryListingAttributesCreationView(CreateView):
     model = InventoryItemAttribute
@@ -980,7 +979,23 @@ class InventoryListingAttributesCreationView(CreateView):
 
     def get_success_url(self):
         return reverse("inventory_review") + "#nav-inventory-tab"
+    
+def InventoryListingAttributesCreation_request(request):
+    if request.method == "POST":
+        form = InventoryListingAttributeCreationForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
 
+            # Getting the current instance object to display in the template
+            img_object = form.instance
+
+            return render(
+                request, "inventoryitems/inventory_add_attributes.html", {"form": form, "img_obj": img_object}
+            )
+    else:
+        form = InventoryListingAttributeCreationForm()
+
+    return render(request, "inventoryitems/inventory_add_attributes.html", {"form": form})
 class InventoryListingsConfirmationView(View):
 
     # Returns view of swapt_user's unconfirmed listings (this page is redirected to right after the upload page if successful)

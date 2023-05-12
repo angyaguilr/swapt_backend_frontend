@@ -5,13 +5,7 @@
 <h1>  </h1>
 <form action="" method="POST" enctype="multipart/form-data">
   {% csrf_token %}
-  {% for field in form %}
-  <div>
-    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ field.label }}</label>
-    <div class="bg-gray-100 border border-gray-100 text-[#807976] sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-       {%render_field field placeholder=field.label class+="w-full text-sm font-bold text-left text-[#807976] flex justify-start items-center relative overflow-hidden gap-2 bg-gray-100 border-0 border-gray-100" %} </div>
- </div>
-  {% endfor %}
+  {{ form.as_p }}  
   </br>
   {% if messages %}
   {% for message in messages %}
@@ -24,5 +18,9 @@
     Create
     </button>
 </form>
+{% if img_obj %}  
+<h3>Succesfully uploaded : {{img_obj.color}}</h3>  
+<img src="{{ img_obj.image.url}}" alt="connect" style="max-height:300px">  
+{% endif %}
 
 {% endblock content%}

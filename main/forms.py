@@ -27,15 +27,15 @@ class ProfileForm(UserChangeForm):
 		model=User
 		fields=('first_name','last_name','email','username')
 
-class ListingCreationForm(ModelForm):
+class SwaptListingCreationForm(ModelForm):
     
     # Instead of creating a new model, just using listing model with arbitrary data for required fields
     # Specifically, using title field for commMkt and stage=5 is for commMkt listings
-    title = forms.CharField(max_length=250, label="InventoryListing Title")
+    title = forms.CharField(max_length=250, label="Swapt Listing Title")
 
     class Meta:
         model = SwaptListingModel
-        fields = ("title", "detail", "condition",)
+        fields = ("title", "detail", "slug", "specs", "category", "condition", "move_out_date", "location", "brand", )
     
     def save(self, commit=True):
         self.full_clean() # calls clean function
@@ -55,11 +55,11 @@ class InventoryListingCreationForm(ModelForm):
 
     class Meta:
         model = InventoryListing
-        fields = ("title", "slug", "detail", "specs", "category", "condition", "location", "pickupmethod", )
+        fields = ("title", "slug", "detail", "specs", "category", "tags", "condition", "location", "pickupmethod", )
     
     def save(self, commit=True):
         self.full_clean() # calls clean function
-        listing = InventoryListing(stage=2, confirmed=False, selling_stage=1, isBundled=False)
+        listing = InventoryListing(stage=2, confirmed=False, selling_stage=1, )
         exclude = ["swaptuser"]
 
         if commit:
@@ -70,6 +70,7 @@ class InventoryListingCreationForm(ModelForm):
             listing.specs = fields['specs']
             listing.category = fields['category']
             listing.condition = fields['condition']
+            listing.tags = fields['tags']
             listing.location = fields['location']
             listing.pickupmethod = fields['pickupmethod']
         
@@ -83,19 +84,6 @@ class InventoryListingAttributeCreationForm(ModelForm):
         model = InventoryItemAttribute
         fields = ("product", "color", "size", "price", "image" )
     
-    def save(self, commit=True):
-        self.full_clean() # calls clean function
-        listingattribute = InventoryItemAttribute()
-
-        if commit:
-            fields = self.cleaned_data
-            listingattribute.product = fields['product']
-            listingattribute.color = fields['color']
-            listingattribute.size = fields['size']
-            listingattribute.price = fields['price']
-            listingattribute.image = fields['image']
-        
-        return listingattribute
 
 class ListingEditForm(ModelForm):
     CAMPUS_CHOICES = [
