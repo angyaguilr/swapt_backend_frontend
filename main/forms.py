@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm,UserChangeForm
-from .models import ProductOffers,UserAddressBook, SwaptListingModel, InventoryListing, InventoryCampusPropertyNamePair, SwaptCampusPropertyNamePair
+from .models import InventoryItemAttribute,ProductOffers,UserAddressBook, SwaptListingModel, InventoryListing, InventoryCampusPropertyNamePair, SwaptCampusPropertyNamePair
 from django.forms import ModelForm
 
 class SignupForm(UserCreationForm):
@@ -55,24 +55,47 @@ class InventoryListingCreationForm(ModelForm):
 
     class Meta:
         model = InventoryListing
-        fields = ("title", "detail", "category", "condition", "location", "pickupmethod", )
+        fields = ("title", "slug", "detail", "specs", "category", "condition", "location", "pickupmethod", )
     
     def save(self, commit=True):
         self.full_clean() # calls clean function
-        listing = InventoryListing(stage=2, confirmed=True, )
+        listing = InventoryListing(stage=2, confirmed=False, selling_stage=1, isBundled=False)
         exclude = ["swaptuser"]
 
         if commit:
             fields = self.cleaned_data
+            listing.title = fields['title']
+            listing.slug = fields['slug']
             listing.detail = fields['detail']
+            listing.specs = fields['specs']
             listing.category = fields['category']
+            listing.condition = fields['condition']
             listing.location = fields['location']
             listing.pickupmethod = fields['pickupmethod']
-            listing.title = fields['title']
-            listing.condition = fields['condition']
         
         return listing
+class InventoryListingAttributeCreationForm(ModelForm):
+    
+    # Instead of creating a new model, just using listing model with arbitrary data for required fields
+    # Specifically, using title field for commMkt and stage=5 is for commMkt listings
 
+    class Meta:
+        model = InventoryItemAttribute
+        fields = ("product", "color", "size", "price", "image" )
+    
+    def save(self, commit=True):
+        self.full_clean() # calls clean function
+        listingattribute = InventoryItemAttribute()
+
+        if commit:
+            fields = self.cleaned_data
+            listingattribute.product = fields['product']
+            listingattribute.color = fields['color']
+            listingattribute.size = fields['size']
+            listingattribute.price = fields['price']
+            listingattribute.image = fields['image']
+        
+        return listingattribute
 
 class ListingEditForm(ModelForm):
     CAMPUS_CHOICES = [

@@ -1,5 +1,5 @@
-{% extends "header.html" %}
-{% block header %}
+{% extends "base.html" %}
+{% block content%}
 <ul class="nav nav-tabs" id="nav-tab" role="tablist">
     <li class="nav-item" role="presentation">
         <button class="nav-link active" id="nav-inventoryreview-tab" data-bs-toggle="tab" data-bs-target="#nav-inventoryreview" type="button" role="tab" aria-controls="nav-inventoryreview" aria-selected="true">Awaiting Review</button>
@@ -486,4 +486,4 @@ var tabShow = new bootstrap.Tab(tabShowEl);
 tabShow.show();
 
 </script>
-{% endblock %}
+{% endblock content%}

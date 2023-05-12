@@ -15,7 +15,7 @@ from django.views.generic import View, UpdateView, CreateView, DetailView, ListV
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
 from django.template.loader import render_to_string
-from .forms import SignupForm, ListingCreationForm, OffersAdd,AddressBookForm,ProfileForm, ListingEditForm, ListingRejectForm, InventoryListingCreationForm
+from .forms import InventoryListingAttributeCreationForm, SignupForm, ListingCreationForm, OffersAdd,AddressBookForm,ProfileForm, ListingEditForm, ListingRejectForm, InventoryListingCreationForm
 from .serializers import InventoryListingSerializer, SwaptListingSerializer, SwaptCampusPropertyNamePairSerializer, CampusPropertyNamePairSerializer, CampusPropertyNamePairSerializer, InventoryListingReviewSerializer, SwaptListingReviewSerializer
 from django.contrib.auth import login,authenticate
 from django.contrib.auth.decorators import login_required
@@ -951,11 +951,27 @@ class InventoryReviewListingsAPI(viewsets.ModelViewSet):
 class InventoryListingCreationView(CreateView):
     model = InventoryListing
     form_class = InventoryListingCreationForm
-    template_name ="/inventoryitems/create_inventoryitems/inventory_create_form.html"
+    template_name ="inventoryitems/inventory_create_form.html"
 
     def form_valid(self, form):
         listing = form.save()
         listing.swaptuser = SwaptUser.objects.get(user=self.request.user) 
+        listing.save()
+        if self.request.user.is_swapt_user:
+            listing.save()
+
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse("inventory_review") + "#nav-inventory-tab"
+
+class InventoryListingAttributesCreationView(CreateView):
+    model = InventoryItemAttribute
+    form_class = InventoryListingAttributeCreationForm
+    template_name ="inventoryitems/inventory_add_attributes.html"
+
+    def form_valid(self, form):
+        listing = form.save()
         listing.save()
         if self.request.user.is_swapt_user:
             listing.save()
@@ -977,7 +993,7 @@ class InventoryListingsConfirmationView(View):
         if not listings:
             return redirect("inventory_create")
 
-        template = "/inventoryitems/create_inventoryitems/inventory_confirm.html"
+        template = "inventoryitems/inventory_confirm.html"
         context = {"listings": InventoryListing.objects.filter(swaptuser=request.user.swaptuser, confirmed=False)}
         return render(request, template, context)
     
@@ -1010,10 +1026,10 @@ class InventoryListingsConfirmationView(View):
 class InventoryListingsReviewView(View):
 
     def get(self, request):
-        template = "/inventoryitems/review_inventoryitems/inventory_review.html"
+        template = "inventoryitems/inventory_review.html"
     
         # Gets different attributes from the query string, but by default will be the most expansive possible
-        locations = self.request.GET.getlist('location', ['ElonNC', 'CollegeParkMD', 'BurlingtonNC', 'ColumbiaMD'])
+        locations = self.request.GET.getlist('location', ['Elon, NC', 'Burlington, NC',])
         propertynames = self.request.GET.getlist('propertyname', ['Oaks', 'MillPoint', 'OakHill'])
         campuses = self.request.GET.getlist('campus', ['Elon', 'UMD', 'UNCG'])
         showNA = self.request.GET.get('showNA', 'true')
@@ -1054,7 +1070,7 @@ class InventoryListingsReviewView(View):
 class InventoryListingEditView(UpdateView):
     form_class = ListingEditForm
     model = InventoryListing
-    template_name = 'inventoryitems/review_inventoryitems/inventory_edit_form.html'
+    template_name = 'inventoryitems/inventory_edit_form.html'
 
     def get(self, request, *args, **kwargs):
         pk = self.kwargs['pk']
@@ -1120,7 +1136,7 @@ class InventoryListingEditView(UpdateView):
 class InventoryListingRejectView(UpdateView):
     form_class = ListingRejectForm
     model = InventoryListing
-    template_name = 'inventoryitems/review_inventoryitems/inventory_reject.html'
+    template_name = 'inventoryitems/inventory_reject.html'
 
     def form_valid(self, form):
         listing = form.save()

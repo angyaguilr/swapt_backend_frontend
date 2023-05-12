@@ -1,12 +1,10 @@
-{% extends "header.html" %}
-{% block header %}
-  <h1> Upload Inventory Card </h1>
+{% extends "base.html" %}
+{% block content%}
+  <h1> Edit </h1>
   <h1>  </h1>
   <form method="post">
     {% csrf_token %}
       {% for field in form %}
-      {% if user.is_admin and field.label == "Stage" %}
-      {% else %}
       <p align="left">
         <div class="form-group row">
           <label class="col-sm-3 col-form-label">{{ field.label }}</label>
@@ -19,14 +17,13 @@
           <p style="color: red">{{ error }}</p>
         {% endfor %}
       </p>
-      {% endif %}
       {% endfor %}
       {% if form.non_field_errors %}
       <ul style="color: red">
       {{ form.non_field_errors.as_ul }}
       </ul>
       {% endif %}
-      <button class="btn btn-success" type="submit">Submit</button>
+      <button class="btn btn-danger" type="submit">Reject</button>
       
   </form>
-{% endblock %}
+  {% endblock content%}
