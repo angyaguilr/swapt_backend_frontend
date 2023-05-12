@@ -4,23 +4,22 @@
 <h1> Upload Inventory Card </h1>
 <h1>  </h1>
 <form action="" method="POST" enctype="multipart/form-data">
-  {% csrf_token %}
-  {{ form.as_p }}  
-  </br>
-  {% if messages %}
-  {% for message in messages %}
-      <div>
-          <p style="color: red">{{ message }}</p>
-      </div>
-  {% endfor %}
-  {% endif %}
-  <button type="submit" class="block text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800">
-    Create
-    </button>
+   {% csrf_token %}
+   {{ form.as_p }}  
+   </br>
+   {% if messages %}
+   {% for message in messages %}
+   <div>
+      <p style="color: red">{{ message }}</p>
+   </div>
+   {% endfor %}
+   {% endif %}
+   <button type="submit" class="block text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800">
+   Create
+   </button>
 </form>
 {% if img_obj %}  
-<h3>Succesfully uploaded : {{img_obj.color}}</h3>  
+<h3>Succesfully uploaded : {{img_obj.color}}</h3>
 <img src="{{ img_obj.image.url}}" alt="connect" style="max-height:300px">  
 {% endif %}
-
 {% endblock content%}

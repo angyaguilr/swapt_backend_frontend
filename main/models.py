@@ -1,9 +1,11 @@
 from django.db import models
 from django.db.models.deletion import CASCADE
+from autoslug import AutoSlugField
 from django.utils.html import mark_safe
 from accounts.models import SwaptUser
 from accounts.models import propManager
 from django.utils import timezone
+from datetime import date
 #from django.contrib.auth.models import User
 from django.conf import settings
 from django.template.defaultfilters import slugify
@@ -159,12 +161,12 @@ class InventoryListing(models.Model):
         ('Wood', 'Wood'),
     ]
     LOCATION_CHOICES = [
-        ('Elon, NC', 'Elon NC'),
+        ('Elon, NC', 'Elon, NC'),
         ('Burlington, NC', 'Burlington, NC'),
     ]
     swaptuser = models.ForeignKey(SwaptUser, on_delete=CASCADE, null=True)
     title=models.CharField(max_length=200)
-    slug=models.CharField(max_length=400)
+    slug=AutoSlugField(_('slug'), max_length=50, unique=True, populate_from=('title',))
     detail=models.TextField()
     specs=models.TextField()
     status=models.BooleanField(default=True)
@@ -393,17 +395,17 @@ class SwaptListingModel(models.Model):
     #field identifying seller who posted listing
     swaptuser = models.ForeignKey(SwaptUser, on_delete=CASCADE, null=True)
     listings = models.ManyToManyField(
-        'InventoryListing', related_name='order', blank=True)
+        'InventoryListing', related_name='inventory', blank=True)
+    title = models.CharField(max_length=250)
     is_paid = models.BooleanField(default=False)
     is_MoveInReady = models.BooleanField(default=False)
     #mandatory fields required with user input
     detail=models.TextField(default="detail")
-    slug=models.CharField(max_length=400, default=4)
+    slug=AutoSlugField(_('slug'), max_length=50, unique=True, populate_from=('title',))
     specs=models.TextField(default="nospecs")
     status=models.BooleanField(default=True)
     category=models.ForeignKey(Category,on_delete=models.CASCADE, default=1)
     brand=models.ForeignKey(Brand,on_delete=models.CASCADE, default=1)
-    title = models.CharField(max_length=250)
     thumbnail = models.ImageField(upload_to=get_image_filename, blank=True)
     condition = models.CharField(max_length=50,choices=CONDITION_CHOICES , null=True)
     #mandatory location details
@@ -427,7 +429,7 @@ class SwaptListingModel(models.Model):
     is_featured=models.BooleanField(default=False)
 
     #date/time fields
-    move_out_date = models.DateTimeField(auto_now_add=False, default=timezone.now,)
+    move_out_date = models.DateField(auto_now_add=False, default=date.today,)
     publishing_date = models.DateTimeField(
         default=timezone.now,
         blank=True,
