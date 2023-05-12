@@ -396,7 +396,7 @@ def save_address(request):
 			saveForm.save()
 			msg='Data has been saved'
 	form=AddressBookForm
-	return render(request, 'user/add-address.html',{'form':form,'msg':msg})
+	return render(request, 'user/addressbook.html',{'form':form,'msg':msg})
 
 # Activate address
 def activate_address(request):
