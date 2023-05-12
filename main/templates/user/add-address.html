@@ -3,7 +3,10 @@
 {% block content %}
 <main class="container mx-auto sm:px-4 my-4">
    <!-- Featured Products -->
-   <h3 class="my-4 border-b pb-1">Address Book <a href="{% url 'add-address' %}" class="float-right inline-block align-middle text-center select-none border font-quicksand font-normal whitespace-no-wrap rounded  no-underline py-1 px-2 leading-tight text-xs  bg-green-500 text-white hover:green-600"><i class="fa fa-plus"></i></a></h3>
+   <h3 class="my-4 border-b pb-1">Address Book <a href="{% url 'add-address' %}" class="float-right inline-block align-middle text-center select-none border font-quicksand font-normal whitespace-no-wrap rounded  no-underline py-1 px-2 leading-tight text-xs  bg-green-500 text-white hover:green-600">
+      <svg class="w-6 h-6 dark:text-white" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
+    </svg></a></h3>
    <div class="flex flex-wrap ">
       <div class="md:w-1/4 pr-4 pl-4">
          {% include 'user/user-sidebar.html' %}

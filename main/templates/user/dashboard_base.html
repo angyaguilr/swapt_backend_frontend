@@ -19,11 +19,8 @@
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet" />
 	</head>
 
-	<body class="font-quicksand grid grid-cols-5 max-w-screen-2xl mx-auto border-x-2 border-gray-100">
-		{% if user.is_authenticated %}
-		{% include 'snippets/navbar.html' %}
-		{% endif %}   
-		{% block content %}
+	<body class="font-quicksand grid grid-cols-5 max-w-screen-2xl mx-auto border-x-2 border-gray-100"> 
+        {% block content %}
 		{% endblock %}
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
 	</body>
