@@ -4,7 +4,7 @@ import json
 from django.shortcuts import render,redirect
 from django.urls import reverse_lazy, reverse
 from django.http import JsonResponse,HttpResponse
-from .models import Banner,Category,Brand,InventoryListing, InventoryItemAttribute, InventoryCampusPropertyNamePair, ProductAttribute,CartOrder,CartOrderItems,ProductOffers,Wishlist,UserAddressBook,  SwaptCampusPropertyNamePair, SwaptListingModel, SwaptListingTag, SwaptPropertyManager, SwaptPaymentHistory, Swapt_Prices, SwaptListingTransactionRef, InventoryListingPrice
+from .models import Banner,Category,Brand,InventoryListing, InventoryItemAttribute, InventoryCampusPropertyNamePair, ProductAttribute,CartOrder,CartOrderItems,ProductOffers,Wishlist,UserAddressBook,  SwaptCampusPropertyNamePair, SwaptListingModel, SwaptPropertyManager, SwaptPaymentHistory, Swapt_Prices, SwaptListingTransactionRef, InventoryListingPrice
 from django.db.models import Max,Min,Count,Avg
 from django.utils.decorators import method_decorator
 from django.shortcuts import render, get_object_or_404
@@ -107,7 +107,9 @@ def brand_product_list(request,brand_id):
 # InventoryListing Detail
 def product_detail(request,slug,id):
     product=SwaptListingModel.objects.get(id=id)
-    related_products=InventoryListing.objects.filter(swaptlistingmodel__pk=1)
+    related_products=InventoryListing.objects.filter(isBundled=True)
+    pairs = SwaptCampusPropertyNamePair.objects.filter(listings=product)
+    queryset = SwaptListingModel.objects.filter(stage=2, swaptcampuspropertynamepair__in=pairs, confirmed=True).distinct()
     #colors=ProductAttribute.objects.filter(product=product).values('color__id','color__title','color__color_code').distinct()
     #sizes=ProductAttribute.objects.filter(product=product).values('size__id','size__title','price','color__id').distinct()
     offersForm=OffersAdd()
@@ -125,10 +127,10 @@ def product_detail(request,slug,id):
 	# End
 
 	# Fetch avg amount for offers
-    avg_offers=ProductOffers.objects.filter(product=product).aggregate(avg_amount=Avg('offers_amount'))
+    avg_offers=ProductOffers.objects.filter(product=product)
 	# End
     #return 'colors':colors,'sizes':sizes
-    return render(request, 'product_detail.html',{'data':product,'related':related_products,'offersForm':offersForm,'canAdd':canAdd,'offers':offers,'avg_offers':avg_offers})
+    return render(request, 'product_detail.html',{"review": queryset[:3], 'data':product,'related':related_products,'offersForm':offersForm,'canAdd':canAdd,'offers':offers,'avg_offers':avg_offers})
 
 # Search
 def search(request):
@@ -821,7 +823,6 @@ class SwaptListingCreation(View):
         swaptuser=request.user.swaptuser
         title = request.POST.get('title')
         detail = request.POST.get('detail')
-        specs = request.POST.get('specs')
         quantity=request.POST['quantity'],
         status=request.POST['status'],
         delivery=request.POST['delivery'],
@@ -862,7 +863,6 @@ class SwaptListingCreation(View):
             listings=InventoryListing_item,
             title=title,
             detail=detail,
-            specs=specs,
             
         )
         order.listings.add(*item_ids)
@@ -1037,7 +1037,6 @@ class InventoryListingsReviewView(View):
         # Filters to relevant pairs, then when filtering listings filters by those pairs and other attributes
         # Also stage 1 is the review stage
         pairs = InventoryCampusPropertyNamePair.objects.filter(campus__in=campuses, propertyname__in=propertynames)
-        swaptlistings = SwaptListingModel.objects.filter(campus__in=campuses, propertyname__in=propertynames)
         queryset = InventoryListing.objects.filter(stage=2, location__in=locations, 
             inventorycampuspropertynamepair__in=pairs, confirmed=True).distinct()
         

@@ -35,7 +35,7 @@ class SwaptListingCreationForm(ModelForm):
 
     class Meta:
         model = SwaptListingModel
-        fields = ("title", "detail", "specs", "category", "condition", "move_out_date", "location", "brand", )
+        fields = ("title", "detail", "category", "condition", "move_out_date", "location", "brand", )
     
     def save(self, commit=True):
         self.full_clean() # calls clean function
@@ -55,7 +55,7 @@ class InventoryListingCreationForm(ModelForm):
 
     class Meta:
         model = InventoryListing
-        fields = ("title", "detail", "specs", "category", "tags", "condition", "location", "pickupmethod", )
+        fields = ("title", "detail", "category", "tags", "condition", )
     
     def save(self, commit=True):
         self.full_clean() # calls clean function
@@ -66,12 +66,9 @@ class InventoryListingCreationForm(ModelForm):
             fields = self.cleaned_data
             listing.title = fields['title']
             listing.detail = fields['detail']
-            listing.specs = fields['specs']
             listing.category = fields['category']
             listing.condition = fields['condition']
             listing.tags = fields['tags']
-            listing.location = fields['location']
-            listing.pickupmethod = fields['pickupmethod']
         
         return listing
 class InventoryListingAttributeCreationForm(ModelForm):
@@ -242,7 +239,7 @@ class InventoryListingEditForm(ModelForm):
     
     class Meta:
         model = InventoryListing
-        fields = ("title", "detail", "location")
+        fields = ("title", "detail",)
 
     def clean(self):
         data = self.cleaned_data

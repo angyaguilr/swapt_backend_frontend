@@ -1,5 +1,5 @@
 from rest_framework import serializers 
-from .models import Banner, Category, Brand, Color, Dimension, InventoryListingPrice, InventoryListingTag, InventoryListing, InventoryCampusPropertyNamePair, ProductAttribute, Swapt_Prices, SwaptCampusPropertyNamePair, SwaptListingModel, SwaptListingTag, SwaptPropertyManager, SwaptPaymentHistory, SwaptListingTransactionRef
+from .models import Banner, Category, Brand, Color, Dimension, InventoryListingPrice, InventoryListingTag, InventoryListing, InventoryCampusPropertyNamePair, ProductAttribute, Swapt_Prices, SwaptCampusPropertyNamePair, SwaptListingModel, SwaptPropertyManager, SwaptPaymentHistory, SwaptListingTransactionRef
 import random
  
 

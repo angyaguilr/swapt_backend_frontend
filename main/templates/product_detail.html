@@ -1,300 +1,272 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<main class="container mx-auto sm:px-4 my-4">
-   <!-- Featured Products -->
-   <h3 class="my-4 border-b pb-1"></h3>
-   <div class="flex flex-wrap ">
-   <div class="flex flex-col justify-start items-center w-[1440px] gap-12 px-[120px] py-16 bg-white">
-      <div class="flex flex-col justify-center items-start flex-grow-0 flex-shrink-0 w-[532px]">
-         <div
-            class="flex flex-col justify-start items-center self-stretch flex-grow-0 flex-shrink-0 pb-2"
-            >
+<div class="px-4 py-14">
+   <div
+      class="lg:max-w-[1440px] md:max-w-[744px] max-w-[375px] mx-auto bg-white lg:px-10 md:px-6 px-4 py-12"
+      >
+      <div class="lg:flex items-stretch justify-center gap-8">
+         <div>
             <div
-               class="flex justify-start items-start flex-grow-0 flex-shrink-0 relative gap-2.5 px-2 py-1 rounded-md"
+               class="lg:max-w-[515px] w-full bg-gray-50 lg:px-10 md:px-6 px-4 py-12"
                >
-               <p class="flex-grow-0 flex-shrink-0 text-sm font-semibold font-quicksand text-center text-[#636b75]">
-                  LISTING DETAILS
-               </p>
-            </div>
-         </div>
-         <div class="flex flex-col justify-start items-start self-stretch flex-grow-0 flex-shrink-0">
-            <div
-               class="flex flex-col justify-start items-start self-stretch flex-grow-0 flex-shrink-0 relative overflow-hidden pb-4"
-               >
-               <p
-                  class="self-stretch flex-grow-0 flex-shrink-0 w-[532px] text-4xl font-semibold font-quicksand text-center"
-                  >
-                  <span
-                     class="self-stretch flex-grow-0 flex-shrink-0 w-[532px] text-4xl font-semibold font-quicksand text-center text-[#0e0f11]"
+               <div class="pb-6">
+                  <p class="text-base leading-none">Home / Swapt Listings / {{data.title}}</p>
+                  <p
+                     class="lg:text-4xl md:text-3xl text-3xl font-semibold leading-9 text-gray-800 md:mt-6 mt-4"
                      >
-                  Location &#x26; </span
-                     ><span
-                     class="self-stretch flex-grow-0 flex-shrink-0 w-[532px] text-4xl font-semibold font-quicksand text-center text-[#957fef]"
-                     >Details</span
+                     {{data.title}}
+                  </p>
+                  <p
+                     class="text-2xl font-semibold leading-normal text-gray-800 md:mt-6 mt-4"
                      >
-               </p>
-            </div>
-         </div>
-         <div class="flex flex-col justify-start items-start self-stretch flex-grow-0 flex-shrink-0">
-            <div
-               class="flex flex-col justify-start items-start self-stretch flex-grow-0 flex-shrink-0 relative overflow-hidden"
-               >
-               <p
-                  class="self-stretch flex-grow-0 flex-shrink-0 w-[532px] text-base text-center text-[#636b75]"
-                  >
-               </p>
-            </div>
-         </div>
-      </div>
-      <div
-         class="flex flex-col justify-start items-center self-stretch flex-grow-0 flex-shrink-0 gap-8"
-         >
-         <div
-            class="flex justify-start items-center self-stretch flex-grow-0 flex-shrink-0 relative overflow-hidden gap-6 p-16 rounded-[20px] bg-gray-50"
-            >
-            <div class="flex flex-col justify-start items-start flex-grow pr-6">
-               <div
-                  class="flex flex-col justify-start items-start self-stretch flex-grow-0 flex-shrink-0 pb-2"
-                  >
-                  <div
-                     class="flex justify-start items-start flex-grow-0 flex-shrink-0 relative gap-2.5 py-1 rounded-md"
+                     $<span class="product-price-{{data.id}}">{{data.productattribute_set.first.price}}</span>
+                  </p>
+                  <p
+                     class="text-base leading-normal text-gray-600 mt-4 lg:max-w-[415px] w-full"
                      >
-                     <p class="flex-grow-0 flex-shrink-0 text-md font-semibold font-quicksand text-center text-[#636b75]">
-                        DETAILS
-                     </p>
-                  </div>
-               </div>
-               <div class="flex flex-col justify-start items-start self-stretch flex-grow-0 flex-shrink-0">
-                  <div
-                     class="flex flex-col justify-start items-start self-stretch flex-grow-0 flex-shrink-0 relative overflow-hidden pb-4"
-                     >
-                     <p
-                        class="self-stretch flex-grow-0 flex-shrink-0 w-[398px] text-2xl font-medium font-quicksand text-left text-[#0e0f11]"
-                        >
-                        {{data.title}}
-                     </p>
-
-                  </div>
-               </div>
-               <div class="flex flex-col justify-start items-start self-stretch flex-grow-0 flex-shrink-0">
-                  <div
-                     class="flex flex-col justify-start items-start self-stretch flex-grow-0 flex-shrink-0 relative overflow-hidden pb-6"
-                     >
-                     <p
-                        class="self-stretch flex-grow-0 flex-shrink-0 w-[398px] text-base text-left text-[#636b75]"
-                        >
-                        {{data.detail}}
-                     </p>
-                  </div>
-               </div>
-               <div
-                  class="flex flex-col justify-start items-start self-stretch flex-grow-0 flex-shrink-0 gap-1 pb-6"
-                  >
-                  <div
-                     class="flex justify-start items-start self-stretch flex-grow-0 flex-shrink-0 relative gap-2"
-                     >
-                     <svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
+                     {{data.detail}}
+                  </p>
+                  <ul role="list" class="space-y-5 my-7">
+                     <li class="flex space-x-3">
+                        <!-- Icon -->
+                        <svg aria-hidden="true" class="flex-shrink-0 w-5 h-5 text-purple-600 dark:text-purple-500" fill="none" sfill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                           <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                           <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"></path>
+                         </svg>
+                        <span class="text-base font-normal leading-tight text-gray-500 dark:text-gray-400">{{data.location}} </span>
+                     </li>
+                     <li class="flex space-x-3">
+                        <!-- Icon -->
+                        <svg aria-hidden="true" class="flex-shrink-0 w-5 h-5 text-purple-600 dark:text-purple-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                           <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z"></path>
+                        </svg>
+                        <span class="text-base font-normal leading-tight text-gray-500 dark:text-gray-400">{{data.move_out_date|date:"M d, Y"}}</span>
+                     </li>
+                     <li class="flex space-x-3">
+                        <!-- Icon -->
+                        <svg aria-hidden="true" class="flex-shrink-0 w-5 h-5 text-purple-600 dark:text-purple-500" fill="currentColor" viewBox="0 0 24 24"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
                         class="flex-grow-0 flex-shrink-0 w-6 h-6 relative"
                         preserveAspectRatio="none"
                         >
                         <path
-                           fill-rule="evenodd"
-                           clip-rule="evenodd"
-                           d="M14.045 7.98782C16.091 9.39982 18.75 12.7998 18.75 15.8628C18.75 18.9698 15.389 21.4878 12 21.4878C8.611 21.4878 5.25 18.9698 5.25 15.8628C5.25 12.7998 7.909 9.39982 9.955 7.98782L8.4 4.28082C8.27339 4.05977 8.24638 3.79543 8.32568 3.55334C8.40498 3.31126 8.58315 3.11412 8.816 3.01082C10.8827 2.33233 13.1123 2.33233 15.179 3.01082C15.4127 3.11315 15.592 3.30988 15.6723 3.55207C15.7526 3.79425 15.7263 4.05914 15.6 4.28082L14.045 7.98782Z"
-                           stroke="#957FEF"
-                           stroke-width="1.5"
-                           stroke-linecap="round"
-                           stroke-linejoin="round"
+                           d="M9.00016 16.1698L4.83016 11.9998L3.41016 13.4098L9.00016 18.9998L21.0002 6.99984L19.5902 5.58984L9.00016 16.1698Z"
+                           fill="#957FEF"
                            ></path>
-                        <path
-                           d="M9.95508 7.98779L14.0451 7.98779"
-                           stroke="#957FEF"
-                           stroke-width="1.5"
-                           stroke-linecap="round"
-                           stroke-linejoin="round"
-                           ></path>
-                        <path
-                           d="M4.5 20.7378C1.5 20.7378 0.75 17.7378 0.75 15.6238C0.839709 13.1078 2.18384 10.804 4.33 9.48779L3.066 7.66479C2.90723 7.43553 2.88877 7.1371 3.01808 6.89002C3.1474 6.64294 3.40313 6.48801 3.682 6.48779H6"
-                           stroke="#2F313E"
-                           stroke-width="1.5"
-                           stroke-linecap="round"
-                           stroke-linejoin="round"
-                           ></path>
-                        <path
-                           d="M10.329 17.3319C10.7684 17.9094 11.4619 18.2364 12.187 18.2079C13.326 18.2079 14.25 17.5149 14.25 16.6599C14.25 15.8049 13.326 15.1139 12.187 15.1139C11.048 15.1139 10.125 14.4209 10.125 13.5659C10.125 12.7109 11.049 12.0189 12.187 12.0189C12.9121 11.9895 13.6058 12.3162 14.045 12.8939"
-                           stroke="#957FEF"
-                           stroke-width="1.5"
-                           stroke-linecap="round"
-                           stroke-linejoin="round"
-                           ></path>
-                        <path
-                           d="M12.1865 18.208V19.238"
-                           stroke="#957FEF"
-                           stroke-width="1.5"
-                           stroke-linecap="round"
-                           stroke-linejoin="round"
-                           ></path>
-                        <path
-                           d="M12.1865 10.9878V12.0188"
-                           stroke="#957FEF"
-                           stroke-width="1.5"
-                           stroke-linecap="round"
-                           stroke-linejoin="round"
-                           ></path>
-                        <path
-                           d="M19.5 20.7378C22.5 20.7378 23.25 17.7378 23.25 15.6238C23.1603 13.1078 21.8162 10.804 19.67 9.48779L20.934 7.66479C21.0928 7.43553 21.1112 7.1371 20.9819 6.89002C20.8526 6.64294 20.5969 6.48801 20.318 6.48779H18"
-                           stroke="#2F313E"
-                           stroke-width="1.5"
-                           stroke-linecap="round"
-                           stroke-linejoin="round"
-                           ></path>
-                     </svg>
-                     <p class="flex-grow w-[366px] text-base text-left text-[#636b75]"><span class="product-price-{{data.id}}">{{data.productattribute_set.first.price}}</span> USD</p>
-                  </div>
-                  <div
-                     class="flex justify-start items-start self-stretch flex-grow-0 flex-shrink-0 relative gap-2"
-                     >
-                     <svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="flex-grow-0 flex-shrink-0 w-6 h-6 relative"
-                        preserveAspectRatio="xMidYMid meet"
-                        >
-                        <mask
-                           id="mask0_1307_6782"
-                           style="mask-type:alpha"
-                           maskUnits="userSpaceOnUse"
-                           x="0"
-                           y="0"
-                           width="24"
-                           height="24"
-                           >
-                           <rect width="24" height="24" fill="#D9D9D9"></rect>
-                        </mask>
-                        <g mask="url(#mask0_1307_6782)">
-                           <path
-                              d="M14.8 16.2L11 12.4V7H13V11.6L16.2 14.8L14.8 16.2ZM12 21C9.7 21 7.696 20.2373 5.988 18.712C4.27933 17.1873 3.3 15.2833 3.05 13H5.1C5.33333 14.7333 6.104 16.1667 7.412 17.3C8.72067 18.4333 10.25 19 12 19C13.95 19 15.604 18.3207 16.962 16.962C18.3207 15.604 19 13.95 19 12C19 10.05 18.3207 8.39567 16.962 7.037C15.604 5.679 13.95 5 12 5C10.85 5 9.775 5.26667 8.775 5.8C7.775 6.33333 6.93333 7.06667 6.25 8H9V10H3V4H5V6.35C5.85 5.28333 6.88767 4.45833 8.113 3.875C9.33767 3.29167 10.6333 3 12 3C13.25 3 14.421 3.23733 15.513 3.712C16.6043 4.18733 17.5543 4.829 18.363 5.637C19.171 6.44567 19.8127 7.39567 20.288 8.487C20.7627 9.579 21 10.75 21 12C21 13.25 20.7627 14.4207 20.288 15.512C19.8127 16.604 19.171 17.554 18.363 18.362C17.5543 19.1707 16.6043 19.8127 15.513 20.288C14.421 20.7627 13.25 21 12 21Z"
-                              fill="#807976"
-                              ></path>
-                        </g>
-                     </svg>
-                     <p class="flex-grow w-[366px] text-base text-left text-[#636b75]">{{data.move_out_date}}</p>
-                  </div>
-                  <div
-                     class="flex justify-start items-start self-stretch flex-grow-0 flex-shrink-0 relative gap-2"
-                     >
-                     <div class="flex justify-start items-start flex-grow-0 flex-shrink-0 relative gap-2.5">
-                        <svg
-                           width="24"
-                           height="24"
-                           viewBox="0 0 24 24"
-                           fill="none"
-                           xmlns="http://www.w3.org/2000/svg"
-                           class="flex-grow-0 flex-shrink-0 w-6 h-6 relative"
-                           preserveAspectRatio="none"
-                           >
-                           <path
-                              d="M9.00016 16.1698L4.83016 11.9998L3.41016 13.4098L9.00016 18.9998L21.0002 6.99984L19.5902 5.58984L9.00016 16.1698Z"
-                              fill="#957FEF"
-                              ></path>
                         </svg>
+                        <span class="text-base font-normal leading-tight text-gray-500 dark:text-gray-400">{{data.selling_stage}}</span>
+                     </li>
+                  </ul>
+               </div>
+               <hr />
+               <div id="accordion-flush" data-accordion="open" data-active-classes="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
+                  <h2 id="accordion-flush-heading-1">
+                     <button type="button" class="flex items-center justify-between w-full py-5 font-medium text-left text-base leading-none text-gray-800 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-1" aria-expanded="true" aria-controls="accordion-flush-body-1">
+                        <span>Specifications</span>
+                        <svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                           <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                     </button>
+                  </h2>
+                  <div id="accordion-flush-body-1" class="hidden" aria-labelledby="accordion-flush-heading-1">
+                     <div class="py-5 border-b border-gray-200 dark:border-gray-700">
+                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                           <thead class="hidden text-xs text-gray-900 uppercase dark:text-gray-400">
+                              <tr>
+                                 <th scope="col" class="px-6 py-3">
+                                    spec
+                                 </th>
+                                 <th scope="col" class="px-6 py-3">
+                                    value
+                                </th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr class="bg-gray-50 dark:bg-gray-800">
+                                 <th scope="row" class="px-6 py-4 text-xs text-gray-900 uppercase dark:text-gray-400">
+                                    Brand
+                                 </th>
+                                 <td class="px-6 py-4">
+                                    <a href="/brand-product-list/{{data.brand.id}}">{{data.brand.title}}</a>
+                                </td>
+                              </tr>
+                              <tr class="bg-gray-50 dark:bg-gray-800">
+                                 <th scope="row" class="px-6 py-4 text-xs text-gray-900 uppercase dark:text-gray-400">
+                                    Category
+                                 </th>
+                                 <td class="px-6 py-4">
+                                    <a href="/category-product-list/{{data.category.id}}">{{data.category.title}}</a>
+                                </td>
+                              </tr>
+                              <tr class="bg-gray-50 dark:bg-gray-800">
+                                 <th scope="row" class="px-6 py-4 text-xs text-gray-900 uppercase dark:text-gray-400">
+                                    Condition
+                                 </th>
+                                 <td class="px-6 py-4">
+                                    {{data.condition}}
+                                </td>
+                              </tr>
+                           </tbody>
+                        </table>
                      </div>
-                     <p class="flex-grow w-[366px] text-base text-left text-[#636b75]">{{data.condition}}</p>
                   </div>
+                  <h2 id="accordion-flush-heading-2">
+                     <button type="button" class="flex items-center justify-between w-full py-5 font-medium text-left text-base leading-none text-gray-800 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-2" aria-expanded="false" aria-controls="accordion-flush-body-2">
+                        <span>Location Details</span>
+                        <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                           <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                     </button>
+                  </h2>
+                  <div id="accordion-flush-body-2" class="hidden" aria-labelledby="accordion-flush-heading-2">
+                     <div class="py-5 border-b border-gray-200 dark:border-gray-700">
+                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                           <thead class="hidden text-xs text-gray-900 uppercase dark:text-gray-400">
+                              <tr>
+                                 <th scope="col" class="px-6 py-3">
+                                    spec
+                                 </th>
+                                 <th scope="col" class="px-6 py-3">
+                                    value
+                                </th>
+                              </tr>
+                           </thead>
+                           {% for listing in review %}
+                           <tbody>
+                              {% for pair in listing.swaptcampuspropertynamepair_set.all %}
+                              <tr class="bg-gray-50 dark:bg-gray-800">
+                                 <th scope="row" class="px-6 py-4 text-xs text-gray-900 uppercase dark:text-gray-400">
+                                    Campus
+                                 </th>
+                                 <td class="px-6 py-4">{{ pair.campus }}
+                                </td>
+                              </tr>
+                              <tr class="bg-gray-50 dark:bg-gray-800">
+                                 <th scope="row" class="px-6 py-4 text-xs text-gray-900 uppercase dark:text-gray-400">
+                                    Property Name
+                                 </th>
+                                 <td class="px-6 py-4">{{ pair.propertyname }}
+                                </td>
+                              </tr>
+                              {% endfor %}
+                           </tbody>
+                           {% endfor %}
+                        </table>
+                     </div>
+                  </div>
+                  <h2 id="accordion-flush-heading-3">
+                     <button type="button" class="flex items-center justify-between w-full py-5 font-medium text-left text-base leading-none text-gray-800 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-3" aria-expanded="false" aria-controls="accordion-flush-body-3">
+                        <span>Delivery</span>
+                        <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                           <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                     </button>
+                  </h2>
+                  <div id="accordion-flush-body-3" class="hidden" aria-labelledby="accordion-flush-heading-3">
+                     <div class="py-5 border-b border-gray-200 dark:border-gray-700">
+                        <p class="mb-2 text-gray-500 dark:text-gray-400">A Swapt is a listing of a tenant’s large furniture and miscellaneous items that they wish to pass on to the incoming tenant.</p>
+                        <p class="mb-2 text-gray-500 dark:text-gray-400">Learn more about Delivery <a href="/about" class="text-blue-600 dark:text-blue-500 hover:underline">here</a></p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="flex gap-4 mt-8 lg:max-w-[515px] w-full">
+               <div
+                  onclick="selectedSize_quick_view_9('S')"
+                  id="S"
+                  class="text-base text-gray-600 border border-gray-200 py-3 w-24 text-center cursor-pointer hover:border-gray-800 focus:border-gray-800"
+                  >
+                  125ml
                </div>
                <div
-                  class="flex flex-col justify-start items-start self-stretch flex-grow-0 flex-shrink-0 pb-2"
+                  onclick="selectedSize_quick_view_9('M')"
+                  id="M"
+                  class="text-base text-gray-600 border border-gray-200 py-3 w-24 text-center cursor-pointer hover:border-gray-800 focus:border-gray-800"
                   >
-                  <div
-                     class="flex justify-start items-start flex-grow-0 flex-shrink-0 relative gap-2.5 py-1 rounded-md"
-                     >
-                     <p class="flex-grow-0 flex-shrink-0 text-md font-semibold font-quicksand text-center text-[#636b75]">
-                        SPECIFICATIONS
-                     </p>
-                  </div>
-                  <table class="w-full max-w-full mb-4 bg-transparent table-bordered">
-                     <tr>
-                        <th class="flex-grow w-[366px] text-base text-left text-[#636b75]">Brand</th>
-                        <td class=" flex-grow w-[366px] text-base text-left text-[#636b75]"><a href="/brand-product-list/{{data.brand.id}}">{{data.brand.title}}</a></td>
-                     </tr>
-                     <tr>
-                        <th  class="flex-grow w-[366px] text-base text-left text-[#636b75]">Category</th>
-                        <td class=" flex-grow w-[366px] text-base text-left text-[#636b75]"><a href="/category-product-list/{{data.category.id}}">{{data.category.title}}</a></td>
-                     </tr>
-                     <tr>
-                        <th class="flex-grow w-[366px] text-base text-left text-[#636b75]">Color</th>
-                        <td>  {% for color in colors %}
-                           <button class="inline-block align-middle text-center select-none border font-normal font-quicksand whitespace-no-wrap rounded  no-underline py-3 px-4 leading-tight text-xl choose-color" data-color="{{color.color__id}}" style="background-color: {{color.color__color_code}}"></button>
-                           {% endfor %}
-                        </td>
-                     </tr>
-                  </table>
-                  <div
-                     class="flex flex-row justify-end items-end w-72 h-11  gap-2 px-4 py-3 rounded-[999px] bg-[#d5ceff]"
-                     >
-                     <p class="flex-grow w-64 text-base font-bold font-quicksand text-center text-[#5e2987]">Add to Cart</p>
-                     <div class="relative flex items-stretch w-full my-3" style="width:30%;">
-                        <input type="hidden" type="number" value="1" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded product-qty-{{data.id}}" id="productQty" />
-                        <div class="input-group-append">
-                           <input type="hidden" class="product-image-{{data.id}}" value="{{data.productattribute_set.first.image}}" />
-                           <input type="hidden" class="product-id-{{data.id}}" value="{{data.id}}" />
-                           <input type="hidden" class="product-title-{{data.id}}" value="{{data.title}}" />
-                           <button data-index="{{data.id}}" type="button" id="addToCartBtn"><i class="fa fa-shopping-cart"></i></button>
-                        </div>
-                     </div>
-                  </div>
+                  250ml
+               </div>
+               <div
+                  onclick="selectedSize_quick_view_9('L')"
+                  id="L"
+                  class="text-base text-gray-600 border border-gray-200 py-3 w-24 text-center cursor-pointer hover:border-gray-800 focus:border-gray-800 focus:text-gray-800"
+                  >
+                  380ml
                </div>
             </div>
-            <div
-               class=" w-full h-2/3 relative overflow-hidden rounded-[20px]"
-               >
-               <img id="zoom_01" data-zoom-image="/media/{{data.productattribute_set.first.image}}" src="/media/{{data.productattribute_set.first.image}}" class="w-[628px] h-[471px] absolute left-[-1.91px] top-[-29.91px] object-cover" alt="{{data.title}}"
-                  />
+            <div class="mt-6 lg:max-w-[515px] w-full">
+               <div class="flex items-center gap-3 mt-3">
+                  <input
+                     type="checkbox"
+                     name="check"
+                     class="w-4 h-4 accent-gray-800 cursor-pointer"
+                     />
+                  <p>
+                     One time perchase
+                     <span class="text-gray-800 font-medium">$40</span>
+                  </p>
+               </div>
+               <div class="flex items-center gap-3 mt-3">
+                  <input
+                     type="checkbox"
+                     name="check2"
+                     class="w-4 h-4 accent-gray-800 cursor-pointer"
+                     />
+                  <p>
+                     Yearly Subscription
+                     <span class="text-gray-800 font-medium">$400</span>
+                  </p>
+               </div>
+            </div>
+            <div class="mt-6 md:flex lg:max-w-[515px] w-full gap-4">
+               <button
+                  class="bg-gray-800 text-white lg:max-w-[217px] w-full py-2 hover:bg-gray-700 transition duration-300 md:block hidden"
+                  >
+               Make An Offer
+               </button>
+               <button
+                  class="bg-gray-800 text-white lg:max-w-[217px] w-full py-2 hover:bg-gray-700 transition duration-300 md:hidden block"
+                  >
+               Make An Offer
+               </button>
+               <div>
+                  <input type="number" value="1" class="form-control product-qty-{{data.id}}" id="productQty" />
+                  <div class="input-group-append">
+                     <input type="hidden" class="product-image-{{data.id}}" value="{{data.productattribute_set.first.image}}" />
+                     <input type="hidden" class="product-id-{{data.id}}" value="{{data.id}}" />
+                     <input type="hidden" class="product-title-{{data.id}}" value="{{data.title}}" />
+                     <button class="text-base border border-gray-300 lg:max-w-[218px] w-full font-medium leading-none text-center text-gray-800 py-3 hover:bg-gray-50 transition duration-300 md:mt-0 mt-4 add-to-cart" data-index="{{data.id}}" type="button" id="addToCartBtn"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+                  </div>
+               </div>
             </div>
          </div>
-      </div>
-      <!-- Related Products -->
-      <h3 class="mt-4 mb-3 border-bottom pb-1">Related Products</h3>
-      <div class="row">
-         {% for product in related%}
-         <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-            <a href="#">
-               <img class="p-8 rounded-t-lg" src="/docs/images/products/apple-watch.png" alt="product image" />
-            </a>
-            <p>{{product.title}}</p>
-            <div class="px-5 pb-5">
-               {% for pair in product.inventory_items.all %}
-               <a href="#">
-                  <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ pair.title }}</h5>
-               </a>
-               <div class="flex items-center mt-2.5 mb-5">
-                  <svg aria-hidden="true" class="w-5 h-5 text-yellow-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>First star</title><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                  <svg aria-hidden="true" class="w-5 h-5 text-yellow-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Second star</title><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                  <svg aria-hidden="true" class="w-5 h-5 text-yellow-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Third star</title><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                  <svg aria-hidden="true" class="w-5 h-5 text-yellow-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Fourth star</title><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                  <svg aria-hidden="true" class="w-5 h-5 text-yellow-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Fifth star</title><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                  <span class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">{{ pair.category }}</span>
-               </div>
-               <div class="flex items-center justify-between">
-                  <span class="text-3xl font-bold text-gray-900 dark:text-white">${{ pair.detail }}</span>
-                  <a href="#" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add to cart</a>
-               </div>
-               {% endfor %}
-            </div>
+         <div>
+            <img
+               id="zoom_01" 
+               data-zoom-image="/media/{{data.productattribute_set.first.image}}" 
+               src="/media/{{data.productattribute_set.first.image}}"
+               alt="{{data.title}}"
+               class="object-cover lg:block md:hidden hidden rounded-lg h-auto max-w-xl"
+               />
+            <img
+               id="zoom_01" 
+               data-zoom-image="/media/{{data.productattribute_set.first.image}}" 
+               src="/media/{{data.productattribute_set.first.image}}"
+               alt="{{data.title}}"
+               class="lg:hidden md:block hidden mt-6 rounded-lg h-auto max-w-xl"
+               />
+            <img
+               id="zoom_01" 
+               data-zoom-image="/media/{{data.productattribute_set.first.image}}" 
+               src="/media/{{data.productattribute_set.first.image}}"
+               alt="{{data.title}}"
+               class="md:hidden block mt-4 rounded-lg h-auto max-w-xl"
+               />
          </div>
-         {% endfor %}
       </div>
    </div>
-</main>
+</div>
 <!-- Image Zoom -->
 <script src="{% static 'jquery.ez-plus.js' %}"></script>
 <script type="text/javascript">

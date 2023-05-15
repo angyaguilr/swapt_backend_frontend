@@ -20,6 +20,11 @@
                   <p class="text-lg font-bold font-quicksand text-black truncate block capitalize">
             <a href="/product/{{product.slug}}/{{product.id}}">{{product.title}}</a></p>
             <p class="text-lg font-normal font-quicksand text-gray-700 truncate block"><a href="/product/{{product.slug}}/{{product.id}}">{{product.location}}</a></p>
+            {% if product.move_out_date|date:"M Y" == product.publishing_date|date:"M Y" %}
+            <p class="text-lg font-normal font-quicksand text-gray-700 truncate block"><a href="/product/{{product.slug}}/{{product.id}}">Available Now</a></p>
+            {% else %}
+            <p class="text-lg font-normal font-quicksand text-gray-700 truncate block"><a href="/product/{{product.slug}}/{{product.id}}">Available {{product.move_out_date|date:"M Y"}}</a></p>
+            {% endif %}
             <div class="flex items-center">
             <p class="text-lg font-normal font-quicksand text-black cursor-auto my-3">
             $ <span class="product-price-{{product.id}}">{{product.productattribute_set.first.price}}</span>

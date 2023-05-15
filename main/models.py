@@ -106,10 +106,6 @@ class Dimension(models.Model):
 
 # InventoryListing Model
 class InventoryListing(models.Model):
-    PICKUP_CHOICES = [
-        (1, 'Public Pickup'),
-        (2, 'Door Pickup'),
-    ]
     APPROVAL_STAGES = [
         (1, 'Draft'),
         (2, 'Published'),
@@ -141,34 +137,10 @@ class InventoryListing(models.Model):
         ('Used - Decent', 'Used - Decent'),
         ('Used - Fair', 'Used - Fair'),
     ]
-    COLOR_CHOICES = [
-        ('Beige', 'Beige'),
-        ('Black', 'Black'),
-        ('Blue', 'Blue'),
-        ('Brown', 'Brown'),
-        ('Clear', 'Clear'),
-        ('Gold', 'Gold'),
-        ('Gray', 'Gray'),
-        ('Green', 'Green'),
-        ('Multicolor', 'Multicolor'),
-        ('Orange', 'Orange'),
-        ('Pink', 'Pink'),
-        ('Purple', 'Purple'),
-        ('Red', 'Red'),
-        ('Silver', 'Silver'),
-        ('White', 'White'),
-        ('Yellow', 'Yellow'),
-        ('Wood', 'Wood'),
-    ]
-    LOCATION_CHOICES = [
-        ('Elon, NC', 'Elon, NC'),
-        ('Burlington, NC', 'Burlington, NC'),
-    ]
     swaptuser = models.ForeignKey(SwaptUser, on_delete=CASCADE, null=True)
     title=models.CharField(max_length=200)
     slug=AutoSlugField(_('slug'), max_length=50, unique=True, populate_from=('title',))
     detail=models.TextField()
-    specs=models.TextField()
     status=models.BooleanField(default=True)
     category = models.CharField(
         max_length=50,
@@ -176,13 +148,6 @@ class InventoryListing(models.Model):
         null=True
     )
     condition = models.CharField(max_length=50,choices=CONDITION_CHOICES , null=True)
-    #mandatory location details
-    location = models.CharField(
-        max_length=30,
-        choices=LOCATION_CHOICES,
-        null=True
-    )
-    pickupmethod = models.PositiveSmallIntegerField(choices= PICKUP_CHOICES, null=True)
     #fields used to review listingscts
     stage = models.PositiveSmallIntegerField(choices=APPROVAL_STAGES, null=True)
     selling_stage = models.PositiveSmallIntegerField(choices=SELLING_STAGES, null=True)
@@ -280,18 +245,6 @@ class InventoryListingPrice(models.Model):
         return f"{self.listing.title} {self.price}"  
 
 #SWAPTLISTINGS
-class SwaptListingTag(models.Model):
-    name = models.CharField(
-        max_length=100, help_text=_("Designates the name of the tag.")
-    )
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        verbose_name_plural='2A: Swapt Listing Tags'
-
-    def __str__(self) -> str:
-        return self.name
     
 class SwaptPropertyManager(models.Model):
     first_name = models.CharField(max_length=30)
@@ -353,9 +306,9 @@ class SwaptListingModel(models.Model):
         (5, 'Closed'),
     ]
     SELLING_STAGES = [
-        (1, 'Available'),
-        (2, 'Pending'),
-        (3, 'Sold'),
+        ('Available', 'Available'),
+        ('Pending', 'Pending'),
+        ('Sold', 'Sold'),
     ]
     CONDITION_CHOICES = [
         ('New', 'New'),
@@ -366,25 +319,6 @@ class SwaptListingModel(models.Model):
     DELIVERYMETHOD_CHOICES = [
         (1, 'Local Pickup'),
         (2, 'Swapt Delivery'),
-    ]
-    COLOR_CHOICES = [
-        ('Beige', 'Beige'),
-        ('Black', 'Black'),
-        ('Blue', 'Blue'),
-        ('Brown', 'Brown'),
-        ('Clear', 'Clear'),
-        ('Gold', 'Gold'),
-        ('Gray', 'Gray'),
-        ('Green', 'Green'),
-        ('Multicolor', 'Multicolor'),
-        ('Orange', 'Orange'),
-        ('Pink', 'Pink'),
-        ('Purple', 'Purple'),
-        ('Red', 'Red'),
-        ('Silver', 'Silver'),
-        ('White', 'White'),
-        ('Yellow', 'Yellow'),
-        ('Wood', 'Wood'),
     ]
     LOCATION_CHOICES = [
         ('Elon, NC', 'Elon, NC'),
@@ -402,12 +336,10 @@ class SwaptListingModel(models.Model):
     #mandatory fields required with user input
     detail=models.TextField(default="detail")
     slug=AutoSlugField(_('slug'), max_length=50, unique=True, populate_from=('title',))
-    specs=models.TextField(default="nospecs")
     status=models.BooleanField(default=True)
     category=models.ForeignKey(Category,on_delete=models.CASCADE, default=1)
     brand=models.ForeignKey(Brand,on_delete=models.CASCADE, default=1)
-    thumbnail = models.ImageField(upload_to=get_image_filename, blank=True)
-    condition = models.CharField(max_length=50,choices=CONDITION_CHOICES , null=True)
+    condition = models.CharField(max_length=50,choices=CONDITION_CHOICES, null=True)
     #mandatory location details
     location = models.CharField(
         max_length=30,
@@ -418,12 +350,11 @@ class SwaptListingModel(models.Model):
     
     #fields used to review listings
     stage = models.PositiveSmallIntegerField(choices=APPROVAL_STAGES, null=True)
-    selling_stage = models.PositiveSmallIntegerField(choices=SELLING_STAGES, null=True)
+    selling_stage = models.CharField(max_length=50,choices=SELLING_STAGES , null=True)
     confirmed = models.BooleanField(default=False)
     issue = models.CharField(max_length=250, blank=True, null=True) # Currently only using one field for both rejected and reported issues
     #optional
     quantity = models.IntegerField(default=1)
-    tags = models.ManyToManyField(SwaptListingTag, blank=True)
     
     #field to display listings in featured page 
     is_featured=models.BooleanField(default=False)
@@ -524,10 +455,10 @@ class ProductOffers(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     product=models.ForeignKey(SwaptListingModel,on_delete=models.CASCADE)
     offers_text=models.TextField()
-    offers_amount=models.CharField(choices=AMOUNT,max_length=150)
+    offers_amount=models.TextField()
 
     class Meta:
-        verbose_name_plural='User: Offers'
+        verbose_name_plural='Offers'
 
     def get_offers_amount(self):
         return self.offers_amount
@@ -538,6 +469,6 @@ class Wishlist(models.Model):
     product=models.ForeignKey(SwaptListingModel,on_delete=models.CASCADE)
 
     class Meta:
-        verbose_name_plural='User: Wishlist'
+        verbose_name_plural='Likes'
             
     
