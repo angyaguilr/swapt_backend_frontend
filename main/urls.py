@@ -13,7 +13,6 @@ router.register(r'inventory-review', views.InventoryReviewListingsAPI)
 urlpatterns=[
     #Next JS landing page -- if user is not logged in
     #to-do -- add if user is authenticated
-    #to-do -- add all next.js pages
     path('', views.index, name="index"),
     path('privacy-policy', views.privacy_policy, name="privacy_policy"),
     path('cookies-policy', views.cookies_policy, name="cookies_policy"),
@@ -72,16 +71,16 @@ urlpatterns=[
     path('update-address/<int:id>',views.update_address, name='update-address'),
     path('edit-profile',views.edit_profile, name='edit-profile'),
     
-    #stripe 
+    #stripe #TO-DO FIX CHECKOUT SESSION
     path("create-checkout-session/<int:pk>/", swapt_user_required()(views.CreateStripeCheckoutSessionView.as_view()),name="create-checkout-session",),
     path('success/', swapt_user_required()(views.SuccessView.as_view()),name='success'),
     path('cancel/', swapt_user_required()(views.CancelView.as_view()),name='cancel'),
     path("webhooks/stripe/", views.StripeWebhookView.as_view(), name="stripe_webhook"), #updated line
-    #Inventory listings:
+    #create Inventory item listings:
     path('inventory-create-item/', views.InventoryListingCreationView.as_view(), name="inventory_create"),
-    path('inventory-add-attributes2/', views.InventoryListingAttributesCreationView.as_view(), name="inventory_add_attribute"),
-    path('inventory-add-attributes/',views.InventoryListingAttributesCreation_request, name='InventoryListingAttributes'),
+    path('inventory-add-attributes/',views.InventoryListingAttributesCreation_request, name='inventory_add_attribute'),
     path('inventory-confirm/', swapt_user_required()(views.InventoryListingsConfirmationView.as_view()), name="inventory_confirm"),
+    #review Inventory item listings:
     path('inventory-review/', login_required()(views.InventoryListingsReviewView.as_view()), name="inventory_review"),
     path('inventory-edit/<int:pk>/', swapt_user_required()(views.InventoryListingEditView.as_view()), name="inventory_edit"),
     path('inventory-reject/<int:pk>/', Swapt_admin_required()(views.InventoryListingRejectView.as_view()), name="inventory_reject"),
@@ -90,8 +89,13 @@ urlpatterns=[
     path('inventory-Listings/', views.InventoryListingsUploaded.as_view(), name='inventory_listings'),
     path('inventory-Listings/search/', views.InventoryListingsUploadedSearch.as_view(), name='inventory_listings_search'),
     
-    #swapt listings:
+    #create swapt listings:
+    path('swapt-create-listing/', views.SwaptListingCreation.as_view(), name='swapt_create'),
     path('swapt-confirm/', swapt_user_required()(views.SwaptListingsConfirmationView.as_view()), name="swapt_confirm"),
+    #from meal delivery
+    path('swapt-confirmation/<int:pk>', views.SwaptListingConfirmation.as_view(), name='swapt_confirmation'),
+    path('swapt-pay-confirmation/', views.SwaptListingPayConfirmation.as_view(),name='payment-confirmation'),
+    #review swapt listings:
     path('swapt-review/', login_required()(views.SwaptListingsReviewView.as_view()), name="swapt_review"),
     path('swapt-edit/<int:pk>/', login_required()(views.SwaptListingEditView.as_view()), name="swapt_edit"),
     path('swapt-reject/<int:pk>/', Swapt_admin_required()(views.SwaptListingRejectView.as_view()), name="swapt_reject"),
@@ -100,11 +104,8 @@ urlpatterns=[
     path('swapt-report/', views.SwaptReportListingView.as_view(), name="swapt_report"),
     path('swapt-Listings/', views.SwaptListingsUploaded.as_view(), name='swapt_listings'),
     path('swapt-Listings/search/', views.SwaptListingsUploadedSearch.as_view(), name='swapt_listings_search'),
-    path('swapt-create-listing/', views.SwaptListingCreation.as_view(), name='swapt_create'),
     path("swapt-listing", views.SwaptListingListView.as_view(), name="swapt_listing_list"),
     path("swapt-<int:pk>/", swapt_user_required()(views.SwaptListingDetailView.as_view()), name="swapt_listing_detail"),
-    path('swapt-confirmation/<int:pk>', views.SwaptListingConfirmation.as_view(), name='swapt_confirmation'),
-    path('swapt-pay-confirmation/', views.SwaptListingPayConfirmation.as_view(),name='payment-confirmation'),
 ]
 
 if settings.DEBUG:

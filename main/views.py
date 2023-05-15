@@ -107,7 +107,7 @@ def brand_product_list(request,brand_id):
 # InventoryListing Detail
 def product_detail(request,slug,id):
     product=SwaptListingModel.objects.get(id=id)
-    related_products=InventoryListing.objects.filter(swaptuser=request.user.swaptuser)
+    related_products=InventoryListing.objects.filter(swaptlistingmodel__pk=1)
     #colors=ProductAttribute.objects.filter(product=product).values('color__id','color__title','color__color_code').distinct()
     #sizes=ProductAttribute.objects.filter(product=product).values('size__id','size__title','price','color__id').distinct()
     offersForm=OffersAdd()
@@ -964,21 +964,6 @@ class InventoryListingCreationView(CreateView):
     def get_success_url(self):
         return reverse("inventory_add_attribute")
 
-class InventoryListingAttributesCreationView(CreateView):
-    model = InventoryItemAttribute
-    form_class = InventoryListingAttributeCreationForm
-    template_name ="inventoryitems/inventory_add_attributes.html"
-
-    def form_valid(self, form):
-        listing = form.save()
-        listing.save()
-        if self.request.user.is_swapt_user:
-            listing.save()
-
-        return super().form_valid(form)
-
-    def get_success_url(self):
-        return reverse("inventory_review") + "#nav-inventory-tab"
     
 def InventoryListingAttributesCreation_request(request):
     if request.method == "POST":
@@ -1052,12 +1037,13 @@ class InventoryListingsReviewView(View):
         # Filters to relevant pairs, then when filtering listings filters by those pairs and other attributes
         # Also stage 1 is the review stage
         pairs = InventoryCampusPropertyNamePair.objects.filter(campus__in=campuses, propertyname__in=propertynames)
-        queryset = InventoryListing.objects.filter(stage=1, location__in=locations, 
+        swaptlistings = SwaptListingModel.objects.filter(campus__in=campuses, propertyname__in=propertynames)
+        queryset = InventoryListing.objects.filter(stage=2, location__in=locations, 
             inventorycampuspropertynamepair__in=pairs, confirmed=True).distinct()
         
         # If the user wants to see cards that have 0 in/itemsSold, add those into the queryset too
         if(showNA == "true"):
-            queryset = queryset | InventoryListing.objects.filter(stage=1, location__in=locations, 
+            queryset = queryset | InventoryListing.objects.filter(stage=2, location__in=locations, 
             inventorycampuspropertynamepair__in=pairs, confirmed=True).distinct()
 
         if request.user.is_swapt_user:

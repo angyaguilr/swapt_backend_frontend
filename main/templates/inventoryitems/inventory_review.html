@@ -1,81 +1,79 @@
 {% extends "base.html" %}
 {% block content%}
-<ul class="nav nav-tabs" id="nav-tab" role="tablist">
-   <li class="nav-item" role="presentation">
-      <button class="nav-link active" id="nav-inventoryreview-tab" data-bs-toggle="tab" data-bs-target="#nav-inventoryreview" type="button" role="tab" aria-controls="nav-inventoryreview" aria-selected="true">Awaiting Review</button>
-   </li>
-   <li class="nav-item" role="presentation">
-      <button class="nav-link" id="nav-inventory-approved-tab" data-bs-toggle="tab" data-bs-target="#nav-inventoryapproved" type="button" role="tab" aria-controls="nav-inventoryapproved" aria-selected="false">Approved</button>
-   </li>
-   <li class="nav-item" role="presentation">
-      <button class="nav-link" id="nav-inventory-reported-tab" data-bs-toggle="tab" data-bs-target="#nav-inventoryreported" type="button" role="tab" aria-controls="nav-inventoryreported" aria-selected="false">Reported</button>
-   </li>
-   <li class="nav-item" role="presentation">
-      <button class="nav-link" id="nav-inventory-rejected-tab" data-bs-toggle="tab" data-bs-target="#nav-inventoryrejected" type="button" role="tab" aria-controls="nav-inventoryrejected" aria-selected="false">Rejected</button>
-   </li>
-</ul>
-<div class="form-check form-check-inline">
-   <input class="form-check-input location filter" type="checkbox" id="ElonNC">
-   <label class="form-check-label" for="ElonNC">
-   ElonNC
-   </label>
+<div class="pl-10 mb-4 border-b border-gray-200 dark:border-gray-700">
+   <ul class="nav nav-tabs flex flex-wrap -mb-px text-sm font-medium text-center" id="nav-tab" data-tabs-toggle="#myTabContent" role="tablist">
+      <li class="nav-item mr-2" role="presentation">
+         <button class="nav-link active" id="nav-inventoryreview-tab" data-bs-toggle="tab" data-bs-target="#nav-inventoryreview" type="button" role="tab" aria-controls="nav-inventoryreview" aria-selected="true">Awaiting Review</button>
+         <button class="inline-block p-4 border-b-2 rounded-t-lg" id="profile-tab" data-tabs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Flowbite Profile</button>
+      </li>
+      <li class="nav-item mr-2" role="presentation">
+         <button class="nav-link" id="nav-inventory-approved-tab" data-bs-toggle="tab" data-bs-target="#nav-inventoryapproved" type="button" role="tab" aria-controls="nav-inventoryapproved" aria-selected="false">Approved</button>
+         <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="dashboard-tab" data-tabs-target="#dashboard" type="button" role="tab" aria-controls="dashboard" aria-selected="false">Flowbite Dashboard</button>
+      </li>
+      <li class="nav-item mr-2" role="presentation">
+         <button class="nav-link" id="nav-inventory-reported-tab" data-bs-toggle="tab" data-bs-target="#nav-inventoryreported" type="button" role="tab" aria-controls="nav-inventoryreported" aria-selected="false">Reported</button>
+         <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="settings-tab" data-tabs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">Flowbite Settings</button>
+      </li>
+      <li role="nav-itempresentation">
+         <button class="nav-link" id="nav-inventory-rejected-tab" data-bs-toggle="tab" data-bs-target="#nav-inventoryrejected" type="button" role="tab" aria-controls="nav-inventoryrejected" aria-selected="false">Rejected</button>
+         <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="contacts-tab" data-tabs-target="#contacts" type="button" role="tab" aria-controls="contacts" aria-selected="false">Flowbite Contacts</button>
+      </li>
+   </ul>
 </div>
-<div class="form-check form-check-inline">
-   <input class="form-check-input location filter" type="checkbox" id="CollegeParkMD">
-   <label class="form-check-label" for="CollegeParkMD">
-   CollegeParkMD
-   </label>
-</div>
-<div class="form-check form-check-inline">
-   <input class="form-check-input location filter" type="checkbox" id="BurlingtonNC">
-   <label class="form-check-label" for="BurlingtonNC">
-   BurlingtonNC
-   </label>
-</div>
-<div class="form-check form-check-inline">
-   <input class="form-check-input location filter" type="checkbox" id="ColumbiaMD">
-   <label class="form-check-label" for="ColumbiaMD">
-   ColumbiaMD
-   </label>
+<div class="z-10 bg-white rounded-lg shadow w-60 dark:bg-gray-700">
+   <div class="form-check form-check-inline">
+      <input class="form-check-input location filter" type="checkbox" id="ElonNC">
+      <label class="form-check-label" for="ElonNC">
+      Elon, NC
+      </label>
+   </div>
+   <div class="form-check form-check-inline">
+      <input class="form-check-input location filter" type="checkbox" id="BurlingtonNC">
+      <label class="form-check-label" for="BurlingtonNC">
+      Burlington, NC
+      </label>
+   </div>
 </div>
 <br></br>
-<div class="form-check form-check-inline">
-   <input class="form-check-input campus filter" type="checkbox" id="Elon">
-   <label class="form-check-label" for="Elon">
-   Elon
-   </label>
+<div class="z-10 bg-white rounded-lg shadow w-60 dark:bg-gray-700">
+   <div class="form-check form-check-inline">
+      <input class="form-check-input campus filter" type="checkbox" id="Elon">
+      <label class="form-check-label" for="Elon">
+      Elon
+      </label>
+   </div>
+   <div class="form-check form-check-inline">
+      <input class="form-check-input campus filter" type="checkbox" id="UMD">
+      <label class="form-check-label" for="UMD">
+      UMD
+      </label>
+   </div>
+   <div class="form-check form-check-inline">
+      <input class="form-check-input campus filter" type="checkbox" id="UNCG">
+      <label class="form-check-label" for="UNCG">
+      UNCG
+      </label>
+   </div>
+   <div class="form-check form-check-inline">
+      <input class="form-check-input propertyname filter" type="checkbox" id="Oaks">
+      <label class="form-check-label" for="Oaks">
+      Oaks
+      </label>
+   </div>
+   <div class="form-check form-check-inline">
+      <input class="form-check-input propertyname filter" type="checkbox" id="MillPoint">
+      <label class="form-check-label" for="MillPoint">
+      MillPoint
+      </label>
+   </div>
+   <div class="form-check form-check-inline">
+      <input class="form-check-input propertyname filter" type="checkbox" id="OakHill">
+      <label class="form-check-label" for="OakHill">
+      OakHill
+      </label>
+   </div>
 </div>
-<div class="form-check form-check-inline">
-   <input class="form-check-input campus filter" type="checkbox" id="UMD">
-   <label class="form-check-label" for="UMD">
-   UMD
-   </label>
-</div>
-<div class="form-check form-check-inline">
-   <input class="form-check-input campus filter" type="checkbox" id="UNCG">
-   <label class="form-check-label" for="UNCG">
-   UNCG
-   </label>
-</div>
-<div class="form-check form-check-inline">
-   <input class="form-check-input propertyname filter" type="checkbox" id="Oaks">
-   <label class="form-check-label" for="Oaks">
-   Oaks
-   </label>
-</div>
-<div class="form-check form-check-inline">
-   <input class="form-check-input propertyname filter" type="checkbox" id="MillPoint">
-   <label class="form-check-label" for="MillPoint">
-   MillPoint
-   </label>
-</div>
-<div class="form-check form-check-inline">
-   <input class="form-check-input propertyname filter" type="checkbox" id="OakHill">
-   <label class="form-check-label" for="OakHill">
-   OakHill
-   </label>
-</div>
-<button class="btn btn-success apply-filter">Filter</button>
+<button class="btn btn-success apply-filter w-60 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Filter</button>
 <div class="tab-content" id="nav-tabContent">
    <div class="tab-pane fade show active" id="nav-inventoryreview" role="tabpanel" aria-labelledby="nav-inventoryreview-tab">
       <div class="row row-cols-1 row-cols-md-3 g-4">
@@ -90,7 +88,7 @@
                   </div>
                   <ul class="list-group list-group-flush">
                      <li class="list-group-item">Name: {{ listing.title }}</li>
-                     <li class="list-group-item">Description: {{ listing.desc }}</li>
+                     <li class="list-group-item">Description: {{ listing.detail}}</li>
                      <li class="list-group-item card-location">Location: {{listing.location}}</li>
                      {% if listing.issue != None %}
                      <li class="list-group-item">Reported/rejected issue: {{ listing.issue }}</li>
@@ -350,7 +348,7 @@
            },
            "columns": [
                {"data": "title"},
-               {"data": "desc"},
+               {"data": "detail"},
                {
                    "searchable": false,
                    "data": "location"

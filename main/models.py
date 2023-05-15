@@ -395,7 +395,7 @@ class SwaptListingModel(models.Model):
     #field identifying seller who posted listing
     swaptuser = models.ForeignKey(SwaptUser, on_delete=CASCADE, null=True)
     listings = models.ManyToManyField(
-        'InventoryListing', related_name='inventory', blank=True)
+        'InventoryListing', related_name='inventory_items', blank=True)
     title = models.CharField(max_length=250)
     is_paid = models.BooleanField(default=False)
     is_MoveInReady = models.BooleanField(default=False)
