@@ -107,7 +107,7 @@ def brand_product_list(request,brand_id):
 # InventoryListing Detail
 def product_detail(request,slug,id):
     product=SwaptListingModel.objects.get(id=id)
-    related_products=InventoryListing.objects.filter(isBundled=True)
+    related_products=InventoryListing.objects.filter(isBundled=True, swaptuser__user = product.swaptuser.user)
     pairs = SwaptCampusPropertyNamePair.objects.filter(listings=product)
     queryset = SwaptListingModel.objects.filter(stage=2, swaptcampuspropertynamepair__in=pairs, confirmed=True).distinct()
     #colors=ProductAttribute.objects.filter(product=product).values('color__id','color__title','color__color_code').distinct()
@@ -309,17 +309,17 @@ def save_offer(request,pid):
 	offers=ProductOffers.objects.create(
 		user=user,
 		product=product,
-		offers_message=request.POST['offers_message'],
-		offers_amount=request.POST['offers_amount'],
+		offers_message=request.POST.get('offers_message'),
+		offers_amount=request.POST.get('offers_amount'),
 		)
 	data={
 		'user':user.username,
-		'offers_message':request.POST['offers_message'],
-		'offers_amount':request.POST['offers_amount']
+		'offers_message':request.POST.get('offers_message'),
+		'offers_amount':request.POST.get('offers_amount')
 	}
 
 	# Fetch avg amount for offers
-	avg_offers=ProductOffers.objects.filter(product=product).aggregate(avg_amount=Avg('offers_amount'))
+	avg_offers=ProductOffers.objects.filter(product=product).aggregate(avg_amount='offers_amount')
 	# End
 
 	return JsonResponse({'bool':True,'data':data,'avg_offers':avg_offers})
@@ -928,18 +928,18 @@ class InventoryReviewListingsAPI(viewsets.ModelViewSet):
         if(stage == 5): 
             return InventoryListing.objects.filter(stage=5)
         
-        locations = self.request.GET.getlist('location', ['ElonNC', 'CollegeParkMD', 'BurlingtonNC', 'ColumbiaMD'])
+        
         propertynames = self.request.GET.getlist('propertyname', ['Oaks', 'MillPoint', 'OakHill'])
         campuses = self.request.GET.getlist('campus', ['Elon', 'UMD', 'UNCG'])
         showNA = self.request.GET.get('showNA', 'true')
 
         # Same filtering as in the regular review view
         pairs = InventoryCampusPropertyNamePair.objects.filter(propertyname__in=propertynames,campus__in=campuses)
-        queryset = InventoryListing.objects.filter(stage=stage, location__in=locations, 
+        queryset = InventoryListing.objects.filter(stage=stage, 
             inventorycampuspropertynamepair__in=pairs, confirmed=True).distinct()
         
         if(showNA == "true"):
-            queryset = queryset | InventoryListing.objects.filter(stage=stage, location__in=locations, 
+            queryset = queryset | InventoryListing.objects.filter(stage=stage,  
             inventorycampuspropertynamepair__in=pairs, confirmed=True).distinct()
         
         if self.request._request.user.is_swapt_user:

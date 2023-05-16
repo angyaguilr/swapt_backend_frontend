@@ -257,7 +257,7 @@ $("#addForm").submit(function(e){
 
 				// create data for offer
 				var _html='<blockquote class="blockquote text-right">';
-				_html+='<small>'+res.data.offers_text+'</small>';
+				_html+='<small>'+res.data.offers_message+'</small>';
 				_html+='<footer class="blockquote-footer">'+res.data.user;
 				_html+='<cite title="Source Title">';
 				for(var i=1; i<=res.data.offers_amount; i++){
@@ -276,8 +276,7 @@ $("#addForm").submit(function(e){
 				// Hide Modal
 				$("#productOffers").modal('hide');
 
-				// AVg Amount
-				$(".avg-amount").text(res.avg_offers.avg_amount.toFixed(1))
+				
 			}
 		}
 	});

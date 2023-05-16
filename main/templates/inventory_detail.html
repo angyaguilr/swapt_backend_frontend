@@ -1,7 +1,7 @@
 <!-- Individual items in swapt listing-->
 <!-- ✅ Grid Section - Starts Here 👇 -->
 <section class="w-fit mx-auto grid grid-cols-1 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
-    {% for product in related %}
+   {% for product in related %}
     <div class="bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
        <div
           class="lg:max-w-[515px] w-full bg-gray-50 lg:px-10 md:px-6 px-4 py-12"
@@ -163,18 +163,8 @@
           </div>
        </div>
        <div class="mt-6 md:flex lg:max-w-[515px] w-full gap-4">
-          <button
-             class="bg-gray-800 text-white lg:max-w-[217px] w-full py-2 hover:bg-gray-700 transition duration-300 md:block hidden"
-             >
-          Make An Offer
-          </button>
-          <button
-             class="bg-gray-800 text-white lg:max-w-[217px] w-full py-2 hover:bg-gray-700 transition duration-300 md:hidden block"
-             >
-          Make An Offer
-          </button>
           <div>
-             <input type="number" value="1" class="form-control product-qty-{{data.id}}" id="productQty" />
+             <input type="hidden" type="number" value="1" class="form-control product-qty-{{data.id}}" id="productQty" />
              <div class="input-group-append">
                 <input type="hidden" class="product-image-{{data.id}}" value="{{data.productattribute_set.first.image}}" />
                 <input type="hidden" class="product-id-{{data.id}}" value="{{data.id}}" />

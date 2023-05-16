@@ -460,8 +460,8 @@ AMOUNT=(
 class ProductOffers(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     product=models.ForeignKey(SwaptListingModel,on_delete=models.CASCADE)
-    offers_message=models.TextField()
-    offers_amount=models.TextField()
+    offers_message=models.TextField(null=True, blank=True)
+    offers_amount=models.TextField(null=True, blank=True)
 
     class Meta:
         verbose_name_plural='Offers'
