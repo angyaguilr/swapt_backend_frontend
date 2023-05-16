@@ -114,9 +114,13 @@ class InventoryListing(models.Model):
         (5, 'Closed'),
     ]
     SELLING_STAGES = [
-        (1, 'Available'),
-        (2, 'Pending'),
-        (3, 'Sold'),
+        ('Available', 'Available'),
+        ('Pending', 'Pending'),
+        ('Sold', 'Sold'),
+    ]
+    DELIVERYMETHOD_CHOICES = [
+        (1, 'Local Pickup'),
+        (2, 'Swapt Delivery'),
     ]
     CATEGORY_CHOICES = [
         ('Living Room Furniture', 'Living Room Furniture'),
@@ -139,8 +143,9 @@ class InventoryListing(models.Model):
     ]
     swaptuser = models.ForeignKey(SwaptUser, on_delete=CASCADE, null=True)
     title=models.CharField(max_length=200)
-    slug=AutoSlugField(_('slug'), max_length=50, unique=True, populate_from=('title',))
+    slug=AutoSlugField(_('slug'), max_length=50, unique=True, populate_from=('title'))
     detail=models.TextField()
+    delivery = models.PositiveSmallIntegerField(choices=DELIVERYMETHOD_CHOICES, null=True)
     status=models.BooleanField(default=True)
     category = models.CharField(
         max_length=50,
@@ -150,7 +155,7 @@ class InventoryListing(models.Model):
     condition = models.CharField(max_length=50,choices=CONDITION_CHOICES , null=True)
     #fields used to review listingscts
     stage = models.PositiveSmallIntegerField(choices=APPROVAL_STAGES, null=True)
-    selling_stage = models.PositiveSmallIntegerField(choices=SELLING_STAGES, null=True)
+    selling_stage = models.CharField(max_length=50,choices=SELLING_STAGES , null=True)
     confirmed = models.BooleanField(default=False)
     isBundled = models.BooleanField(default=False)
     issue = models.CharField(max_length=250, blank=True, null=True) # Currently only using one field for both rejected and reported issues
@@ -335,10 +340,10 @@ class SwaptListingModel(models.Model):
     is_MoveInReady = models.BooleanField(default=False)
     #mandatory fields required with user input
     detail=models.TextField(default="detail")
-    slug=AutoSlugField(_('slug'), max_length=50, unique=True, populate_from=('title',))
+    slug=AutoSlugField(_('slug'), max_length=50, unique=True, populate_from=('title'))
     status=models.BooleanField(default=True)
-    category=models.ForeignKey(Category,on_delete=models.CASCADE, default=1)
-    brand=models.ForeignKey(Brand,on_delete=models.CASCADE, default=1)
+    category=models.ForeignKey(Category,on_delete=models.CASCADE)
+    brand=models.ForeignKey(Brand,on_delete=models.CASCADE)
     condition = models.CharField(max_length=50,choices=CONDITION_CHOICES, null=True)
     #mandatory location details
     location = models.CharField(
@@ -430,6 +435,7 @@ class ProductAttribute(models.Model):
 # InventoryListing Attribute
 class InventoryItemAttribute(models.Model):
     product=models.ForeignKey(InventoryListing,on_delete=models.CASCADE)
+    brand=models.CharField(max_length=100, default='Brand')
     color=models.ForeignKey(Color,on_delete=models.CASCADE)
     size=models.ForeignKey(Dimension,on_delete=models.CASCADE)
     price=models.PositiveIntegerField(default=0)
@@ -443,7 +449,7 @@ class InventoryItemAttribute(models.Model):
 
     def image_tag(self):
         return mark_safe('<img src="%s" width="50" height="50" />' % (self.image.url))
-# InventoryListing Review
+#offers
 AMOUNT=(
     (1,'1'),
     (2,'2'),

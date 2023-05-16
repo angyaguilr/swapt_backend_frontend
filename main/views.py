@@ -130,7 +130,7 @@ def product_detail(request,slug,id):
     avg_offers=ProductOffers.objects.filter(product=product)
 	# End
     #return 'colors':colors,'sizes':sizes
-    return render(request, 'product_detail.html',{"review": queryset[:3], 'data':product,'related':related_products,'offersForm':offersForm,'canAdd':canAdd,'offers':offers,'avg_offers':avg_offers})
+    return render(request, 'product_detail.html',{"locationdata": queryset[:3], 'data':product,'related':related_products,'offersForm':offersForm,'canAdd':canAdd,'offers':offers,'avg_offers':avg_offers})
 
 # Search
 def search(request):
