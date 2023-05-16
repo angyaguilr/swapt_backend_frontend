@@ -398,7 +398,7 @@ def save_address(request):
 			saveForm.save()
 			msg='Data has been saved'
 	form=AddressBookForm
-	return render(request, 'user/addressbook.html',{'form':form,'msg':msg})
+	return render(request, 'user/add-address.html',{'form':form,'msg':msg})
 
 # Activate address
 def activate_address(request):
@@ -801,78 +801,22 @@ class SwaptListingsUploadedSearch(View):
 
         return render(request, 'swaptlistings/swapt_listings.html', context)
 
-class SwaptListingCreation(View):
+class SwaptListingCreation(CreateView):
     model = SwaptListingModel
     form_class = SwaptListingCreationForm
     template_name ="swaptlistings/swapt_create_form.html"
 
-    def get(self, request, *args, **kwargs):
-        # get every item from each category
-        InventoryFurnitureItems = InventoryListing.objects.filter(swaptuser=request.user.swaptuser, stage=2, selling_stage= 1, isBundled=False, confirmed=True)
+    def form_valid(self, form):
+        listing = form.save()
+        listing.swaptuser = SwaptUser.objects.get(user=self.request.user) 
+        listing.save()
+        if self.request.user.is_swapt_user:
+            listing.save()
 
-        # pass into context
-        context = {
-            'InventoryFurnitureItems': InventoryFurnitureItems,
-        }
+        return super().form_valid(form)
 
-        # render the template
-        return render(request, 'swaptlistings/swapt_create_form.html', context)
-    
-    def post(self, request, *args, **kwargs):
-        propertymanager=request.user.propertymanager
-        swaptuser=request.user.swaptuser
-        title = request.POST.get('title')
-        detail = request.POST.get('detail')
-        quantity=request.POST['quantity'],
-        status=request.POST['status'],
-        delivery=request.POST['delivery'],
-        condition=request.POST['condition'],
-        location=request.POST['location'],
-        move_out_date=request.POST['move_out_date'],
-        category=request.POST['category'],
-        brand=request.POST['brand'],
-        slug=request.POST['slug'],
-        stage=request.POST['stage'],
-        selling_stage=request.POST['selling_stage'],
-
-        order_listings = {
-            'listings': []
-        }
-
-        listings = request.POST.getlist('listings[]')
-
-        for item in listings:
-            InventoryListing_item = InventoryListing.objects.get(pk__contains=int(item))
-            InventoryListing_item_attr = InventoryItemAttribute.objects.get(pk__contains=int(item))
-            item_data = {
-                'id': InventoryListing_item.pk,
-                'title': InventoryListing_item.title,
-            }
-
-            order_listings['listings'].append(item_data)
-
-            price = 0
-            item_ids = []
-
-        for item in order_listings['listings']:
-            #price += item['price']
-            item_ids.append(item['id'])
-
-        order = SwaptListingModel.objects.create(
-            #price=price,
-            listings=InventoryListing_item,
-            title=title,
-            detail=detail,
-            
-        )
-        order.listings.add(*item_ids)
-
-
-        context = {
-            'listings': order_listings['listings'],
-        }
-
-        return redirect('swapt_confirmation', pk=order.pk) 
+    def get_success_url(self):
+        return reverse("inventory_add_attribute")
 
       
 class SwaptListingListView(ListView):
@@ -1029,7 +973,7 @@ class InventoryListingsReviewView(View):
         template = "inventoryitems/inventory_review.html"
     
         # Gets different attributes from the query string, but by default will be the most expansive possible
-        locations = self.request.GET.getlist('location', ['Elon, NC', 'Burlington, NC',])
+        #locations = self.request.GET.getlist('location', ['Elon, NC', 'Burlington, NC',])
         propertynames = self.request.GET.getlist('propertyname', ['Oaks', 'MillPoint', 'OakHill'])
         campuses = self.request.GET.getlist('campus', ['Elon', 'UMD', 'UNCG'])
         showNA = self.request.GET.get('showNA', 'true')
@@ -1037,12 +981,12 @@ class InventoryListingsReviewView(View):
         # Filters to relevant pairs, then when filtering listings filters by those pairs and other attributes
         # Also stage 1 is the review stage
         pairs = InventoryCampusPropertyNamePair.objects.filter(campus__in=campuses, propertyname__in=propertynames)
-        queryset = InventoryListing.objects.filter(stage=2, location__in=locations, 
+        queryset = InventoryListing.objects.filter(stage=2, 
             inventorycampuspropertynamepair__in=pairs, confirmed=True).distinct()
         
         # If the user wants to see cards that have 0 in/itemsSold, add those into the queryset too
         if(showNA == "true"):
-            queryset = queryset | InventoryListing.objects.filter(stage=2, location__in=locations, 
+            queryset = queryset | InventoryListing.objects.filter(stage=2, 
             inventorycampuspropertynamepair__in=pairs, confirmed=True).distinct()
 
         if request.user.is_swapt_user:

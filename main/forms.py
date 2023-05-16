@@ -35,17 +35,26 @@ class SwaptListingCreationForm(ModelForm):
 
     class Meta:
         model = SwaptListingModel
-        fields = ("title", "detail", "category", "condition", "move_out_date", "location", "brand", )
+        fields = ("title", "listings", "detail", "category", "condition", "move_out_date", "location", "brand", )
     
     def save(self, commit=True):
         self.full_clean() # calls clean function
-        listing = SwaptListingModel(stage=5)
-        
+        listing = SwaptListingModel(stage=2, confirmed=False, selling_stage=1, )
+        exclude = ["swaptuser"]
+
         if commit:
             fields = self.cleaned_data
             listing.title = fields['title']
+            listing.detail = fields['detail']
+            listing.listings = fields['listings']
+            listing.category = fields['category']
+            listing.condition = fields['condition']
+            listing.location = fields['location']
+            listing.brand = fields['brand']
+            listing.move_out_date = fields['move_out_date']
         
         return listing
+        
 
 class InventoryListingCreationForm(ModelForm):
     
@@ -71,6 +80,7 @@ class InventoryListingCreationForm(ModelForm):
             listing.tags = fields['tags']
         
         return listing
+    
 class InventoryListingAttributeCreationForm(ModelForm):
     
     # Instead of creating a new model, just using listing model with arbitrary data for required fields

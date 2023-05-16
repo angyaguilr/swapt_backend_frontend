@@ -1,4 +1,5 @@
 {% extends 'user/dashboard_base.html' %}
+{% load widget_tweaks %}
 {% block content %}
 {% if user.is_authenticated %}
 <!--Sidebar-->
@@ -7,79 +8,81 @@
 <div class="col-span-4 bg-gray-100 ">
    <!-- Nav -->
    <nav class="bg-white top-0 border-gray-200 dark:bg-gray-900">
-    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-    <div class="flex items-center static md:order-2">
-        <button type="button" class="flex  items-center space-x-2 rounded-full border-2 p-2 static mr-3 text-sm rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
-          <span class="sr-only">Open user menu</span>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="relative h-6 w-6 flex-shrink-0 flex-grow-0" preserveAspectRatio="xMidYMid meet">
-             <path d="M1.5 12H22.5" stroke="#717171" stroke-width="3"></path>
-             <path d="M1.5 18H22.5" stroke="#717171" stroke-width="3"></path>
-             <path d="M1.5 6H22.5" stroke="#717171" stroke-width="3"></path>
-          </svg>
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="relative h-8 w-8 flex-shrink-0 flex-grow-0" preserveAspectRatio="none">
-             <g clip-path="url(#clip0_403_153)">
-                <path d="M16 0.699997C7.56295 0.699997 0.699951 7.563 0.699951 16C0.699951 24.437 7.56295 31.3 16 31.3C24.437 31.3 31.2999 24.437 31.2999 16C31.2999 7.563 24.437 0.699997 16 0.699997ZM16 28.7C11.979 28.7 8.39495 26.816 6.06695 23.89C7.68856 21.7682 9.95064 20.2253 12.518 19.49C11.5936 18.9028 10.8323 18.0918 10.3048 17.1321C9.77719 16.1724 9.50038 15.0951 9.49995 14C9.49995 10.416 12.416 7.5 16 7.5C19.584 7.5 22.5 10.416 22.5 14C22.499 15.0953 22.2219 16.1726 21.6942 17.1324C21.1665 18.0922 20.4053 18.9034 19.481 19.491C22.0488 20.2258 24.3113 21.7687 25.933 23.891C23.6049 26.816 20.021 28.7 16 28.7Z" fill="#717171"></path>
-             </g>
-             <circle cx="27" cy="5" r="4.5" fill="#5E2987" stroke="white"></circle>
-             <defs>
-                <clipPath id="clip0_403_153">
-                   <rect width="32" height="32" fill="white"></rect>
-                </clipPath>
-             </defs>
-          </svg>
-        </button>
-        <!-- Dropdown menu -->
-        <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
-          <div class="px-4 py-3">
-            <span class="block text-sm text-gray-900 dark:text-white">{{ user.first_name }} {{ user.last_name }}</span>
-            <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">{{ user.email}}</span>
-          </div>
-          <ul class="py-2" aria-labelledby="user-menu-button">
-            <li>
-              <a href="{% url 'my_dashboard' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a>
-            </li>
-            <li>
-              <a href="{% url 'edit-profile' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Settings</a>
-            </li>
-            <li>
-              <a href="{% url 'my_dashboard' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">TBD</a>
-            </li>
-            <li>
-              <a href="{% url 'accounts:logout' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
-            </li>
-          </ul>
-        </div>
-        <button data-collapse-toggle="mobile-menu-2" type="button" class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="mobile-menu-2" aria-expanded="false">
-          <span class="sr-only">Open main menu</span>
-          <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
-      </button>
-    </div>
-    <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1">
-     <form class="flex items-center rounded-full py-2 md:border-2 md:shadow-sm" action="/search">
-       <input name="q" type="text" class="flex-grow bg-transparent border-transparent rounded-full pl-5 text-center text-gray-600 placeholder-gray-400 outline-none" placeholder="Search by location" />
-       <!-- <div class="h-8 w-px flex-shrink-0 flex-grow-0 bg-[#ebebeb]"></div>
-       <input name="q" type="text" class="flex-grow bg-transparent border-transparent rounded-full pl-2 text-center text-gray-600 placeholder-gray-400 outline-none" placeholder="city" /> --> 
-        <div class="input-group-append">
-         <button class="hidden h-8 cursor-pointer rounded-full bg-purple-900 p-2 text-white md:mx-2 md:inline-flex" type="submit" id="button-addon2">
-           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="relative h-4 w-4" preserveAspectRatio="xMidYMid meet">
-             <path d="M14.2716 13.1684L11.3313 10.2281C12.0391 9.28573 12.4213 8.13865 12.42 6.96C12.42 3.94938 9.97063 1.5 6.96 1.5C3.94938 1.5 1.5 3.94938 1.5 6.96C1.5 9.97063 3.94938 12.42 6.96 12.42C8.13865 12.4213 9.28573 12.0391 10.2281 11.3313L13.1684 14.2716C13.3173 14.4046 13.5114 14.4756 13.711 14.47C13.9105 14.4645 14.1004 14.3827 14.2415 14.2415C14.3827 14.1004 14.4645 13.9105 14.47 13.711C14.4756 13.5114 14.4046 13.3173 14.2716 13.1684V13.1684ZM3.06 6.96C3.06 6.18865 3.28873 5.43463 3.71727 4.79328C4.14581 4.15192 4.7549 3.65205 5.46754 3.35687C6.18017 3.06169 6.96433 2.98446 7.72085 3.13494C8.47738 3.28542 9.17229 3.65686 9.71772 4.20228C10.2631 4.74771 10.6346 5.44262 10.7851 6.19915C10.9355 6.95567 10.8583 7.73983 10.5631 8.45247C10.2679 9.1651 9.76808 9.77419 9.12673 10.2027C8.48537 10.6313 7.73135 10.86 6.96 10.86C5.92604 10.8588 4.93478 10.4475 4.20365 9.71635C3.47253 8.98522 3.06124 7.99396 3.06 6.96V6.96Z" fill="white"></path>
-          </svg>
-         </button>
-       </div>
-     </form>
-    </div>
-    <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="mobile-menu-2">
-        <ul class="flex flex-col  mr-3 font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-         <li>
-           <a href="{% url 'swapt_create' %}" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-purple-700 md:p-0 dark:text-white md:dark:hover:text-purple-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Create a Listing</a>
-         </li>
-         <li>
-          <a href="{% url 'cart' %}" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-purple-700 md:p-0 dark:text-white md:dark:hover:text-purple-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700" aria-current="page"><img class="dark:hidden" src="https://tuk-cdn.s3.amazonaws.com/can-uploader/navigation-V-svg4.svg" alt="cart" /></a>
-        </li>
-       </ul>
-    </div>
-    </div>
-  </nav>  
+      <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+         <div class="flex items-center static md:order-2">
+            <button type="button" class="flex  items-center space-x-2 rounded-full border-2 p-2 static mr-3 text-sm rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+               <span class="sr-only">Open user menu</span>
+               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="relative h-6 w-6 flex-shrink-0 flex-grow-0" preserveAspectRatio="xMidYMid meet">
+                  <path d="M1.5 12H22.5" stroke="#717171" stroke-width="3"></path>
+                  <path d="M1.5 18H22.5" stroke="#717171" stroke-width="3"></path>
+                  <path d="M1.5 6H22.5" stroke="#717171" stroke-width="3"></path>
+               </svg>
+               <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="relative h-8 w-8 flex-shrink-0 flex-grow-0" preserveAspectRatio="none">
+                  <g clip-path="url(#clip0_403_153)">
+                     <path d="M16 0.699997C7.56295 0.699997 0.699951 7.563 0.699951 16C0.699951 24.437 7.56295 31.3 16 31.3C24.437 31.3 31.2999 24.437 31.2999 16C31.2999 7.563 24.437 0.699997 16 0.699997ZM16 28.7C11.979 28.7 8.39495 26.816 6.06695 23.89C7.68856 21.7682 9.95064 20.2253 12.518 19.49C11.5936 18.9028 10.8323 18.0918 10.3048 17.1321C9.77719 16.1724 9.50038 15.0951 9.49995 14C9.49995 10.416 12.416 7.5 16 7.5C19.584 7.5 22.5 10.416 22.5 14C22.499 15.0953 22.2219 16.1726 21.6942 17.1324C21.1665 18.0922 20.4053 18.9034 19.481 19.491C22.0488 20.2258 24.3113 21.7687 25.933 23.891C23.6049 26.816 20.021 28.7 16 28.7Z" fill="#717171"></path>
+                  </g>
+                  <circle cx="27" cy="5" r="4.5" fill="#5E2987" stroke="white"></circle>
+                  <defs>
+                     <clipPath id="clip0_403_153">
+                        <rect width="32" height="32" fill="white"></rect>
+                     </clipPath>
+                  </defs>
+               </svg>
+            </button>
+            <!-- Dropdown menu -->
+            <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
+               <div class="px-4 py-3">
+                  <span class="block text-sm text-gray-900 dark:text-white">{{ user.first_name }} {{ user.last_name }}</span>
+                  <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">{{ user.email}}</span>
+               </div>
+               <ul class="py-2" aria-labelledby="user-menu-button">
+                  <li>
+                     <a href="{% url 'my_dashboard' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a>
+                  </li>
+                  <li>
+                     <a href="{% url 'edit-profile' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Settings</a>
+                  </li>
+                  <li>
+                     <a href="{% url 'my_dashboard' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">TBD</a>
+                  </li>
+                  <li>
+                     <a href="{% url 'accounts:logout' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+                  </li>
+               </ul>
+            </div>
+            <button data-collapse-toggle="mobile-menu-2" type="button" class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="mobile-menu-2" aria-expanded="false">
+               <span class="sr-only">Open main menu</span>
+               <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+               </svg>
+            </button>
+         </div>
+         <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1">
+            <form class="flex items-center rounded-full py-2 md:border-2 md:shadow-sm" action="/search">
+               <input name="q" type="text" class="flex-grow bg-transparent border-transparent rounded-full pl-5 text-center text-gray-600 placeholder-gray-400 outline-none" placeholder="Search by location" />
+               <!-- <div class="h-8 w-px flex-shrink-0 flex-grow-0 bg-[#ebebeb]"></div>
+                  <input name="q" type="text" class="flex-grow bg-transparent border-transparent rounded-full pl-2 text-center text-gray-600 placeholder-gray-400 outline-none" placeholder="city" /> --> 
+               <div class="input-group-append">
+                  <button class="hidden h-8 cursor-pointer rounded-full bg-purple-900 p-2 text-white md:mx-2 md:inline-flex" type="submit" id="button-addon2">
+                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="relative h-4 w-4" preserveAspectRatio="xMidYMid meet">
+                        <path d="M14.2716 13.1684L11.3313 10.2281C12.0391 9.28573 12.4213 8.13865 12.42 6.96C12.42 3.94938 9.97063 1.5 6.96 1.5C3.94938 1.5 1.5 3.94938 1.5 6.96C1.5 9.97063 3.94938 12.42 6.96 12.42C8.13865 12.4213 9.28573 12.0391 10.2281 11.3313L13.1684 14.2716C13.3173 14.4046 13.5114 14.4756 13.711 14.47C13.9105 14.4645 14.1004 14.3827 14.2415 14.2415C14.3827 14.1004 14.4645 13.9105 14.47 13.711C14.4756 13.5114 14.4046 13.3173 14.2716 13.1684V13.1684ZM3.06 6.96C3.06 6.18865 3.28873 5.43463 3.71727 4.79328C4.14581 4.15192 4.7549 3.65205 5.46754 3.35687C6.18017 3.06169 6.96433 2.98446 7.72085 3.13494C8.47738 3.28542 9.17229 3.65686 9.71772 4.20228C10.2631 4.74771 10.6346 5.44262 10.7851 6.19915C10.9355 6.95567 10.8583 7.73983 10.5631 8.45247C10.2679 9.1651 9.76808 9.77419 9.12673 10.2027C8.48537 10.6313 7.73135 10.86 6.96 10.86C5.92604 10.8588 4.93478 10.4475 4.20365 9.71635C3.47253 8.98522 3.06124 7.99396 3.06 6.96V6.96Z" fill="white"></path>
+                     </svg>
+                  </button>
+               </div>
+            </form>
+         </div>
+         <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="mobile-menu-2">
+            <ul class="flex flex-col  mr-3 font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+               <li>
+                  <a href="{% url 'swapt_create' %}" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-purple-700 md:p-0 dark:text-white md:dark:hover:text-purple-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Create a Listing</a>
+               </li>
+               <li>
+                  <a href="{% url 'cart' %}" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-purple-700 md:p-0 dark:text-white md:dark:hover:text-purple-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700" aria-current="page"><img class="dark:hidden" src="https://tuk-cdn.s3.amazonaws.com/can-uploader/navigation-V-svg4.svg" alt="cart" /></a>
+               </li>
+            </ul>
+         </div>
+      </div>
+   </nav>
    <!-- /Nav -->
    <!-- Main Section -->
    <section class="px-8 py-6">
@@ -187,13 +190,12 @@
          </div>
       </section>
       <!-- /Members -->
-      <!-- profile -->
       <section class="col-span-1 bg-white h-full rounded-2xl px-6 pt-10 pb-6">
          <div class="mx-auto w-full text-center flex justify-center">
             <div
                class="relative aspect-square rounded-2xl bg-white flex justify-center items-center flex-col text-gray-500 text-sm">
                <span>
-               <img src="media/userprofileimg.svg" class="w-20 h-20 rounded-full mb-4 border border-blue-200"
+               <img src="media/userprofileimg.svg" class="w-20 h-20 rounded-full mb-4 border border-purple-200"
                   alt="" srcset="">
                </span>
                <div class="font-semibold font-quicksand"> {{ user.first_name }}<span>   </span>{{ user.last_name }}</div>
@@ -204,29 +206,45 @@
                {% endif %}
             </div>
          </div>
+         <h3 class="my-4 border-b pb-1">Your Addresses <a href="{% url 'add-address' %}" class="float-right inline-block align-middle text-center select-none border font-quicksand font-normal whitespace-no-wrap rounded-lg  no-underline py-1 px-2 leading-tight text-xs  bg-purple-500 text-white hover:purple-600">Add</a></h3>
          {% for add in addbook %}
          <div class="w-full mt-10">
             <div class="z-20 w-full text-center">
                <span
                   class="w-1/2 bg-gray-800 inline-block mx-auto text-xxs text-gray-50 px-2 py-2 text-center rounded-lg whitespace-nowrap ">
-               Address</span>
+               Address
+               </span>
             </div>
             <div
-               class="z-10 bg-gray-100 rounded-2xl px-5 py-6 -mt-4 flex items-center justify-between space-x-4 ">
+               class="z-10 bg-gray-100 rounded-2xl px-5 py-6 -mt-4 flex items-center justify-between space-x-4 {% if add.status %}border-secondary shadow{% endif %} address{{add.id}} address">
                <span class="relative">
                <img src="/media/home-location.svg"
                   class="w-12 h-12" alt="" srcset="">
                </span>
                <div class="flex-1">
-                  <div class="font-semibold font-quicksand text-sm">{{add.address}}</div>
-                  <div class="text-xxs text-gray-400 mt-1">{{add.propertyname}}</div>
+                  <div class="px-2 font-semibold font-quicksand text-sm">{{add.address}}</div>
+                  <div class="px-2 text-xxs text-gray-400 mt-1">{{add.propertyname}}</div>
+                  {% if add.status %}
+                  <div
+                     class="z-10 bg-gray-100 px-2 py-4 -mt-4 flex items-center justify-normal space-x-4 ">
+                     <svg class="w-6 h-6 dark:text-white text-center text-green-500 check{{add.id}} check" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                     </svg>
+                     <button style="display:none;" data-address="{{add.id}}" class="inline-block align-middle text-center select-none border font-quicksand font-normal whitespace-no-wrap rounded text-xs  bg-purple-500 text-white hover:bg-purple-600 activate-address  py-1 px-3 leading-normal no-underline{{add.id}} actbtn">Activate</button>
+                  </div>
+                  {% else %}
+                  <div
+                     class="z-10 bg-gray-100 px-2 py-4 -mt-4 flex items-center justify-around space-x-4 ">
+                     <svg class="hidden w-6 h-6 dark:text-white text-green-500 check{{add.id}} check" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                     </svg>
+                     <button data-address="{{add.id}}" class="inline-block align-middle text-center select-none border font-quicksand font-normal whitespace-no-wrap rounded text-xs  bg-purple-500 text-white hover:bg-purple-600 activate-address py-1 px-3 leading-normal no-underline{{add.id}} actbtn">Activate</button>
+                  </div>
+                  {% endif %}
                </div>
-               <a href="#" class="text-gray-500 hover:text-purple-500">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 " fill="none"
-                     viewBox="0 0 24 24" stroke="currentColor">
-                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z">
-                     </path>
+               <a href="{% url 'update-address' add.id %}" class="text-gray-500 hover:text-purple-500">
+                  <svg class="w-6 h-6 dark:text-white" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"></path>
                   </svg>
                </a>
             </div>
@@ -239,6 +257,37 @@
             <div class="mt-1.5 font-quicksand font-semibold">{{ user.username }}</div>
             <div class="text-gray-500 mt-5">University Campus</div>
             <div class="mt-1.5 font-quicksand font-semibold"> {{ user.campusSignUp }}</div>
+         </div>
+         <div id="add-address-modal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative w-full max-w-md max-h-full">
+               <!-- Modal content -->
+               <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                  <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-hide="add-address-modal">
+                     <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                     </svg>
+                     <span class="sr-only">Close modal</span>
+                  </button>
+                  <div class="px-6 py-6 lg:px-8">
+                     <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Add a new address</h3>
+                     {% if msg %}
+                     <p class="text-green-500">{{msg}}</p>
+                     {% endif %}
+                     <form class="space-y-6" method="post">
+                        {% csrf_token %}
+                        {% for field in form %}
+                        <div>
+                           <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ field.label }}</label>
+                           <div class="bg-gray-100 border border-gray-100 text-[#807976] sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500">
+                              {%render_field field placeholder=field.label class+="w-full text-sm font-bold text-left text-[#807976] flex justify-start items-center relative overflow-hidden gap-2 bg-gray-100 border-0 border-gray-100" %} 
+                           </div>
+                        </div>
+                        {% endfor %}
+                        <button type="submit"  value="Save" class="w-full text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800">Save Address</button>
+                     </form>
+                  </div>
+               </div>
+            </div>
          </div>
       </section>
       <!-- /profile -->
