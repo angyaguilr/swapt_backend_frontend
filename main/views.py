@@ -309,12 +309,12 @@ def save_offer(request,pid):
 	offers=ProductOffers.objects.create(
 		user=user,
 		product=product,
-		offers_text=request.POST['offers_text'],
+		offers_message=request.POST['offers_message'],
 		offers_amount=request.POST['offers_amount'],
 		)
 	data={
 		'user':user.username,
-		'offers_text':request.POST['offers_text'],
+		'offers_message':request.POST['offers_message'],
 		'offers_amount':request.POST['offers_amount']
 	}
 

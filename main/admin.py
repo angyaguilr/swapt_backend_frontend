@@ -55,7 +55,7 @@ admin.site.register(CartOrderItems,CartOrderItemsAdmin)
 
 
 class ProductOffersAdmin(admin.ModelAdmin):
-	list_display=('user','product','offers_text','get_offers_amount')
+	list_display=('user','product','offers_message','get_offers_amount')
 admin.site.register(ProductOffers,ProductOffersAdmin)
 
 
