@@ -4,7 +4,7 @@ import json
 from django.shortcuts import render,redirect
 from django.urls import reverse_lazy, reverse
 from django.http import JsonResponse,HttpResponse
-from .models import Banner,Category,Brand,InventoryListing, InventoryItemAttribute, InventoryCampusPropertyNamePair, ProductAttribute,CartOrder,CartOrderItems,ProductOffers,Wishlist,UserAddressBook,  SwaptCampusPropertyNamePair, SwaptListingModel, SwaptPropertyManager, SwaptPaymentHistory, Swapt_Prices, SwaptListingTransactionRef, InventoryListingPrice
+from .models import Banner,Category,Brand,InventoryListing, InventoryItemAttribute, ProductAttribute,CartOrder,CartOrderItems,ProductOffers,Wishlist,UserAddressBook, SwaptListingModel 
 from django.db.models import Max,Min,Count,Avg
 from django.utils.decorators import method_decorator
 from django.shortcuts import render, get_object_or_404
@@ -108,8 +108,7 @@ def brand_product_list(request,brand_id):
 def product_detail(request,slug,id):
     product=SwaptListingModel.objects.get(id=id)
     related_products=InventoryListing.objects.filter(isBundled=True, swaptuser__user = product.swaptuser.user)
-    pairs = SwaptCampusPropertyNamePair.objects.filter(listings=product)
-    queryset = SwaptListingModel.objects.filter(stage=2, swaptcampuspropertynamepair__in=pairs, confirmed=True).distinct()
+    addbook=UserAddressBook.objects.filter(user = product.swaptuser.user).order_by('-id')
     #colors=ProductAttribute.objects.filter(product=product).values('color__id','color__title','color__color_code').distinct()
     #sizes=ProductAttribute.objects.filter(product=product).values('size__id','size__title','price','color__id').distinct()
     offersForm=OffersAdd()
@@ -130,7 +129,7 @@ def product_detail(request,slug,id):
     avg_offers=ProductOffers.objects.filter(product=product)
 	# End
     #return 'colors':colors,'sizes':sizes
-    return render(request, 'product_detail.html',{"locationdata": queryset[:3], 'data':product,'related':related_products,'offersForm':offersForm,'canAdd':canAdd,'offers':offers,'avg_offers':avg_offers})
+    return render(request, 'product_detail.html',{'addbook':addbook, 'data':product,'related':related_products,'offersForm':offersForm,'canAdd':canAdd,'offers':offers,'avg_offers':avg_offers})
 
 # Search
 class SwaptListingsUploadedSearch(View):
@@ -521,7 +520,7 @@ class StripeWebhookView(View):
                 from_email="test@gmail.com",
             )
 
-            SwaptPaymentHistory.objects.create(
+            CartOrderItems.objects.create(
                 email=customer_email, listing=listing, payment_status="completed"
             ) # Add this
         # Can handle other events here.
@@ -635,7 +634,7 @@ class InventoryListingsReviewView(View):
 
         # Filters to relevant pairs, then when filtering listings filters by those pairs and other attributes
         # Also stage 1 is the review stage
-        pairs = InventoryCampusPropertyNamePair.objects.filter(campus__in=campuses, propertyname__in=propertynames)
+        pairs =  UserAddressBook.objects.filter(campus__in=campuses, propertyname__in=propertynames)
         queryset = InventoryListing.objects.filter(stage=2, 
             inventorycampuspropertynamepair__in=pairs, confirmed=True).distinct()
         
@@ -757,7 +756,7 @@ class InventoryListingListAPIView(generics.ListAPIView):
         number = self.request.GET.get('number')
 
         # Get pairs with  levels specified, then narrow down listings based on those pairs and other attributes
-        pairs = InventoryCampusPropertyNamePair.objects.filter(campus__in=campuss)
+        pairs =  UserAddressBook.objects.filter(campus__in=campuss)
         queryset = InventoryListing.objects.filter(inventorycampuspropertynamepair__in=pairs).distinct()
         queryset = queryset.filter(confirmed=True, stage=2, location__in=locations) # Make sure cards returned in request are approved and confirmed
         queryset = sorted(queryset, key=lambda x: random.random()) # Randomize order as to not give same cards in same order every time to the app
@@ -824,7 +823,7 @@ class InventoryReviewListingsAPI(viewsets.ModelViewSet):
         showNA = self.request.GET.get('showNA', 'true')
 
         # Same filtering as in the regular review view
-        pairs = InventoryCampusPropertyNamePair.objects.filter(propertyname__in=propertynames,campus__in=campuses)
+        pairs =  UserAddressBook.objects.filter(propertyname__in=propertynames,campus__in=campuses)
         queryset = InventoryListing.objects.filter(stage=stage, 
             inventorycampuspropertynamepair__in=pairs, confirmed=True).distinct()
         
@@ -869,7 +868,7 @@ class SwaptReviewListingsAPI(viewsets.ModelViewSet):
         showNA = self.request.GET.get('showNA', 'true')
 
         # Same filtering as in the regular review view
-        pairs = SwaptCampusPropertyNamePair.objects.filter(propertyname__in=propertynames,campus__in=campuses)
+        pairs =  UserAddressBook.objects.filter(propertyname__in=propertynames,campus__in=campuses)
         queryset = SwaptListingModel.objects.filter(stage=stage, location__in=locations, swaptcampuspropertynamepair__in=pairs, confirmed=True).distinct()
         
         if(showNA == "true"):
@@ -935,7 +934,7 @@ class SwaptListingsReviewView(View):
 
         # Filters to relevant pairs, then when filtering listings filters by those pairs and other attributes
         # Also stage 1 is the review stage
-        pairs = SwaptCampusPropertyNamePair.objects.filter(campus__in=campuses, propertyname__in=propertynames)
+        pairs =  UserAddressBook.objects.filter(campus__in=campuses, propertyname__in=propertynames)
         queryset = SwaptListingModel.objects.filter(stage=1, location__in=locations, 
             swaptcampuspropertynamepair__in=pairs, confirmed=True).distinct()
         
@@ -1058,7 +1057,7 @@ class SwaptListingListAPIView(generics.ListAPIView):
         number = self.request.GET.get('number')
 
         # Get pairs with  levels specified, then narrow down listings based on those pairs and other attributes
-        pairs = SwaptCampusPropertyNamePair.objects.filter(campus__in=campuss)
+        pairs =  UserAddressBook.objects.filter(campus__in=campuss)
         queryset = SwaptListingModel.objects.filter(swaptcampuspropertynamepair__in=pairs).distinct()
         queryset = queryset.filter(confirmed=True, stage=2, location__in=locations) # Make sure cards returned in request are approved and confirmed
         queryset = sorted(queryset, key=lambda x: random.random()) # Randomize order as to not give same cards in same order every time to the app
@@ -1149,7 +1148,7 @@ class SwaptListingDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super( SwaptListingDetailView, self).get_context_data()
-        context["swapt_prices"] = Swapt_Prices.objects.filter(swapt_bundle_listing=self.get_object())
+        context["productattribute"] = ProductAttribute.objects.filter(product=self.get_object())
         return context          
 
 class SwaptListingConfirmation(View):

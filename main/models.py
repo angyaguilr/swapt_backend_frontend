@@ -190,107 +190,42 @@ class CartOrder(models.Model):
 
     class Meta:
         verbose_name_plural='Swapt Orders'
-
-# OrderItems
-class CartOrderItems(models.Model):
-    order=models.ForeignKey(CartOrder,on_delete=models.CASCADE)
-    invoice_no=models.CharField(max_length=150)
-    item=models.CharField(max_length=150)
-    image=models.CharField(max_length=200)
-    qty=models.IntegerField()
-    price=models.FloatField()
-    total=models.FloatField()
-
-    class Meta:
-        verbose_name_plural='Swapt Order Items'
-
-    def image_tag(self):
-        return mark_safe('<img src="/media/%s" width="50" height="50" />' % (self.image))
-
+  
 # AddressBook
 class UserAddressBook(models.Model):
-    user=models.ForeignKey(User,on_delete=models.CASCADE)
-    propertyname=models.CharField(max_length=50,null=True)
-    address=models.TextField()
-    status=models.BooleanField(default=False)
-
-    class Meta:
-        verbose_name_plural='User: AddressBook'
-
-class InventoryCampusPropertyNamePair(models.Model):
-    listings = models.ManyToManyField('InventoryListing')
     CAMPUS_CHOICES = [
-        ('Elon', 'Elon'),
-        ('UMD', 'UMD'),
-        ('UNCG', 'UNCG')
+        ('Elon University', 'Elon University'),
     ]
-    PROPERTYNAME_CHOICES = [
-        ('Oaks', 'Oaks'),
-        ('MillPoint', 'MillPoint'),
-        ('OakHill', 'OakHill'),
-    ]
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    address=models.TextField()
     campus = models.CharField(
         max_length=30,
         choices=CAMPUS_CHOICES,
-        default='Elon'
+        default='Elon University'
     )
-    propertyname = models.CharField(
-        max_length=30,
-        choices=PROPERTYNAME_CHOICES,
-    )
-    confirmed = models.BooleanField(default=False)  
-class InventoryListingPrice(models.Model):
-    listing = models.ForeignKey(InventoryListing, on_delete=models.CASCADE)
-    price = models.DecimalField(decimal_places=2, max_digits=10)
+    propertyname=models.CharField(max_length=50,null=True)
+    status=models.BooleanField(default=False)
 
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    class Meta:
+        verbose_name_plural='Users AddressBook'
+# InventoryListing Attribute
+class InventoryItemAttribute(models.Model):
+    product=models.ForeignKey(InventoryListing,on_delete=models.CASCADE)
+    brand=models.CharField(max_length=100, default='Brand')
+    color=models.ForeignKey(Color,on_delete=models.CASCADE)
+    size=models.ForeignKey(Dimension,on_delete=models.CASCADE)
+    price=models.PositiveIntegerField(default=0)
+    image=models.ImageField(upload_to="product_imgs/",null=True)
 
-    def __str__(self) -> str:
-        return f"{self.listing.title} {self.price}"  
+    class Meta:
+        verbose_name_plural='1E: Inventory Item Attributes'
 
+    def __str__(self):
+        return self.product.title
+
+    def image_tag(self):
+        return mark_safe('<img src="%s" width="50" height="50" />' % (self.image.url))
 #SWAPTLISTINGS
-    
-class SwaptPropertyManager(models.Model):
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
-    companyname = models.CharField(max_length=40, default="company")
-    email = models.EmailField(unique= True)
-    propertyname = models.CharField(max_length=30)
-
-    def __str__(self):
-        return "%s %s" % (self.first_name, self.last_name)
-
-#save customer order for future reference #TBD
-class SwaptListingTransactionRef(models.Model):
-    email = models.EmailField(max_length=254)
-    paid = models.BooleanField(default="False")
-    amount = models.IntegerField(default=0)
-    description = models.CharField(default=None,max_length=800)
-    def __str__(self):
-        return self.email 
-
-class SwaptPaymentHistory(models.Model):
-    PENDING = "P"
-    COMPLETED = "C"
-    FAILED = "F"
-
-    STATUS_CHOICES = (
-        (PENDING, _("pending")),
-        (COMPLETED, _("completed")),
-        (FAILED, _("failed")),
-    )
-
-    email = models.EmailField(unique=True)
-    listing = models.ForeignKey(InventoryListing, on_delete=models.CASCADE)
-    payment_status = models.CharField(
-        max_length=1, choices=STATUS_CHOICES, default=PENDING
-    )
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.listing.title
     
 class SwaptListingManager(models.Manager):
     # Only shows the user rejected listings within last 30 days or listings from other stages
@@ -384,40 +319,7 @@ class SwaptListingModel(models.Model):
     def save(self, *args, **kwargs):
         super(SwaptListingModel, self).save(*args, **kwargs) 
 
-class Swapt_Prices(models.Model):
-    swapt_bundle_listing = models.ForeignKey(SwaptListingModel, on_delete=models.CASCADE)
-    price = models.DecimalField(decimal_places=2, max_digits=10)
-
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self) -> str:
-        return f"{self.swapt_bundle_listing.title} {self.price}" 
-
-class SwaptCampusPropertyNamePair(models.Model):
-    listings = models.ManyToManyField('SwaptListingModel')
-    CAMPUS_CHOICES = [
-        ('Elon', 'Elon'),
-        ('UMD', 'UMD'),
-        ('UNCG', 'UNCG')
-    ]
-    PROPERTYNAME_CHOICES = [
-        ('Oaks', 'Oaks'),
-        ('MillPoint', 'MillPoint'),
-        ('OakHill', 'OakHill'),
-    ]
-    campus = models.CharField(
-        max_length=30,
-        choices=CAMPUS_CHOICES,
-        default='Elon'
-    )
-    propertyname = models.CharField(
-        max_length=30,
-        choices=PROPERTYNAME_CHOICES,
-    )
-    confirmed = models.BooleanField(default=False)
-
-# InventoryListing Attribute
+# swapt product Attribute
 class ProductAttribute(models.Model):
     product=models.ForeignKey(SwaptListingModel,on_delete=models.CASCADE)
     price=models.PositiveIntegerField(default=0)
@@ -432,23 +334,10 @@ class ProductAttribute(models.Model):
     def image_tag(self):
         return mark_safe('<img src="%s" width="50" height="50" />' % (self.image.url))
 
-# InventoryListing Attribute
-class InventoryItemAttribute(models.Model):
-    product=models.ForeignKey(InventoryListing,on_delete=models.CASCADE)
-    brand=models.CharField(max_length=100, default='Brand')
-    color=models.ForeignKey(Color,on_delete=models.CASCADE)
-    size=models.ForeignKey(Dimension,on_delete=models.CASCADE)
-    price=models.PositiveIntegerField(default=0)
-    image=models.ImageField(upload_to="product_imgs/",null=True)
+    
 
-    class Meta:
-        verbose_name_plural='1E: Inventory Item Attributes'
+    
 
-    def __str__(self):
-        return self.product.title
-
-    def image_tag(self):
-        return mark_safe('<img src="%s" width="50" height="50" />' % (self.image.url))
 #offers
 AMOUNT=(
     (1,'1'),
@@ -464,10 +353,40 @@ class ProductOffers(models.Model):
     offers_amount=models.TextField(null=True, blank=True)
 
     class Meta:
-        verbose_name_plural='Offers'
+        verbose_name_plural='Users Offers'
 
     def get_offers_amount(self):
         return self.offers_amount
+  
+# order 
+class CartOrderItems(models.Model):
+    PENDING = "P"
+    COMPLETED = "C"
+    FAILED = "F"
+
+    STATUS_CHOICES = (
+        (PENDING, _("pending")),
+        (COMPLETED, _("completed")),
+        (FAILED, _("failed")),
+    )
+    order=models.ForeignKey(CartOrder,on_delete=models.CASCADE)
+    invoice_no=models.CharField(max_length=150)
+    email = models.EmailField(unique=True, default='test@swapt.it')
+    listing = models.ForeignKey(SwaptListingModel, on_delete=models.CASCADE, default=1)
+    item=models.CharField(max_length=150)
+    image=models.CharField(max_length=200)
+    payment_status = models.CharField(
+        max_length=1, choices=STATUS_CHOICES, default=PENDING
+    )
+    qty=models.IntegerField()
+    price=models.FloatField()
+    total=models.FloatField()
+
+    class Meta:
+        verbose_name_plural='Swapt Order Items'
+
+    def image_tag(self):
+        return mark_safe('<img src="/media/%s" width="50" height="50" />' % (self.image))
 
 # WishList
 class Wishlist(models.Model):
@@ -475,6 +394,6 @@ class Wishlist(models.Model):
     product=models.ForeignKey(SwaptListingModel,on_delete=models.CASCADE)
 
     class Meta:
-        verbose_name_plural='Likes'
+        verbose_name_plural='Users Likes'
             
     

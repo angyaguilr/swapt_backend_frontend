@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm,UserChangeForm
-from .models import InventoryItemAttribute,ProductOffers,UserAddressBook, SwaptListingModel, InventoryListing, InventoryCampusPropertyNamePair, SwaptCampusPropertyNamePair
+from .models import InventoryItemAttribute,ProductOffers,UserAddressBook, SwaptListingModel, InventoryListing
 from django.forms import ModelForm
 
 class SignupForm(UserCreationForm):
@@ -19,7 +19,7 @@ class OffersAdd(forms.ModelForm):
 class AddressBookForm(forms.ModelForm):
 	class Meta:
 		model=UserAddressBook
-		fields=('address','propertyname','status')
+		fields=('address','campus', 'propertyname','status')
 
 # ProfileEdit
 class ProfileForm(UserChangeForm):
@@ -177,7 +177,7 @@ class ListingEditForm(ModelForm):
             # Add new pairs
             # NOTE: if first pair and third pair are filled in, but second isn't, then when displayed on the site, the third pair filled in on 
             # the form will act like the second pair
-            firstPair = SwaptCampusPropertyNamePair.objects.get_or_create(
+            firstPair =  UserAddressBook.objects.get_or_create(
                 campus=fields['campusOne'],
                 propertyname=fields['propertynameOne']
             )
@@ -185,14 +185,14 @@ class ListingEditForm(ModelForm):
             
             # Need to make sure these fields are filled in before adding a pair since they're optional (same goes for pair 3)
             if fields['campusTwo'] != None and fields['propertynameTwo'] != "":
-                secondPair = SwaptCampusPropertyNamePair.objects.get_or_create(
+                secondPair =  UserAddressBook.objects.get_or_create(
                     campus=fields['campusTwo'],
                     propertyname=fields['propertynameTwo']
                 )
                 secondPair[0].listings.add(listing)
 
             if fields['campusThree'] != None and fields['propertynameThree'] != "":
-                thirdPair = SwaptCampusPropertyNamePair.objects.get_or_create(
+                thirdPair =  UserAddressBook.objects.get_or_create(
                     campus=fields['campusThree'],
                     propertyname=fields['propertynameThree']
                 )
@@ -299,7 +299,7 @@ class InventoryListingEditForm(ModelForm):
             # Add new pairs
             # NOTE: if first pair and third pair are filled in, but second isn't, then when displayed on the site, the third pair filled in on 
             # the form will act like the second pair
-            firstPair = InventoryCampusPropertyNamePair.objects.get_or_create(
+            firstPair =  UserAddressBook.objects.get_or_create(
                 campus=fields['campusOne'],
                 propertyname=fields['propertynameOne']
             )
@@ -307,14 +307,14 @@ class InventoryListingEditForm(ModelForm):
             
             # Need to make sure these fields are filled in before adding a pair since they're optional (same goes for pair 3)
             if fields['campusTwo'] != None and fields['propertynameTwo'] != "":
-                secondPair = InventoryCampusPropertyNamePair.objects.get_or_create(
+                secondPair =  UserAddressBook.objects.get_or_create(
                     campus=fields['campusTwo'],
                     propertyname=fields['propertynameTwo']
                 )
                 secondPair[0].listings.add(listing)
 
             if fields['campusThree'] != None and fields['propertynameThree'] != "":
-                thirdPair = InventoryCampusPropertyNamePair.objects.get_or_create(
+                thirdPair =  UserAddressBook.objects.get_or_create(
                     campus=fields['campusThree'],
                     propertyname=fields['propertynameThree']
                 )

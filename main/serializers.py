@@ -1,12 +1,12 @@
 from rest_framework import serializers 
-from .models import Banner, Category, Brand, Color, Dimension, InventoryListingPrice, InventoryListingTag, InventoryListing, InventoryCampusPropertyNamePair, ProductAttribute, Swapt_Prices, SwaptCampusPropertyNamePair, SwaptListingModel, SwaptPropertyManager, SwaptPaymentHistory, SwaptListingTransactionRef
+from .models import Banner, Category, Brand, Color, Dimension, InventoryListingTag, InventoryListing,  UserAddressBook, ProductAttribute, SwaptListingModel
 import random
  
 
 class CampusPropertyNamePairSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = InventoryCampusPropertyNamePair
+        model =  UserAddressBook
         fields = ('campus',
                   'propertyname',
                   )
@@ -90,7 +90,7 @@ class InventoryListingReviewSerializer(serializers.ModelSerializer):
 class SwaptCampusPropertyNamePairSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = SwaptCampusPropertyNamePair
+        model =  UserAddressBook
         fields = ('campus',
                   'propertyname',
                   )

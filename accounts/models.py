@@ -10,7 +10,6 @@ class User(AbstractUser):
    
     CAMPUS_CHOICES = [
         ('Elon University', 'Elon University'),
-        ('University of Maryland', 'University of Maryland'),
     ]
     campusSignUp = models.CharField(
         max_length=50,

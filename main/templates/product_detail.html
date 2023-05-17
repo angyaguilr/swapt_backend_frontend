@@ -139,34 +139,32 @@
                   <div id="accordion-flush-body-2" class="hidden" aria-labelledby="accordion-flush-heading-2">
                      <div class="py-5 border-b border-gray-200 dark:border-gray-700">
                         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                           <thead class="hidden text-xs text-gray-900 uppercase dark:text-gray-400">
+                           {% for address in addbook %}
+                           <thead class="text-xs text-gray-900 uppercase dark:text-gray-400">
                               <tr>
                                  <th scope="col" class="px-6 py-3">
-                                    spec
+                                    Address
                                  </th>
                                  <th scope="col" class="px-6 py-3">
-                                    value
+                                    {{ address.address }}
                                  </th>
                               </tr>
                            </thead>
-                           {% for listing in locationdata %}
                            <tbody>
-                              {% for pair in listing.swaptcampuspropertynamepair_set.all %}
                               <tr class="bg-gray-50 dark:bg-gray-800">
                                  <th scope="row" class="px-6 py-4 text-xs text-gray-900 uppercase dark:text-gray-400">
                                     Campus
                                  </th>
-                                 <td class="px-6 py-4">{{ pair.campus }}
+                                 <td class="px-6 py-4">{{ address.campus }}
                                  </td>
                               </tr>
                               <tr class="bg-gray-50 dark:bg-gray-800">
                                  <th scope="row" class="px-6 py-4 text-xs text-gray-900 uppercase dark:text-gray-400">
                                     Property Name
                                  </th>
-                                 <td class="px-6 py-4">{{ pair.propertyname }}
+                                 <td class="px-6 py-4">{{ address.propertyname }}
                                  </td>
                               </tr>
-                              {% endfor %}
                            </tbody>
                            {% endfor %}
                         </table>
@@ -182,8 +180,8 @@
                   </h2>
                   <div id="accordion-flush-body-3" class="hidden" aria-labelledby="accordion-flush-heading-3">
                      <div class="py-5 border-b border-gray-200 dark:border-gray-700">
-                        <p class="mb-2 text-gray-500 dark:text-gray-400">A Swapt is a listing of a tenant’s large furniture and miscellaneous items that they wish to pass on to the incoming tenant.</p>
-                        <p class="mb-2 text-gray-500 dark:text-gray-400">Learn more about Delivery <a href="/about" class="text-purple-600 dark:text-purple-500 hover:underline">here</a></p>
+                        <p class="mb-2 text-gray-500 dark:text-gray-400">In order for you to receive the items in this listing, you must be the incoming tenant of the address under this listing. If you are the incoming tenant for this address, your items will be waiting for you at this address when you move in. </p>
+                        <p class="mb-2 text-gray-500 dark:text-gray-400">Learn more about how Swapt works <a href="/about" class="text-purple-600 dark:text-purple-500 hover:underline">here</a></p>
                      </div>
                   </div>
                </div>
@@ -229,22 +227,24 @@
          </div>
       </div>
       <!-- inventory listing items-->
-      <div class="divider"><p
-         class="self-stretch text-4xl font-semibold text-center"
-       >
-         <span
-           class="self-stretch  text-4xl font-semibold text-center text-[#0e0f11]"
-           >Items &#x26; </span
-         ><span
-           class="self-stretch text-4xl font-semibold text-center text-[#957fef]"
-           >Details</span
-         >
-       </p></div>
-       <p
+      <div class="divider">
+         <p
+            class="self-stretch text-4xl font-semibold text-center"
+            >
+            <span
+               class="self-stretch  text-4xl font-semibold text-center text-[#0e0f11]"
+               >Items &#x26; </span
+               ><span
+               class="self-stretch text-4xl font-semibold text-center text-[#957fef]"
+               >Details</span
+               >
+         </p>
+      </div>
+      <p
          class="self-stretch pt-4 text-base text-center text-[#636b75]"
-       >
+         >
          This listing includes all of the following furniture items
-       </p>
+      </p>
       {% include 'inventory_detail.html' %}
    </div>
    <!-- Main modal -->
@@ -283,9 +283,8 @@
 <!-- Image Zoom -->
 <script src="{% static 'jquery.ez-plus.js' %}"></script>
 <script type="text/javascript">
-    $('#zoom_01').ezPlus();
+   $('#zoom_01').ezPlus();
 </script>
-
 <!-- Add To Cart -->
 <script src="{% static 'custom.js' %}"></script>
 {% endblock %}

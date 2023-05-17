@@ -1,19 +1,13 @@
 from django.contrib import admin
-from .models import InventoryItemAttribute, InventoryCampusPropertyNamePair, Banner,Category,Brand,Color,Dimension,InventoryListing,ProductAttribute,CartOrder,CartOrderItems,ProductOffers,Wishlist,UserAddressBook, Swapt_Prices, SwaptCampusPropertyNamePair, SwaptListingModel, SwaptPropertyManager, SwaptListingTransactionRef, SwaptPaymentHistory, InventoryListingTag, InventoryListingPrice
+from .models import InventoryItemAttribute, Banner,Category,Brand,Color,Dimension,InventoryListing,ProductAttribute,CartOrder,CartOrderItems,ProductOffers,Wishlist,UserAddressBook, SwaptListingModel, InventoryListingTag
 
 # admin.site.register(Banner)
 admin.site.register(Brand)
 admin.site.register(Dimension)
 #swapt
-admin.site.register(Swapt_Prices)
 admin.site.register(InventoryListing)
-admin.site.register(SwaptListingTransactionRef)
-admin.site.register(SwaptPaymentHistory)
-admin.site.register(SwaptCampusPropertyNamePair)
-admin.site.register(SwaptPropertyManager)
 #Inventory listings
 admin.site.register(InventoryListingTag)
-admin.site.register(InventoryCampusPropertyNamePair)
 
 
 class BannerAdmin(admin.ModelAdmin):
@@ -65,12 +59,3 @@ admin.site.register(Wishlist)
 class UserAddressBookAdmin(admin.ModelAdmin):
 	list_display=('user','address','status')
 admin.site.register(UserAddressBook,UserAddressBookAdmin)
-
-class PriceAdmin(admin.StackedInline):
-    model = InventoryListingPrice
-
-class ListingAdmin(admin.ModelAdmin):
-    inlines = (PriceAdmin,)
-
-    class Meta:
-        model = InventoryListing
