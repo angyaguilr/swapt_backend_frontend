@@ -6,66 +6,78 @@
       <!-- Featured Listings -->
    <div class="flex flex-wrap flex-col">
       <!-- ✅ Grid Section - Starts Here 👇 -->
-      <section class="w-fit mx-auto grid grid-cols-1 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
-         {% for product in review %}
-         <!--   ✅ Product card 1 - Starts Here 👇 -->
-         <div class="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
-            <a href="/product/{{product.slug}}/{{product.id}}">
-               <img src="/media/{{product.productattribute_set.first.image}}" alt="{{product.title}}" class="h-80 w-72 object-cover rounded-t-xl" />
-               <div class="px-4 py-3 w-72">
-                  <p class="text-lg font-bold font-quicksand text-black truncate block capitalize">
-            <a href="/product/{{product.slug}}/{{product.id}}">{{product.title}}</a></p>
-            <p class="text-lg font-normal font-quicksand text-gray-700 truncate block"><a href="/product/{{product.slug}}/{{product.id}}">{{product.location}}</a></p>
-            {% if product.move_out_date|date:"M Y" == product.publishing_date|date:"M Y" %}
-            <p class="text-lg font-normal font-quicksand text-gray-700 truncate block"><a href="/product/{{product.slug}}/{{product.id}}">Available Now</a></p>
-            {% else %}
-            <p class="text-lg font-normal font-quicksand text-gray-700 truncate block"><a href="/product/{{product.slug}}/{{product.id}}">Available {{product.move_out_date|date:"M Y"}}</a></p>
-            {% endif %}
-            <div class="flex items-center">
-            <p class="text-lg font-normal font-quicksand text-black cursor-auto my-3">
-            $ <span class="product-price-{{product.id}}">{{product.productattribute_set.first.price}}</span>
-            </p>
-            <p class="text-sm text-gray-600 cursor-auto ml-2">USD</p>
-            <div class="ml-auto">
-            <input type="hidden" value="1" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded product-qty-{{product.id}}" id="productQty" />
-            <input type="hidden" class="product-image-{{product.id}}" value="{{product.productattribute_set.first.image}}" />
-            <input type="hidden" class="product-id-{{product.id}}" value="{{product.id}}" />
-            <input type="hidden" class="product-title-{{product.id}}" value="{{product.title}}" />
-            <button class="inline-block align-middle text-center select-none border font-normal font-quicksand whitespace-no-wrap rounded  no-underline py-1 px-2 leading-tight text-xs text-black add-to-cart" data-index="{{product.id}}">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bag-plus" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z" />
-            <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
-            </svg>
-            </button>
-            <button class="inline-block align-middle text-center select-none border font-normal font-quicksand whitespace-no-wrap rounded  no-underline py-1 px-2 leading-tight text-xs text-white hover:bg-red-700">
-            <svg
-               width="24"
-               height="24"
-               viewBox="0 0 24 24"
-               fill="currentColor"
-               xmlns="http://www.w3.org/2000/svg"
-               class="w-5 h-5"
-               preserveAspectRatio="xMidYMid meet"
+      <section class="w-fit mx-auto grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
+        {% for product in review %}
+         <div class="bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
+            <div
+               class="lg:max-w-[515px] w-full bg-gray-50 lg:px-10 md:px-6 px-4 py-12"
                >
-            <path
-               d="M12 21C17.25 17.4503 22.5 13.5 22.5 8.25C22.5 6.906 21.9878 5.56275 20.9625 4.5375C19.9373 3.513 18.594 3 17.25 3C15.9067 3 14.5628 3.513 13.5382 4.5375L12 6.07575L10.4625 4.5375C9.43725 3.513 8.094 3 6.75 3C5.40675 3 4.06275 3.513 3.03825 4.5375C2.013 5.56275 1.5 6.906 1.5 8.25C1.5 13.5 6.75 17.4503 12 21Z"
-               fill="black"
-               fill-opacity="0.5"
-               stroke="white"
-               stroke-width="2"
-               ></path>
-            </svg>
-            </button>
+               <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
+                  <div class="relative h-56 overflow-hidden rounded-lg md:h-96" >
+                     <img id="zoom_01" 
+                        data-zoom-image="/media/{{product.inventoryitemattribute_set.first.image}}" 
+                        src="/media/{{product.inventoryitemattribute_set.first.image}}"
+                        alt="{{product.title}}" class="absolute block max-w-full h-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+                  </div>
+               </div>
+               <div class="pb-6">
+                <div class="flex flex-row space-x-5" >
+                    <p
+                       class="lg:text-4xl md:text-3xl text-3xl font-semibold leading-9 text-gray-800 md:mt-6 mt-4"
+                       >
+                       {{product.title}}
+                    </p>
+                    <p class="lg:text-4xl md:text-3xl text-3xl font-semibold leading-9 text-gray-800 md:mt-6 mt-4">
+                      <a href="{% url 'inventory_edit' product.id %}" class="text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900">
+                          Edit
+                      </a>
+                  </p>
+                  </div>
+                  <p
+                     class="text-2xl font-semibold leading-normal text-gray-800 md:mt-6 mt-4"
+                     >
+                     $<span class="product-price-{{product.id}}">{{product.inventoryitemattribute_set.first.price}}</span>
+                  </p>
+                  <p
+                     class="text-base leading-normal text-gray-600 mt-4 lg:max-w-[415px] w-full"
+                     >
+                     {{product.detail}}
+                  </p>
+                  <ul role="list" class="space-y-5 my-7">
+                     <li class="flex space-x-3">
+                        <!-- Icon -->
+                        <svg aria-hidden="true" class="flex-shrink-0 w-5 h-5 text-purple-600 dark:text-purple-500" fill="currentColor" viewBox="0 0 24 24"
+                           fill="none"
+                           xmlns="http://www.w3.org/2000/svg"
+                           class="flex-grow-0 flex-shrink-0 w-6 h-6 relative"
+                           preserveAspectRatio="none"
+                           >
+                           <path
+                              d="M9.00016 16.1698L4.83016 11.9998L3.41016 13.4098L9.00016 18.9998L21.0002 6.99984L19.5902 5.58984L9.00016 16.1698Z"
+                              fill="#957FEF"
+                              ></path>
+                        </svg>
+                        <span class="text-base font-normal leading-tight text-gray-500 dark:text-gray-400">{{product.selling_stage}}</span>
+                     </li>
+                  </ul>
+               </div>
+               <hr />
+               {% include 'snippets/inventory_accordion.html' %}
             </div>
+            <div class="mt-6 md:flex lg:max-w-[515px] w-full gap-4">
+               <div>
+                  <input type="hidden" type="number" value="1" class="form-control product-qty-{{data.id}}" id="productQty" />
+                  <div class="input-group-append">
+                     <input type="hidden" class="product-image-{{data.id}}" value="{{data.productattribute_set.first.image}}" />
+                     <input type="hidden" class="product-id-{{data.id}}" value="{{data.id}}" />
+                     <input type="hidden" class="product-title-{{data.id}}" value="{{data.title}}" />
+                     <button class="text-base border border-gray-300 lg:max-w-[218px] w-full font-medium leading-none text-center text-gray-800 py-3 hover:bg-gray-50 transition duration-300 md:mt-0 mt-4 add-to-cart" data-index="{{data.id}}" type="button" id="addToCartBtn"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+                  </div>
+               </div>
             </div>
-            </div>
-            </a>
          </div>
          {% endfor %}
-         <!--   🛑 Product card 1 - Ends Here  -->
-         <p class="my-4 text-center"><a href="{% url 'product-list' %}" class="inline-block align-middle text-center select-none border font-normal font-quicksand whitespace-no-wrap rounded  no-underline bg-gray-900 text-white hover:bg-gray-900 py-1 px-2 leading-tight text-xs ">All Products</a></p>
       </section>
-      <!-- 🛑 Grid Section - Ends Here -->
    </div>
 </main>
 <div class="pl-10 mb-4 border-b border-gray-200 dark:border-gray-700">
@@ -154,7 +166,7 @@
                      <h5 class="card-title">Awaiting Review</h5>
                      <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
                   </div>
-                  <ul class="list-group list-group-flush">
+                  <ul class="list-group list-group--flush">
                      <li class="list-group-item">Name: {{ listing.title }}</li>
                      <li class="list-group-item">Description: {{ listing.detail}}</li>
                      <li class="list-group-item card-location">Location: {{listing.location}}</li>

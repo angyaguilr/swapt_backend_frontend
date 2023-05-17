@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<div class="px-4 py-14">
+<div class="px-4 py-24">
    <div
       class="lg:max-w-[1440px] md:max-w-[744px] max-w-[375px] mx-auto bg-white lg:px-10 md:px-6 px-4 py-12"
       >
@@ -194,15 +194,15 @@
                </div>
             </div>
          </div>
-         <div id="gallery" class="relative lg:w-1/2 xl:w-5/12 sm:p-12" data-carousel="slide">
+         <div id="gallery" class="relative lg:w-1/2 xl:w-7/12 sm:p-12" data-carousel="slide">
             <!-- Carousel wrapper -->
-            <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
+            <div class="relative h-auto w-full overflow-hidden rounded-lg md:h-96">
                <!-- Swapt Listing Thumbnail Photo -->
                <div class="hidden duration-700 ease-in-out" data-carousel-item>
                   <img  id="zoom_01" 
                      data-zoom-image="/media/{{data.productattribute_set.first.image}}" 
                      src="/media/{{data.productattribute_set.first.image}}"
-                     alt="{{data.title}}" class="absolute block max-w-full h-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+                     alt="{{data.title}}" class="absolute block h-auto max-w-full object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
                </div>
                <!-- Inventory Item(s) -->
                {% for product in related %}
@@ -210,7 +210,7 @@
                   <img id="zoom_01" 
                      data-zoom-image="/media/{{product.inventoryitemattribute_set.first.image}}" 
                      src="/media/{{product.inventoryitemattribute_set.first.image}}"
-                     alt="{{product.title}}" class="absolute block max-w-full h-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+                     alt="{{product.title}}" class="absolute block object-cover h-auto max-w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
                </div>
                {% endfor %}
             </div>

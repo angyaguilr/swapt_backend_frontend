@@ -46,7 +46,7 @@ class SwaptListingCreationForm(ModelForm):
             fields = self.cleaned_data
             listing.title = fields['title']
             listing.detail = fields['detail']
-            listing.listings = fields['listings']
+            #listing.listings = fields['listings']
             listing.category = fields['category']
             listing.condition = fields['condition']
             listing.location = fields['location']
