@@ -1,25 +1,37 @@
 {% extends "base.html" %}
 {% load widget_tweaks %}
 {% block content%}
-<h1> Upload Inventory Card </h1>
-<h1>  </h1>
-<form action="" method="POST" enctype="multipart/form-data">
-   {% csrf_token %}
-   {{ form.as_p }}  
-   </br>
-   {% if messages %}
-   {% for message in messages %}
-   <div>
-      <p style="color: red">{{ message }}</p>
-   </div>
-   {% endfor %}
-   {% endif %}
-   <button type="submit" class="block text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800">
-   Create
-   </button>
-</form>
-{% if img_obj %}  
-<h3>Succesfully uploaded : {{img_obj.color}}</h3>
-<img src="{{ img_obj.image.url}}" alt="connect" style="max-height:300px">  
-{% endif %}
+<div class="flex flex-row pt-24">
+   {% include 'snippets/create_inventory_stepper.html' %}
+   <form action="" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      {% for field in form %}
+      <div class="px-10 pt-6">
+         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ field.label }}</label>
+         <div class="bg-gray-100 border border-gray-100 text-[#807976] sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            {%render_field field placeholder=field.label class+="w-full text-sm font-bold text-left text-[#807976] flex justify-start items-center relative overflow-hidden gap-2 bg-gray-100 border-0 border-gray-100" %} 
+         </div>
+      </div>
+      {% endfor %}
+      </br>
+      {% if messages %}
+      {% for message in messages %}
+      <div class="px-10 pt-10">
+         <p style="color: red">{{ message }}</p>
+      </div>
+      {% endfor %}
+      {% endif %}
+      {% if img_obj %}  
+      <div class="px-10 pt-2">
+         <h3>Image uploaded:</h3>
+         <img src="{{ img_obj.image.url}}" alt="connect" class="h-28 w-44 shadow-md border object-cover rounded-xl">  
+      </div>
+      {% endif %}
+      <div class="flex flex-col items-end px-10 pt-10">
+         <button type="submit" class="block text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800">
+         Next: Confirm
+         </button>
+      </div>
+   </form>
+</div>
 {% endblock content%}

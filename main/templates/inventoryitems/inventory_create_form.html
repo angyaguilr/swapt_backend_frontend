@@ -2,7 +2,7 @@
 {% load widget_tweaks %}
 {% block content%}
 <div class="flex flex-row pt-24">
-   {% include 'snippets/create_swapt_stepper.html' %}
+   {% include 'snippets/create_inventory_stepper.html' %}
    <form action="" method="POST" enctype="multipart/form-data">
       {% csrf_token %}
       {% for field in form %}

@@ -859,7 +859,7 @@ class SwaptListingPayConfirmation(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'swaptlistings/swapt_pay_confirmation.html')
 
-#Community Listings
+#Inventory Listings
 class InventoryReviewListingsAPI(viewsets.ModelViewSet):
     queryset = InventoryListing.objects.filter(confirmed=True)
     serializer_class = InventoryListingReviewSerializer
@@ -925,6 +925,7 @@ def InventoryListingAttributesCreation_request(request):
         form = InventoryListingAttributeCreationForm()
 
     return render(request, "inventoryitems/inventory_add_attributes.html", {"form": form})
+
 class InventoryListingsConfirmationView(View):
 
     # Returns view of swapt_user's unconfirmed listings (this page is redirected to right after the upload page if successful)

@@ -60,10 +60,26 @@
                      </li>
                   </ul>
                </div>
+               <div class="flex justify-center flex-col mt-2 md:flex lg:max-w-[515px] w-full gap-4">
+                  <div>
+                     <input type="hidden" type="number" value="1" class="form-control product-qty-{{data.id}}" id="productQty" />
+                     <div class="input-group-append">
+                        <input type="hidden" class="product-image-{{data.id}}" value="{{data.productattribute_set.first.image}}" />
+                        <input type="hidden" class="product-id-{{data.id}}" value="{{data.id}}" />
+                        <input type="hidden" class="product-title-{{data.id}}" value="{{data.title}}" />
+                        <button class="w-full text-white bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 add-to-cart" data-index="{{data.id}}" type="button" id="addToCartBtn"> Add to Cart</button>
+                     </div>
+                  </div>
+                  <button data-modal-target="product-offer-modal" data-modal-toggle="product-offer-modal" 
+                     class="w-full text-purple-700 border border-purple-700 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900"
+                     >
+                  Make An Offer
+                  </button>
+               </div>
                <hr />
                <div id="accordion-flush" data-accordion="open" data-active-classes="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
                   <h2 id="accordion-flush-heading-1">
-                     <button type="button" class="flex items-center justify-between w-full py-5 font-medium text-left text-base leading-none text-gray-800 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-1" aria-expanded="true" aria-controls="accordion-flush-body-1">
+                     <button type="button" class="flex items-center justify-between w-full py-5 font-semibold uppercase text-left text-base leading-none text-gray-600 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-1" aria-expanded="true" aria-controls="accordion-flush-body-1">
                         <span>Specifications</span>
                         <svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
@@ -113,7 +129,7 @@
                      </div>
                   </div>
                   <h2 id="accordion-flush-heading-2">
-                     <button type="button" class="flex items-center justify-between w-full py-5 font-medium text-left text-base leading-none text-gray-800 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-2" aria-expanded="false" aria-controls="accordion-flush-body-2">
+                     <button type="button" class="flex items-center justify-between w-full py-5 font-semibold uppercase text-left text-base leading-none text-gray-600 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-2" aria-expanded="false" aria-controls="accordion-flush-body-2">
                         <span>Location Details</span>
                         <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
@@ -157,7 +173,7 @@
                      </div>
                   </div>
                   <h2 id="accordion-flush-heading-3">
-                     <button type="button" class="flex items-center justify-between w-full py-5 font-medium text-left text-base leading-none text-gray-800 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-3" aria-expanded="false" aria-controls="accordion-flush-body-3">
+                     <button type="button" class="flex items-center justify-between w-full py-5 font-semibold uppercase text-left text-base leading-none text-gray-600 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-3" aria-expanded="false" aria-controls="accordion-flush-body-3">
                         <span>Delivery</span>
                         <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
@@ -169,27 +185,6 @@
                         <p class="mb-2 text-gray-500 dark:text-gray-400">A Swapt is a listing of a tenant’s large furniture and miscellaneous items that they wish to pass on to the incoming tenant.</p>
                         <p class="mb-2 text-gray-500 dark:text-gray-400">Learn more about Delivery <a href="/about" class="text-purple-600 dark:text-purple-500 hover:underline">here</a></p>
                      </div>
-                  </div>
-               </div>
-            </div>
-            <div class="mt-6 md:flex lg:max-w-[515px] w-full gap-4">
-               <button data-modal-target="product-offer-modal" data-modal-toggle="product-offer-modal" 
-                  class="bg-gray-800 text-white lg:max-w-[217px] w-full py-2 hover:bg-gray-700 transition duration-300 md:block hidden"
-                  >
-               Make An Offer
-               </button>
-               <button data-modal-target="product-offer-modal" data-modal-toggle="product-offer-modal" 
-                  class="bg-gray-800 text-white lg:max-w-[217px] w-full py-2 hover:bg-gray-700 transition duration-300 md:hidden block"
-                  >
-               Make An Offer
-               </button>
-               <div>
-                  <input type="hidden" type="number" value="1" class="form-control product-qty-{{data.id}}" id="productQty" />
-                  <div class="input-group-append">
-                     <input type="hidden" class="product-image-{{data.id}}" value="{{data.productattribute_set.first.image}}" />
-                     <input type="hidden" class="product-id-{{data.id}}" value="{{data.id}}" />
-                     <input type="hidden" class="product-title-{{data.id}}" value="{{data.title}}" />
-                     <button class="text-base border border-gray-300 lg:max-w-[218px] w-full font-medium leading-none text-center text-gray-800 py-3 hover:bg-gray-50 transition duration-300 md:mt-0 mt-4 add-to-cart" data-index="{{data.id}}" type="button" id="addToCartBtn"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
                   </div>
                </div>
             </div>
@@ -234,6 +229,22 @@
          </div>
       </div>
       <!-- inventory listing items-->
+      <div class="divider"><p
+         class="self-stretch text-4xl font-semibold text-center"
+       >
+         <span
+           class="self-stretch  text-4xl font-semibold text-center text-[#0e0f11]"
+           >Items &#x26; </span
+         ><span
+           class="self-stretch text-4xl font-semibold text-center text-[#957fef]"
+           >Details</span
+         >
+       </p></div>
+       <p
+         class="self-stretch pt-4 text-base text-center text-[#636b75]"
+       >
+         This listing includes all of the following furniture items
+       </p>
       {% include 'inventory_detail.html' %}
    </div>
    <!-- Main modal -->
