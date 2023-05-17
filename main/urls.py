@@ -29,7 +29,8 @@ urlpatterns=[
     path('brand-list',views.brand_list,name='brand-list'),
     path('category-product-list/<int:cat_id>',views.category_product_list,name='category-product-list'),
     path('brand-product-list/<int:brand_id>',views.brand_product_list,name='brand-product-list'),
-    path('search',views.search,name='search'),
+    #unused view - path('search',views.search,name='search'),
+    path('search', views.SwaptListingsUploadedSearch.as_view(), name='search'),
     path('filter-data',views.filter_data,name='filter_data'),
     path('load-more-data',views.load_more_data,name='load_more_data'),
     #product details page
@@ -79,6 +80,7 @@ urlpatterns=[
     #create Inventory item listings:
     path('inventory-create-item/', views.InventoryListingCreationView.as_view(), name="inventory_create"),
     path('inventory-add-attributes/',views.InventoryListingAttributesCreation_request, name='inventory_add_attribute'),
+    #path('inventory-add-attributes/', views.InventoryItemAttributeCreationView.as_view(), name="inventory_add_attribute"),
     path('inventory-confirm/', swapt_user_required()(views.InventoryListingsConfirmationView.as_view()), name="inventory_confirm"),
     #review Inventory item listings:
     path('inventory-review/', login_required()(views.InventoryListingsReviewView.as_view()), name="inventory_review"),
@@ -103,7 +105,6 @@ urlpatterns=[
     re_path('^api/', include(router.urls)),
     path('swapt-report/', views.SwaptReportListingView.as_view(), name="swapt_report"),
     path('swapt-Listings/', views.SwaptListingsUploaded.as_view(), name='swapt_listings'),
-    path('swapt-Listings/search/', views.SwaptListingsUploadedSearch.as_view(), name='swapt_listings_search'),
     path("swapt-listing", views.SwaptListingListView.as_view(), name="swapt_listing_list"),
     path("swapt-<int:pk>/", swapt_user_required()(views.SwaptListingDetailView.as_view()), name="swapt_listing_detail"),
 ]

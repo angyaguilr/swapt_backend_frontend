@@ -33,7 +33,7 @@ from django_nextjs.render import render_nextjs_page_sync
 stripe.api_key = settings.STRIPE_SECRET_KEY
 YOUR_DOMAIN = 'http://127.0.0.1:8000' 
 
-# Home Page
+# Next JS Landing Pages
 def index(request):
     return render_nextjs_page_sync(request)
 
@@ -73,7 +73,7 @@ def brand_list(request):
     data=Brand.objects.all().order_by('-id')
     return render(request,'brand_list.html',{'data':data})
 
-# InventoryListing List
+# Swapt Listing List
 def product_list(request):
 	total_data= SwaptListingModel.objects.count()
 	data=SwaptListingModel.objects.all().order_by('-id')[:3]
@@ -88,7 +88,7 @@ def product_list(request):
 		}
 		)
 
-# InventoryListing List According to Category
+# Swapt Listing List According to Category
 def category_product_list(request,cat_id):
 	category=Category.objects.get(id=cat_id)
 	data=SwaptListingModel.objects.filter(category=category).order_by('-id')
@@ -96,7 +96,7 @@ def category_product_list(request,cat_id):
 			'data':data,
 			})
 
-# InventoryListing List According to Brand
+# Swapt Listing List According to Brand
 def brand_product_list(request,brand_id):
 	brand=Brand.objects.get(id=brand_id)
 	data=SwaptListingModel.objects.filter(brand=brand).order_by('-id')
@@ -104,7 +104,7 @@ def brand_product_list(request,brand_id):
 			'data':data,
 			})
 
-# InventoryListing Detail
+# Swapt Listing Detail
 def product_detail(request,slug,id):
     product=SwaptListingModel.objects.get(id=id)
     related_products=InventoryListing.objects.filter(isBundled=True, swaptuser__user = product.swaptuser.user)
@@ -133,10 +133,21 @@ def product_detail(request,slug,id):
     return render(request, 'product_detail.html',{"locationdata": queryset[:3], 'data':product,'related':related_products,'offersForm':offersForm,'canAdd':canAdd,'offers':offers,'avg_offers':avg_offers})
 
 # Search
-def search(request):
-	q=request.GET['q']
-	data=SwaptListingModel.objects.filter(location__icontains=q).order_by('-id')
-	return render(request,'search.html',{'data':data})
+class SwaptListingsUploadedSearch(View):
+    def get(self, request, *args, **kwargs):
+        query = self.request.GET.get("q")
+
+        data=SwaptListingModel.objects.filter(
+            Q(title__icontains=query) |
+            Q(location__icontains=query)
+        )
+
+        context = {
+            'data':data
+        }
+
+        return render(request, 'search.html', context)
+ 
 
 # Filter Data
 def filter_data(request):
@@ -517,6 +528,327 @@ class StripeWebhookView(View):
 
         return HttpResponse(status=200)
 
+#Inventory Listings
+class InventoryListingCreationView(CreateView):
+    model = InventoryListing
+    form_class = InventoryListingCreationForm
+    template_name ="inventoryitems/inventory_create_form.html"
+
+    def form_valid(self, form):
+        listing = form.save()
+        listing.swaptuser = SwaptUser.objects.get(user=self.request.user) 
+        listing.save()
+        if self.request.user.is_swapt_user:
+            listing.save()
+
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse("inventory_add_attribute")
+
+class InventoryItemAttributeCreationView(CreateView):
+    model = InventoryItemAttribute
+    form_class = InventoryListingAttributeCreationForm
+    template_name ="inventoryitems/inventory_add_attributes.html"
+
+    def form_valid(self, form):
+        listing = form.save()
+        listing.swaptuser = SwaptUser.objects.get(user=self.request.user) 
+        listing.save()
+        if self.request.user.is_swapt_user:
+            listing.save()
+
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse("inventory_add_attribute")
+        
+def InventoryListingAttributesCreation_request(request):
+    if request.method == "POST":
+        form = InventoryListingAttributeCreationForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+
+            # Getting the current instance object to display in the template
+            img_object = form.instance
+
+            return render(
+                request, "inventoryitems/inventory_add_attributes.html", {"form": form, "img_obj": img_object}
+            )
+    else:
+        form = InventoryListingAttributeCreationForm()
+
+    return render(request, "inventoryitems/inventory_add_attributes.html", {"form": form})
+
+class InventoryListingsConfirmationView(View):
+
+    # Returns view of swapt_user's unconfirmed listings (this page is redirected to right after the upload page if successful)
+    # swapt_user can delete or edit listings
+    def get(self, request):
+        
+        listings = InventoryListing.objects.filter(swaptuser=request.user.swaptuser, confirmed=False)
+
+        # Can't access page without unconfirmed listings
+        if not listings:
+            return redirect("inventory_create")
+
+        template = "inventoryitems/inventory_confirm.html"
+        context = {"listings": InventoryListing.objects.filter(swaptuser=request.user.swaptuser, confirmed=False)}
+        return render(request, template, context)
+    
+    def post(self, request):
+
+        listings = InventoryListing.objects.filter(swaptuser=request.user.swaptuser, confirmed=False)
+
+        # Sets listings' and pairs' confirm fields to true if swapt_user selected the confirm button
+        if request.POST.get('status') == "confirm":
+            for listing in listings:
+                listing.confirmed = True
+                for pair in listing.inventorycampuspropertynamepair_set.all():
+                    pair.confirmed = True
+                    pair.save()
+
+            InventoryListing.objects.bulk_update(listings, ['confirmed'])
+            return redirect("inventory_review")
+
+        # If selected the delete button for a specific card, deletes that cards
+        elif request.POST.get('status') == "delete":
+            id = request.POST['id']
+            listings.get(id=id).delete()
+            return redirect("inventory_confirm")
+
+        # The only other button that results in a post request is the cancel button, which deletes all unconfirmed cards
+        else:
+            listings.delete()
+            return redirect("inventory_create")['ElonNC', 'CollegeParkMD', 'BurlingtonNC', 'ColumbiaMD']
+
+class InventoryListingsReviewView(View):
+
+    def get(self, request):
+        template = "inventoryitems/inventory_review.html"
+    
+        # Gets different attributes from the query string, but by default will be the most expansive possible
+        #locations = self.request.GET.getlist('location', ['Elon, NC', 'Burlington, NC',])
+        propertynames = self.request.GET.getlist('propertyname', ['Oaks', 'MillPoint', 'OakHill'])
+        campuses = self.request.GET.getlist('campus', ['Elon', 'UMD', 'UNCG'])
+        showNA = self.request.GET.get('showNA', 'true')
+
+        # Filters to relevant pairs, then when filtering listings filters by those pairs and other attributes
+        # Also stage 1 is the review stage
+        pairs = InventoryCampusPropertyNamePair.objects.filter(campus__in=campuses, propertyname__in=propertynames)
+        queryset = InventoryListing.objects.filter(stage=2, 
+            inventorycampuspropertynamepair__in=pairs, confirmed=True).distinct()
+        
+        # If the user wants to see cards that have 0 in/itemsSold, add those into the queryset too
+        if(showNA == "true"):
+            queryset = queryset | InventoryListing.objects.filter(stage=2, 
+            inventorycampuspropertynamepair__in=pairs, confirmed=True).distinct()
+
+        if request.user.is_swapt_user:
+            context = {"user": request.user, "review": queryset.filter(swaptuser=request.user.swaptuser)}
+        elif request.user.is_admin:
+            context = {"user": request.user, "review": queryset[:3]} # Only show 3 at a time for admin
+        return render(request, template, context)
+
+    def post(self, request):
+        id = request.POST['id']
+        listing = InventoryListing.objects.get(id=id)
+
+        # Deletes listings or changes stage (i.e. if approve or reject button is pressed)
+        if request.POST.get('status'):
+            if request.POST.get('status') == "delete" and (request.user.is_admin or (request.user.is_swapt_user and listing.stage != 2)):
+                listing.delete()
+            elif request.user.is_admin:
+                listing.stage = int(request.POST.get('status'))
+                if listing.stage == 2:
+                    listing.issue = None # If the card is approved again, don't keep previous issue in the database
+                listing.save()
+        
+        return redirect("inventory_review")
+
+class InventoryListingEditView(UpdateView):
+    form_class = ListingEditForm
+    model = InventoryListing
+    template_name = 'inventoryitems/inventory_edit_form.html'
+
+    def get(self, request, *args, **kwargs):
+        pk = self.kwargs['pk']
+        listing = InventoryListing.objects.get(id=pk)
+
+        # Conditionals to make sure user has access to review page for the listing with the particular id requested
+        if request.user.is_admin:
+            return super().get(self, request, *args, **kwargs)
+        if listing.swaptuser != request.user.swaptuser or (request.user.is_swapt_user and listing.stage == 2):
+            return redirect('inventory_review')
+        return super().get(self, request, *args, **kwargs)
+    
+    # This function is used to get the initial values of form fields
+    # Mostly used for pairs since those are part of a related model (through the manytomany field), so model fields
+    # are for the most part automatically filled in with proper intial values
+    def get_initial(self):
+        pk = self.kwargs['pk']
+        listing = InventoryListing.objects.get(id=pk)
+        pairs = listing.inventorycampuspropertynamepair_set.all()
+        
+        intial = {'stage': listing.stage, 'campusOne': "", 'propertynameOne': "", 'campusTwo': "", 'propertynameTwo': "", 'campusThree': "", 'propertynameThree': ""}
+        
+        counter = 1
+        
+        for pair in pairs:
+            if counter == 1:
+                intial['campusOne'] = pair.campus
+                intial['propertynameOne'] = pair.propertyname
+            if counter == 2:
+                intial['campusTwo'] = pair.campus
+                intial['propertynameTwo'] = pair.propertyname
+            if counter == 3:
+                intial['campusThree'] = pair.campus
+                intial['propertynameThree'] = pair.propertyname
+
+            counter += 1
+        
+        return intial
+
+    def get_success_url(self):
+        pk = self.kwargs['pk']
+        # self.request
+        listing = InventoryListing.objects.get(id=pk)
+
+        # Go back to confirmation page if editing an unconfirmed card, otherwise return to the review page
+        if self.request.user.is_swapt_user and not listing.confirmed:
+            return reverse_lazy("inventory_confirm")
+        if (self.request.user.is_swapt_user and listing.confirmed) or self.request.user.is_admin:
+            return reverse_lazy("inventory_review")
+
+    def form_valid(self, form):
+        listing = form.save()
+
+        # Change stage, either based on admin changing it or automatic changes when swapt_user updates rejected/reported card
+        if self.request.user.is_admin:
+            listing.stage = int(form.cleaned_data["stage"])
+        elif self.request.user.is_swapt_user and (listing.stage == 3 or listing.stage == 4):
+            listing.stage = 1
+        listing.save()
+
+        return super().form_valid(form)
+
+class InventoryListingRejectView(UpdateView):
+    form_class = ListingRejectForm
+    model = InventoryListing
+    template_name = 'inventoryitems/inventory_reject.html'
+
+    def form_valid(self, form):
+        listing = form.save()
+        listing.save()
+        return super().form_valid(form)
+    
+    def get_success_url(self):
+        return reverse("inventory_review") + "#nav-inventoryreview-tab" # Go back to the review tab after rejecting since can only reject from that tab
+
+class InventoryListingListAPIView(generics.ListAPIView):
+    queryset = InventoryListing.objects.filter(confirmed=True)
+    serializer_class = InventoryListingSerializer
+
+    def get_queryset(self):
+
+        # Get attibutes
+        locations = self.request.GET.getlist('location')
+        campuss = self.request.GET.getlist('')
+        number = self.request.GET.get('number')
+
+        # Get pairs with  levels specified, then narrow down listings based on those pairs and other attributes
+        pairs = InventoryCampusPropertyNamePair.objects.filter(campus__in=campuss)
+        queryset = InventoryListing.objects.filter(inventorycampuspropertynamepair__in=pairs).distinct()
+        queryset = queryset.filter(confirmed=True, stage=2, location__in=locations) # Make sure cards returned in request are approved and confirmed
+        queryset = sorted(queryset, key=lambda x: random.random()) # Randomize order as to not give same cards in same order every time to the app
+        queryset = queryset[:int(int(number) * .85)] # Only give up to 85% number of cards specified
+        queryset = sorted(queryset + sorted(InventoryListing.objects.filter(stage=5), key=lambda x: random.random())[:int(int(number) * .15)], key=lambda x: random.random()) # Other 15% of cards are inventory cards
+       
+        return queryset
+
+
+    def list(self, request, **kwargs):
+        # Note the use of `get_queryset()` instead of `self.queryset`
+        queryset = self.get_queryset()
+        # Passes  list in so that serializer can randomly pick the propertyname levels to return in the request for the cards
+        serializer = InventoryListingSerializer(queryset, many=True, context={'campuss': self.request.GET.getlist('')})  
+        data = serializer.data
+
+        # This is for the animations in the app to work
+        # i = int(self.request.GET.get('number'))
+        i = int(request.GET.get('number')) - 1
+        for entry in data:
+            entry["index"] = i
+            i -= 1
+        return Response(serializer.data)
+
+class InventoryReportListingView(generics.UpdateAPIView):
+    queryset = InventoryListing.objects.filter(stage=2, confirmed=True)
+    serializer_class = InventoryListingSerializer
+    permission_classes = (AllowAny,)
+
+    def get_queryset(self):
+        return InventoryListing.objects.filter(stage=2, confirmed=True)
+
+    def get_object(self):
+        queryset = self.get_queryset()
+        obj = queryset.get(pk=self.request.GET.get('id'))
+        return obj
+    
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+
+        instance = self.get_object()
+        # Updates listing to be reported with the issue field filled in (it will be whatever the user wrote)
+        serializer = self.get_serializer(instance, data={"stage": 4, "issue": request.data["issue"]}, partial=partial) 
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        return Response(serializer.data)
+
+class InventoryReviewListingsAPI(viewsets.ModelViewSet):
+    queryset = InventoryListing.objects.filter(confirmed=True)
+    serializer_class = InventoryListingReviewSerializer
+
+    def get_queryset(self):
+
+        # Get attributes from query string
+        stage = int(self.request.GET.get('stage'))
+
+        if(stage == 5): 
+            return InventoryListing.objects.filter(stage=5)
+        
+        
+        propertynames = self.request.GET.getlist('propertyname', ['Oaks', 'MillPoint', 'OakHill'])
+        campuses = self.request.GET.getlist('campus', ['Elon', 'UMD', 'UNCG'])
+        showNA = self.request.GET.get('showNA', 'true')
+
+        # Same filtering as in the regular review view
+        pairs = InventoryCampusPropertyNamePair.objects.filter(propertyname__in=propertynames,campus__in=campuses)
+        queryset = InventoryListing.objects.filter(stage=stage, 
+            inventorycampuspropertynamepair__in=pairs, confirmed=True).distinct()
+        
+        if(showNA == "true"):
+            queryset = queryset | InventoryListing.objects.filter(stage=stage,  
+            inventorycampuspropertynamepair__in=pairs, confirmed=True).distinct()
+        
+        if self.request._request.user.is_swapt_user:
+            return queryset.filter(swaptuser=self.request._request.user.swaptuser)
+        else:
+            return queryset
+        
+class InventoryListingsUploaded(View):
+    def get(self, request, *args, **kwargs):
+        swapt_items = InventoryListing.objects.all()
+
+        context = {
+            'swapt_items': swapt_items
+        }
+
+        return render(request, 'listings/inventory_listings.html', context)
+
+
+
 
 #Swapt Listings
 class SwaptReviewListingsAPI(viewsets.ModelViewSet):
@@ -786,20 +1118,6 @@ class SwaptListingsUploaded(View):
 
         return render(request, 'swaptlistings/swapt_listings.html', context)
 
-class SwaptListingsUploadedSearch(View):
-    def get(self, request, *args, **kwargs):
-        query = self.request.GET.get("q")
-
-        swapt_bundle_items = SwaptListingModel.objects.filter(
-            Q(title__icontains=query) |
-            Q(desc__icontains=query)
-        )
-
-        context = {
-            'swapt_bundle_items': swapt_bundle_items
-        }
-
-        return render(request, 'swaptlistings/swapt_listings.html', context)
 
 class SwaptListingCreation(CreateView):
     model = SwaptListingModel
@@ -859,322 +1177,24 @@ class SwaptListingPayConfirmation(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'swaptlistings/swapt_pay_confirmation.html')
 
-#Inventory Listings
-class InventoryReviewListingsAPI(viewsets.ModelViewSet):
-    queryset = InventoryListing.objects.filter(confirmed=True)
-    serializer_class = InventoryListingReviewSerializer
-
-    def get_queryset(self):
-
-        # Get attributes from query string
-        stage = int(self.request.GET.get('stage'))
-
-        if(stage == 5): 
-            return InventoryListing.objects.filter(stage=5)
-        
-        
-        propertynames = self.request.GET.getlist('propertyname', ['Oaks', 'MillPoint', 'OakHill'])
-        campuses = self.request.GET.getlist('campus', ['Elon', 'UMD', 'UNCG'])
-        showNA = self.request.GET.get('showNA', 'true')
-
-        # Same filtering as in the regular review view
-        pairs = InventoryCampusPropertyNamePair.objects.filter(propertyname__in=propertynames,campus__in=campuses)
-        queryset = InventoryListing.objects.filter(stage=stage, 
-            inventorycampuspropertynamepair__in=pairs, confirmed=True).distinct()
-        
-        if(showNA == "true"):
-            queryset = queryset | InventoryListing.objects.filter(stage=stage,  
-            inventorycampuspropertynamepair__in=pairs, confirmed=True).distinct()
-        
-        if self.request._request.user.is_swapt_user:
-            return queryset.filter(swaptuser=self.request._request.user.swaptuser)
-        else:
-            return queryset
-        
-class InventoryListingCreationView(CreateView):
-    model = InventoryListing
-    form_class = InventoryListingCreationForm
-    template_name ="inventoryitems/inventory_create_form.html"
-
-    def form_valid(self, form):
-        listing = form.save()
-        listing.swaptuser = SwaptUser.objects.get(user=self.request.user) 
-        listing.save()
-        if self.request.user.is_swapt_user:
-            listing.save()
-
-        return super().form_valid(form)
-
-    def get_success_url(self):
-        return reverse("inventory_add_attribute")
-
-    
-def InventoryListingAttributesCreation_request(request):
-    if request.method == "POST":
-        form = InventoryListingAttributeCreationForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-
-            # Getting the current instance object to display in the template
-            img_object = form.instance
-
-            return render(
-                request, "inventoryitems/inventory_add_attributes.html", {"form": form, "img_obj": img_object}
-            )
-    else:
-        form = InventoryListingAttributeCreationForm()
-
-    return render(request, "inventoryitems/inventory_add_attributes.html", {"form": form})
-
-class InventoryListingsConfirmationView(View):
-
-    # Returns view of swapt_user's unconfirmed listings (this page is redirected to right after the upload page if successful)
-    # swapt_user can delete or edit listings
-    def get(self, request):
-        
-        listings = InventoryListing.objects.filter(swaptuser=request.user.swaptuser, confirmed=False)
-
-        # Can't access page without unconfirmed listings
-        if not listings:
-            return redirect("inventory_create")
-
-        template = "inventoryitems/inventory_confirm.html"
-        context = {"listings": InventoryListing.objects.filter(swaptuser=request.user.swaptuser, confirmed=False)}
-        return render(request, template, context)
-    
-    def post(self, request):
-
-        listings = InventoryListing.objects.filter(swaptuser=request.user.swaptuser, confirmed=False)
-
-        # Sets listings' and pairs' confirm fields to true if swapt_user selected the confirm button
-        if request.POST.get('status') == "confirm":
-            for listing in listings:
-                listing.confirmed = True
-                for pair in listing.inventorycampuspropertynamepair_set.all():
-                    pair.confirmed = True
-                    pair.save()
-
-            InventoryListing.objects.bulk_update(listings, ['confirmed'])
-            return redirect("inventory_review")
-
-        # If selected the delete button for a specific card, deletes that cards
-        elif request.POST.get('status') == "delete":
-            id = request.POST['id']
-            listings.get(id=id).delete()
-            return redirect("inventory_confirm")
-
-        # The only other button that results in a post request is the cancel button, which deletes all unconfirmed cards
-        else:
-            listings.delete()
-            return redirect("inventory_create")['ElonNC', 'CollegeParkMD', 'BurlingtonNC', 'ColumbiaMD']
-
-class InventoryListingsReviewView(View):
-
-    def get(self, request):
-        template = "inventoryitems/inventory_review.html"
-    
-        # Gets different attributes from the query string, but by default will be the most expansive possible
-        #locations = self.request.GET.getlist('location', ['Elon, NC', 'Burlington, NC',])
-        propertynames = self.request.GET.getlist('propertyname', ['Oaks', 'MillPoint', 'OakHill'])
-        campuses = self.request.GET.getlist('campus', ['Elon', 'UMD', 'UNCG'])
-        showNA = self.request.GET.get('showNA', 'true')
-
-        # Filters to relevant pairs, then when filtering listings filters by those pairs and other attributes
-        # Also stage 1 is the review stage
-        pairs = InventoryCampusPropertyNamePair.objects.filter(campus__in=campuses, propertyname__in=propertynames)
-        queryset = InventoryListing.objects.filter(stage=2, 
-            inventorycampuspropertynamepair__in=pairs, confirmed=True).distinct()
-        
-        # If the user wants to see cards that have 0 in/itemsSold, add those into the queryset too
-        if(showNA == "true"):
-            queryset = queryset | InventoryListing.objects.filter(stage=2, 
-            inventorycampuspropertynamepair__in=pairs, confirmed=True).distinct()
-
-        if request.user.is_swapt_user:
-            context = {"user": request.user, "review": queryset.filter(swaptuser=request.user.swaptuser)}
-        elif request.user.is_admin:
-            context = {"user": request.user, "review": queryset[:3]} # Only show 3 at a time for admin
-        return render(request, template, context)
-
-    def post(self, request):
-        id = request.POST['id']
-        listing = InventoryListing.objects.get(id=id)
-
-        # Deletes listings or changes stage (i.e. if approve or reject button is pressed)
-        if request.POST.get('status'):
-            if request.POST.get('status') == "delete" and (request.user.is_admin or (request.user.is_swapt_user and listing.stage != 2)):
-                listing.delete()
-            elif request.user.is_admin:
-                listing.stage = int(request.POST.get('status'))
-                if listing.stage == 2:
-                    listing.issue = None # If the card is approved again, don't keep previous issue in the database
-                listing.save()
-        
-        return redirect("inventory_review")
-
-class InventoryListingEditView(UpdateView):
-    form_class = ListingEditForm
-    model = InventoryListing
-    template_name = 'inventoryitems/inventory_edit_form.html'
-
-    def get(self, request, *args, **kwargs):
-        pk = self.kwargs['pk']
-        listing = InventoryListing.objects.get(id=pk)
-
-        # Conditionals to make sure user has access to review page for the listing with the particular id requested
-        if request.user.is_admin:
-            return super().get(self, request, *args, **kwargs)
-        if listing.swaptuser != request.user.swaptuser or (request.user.is_swapt_user and listing.stage == 2):
-            return redirect('inventory_review')
-        return super().get(self, request, *args, **kwargs)
-    
-    # This function is used to get the initial values of form fields
-    # Mostly used for pairs since those are part of a related model (through the manytomany field), so model fields
-    # are for the most part automatically filled in with proper intial values
-    def get_initial(self):
-        pk = self.kwargs['pk']
-        listing = InventoryListing.objects.get(id=pk)
-        pairs = listing.inventorycampuspropertynamepair_set.all()
-        
-        intial = {'stage': listing.stage, 'campusOne': "", 'propertynameOne': "", 'campusTwo': "", 'propertynameTwo': "", 'campusThree': "", 'propertynameThree': ""}
-        
-        counter = 1
-        
-        for pair in pairs:
-            if counter == 1:
-                intial['campusOne'] = pair.campus
-                intial['propertynameOne'] = pair.propertyname
-            if counter == 2:
-                intial['campusTwo'] = pair.campus
-                intial['propertynameTwo'] = pair.propertyname
-            if counter == 3:
-                intial['campusThree'] = pair.campus
-                intial['propertynameThree'] = pair.propertyname
-
-            counter += 1
-        
-        return intial
-
-    def get_success_url(self):
-        pk = self.kwargs['pk']
-        # self.request
-        listing = InventoryListing.objects.get(id=pk)
-
-        # Go back to confirmation page if editing an unconfirmed card, otherwise return to the review page
-        if self.request.user.is_swapt_user and not listing.confirmed:
-            return reverse_lazy("inventory_confirm")
-        if (self.request.user.is_swapt_user and listing.confirmed) or self.request.user.is_admin:
-            return reverse_lazy("inventory_review")
-
-    def form_valid(self, form):
-        listing = form.save()
-
-        # Change stage, either based on admin changing it or automatic changes when swapt_user updates rejected/reported card
-        if self.request.user.is_admin:
-            listing.stage = int(form.cleaned_data["stage"])
-        elif self.request.user.is_swapt_user and (listing.stage == 3 or listing.stage == 4):
-            listing.stage = 1
-        listing.save()
-
-        return super().form_valid(form)
-
-class InventoryListingRejectView(UpdateView):
-    form_class = ListingRejectForm
-    model = InventoryListing
-    template_name = 'inventoryitems/inventory_reject.html'
-
-    def form_valid(self, form):
-        listing = form.save()
-        listing.save()
-        return super().form_valid(form)
-    
-    def get_success_url(self):
-        return reverse("inventory_review") + "#nav-inventoryreview-tab" # Go back to the review tab after rejecting since can only reject from that tab
-
-class InventoryListingListAPIView(generics.ListAPIView):
-    queryset = InventoryListing.objects.filter(confirmed=True)
-    serializer_class = InventoryListingSerializer
-
-    def get_queryset(self):
-
-        # Get attibutes
-        locations = self.request.GET.getlist('location')
-        campuss = self.request.GET.getlist('')
-        number = self.request.GET.get('number')
-
-        # Get pairs with  levels specified, then narrow down listings based on those pairs and other attributes
-        pairs = InventoryCampusPropertyNamePair.objects.filter(campus__in=campuss)
-        queryset = InventoryListing.objects.filter(inventorycampuspropertynamepair__in=pairs).distinct()
-        queryset = queryset.filter(confirmed=True, stage=2, location__in=locations) # Make sure cards returned in request are approved and confirmed
-        queryset = sorted(queryset, key=lambda x: random.random()) # Randomize order as to not give same cards in same order every time to the app
-        queryset = queryset[:int(int(number) * .85)] # Only give up to 85% number of cards specified
-        queryset = sorted(queryset + sorted(InventoryListing.objects.filter(stage=5), key=lambda x: random.random())[:int(int(number) * .15)], key=lambda x: random.random()) # Other 15% of cards are inventory cards
-       
-        return queryset
-
-
-    def list(self, request, **kwargs):
-        # Note the use of `get_queryset()` instead of `self.queryset`
-        queryset = self.get_queryset()
-        # Passes  list in so that serializer can randomly pick the propertyname levels to return in the request for the cards
-        serializer = InventoryListingSerializer(queryset, many=True, context={'campuss': self.request.GET.getlist('')})  
-        data = serializer.data
-
-        # This is for the animations in the app to work
-        # i = int(self.request.GET.get('number'))
-        i = int(request.GET.get('number')) - 1
-        for entry in data:
-            entry["index"] = i
-            i -= 1
-        return Response(serializer.data)
-
-class InventoryReportListingView(generics.UpdateAPIView):
-    queryset = InventoryListing.objects.filter(stage=2, confirmed=True)
-    serializer_class = InventoryListingSerializer
-    permission_classes = (AllowAny,)
-
-    def get_queryset(self):
-        return InventoryListing.objects.filter(stage=2, confirmed=True)
-
-    def get_object(self):
-        queryset = self.get_queryset()
-        obj = queryset.get(pk=self.request.GET.get('id'))
-        return obj
-    
-    def update(self, request, *args, **kwargs):
-        partial = kwargs.pop('partial', False)
-
-        instance = self.get_object()
-        # Updates listing to be reported with the issue field filled in (it will be whatever the user wrote)
-        serializer = self.get_serializer(instance, data={"stage": 4, "issue": request.data["issue"]}, partial=partial) 
-        serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
-
-        return Response(serializer.data)
-
-
-class InventoryListingsUploaded(View):
-    def get(self, request, *args, **kwargs):
-        swapt_items = InventoryListing.objects.all()
-
-        context = {
-            'swapt_items': swapt_items
-        }
-
-        return render(request, 'listings/inventory_listings.html', context)
-
+#Unused Views
 class InventoryListingsUploadedSearch(View):
     def get(self, request, *args, **kwargs):
         query = self.request.GET.get("q")
 
-        swapt_items = InventoryListing.objects.filter(
+        inventory_items = InventoryListing.objects.filter(
             Q(title__icontains=query) |
-            Q(desc__icontains=query)
+            Q(location__icontains=query)
         )
 
         context = {
-            'swapt_items': swapt_items
+            'inventory_items': inventory_items
         }
 
-        return render(request, 'listings/inventory_listings.html', context)
+        return render(request, '', context)
     
+    
+def search(request):
+	q=request.GET['q']
+	data=SwaptListingModel.objects.filter(location__icontains=q).order_by('-id')
+	return render(request,'search.html',{'data':data})   
