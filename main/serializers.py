@@ -79,7 +79,6 @@ class InventoryListingReviewSerializer(serializers.ModelSerializer):
                   'desc',
                   'location',
                   'id',
-                  'inventorycampuspropertynamepair_set',
                   'issue'
                   )
         depth=1 # Allows user to see campus and propertyname pairs from the set

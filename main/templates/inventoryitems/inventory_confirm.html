@@ -42,11 +42,6 @@
                </svg>
                <span class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">{{ listing.tags }}</span>
             </div>
-            {% for pair in listing.inventorycampuspropertynamepair_set.all %}
-            <div class="flex items-center mt-2.5 mb-5">
-               <p class="text-md font-normal tracking-tight text-gray-900 dark:text-white">Campus/Property Name pair {{ forloop.counter }}: {{ pair.campus }}/{{ pair.propertyname }}</p>
-            </div>
-            {% endfor %}
             <div class="flex items-center justify-between">
                <span class="text-3xl font-bold text-gray-900 dark:text-white">$599</span>
                <a href="{% url 'inventory_edit' listing.id %}" role="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Edit</a>

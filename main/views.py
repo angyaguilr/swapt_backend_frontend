@@ -633,9 +633,6 @@ class InventoryListingsConfirmationView(View):
         if request.POST.get('status') == "confirm":
             for listing in listings:
                 listing.confirmed = True
-                for pair in listing.inventorycampuspropertynamepair_set.all():
-                    pair.confirmed = True
-                    pair.save()
 
             InventoryListing.objects.bulk_update(listings, ['confirmed'])
             return redirect("inventory_review")
@@ -665,13 +662,11 @@ class InventoryListingsReviewView(View):
         # Filters to relevant pairs, then when filtering listings filters by those pairs and other attributes
         # Also stage 1 is the review stage
         pairs =  UserAddressBook.objects.filter(campus__in=campuses, propertyname__in=propertynames)
-        queryset = InventoryListing.objects.filter(stage=2, 
-            inventorycampuspropertynamepair__in=pairs, confirmed=True).distinct()
+        queryset = InventoryListing.objects.filter(stage=2, confirmed=True).distinct()
         
         # If the user wants to see cards that have 0 in/itemsSold, add those into the queryset too
         if(showNA == "true"):
-            queryset = queryset | InventoryListing.objects.filter(stage=2, 
-            inventorycampuspropertynamepair__in=pairs, confirmed=True).distinct()
+            queryset = queryset | InventoryListing.objects.filter(stage=2, confirmed=True).distinct()
 
         if request.user.is_swapt_user:
             context = {"user": request.user, "review": queryset.filter(swaptuser=request.user.swaptuser)}
@@ -717,24 +712,10 @@ class InventoryListingEditView(UpdateView):
     def get_initial(self):
         pk = self.kwargs['pk']
         listing = InventoryListing.objects.get(id=pk)
-        pairs = listing.inventorycampuspropertynamepair_set.all()
         
         intial = {'stage': listing.stage, 'campusOne': "", 'propertynameOne': "", 'campusTwo': "", 'propertynameTwo': "", 'campusThree': "", 'propertynameThree': ""}
         
         counter = 1
-        
-        for pair in pairs:
-            if counter == 1:
-                intial['campusOne'] = pair.campus
-                intial['propertynameOne'] = pair.propertyname
-            if counter == 2:
-                intial['campusTwo'] = pair.campus
-                intial['propertynameTwo'] = pair.propertyname
-            if counter == 3:
-                intial['campusThree'] = pair.campus
-                intial['propertynameThree'] = pair.propertyname
-
-            counter += 1
         
         return intial
 
@@ -787,7 +768,7 @@ class InventoryListingListAPIView(generics.ListAPIView):
 
         # Get pairs with  levels specified, then narrow down listings based on those pairs and other attributes
         pairs =  UserAddressBook.objects.filter(campus__in=campuss)
-        queryset = InventoryListing.objects.filter(inventorycampuspropertynamepair__in=pairs).distinct()
+        queryset = InventoryListing.objects.filter().distinct()
         queryset = queryset.filter(confirmed=True, stage=2, location__in=locations) # Make sure cards returned in request are approved and confirmed
         queryset = sorted(queryset, key=lambda x: random.random()) # Randomize order as to not give same cards in same order every time to the app
         queryset = queryset[:int(int(number) * .85)] # Only give up to 85% number of cards specified
@@ -854,12 +835,10 @@ class InventoryReviewListingsAPI(viewsets.ModelViewSet):
 
         # Same filtering as in the regular review view
         pairs =  UserAddressBook.objects.filter(propertyname__in=propertynames,campus__in=campuses)
-        queryset = InventoryListing.objects.filter(stage=stage, 
-            inventorycampuspropertynamepair__in=pairs, confirmed=True).distinct()
+        queryset = InventoryListing.objects.filter(stage=stage, confirmed=True).distinct()
         
         if(showNA == "true"):
-            queryset = queryset | InventoryListing.objects.filter(stage=stage,  
-            inventorycampuspropertynamepair__in=pairs, confirmed=True).distinct()
+            queryset = queryset | InventoryListing.objects.filter(stage=stage, confirmed=True).distinct()
         
         if self.request._request.user.is_swapt_user:
             return queryset.filter(swaptuser=self.request._request.user.swaptuser)
@@ -921,7 +900,7 @@ class SwaptListingsConfirmationView(View):
         if not listings:
             return redirect("swapt_create")
 
-        template = "/swaptlistings/swapt_confirm.html"
+        template = "swaptlistings/swapt_confirm.html"
         context = {"listings": SwaptListingModel.objects.filter(swaptuser=request.user.swaptuser, confirmed=False)}
         return render(request, template, context)
      def post(self, request):
@@ -950,7 +929,7 @@ class SwaptListingsConfirmationView(View):
 class SwaptListingsReviewView(View):
 
     def get(self, request):
-        template = "/swaptlistings/swapt_review.html"
+        template = "swaptlistings/swapt_review.html"
     
         # Gets different attributes from the query string, but by default will be the most expansive possible
         locations = self.request.GET.getlist('location', ['ElonNC', 'CollegeParkMD', 'BurlingtonNC', 'ColumbiaMD'])
