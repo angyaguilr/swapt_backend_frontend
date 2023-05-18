@@ -13,8 +13,8 @@
                <div class="relative h-48 overflow-hidden rounded-lg md:h-96">
                   <div class="relative h-48 overflow-hidden rounded-lg md:h-96" >
                      <img id="zoom_01" 
-                        data-zoom-image="/media/{{product.inventoryitemattribute_set.first.image}}" 
-                        src="/media/{{product.inventoryitemattribute_set.first.image}}"
+                        data-zoom-image="/media/{{product.productattribute_set.first.image}}" 
+                        src="/media/{{product.productattribute_set.first.image}}"
                         alt="{{product.title}}" class="object-cover absolute block rounded-lg max-w-full h-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
                   </div>
                </div>
@@ -27,7 +27,7 @@
                   <p
                      class="text-2xl font-semibold leading-normal text-gray-800 md:mt-6 mt-4"
                      >
-                     $<span class="product-price-{{product.id}}">{{product.inventoryitemattribute_set.first.price}}</span>
+                     $<span class="product-price-{{product.id}}">{{product.productattribute_set.first.price}}</span>
                   </p>
                   <p
                      class="text-base leading-normal text-gray-600 mt-4 lg:max-w-[415px] w-full"
@@ -83,14 +83,14 @@
                              </tr>
                           </thead>
                           <tbody>
-                             <tr class="bg-gray-50 dark:bg-gray-800">
-                                <th scope="row" class="px-6 py-4 text-xs text-gray-900 uppercase dark:text-gray-400">
-                                   Brand
-                                </th>
-                                <td class="px-6 py-4">
-                                   {{product.inventoryitemattribute_set.first.brand}}
-                                </td>
-                             </tr>
+                              <tr class="bg-gray-50 dark:bg-gray-800">
+                                 <th scope="row" class="px-6 py-4 text-xs text-gray-900 uppercase dark:text-gray-400">
+                                    Brand
+                                 </th>
+                                 <td class="px-6 py-4">
+                                    {{product.brand}}
+                                 </td>
+                              </tr>
                              <tr class="bg-gray-50 dark:bg-gray-800">
                                 <th scope="row" class="px-6 py-4 text-xs text-gray-900 uppercase dark:text-gray-400">
                                    Category
@@ -105,22 +105,6 @@
                                 </th>
                                 <td class="px-6 py-4">
                                    {{product.condition}}
-                                </td>
-                             </tr>
-                             <tr class="bg-gray-50 dark:bg-gray-800">
-                                <th scope="row" class="px-6 py-4 text-xs text-gray-900 uppercase dark:text-gray-400">
-                                   Colors
-                                </th>
-                                <td class="px-6 py-4">
-                                   {{product.inventoryitemattribute_set.first.color}}
-                                </td>
-                             </tr>
-                             <tr class="bg-gray-50 dark:bg-gray-800">
-                                <th scope="row" class="px-6 py-4 text-xs text-gray-900 uppercase dark:text-gray-400">
-                                   Dimensions
-                                </th>
-                                <td class="px-6 py-4">
-                                   {{product.inventoryitemattribute_set.first.size}}
                                 </td>
                              </tr>
                           </tbody>

@@ -622,7 +622,7 @@ class InventoryListingsConfirmationView(View):
             return redirect("inventory_create")
 
         template = "inventoryitems/inventory_confirm.html"
-        context = {"listings": InventoryListing.objects.filter(swaptuser=request.user.swaptuser, confirmed=False)}
+        context = {"inventorylistings": InventoryListing.objects.filter(swaptuser=request.user.swaptuser, confirmed=False)}
         return render(request, template, context)
     
     def post(self, request):
@@ -932,7 +932,7 @@ class SwaptListingsReviewView(View):
         template = "swaptlistings/swapt_review.html"
     
         # Gets different attributes from the query string, but by default will be the most expansive possible
-        locations = self.request.GET.getlist('location', ['ElonNC', 'CollegeParkMD', 'BurlingtonNC', 'ColumbiaMD'])
+        locations = self.request.GET.getlist('location', ['Elon, NC', 'Burlington, NC'])
         propertynames = self.request.GET.getlist('propertyname', ['Oaks', 'MillPoint', 'OakHill'])
         campuses = self.request.GET.getlist('campus', ['Elon', 'UMD', 'UNCG'])
         showNA = self.request.GET.get('showNA', 'true')
@@ -940,16 +940,16 @@ class SwaptListingsReviewView(View):
         # Filters to relevant pairs, then when filtering listings filters by those pairs and other attributes
         # Also stage 1 is the review stage
         pairs =  UserAddressBook.objects.filter(campus__in=campuses, propertyname__in=propertynames)
-        queryset = SwaptListingModel.objects.filter(stage=1, location__in=locations, confirmed=True).distinct()
+        queryset = SwaptListingModel.objects.filter(stage=2, confirmed=True).distinct()
         
         # If the user wants to see cards that have 0 in/itemsSold, add those into the queryset too
         if(showNA == "true"):
             queryset = queryset | SwaptListingModel.objects.filter(stage=1, location__in=locations, confirmed=True).distinct()
 
         if request.user.is_swapt_user:
-            context = {"user": request.user, "swaptreview": queryset.filter(swaptuser=request.user.swaptuser)}
+            context = {"user": request.user, "swaptreview": queryset.filter(stage=2, confirmed=True, swaptuser=request.user.swaptuser)}
         elif request.user.is_admin:
-            context = {"user": request.user, "swaptreview": queryset[:3]} # Only show 3 at a time for admin
+            context = {"user": request.user, "swaptreview": queryset.filter(stage=1, confirmed=True, propertymanager=request.user.propertymanager)} # Only show 3 at a time for admin
         return render(request, template, context)
 
     def post(self, request):
