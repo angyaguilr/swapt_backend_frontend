@@ -1134,18 +1134,76 @@ class SwaptListingCreation(CreateView):
     template_name ="swaptlistings/swapt_create_form.html"
     
     def get(self, request, *args, **kwargs):
+        # get every item from each category
         form = self.form_class
-        first_name = kwargs['name']
-        return render(request, self.template_name, {'form': form, "first":first_name})
-    
-    def post(self, request, *args, **kwargs):
-        form = self. form_class(request.POST)
-        if form.is_valid():
-            form.save()
-        return redirect("swapt_add_attribute")
+        InventoryFurnitureItems = InventoryListing.objects.filter(swaptuser=request.user.swaptuser, stage=2, selling_stage= 1, isBundled=False, confirmed=True)
 
-    def get_success_url(self):
-        return reverse("swapt_add_attribute")
+
+        # pass into context
+        context = {
+           'InventoryFurnitureItems': InventoryFurnitureItems, 'form': form,
+        }
+
+        # render the template
+        return render(request, 'swaptlistings/swapt_create_form.html', context)
+
+    def post(self, request, *args, **kwargs):
+        #"title", "listings", "detail", "category", "condition", "move_out_date", "location", "brand"
+        #propertymanager=request.user.propertymanager
+        swaptuser=request.user.swaptuser
+        title = request.POST.get('title')
+        detail = request.POST.get('detail')
+        categorylist = request.POST.get('category')
+        condition = request.POST.get('condition')
+        move_out_date = request.POST.get('move_out_date')
+        location = request.POST.get('location')
+        brand = request.POST.get('brand')
+
+        #https://stackoverflow.com/questions/4195242/django-model-object-with-foreign-key-creation
+        order_items = {
+            'items': []
+        }
+
+        items = request.POST.getlist('items[]')
+
+        for item in items:
+            inventory_item = InventoryListing.objects.get(pk__contains=int(item))
+            item_data = {
+                'id': inventory_item.pk,
+                'title': inventory_item.title,
+                'detail': inventory_item.detail,
+                'category': inventory_item.category,
+                'condition': inventory_item.condition,
+            }
+
+            order_items['items'].append(item_data)
+
+            price = 0
+            item_ids = []
+
+        for item in order_items['items']:
+            item_ids.append(item['id'])
+        category = Category.objects.get(title=categorylist)
+        order = SwaptListingModel.objects.create(
+            title=title ,
+            detail=detail,
+            category=category,
+            condition=condition,
+            move_out_date=move_out_date,
+            location=location,
+            brand =brand,
+            swaptuser=swaptuser,
+            #propertymanager=propertymanager 
+        )
+        order.listings.add(*item_ids)
+
+
+        context = {
+            'items': order_items['items'],
+            'price': price
+        }
+
+        return redirect('swapt_add_attribute', pk=order.pk)
 
       
 class SwaptListingListView(ListView):

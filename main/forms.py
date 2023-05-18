@@ -35,7 +35,7 @@ class SwaptListingCreationForm(ModelForm):
 
     class Meta:
         model = SwaptListingModel
-        fields = ("title", "listings", "detail", "category", "condition", "move_out_date", "location", "brand", )
+        fields = ("title", "detail", "category", "condition", "move_out_date", "location", "brand", )
     
     def save(self, commit=True):
         self.full_clean() # calls clean function
