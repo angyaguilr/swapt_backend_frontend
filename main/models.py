@@ -371,7 +371,6 @@ class CartOrderItems(models.Model):
     )
     order=models.ForeignKey(CartOrder,on_delete=models.CASCADE)
     invoice_no=models.CharField(max_length=150)
-    email = models.EmailField(unique=True, default='test@swapt.it')
     listing = models.ForeignKey(SwaptListingModel, on_delete=models.CASCADE, default=1)
     item=models.CharField(max_length=150)
     image=models.CharField(max_length=200)

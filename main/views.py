@@ -259,6 +259,109 @@ def signup(request):
 
 
 # Checkout
+class CreateStripeCheckoutSessionView(View):
+    """
+    Create a checkout session and redirect the user to Stripe's checkout page
+    """
+    
+    def post(self, request, *args, **kwargs):
+        stripe_total_amt=0
+        total_amt=0
+        totalAmt=0
+        stripe_total_name=''
+        if 'cartdata' in request.session:
+            for p_id,item in request.session['cartdata'].items():
+                totalAmt+=int(item['qty'])*float(item['price'])
+            # Order
+            order=CartOrder.objects.create(
+                    user=request.user,
+                    total_amt=totalAmt
+                )
+            # End
+            for p_id,item in request.session['cartdata'].items():
+                total_amt+=int(item['qty'])*float(item['price'])
+                # OrderItems
+                items=CartOrderItems.objects.create(
+                    order=order,
+                    invoice_no='INV-'+str(order.id),
+                    item=item['title'],
+                    image=item['image'],
+                    qty=item['qty'],
+                    price=item['price'],
+                    total=float(item['qty'])*float(item['price'])
+                    )
+                # End
+            listing = SwaptListingModel.objects.get(id=self.kwargs["pk"])
+            for p_id,item in request.session['cartdata'].items():
+                stripe_total_amt+=float(item['qty'])*float(item['price'])
+                stripe_total_name+= item['title']
+                stripe_total_name+= ', '
+                
+                checkout_session = stripe.checkout.Session.create(
+                    payment_method_types=["card"],
+                    line_items=[
+                        {
+                            "price_data": {
+                                "currency": "usd",
+                                "unit_amount": int(stripe_total_amt) * 100,
+                                "product_data": {
+                                    "name": stripe_total_name,
+                                    "description": stripe_total_name,
+                                    "images": [
+                                        f"{settings.BACKEND_DOMAIN}media/{item['image']}"
+                                    ],
+                                },
+                            },
+                            "quantity": item['qty'],
+                        }
+                    ],
+                    #metadata={"listing_id": listing.id},
+                    mode="payment",
+                    success_url=settings.PAYMENT_SUCCESS_URL,
+                    cancel_url=settings.PAYMENT_CANCEL_URL,
+            )
+            return redirect(checkout_session.url)
+
+@method_decorator(csrf_exempt, name="dispatch")
+class StripeWebhookView(View):
+    """
+    Stripe webhook view to handle checkout session completed event.
+    """
+
+    def post(self, request, format=None):
+        payload = request.body
+        endpoint_secret = settings.STRIPE_WEBHOOK_SECRET
+        sig_header = request.META["HTTP_STRIPE_SIGNATURE"]
+        event = None
+
+        try:
+            event = stripe.Webhook.construct_event(payload, sig_header, endpoint_secret)
+        except ValueError as e:
+            # Invalid payload
+            return HttpResponse(status=400)
+        except stripe.error.SignatureVerificationError as e:
+            # Invalid signature
+            return HttpResponse(status=400)
+
+        if event["type"] == "checkout.session.completed":
+            print("Payment successful")
+            session = event["data"]["object"]
+            customer_email = session["customer_details"]["email"]
+            listing_id = session["metadata"]["listing_id"]
+            listing = get_object_or_404(SwaptListingModel, id=listing_id)
+
+            send_mail(
+                subject="Here is your listing",
+                message=f"Thanks for your purchase. The URL is: {listing.url}",
+                recipient_list=[customer_email],
+                from_email="test@gmail.com",
+            )
+
+            CartOrderItems.objects.create( listing=listing, payment_status="completed"
+            ) # Add this
+        # Can handle other events here.
+
+        return HttpResponse(status=200)
 @login_required
 def checkout(request):
 	total_amt=0
@@ -447,85 +550,12 @@ def update_address(request,id):
 
 #Checkout with Stripe
 class SuccessView(TemplateView):
-    template_name = "/stripe/success.html"
+    template_name = "stripe/success.html"
 
 class CancelView(TemplateView):
-    template_name = "/stripe/cancel.html"
+    template_name = "stripe/cancel.html"
 
-class CreateStripeCheckoutSessionView(View):
-    """
-    Create a checkout session and redirect the user to Stripe's checkout page
-    """
 
-    def post(self, request, *args, **kwargs):
-        price = ProductAttribute.objects.get(id=self.kwargs["pk"])
-
-        checkout_session = stripe.checkout.Session.create(
-            payment_method_types=["card"],
-            line_items=[
-                {
-                    "price_data": {
-                        "currency": "usd",
-                        "unit_amount": int(price.price) * 100,
-                        "product_data": {
-                            "name": price.product.title,
-                            "description": price.product.desc,
-                            "images": [
-                                f"{settings.BACKEND_DOMAIN}/{price.image}"
-                            ],
-                        },
-                    },
-                    "quantity": price.product.quantity,
-                }
-            ],
-            metadata={"listing_id": price.product.id},
-            mode="payment",
-            success_url=settings.PAYMENT_SUCCESS_URL,
-            cancel_url=settings.PAYMENT_CANCEL_URL,
-        )
-        return redirect(checkout_session.url)
-
-@method_decorator(csrf_exempt, name="dispatch")
-class StripeWebhookView(View):
-    """
-    Stripe webhook view to handle checkout session completed event.
-    """
-
-    def post(self, request, format=None):
-        payload = request.body
-        endpoint_secret = settings.STRIPE_WEBHOOK_SECRET
-        sig_header = request.META["HTTP_STRIPE_SIGNATURE"]
-        event = None
-
-        try:
-            event = stripe.Webhook.construct_event(payload, sig_header, endpoint_secret)
-        except ValueError as e:
-            # Invalid payload
-            return HttpResponse(status=400)
-        except stripe.error.SignatureVerificationError as e:
-            # Invalid signature
-            return HttpResponse(status=400)
-
-        if event["type"] == "checkout.session.completed":
-            print("Payment successful")
-            session = event["data"]["object"]
-            customer_email = session["customer_details"]["email"]
-            listing_id = session["metadata"]["listing_id"]
-            listing = get_object_or_404(SwaptListingModel, id=listing_id)
-
-            send_mail(
-                subject="Here is your listing",
-                message=f"Thanks for your purchase. The URL is: {listing.url}",
-                recipient_list=[customer_email],
-                from_email="test@gmail.com",
-            )
-
-            CartOrderItems.objects.create(
-                email=customer_email, listing=listing, payment_status="completed"
-            ) # Add this
-        # Can handle other events here.
-
-        return HttpResponse(status=200)
 
 #Inventory Listings
 class InventoryListingCreationView(CreateView):
@@ -869,11 +899,10 @@ class SwaptReviewListingsAPI(viewsets.ModelViewSet):
 
         # Same filtering as in the regular review view
         pairs =  UserAddressBook.objects.filter(propertyname__in=propertynames,campus__in=campuses)
-        queryset = SwaptListingModel.objects.filter(stage=stage, location__in=locations, swaptcampuspropertynamepair__in=pairs, confirmed=True).distinct()
+        queryset = SwaptListingModel.objects.filter(stage=stage, location__in=locations, confirmed=True).distinct()
         
         if(showNA == "true"):
-            queryset = queryset | SwaptListingModel.objects.filter(stage=stage, location__in=locations,
-            swaptcampuspropertynamepair__in=pairs, confirmed=True).distinct()
+            queryset = queryset | SwaptListingModel.objects.filter(stage=stage, location__in=locations, confirmed=True).distinct()
         
         if self.request._request.user.is_swapt_user:
             return queryset.filter(swaptuser=self.request._request.user.swaptuser)
@@ -903,9 +932,6 @@ class SwaptListingsConfirmationView(View):
         if request.POST.get('status') == "confirm":
             for listing in listings:
                 listing.confirmed = True
-                for pair in listing.swaptcampuspropertynamepair_set.all():
-                    pair.confirmed = True
-                    pair.save()
 
             SwaptListingModel.objects.bulk_update(listings, ['confirmed'])
             return redirect("swapt_review")
@@ -935,13 +961,11 @@ class SwaptListingsReviewView(View):
         # Filters to relevant pairs, then when filtering listings filters by those pairs and other attributes
         # Also stage 1 is the review stage
         pairs =  UserAddressBook.objects.filter(campus__in=campuses, propertyname__in=propertynames)
-        queryset = SwaptListingModel.objects.filter(stage=1, location__in=locations, 
-            swaptcampuspropertynamepair__in=pairs, confirmed=True).distinct()
+        queryset = SwaptListingModel.objects.filter(stage=1, location__in=locations, confirmed=True).distinct()
         
         # If the user wants to see cards that have 0 in/itemsSold, add those into the queryset too
         if(showNA == "true"):
-            queryset = queryset | SwaptListingModel.objects.filter(stage=1, location__in=locations, 
-            swaptcampuspropertynamepair__in=pairs, confirmed=True).distinct()
+            queryset = queryset | SwaptListingModel.objects.filter(stage=1, location__in=locations, confirmed=True).distinct()
 
         if request.user.is_swapt_user:
             context = {"user": request.user, "swaptreview": queryset.filter(swaptuser=request.user.swaptuser)}
@@ -988,24 +1012,11 @@ class SwaptListingEditView(UpdateView):
     def get_initial(self):
         pk = self.kwargs['pk']
         listing = SwaptListingModel.objects.get(id=pk)
-        pairs = listing.swaptcampuspropertynamepair_set.all()
+        #pairs = listing.swaptcampuspropertynamepair_set.all()
         
         intial = {'stage': listing.stage, 'campusOne': "", 'propertynameOne': "", 'campusTwo': "", 'propertynameTwo': "", 'campusThree': "", 'propertynameThree': ""}
         
-        counter = 1
         
-        for pair in pairs:
-            if counter == 1:
-                intial['campusOne'] = pair.campus
-                intial['propertynameOne'] = pair.propertyname
-            if counter == 2:
-                intial['campusTwo'] = pair.campus
-                intial['propertynameTwo'] = pair.propertyname
-            if counter == 3:
-                intial['campusThree'] = pair.campus
-                intial['propertynameThree'] = pair.propertyname
-
-            counter += 1
         
         return intial
 
@@ -1058,7 +1069,7 @@ class SwaptListingListAPIView(generics.ListAPIView):
 
         # Get pairs with  levels specified, then narrow down listings based on those pairs and other attributes
         pairs =  UserAddressBook.objects.filter(campus__in=campuss)
-        queryset = SwaptListingModel.objects.filter(swaptcampuspropertynamepair__in=pairs).distinct()
+        queryset = SwaptListingModel.objects.filter().distinct()
         queryset = queryset.filter(confirmed=True, stage=2, location__in=locations) # Make sure cards returned in request are approved and confirmed
         queryset = sorted(queryset, key=lambda x: random.random()) # Randomize order as to not give same cards in same order every time to the app
         queryset = queryset[:int(int(number) * .85)] # Only give up to 85% number of cards specified

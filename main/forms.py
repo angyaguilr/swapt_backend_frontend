@@ -165,14 +165,11 @@ class ListingEditForm(ModelForm):
     def save(self, commit=True):
         self.full_clean() # calls clean function
         listing = super().save(commit=False)
-        pairs = listing.swaptcampuspropertynamepair_set.all()
         
         if commit:
             fields = self.cleaned_data
             
-            # Remove old pairs
-            for pair in pairs:
-                pair.listings.remove(listing)
+            #
 
             # Add new pairs
             # NOTE: if first pair and third pair are filled in, but second isn't, then when displayed on the site, the third pair filled in on 

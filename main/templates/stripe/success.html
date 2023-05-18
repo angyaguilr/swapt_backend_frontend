@@ -1,11 +1,10 @@
-{% extends 'listings/base.html' %}
-{% block title %} Success {% endblock title%} 
+{% extends 'base.html' %}
+{% block title %} Cancel {% endblock title%} 
 {% block content %}
-<div class="relative px-3 py-3 mb-4 border rounded bg-green-200 border-green-300 text-green-800" role="alert">
-  Thanks for purchasing our listing
-  <a
-      href="{% url 'inventory_listing_list' %}"
-      >Go to listings</a
-    >
-</div>
+
+<div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+   <span class="font-medium">Thanks for purchasing from Swapt Marketplace. We will be in touch with more details about your furniture items.</span> <br>In the meantime, checkout our <a
+   href="{% url 'featured' %}"
+   >featured listings</a>.
+ </div>
 {% endblock content %}

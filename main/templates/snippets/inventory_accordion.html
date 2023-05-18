@@ -88,22 +88,20 @@
             </thead>
             {% for listing in review %}
             <tbody>
-               {% for pair in listing.swaptcampuspropertynamepair_set.all %}
                <tr class="bg-gray-50 dark:bg-gray-800">
                   <th scope="row" class="px-6 py-4 text-xs text-gray-900 uppercase dark:text-gray-400">
                      Campus
                   </th>
-                  <td class="px-6 py-4">{{ pair.campus }}
+                  <td class="px-6 py-4">{{ listing.campus }}
                   </td>
                </tr>
                <tr class="bg-gray-50 dark:bg-gray-800">
                   <th scope="row" class="px-6 py-4 text-xs text-gray-900 uppercase dark:text-gray-400">
                      Property Name
                   </th>
-                  <td class="px-6 py-4">{{ pair.propertyname }}
+                  <td class="px-6 py-4">{{ listing.propertyname }}
                   </td>
                </tr>
-               {% endfor %}
             </tbody>
             {% endfor %}
          </table>
