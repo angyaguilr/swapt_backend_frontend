@@ -1,191 +1,137 @@
-{% extends "base.html" %}
-{% block content%}
-<ul class="nav nav-tabs" id="nav-tab" role="tablist">
-   <li class="nav-item" role="presentation">
-      <button class="nav-link active" id="nav-swaptreview-tab" data-bs-toggle="tab" data-bs-target="#nav-swaptreview" type="button" role="tab" aria-controls="nav-swaptreview" aria-selected="true">Awaiting Review</button>
-   </li>
-   <li class="nav-item" role="presentation">
-      <button class="nav-link" id="nav-swaptswapt-approved-tab" data-bs-toggle="tab" data-bs-target="#nav-swaptapproved" type="button" role="tab" aria-controls="nav-swaptapproved" aria-selected="false">Approved</button>
-   </li>
-   <li class="nav-item" role="presentation">
-      <button class="nav-link" id="nav-swaptswapt-reported-tab" data-bs-toggle="tab" data-bs-target="#nav-swaptreported" type="button" role="tab" aria-controls="nav-swaptreported" aria-selected="false">Reported</button>
-   </li>
-   <li class="nav-item" role="presentation">
-      <button class="nav-link" id="nav-swaptswapt-rejected-tab" data-bs-toggle="tab" data-bs-target="#nav-swaptrejected" type="button" role="tab" aria-controls="nav-swaptrejected" aria-selected="false">Rejected</button>
-   </li>
-</ul>
-<div class="form-check form-check-inline">
-   <input class="form-check-input location filter" type="checkbox" id="ElonNC">
-   <label class="form-check-label" for="ElonNC">
-   ElonNC
-   </label>
-</div>
-<div class="form-check form-check-inline">
-   <input class="form-check-input location filter" type="checkbox" id="CollegeParkMD">
-   <label class="form-check-label" for="CollegeParkMD">
-   CollegeParkMD
-   </label>
-</div>
-<div class="form-check form-check-inline">
-   <input class="form-check-input location filter" type="checkbox" id="BurlingtonNC">
-   <label class="form-check-label" for="BurlingtonNC">
-   BurlingtonNC
-   </label>
-</div>
-<div class="form-check form-check-inline">
-   <input class="form-check-input location filter" type="checkbox" id="ColumbiaMD">
-   <label class="form-check-label" for="ColumbiaMD">
-   ColumbiaMD
-   </label>
-</div>
-<br></br>
-<div class="form-check form-check-inline">
-   <input class="form-check-input campus filter" type="checkbox" id="Elon">
-   <label class="form-check-label" for="Elon">
-   Elon
-   </label>
-</div>
-<div class="form-check form-check-inline">
-   <input class="form-check-input campus filter" type="checkbox" id="UMD">
-   <label class="form-check-label" for="UMD">
-   UMD
-   </label>
-</div>
-<div class="form-check form-check-inline">
-   <input class="form-check-input campus filter" type="checkbox" id="UNCG">
-   <label class="form-check-label" for="UNCG">
-   UNCG
-   </label>
-</div>
-<div class="form-check form-check-inline">
-   <input class="form-check-input propertyname filter" type="checkbox" id="Oaks">
-   <label class="form-check-label" for="Oaks">
-   Oaks
-   </label>
-</div>
-<div class="form-check form-check-inline">
-   <input class="form-check-input propertyname filter" type="checkbox" id="MillPoint">
-   <label class="form-check-label" for="MillPoint">
-   MillPoint
-   </label>
-</div>
-<div class="form-check form-check-inline">
-   <input class="form-check-input propertyname filter" type="checkbox" id="OakHill">
-   <label class="form-check-label" for="OakHill">
-   OakHill
-   </label>
-</div>
-<button class="btn btn-success apply-filter">Filter</button>
-<div class="tab-content" id="nav-tabContent">
-   <div class="tab-pane fade show active" id="nav-swaptreview" role="tabpanel" aria-labelledby="nav-swaptreview-tab">
-      <div class="row row-cols-1 row-cols-md-3 g-4">
-         {% for listing in swaptreview %}
-         <div class="col">
-            <form action="" method="POST">
-               {% csrf_token %}
-               <div class="card" style="width: 18rem;">
-                  <div class="card-body">
-                     <h5 class="card-title">Awaiting Review</h5>
-                     <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
-                  </div>
-                  <ul class="list-group list-group-flush">
-                     <li class="list-group-item">Name: {{ listing.title }}</li>
-                     <li class="list-group-item">Description: {{ listing.desc }}</li>
-                     <li class="list-group-item card-location">Location: {{listing.location}}</li>
-                     {% if listing.issue != None %}
-                     <li class="list-group-item">Reported/rejected issue: {{ listing.issue }}</li>
-                     {% endif %}
-                  </ul>
-                  <div class="card-body">
-                     {% if user.is_admin %}
-                     {% if listing.stage != 2 %}
-                     <button type="submit" value="2" class="btn btn-success" name="status">Approve</button>
-                     {% endif %}
-                     {% if listing.stage == 1 %}
-                     {% comment %} <button type="submit" value="3" class="btn btn-danger" name="status">Reject</button> {% endcomment %}
-                     <a class="btn btn-danger" href="{% url 'swapt_reject' listing.id %}?next={% url 'swapt_review'%}#nav-swaptreview-tab" role="button">Reject</a>
-                     {% else %}
-                     <button type="submit" value="delete" class="btn btn-danger" name="status">Delete</button>
-                     {% endif %}
-                     <a class="btn btn-primary" href="{% url 'swapt_edit' listing.id %}?next={% url 'swapt_review'%}#nav-swaptreview-tab" role="button">Edit</a>
-                     {% elif listing.stage != 2 and user.is_swapt_user %}
-                     <a class="btn btn-primary" href="{% url 'swapt_edit' listing.id %}?next={% url 'swapt_review'%}#nav-swaptreview-tab" role="button">Edit</a>
-                     <button type="submit" value="delete" class="btn btn-danger" name="status">Delete</button>
-                     {% endif %}
-                     <input type="hidden" name="id" value={{ listing.id }}>
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main class="container mx-auto sm:px-4 my-4 pt-14">
+   <div class="flex flex-wrap flex-col">
+      <!-- ✅ Grid Section - Starts Here 👇 -->
+      <section class="w-fit mx-auto grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
+         {% for product in swaptreview %}
+         <div class="bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
+            <div
+               class="lg:max-w-[515px] w-full bg-gray-50 lg:px-10 md:px-6 px-4 py-12"
+               >
+               <div class="relative h-48 overflow-hidden rounded-lg md:h-96">
+                  <div class="relative h-48 overflow-hidden rounded-lg md:h-96" >
+                     <img id="zoom_01" 
+                        data-zoom-image="/media/{{product.inventoryitemattribute_set.first.image}}" 
+                        src="/media/{{product.inventoryitemattribute_set.first.image}}"
+                        alt="{{product.title}}" class="object-cover absolute block rounded-lg max-w-full h-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
                   </div>
                </div>
-            </form>
+               <div class="pb-6">
+                  <div class="flex flex-row space-x-5" >
+                     <p class="lg:text-4xl md:text-3xl text-3xl font-semibold leading-9 text-gray-800 md:mt-6 mt-4">
+                        {{product.title}}
+                     </p>
+                  </div>
+                  <p
+                     class="text-2xl font-semibold leading-normal text-gray-800 md:mt-6 mt-4"
+                     >
+                     $<span class="product-price-{{product.id}}">{{product.inventoryitemattribute_set.first.price}}</span>
+                  </p>
+                  <p
+                     class="text-base leading-normal text-gray-600 mt-4 lg:max-w-[415px] w-full"
+                     >
+                     {{product.detail}}
+                  </p>
+                  <form action="" method="POST">
+                     {% csrf_token %}
+                     <div class="card" style="width: 18rem;">
+                        <div class="flex justify-center flex-row mt-2 md:flex lg:max-w-[515px] w-full gap-4">
+                           {% if user.is_admin %}
+                           {% if listing.stage != 2 %}
+                           <button type="submit" value="2" class="btn btn-success" name="status">Approve</button>
+                           {% endif %}
+                           {% if listing.stage == 1 %}
+                           {% comment %} 
+                           <button type="submit" value="3" class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900" name="status">Reject</button> {% endcomment %}
+                           <a class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900" href="{% url 'inventory_reject' product.id %}?next={% url 'inventory_review'%}#nav-inventoryreview-tab" role="button">Reject</a>
+                           {% else %}
+                           <button type="submit" value="delete" class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900r" name="status">Delete</button>
+                           {% endif %}
+                           <a class="text-center focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" href="{% url 'inventory_edit' product.id %}?next={% url 'inventory_review'%}#nav-inventoryreview-tab" role="button">Edit</a>
+                           {% elif listing.stage != 2 and user.is_swapt_user %}
+                           <a class="text-center focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" href="{% url 'inventory_edit' product.id %}?next={% url 'inventory_review'%}#nav-inventoryreview-tab" role="button">Edit</a>
+                           <button type="submit" value="delete" class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900" name="status">Delete</button>
+                           {% endif %}
+                           <input type="hidden" name="id" value={{ product.id }}>
+                        </div>
+                     </div>
+                  </form>
+               </div>
+               <hr />
+               <div id="{{ product.id }}-accordion-flush" data-accordion="collapse" data-active-classes="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
+                 <h2 id="{{ product.id }}-accordion-flush-heading-1">
+                    <button type="button" class="flex items-center justify-between w-full py-5 font-semibold uppercase text-left text-base leading-none text-gray-600 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#{{ product.id }}-accordion-flush-body-1" aria-expanded="true" aria-controls="{{ product.id }}-accordion-flush-body-1">
+                       <span>Specifications</span>
+                       <svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                       </svg>
+                    </button>
+                 </h2>
+                 <div id="{{ product.id }}-accordion-flush-body-1" class="" aria-labelledby="{{ product.id }}-accordion-flush-heading-1">
+                    <div class="py-5 border-b border-gray-200 dark:border-gray-700">
+                       <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                          <thead class="hidden text-xs text-gray-900 uppercase dark:text-gray-400">
+                             <tr>
+                                <th scope="col" class="px-6 py-3">
+                                   spec
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                   value
+                                </th>
+                             </tr>
+                          </thead>
+                          <tbody>
+                             <tr class="bg-gray-50 dark:bg-gray-800">
+                                <th scope="row" class="px-6 py-4 text-xs text-gray-900 uppercase dark:text-gray-400">
+                                   Brand
+                                </th>
+                                <td class="px-6 py-4">
+                                   {{product.inventoryitemattribute_set.first.brand}}
+                                </td>
+                             </tr>
+                             <tr class="bg-gray-50 dark:bg-gray-800">
+                                <th scope="row" class="px-6 py-4 text-xs text-gray-900 uppercase dark:text-gray-400">
+                                   Category
+                                </th>
+                                <td class="px-6 py-4">
+                                   {{product.category}}
+                                </td>
+                             </tr>
+                             <tr class="bg-gray-50 dark:bg-gray-800">
+                                <th scope="row" class="px-6 py-4 text-xs text-gray-900 uppercase dark:text-gray-400">
+                                   Condition
+                                </th>
+                                <td class="px-6 py-4">
+                                   {{product.condition}}
+                                </td>
+                             </tr>
+                             <tr class="bg-gray-50 dark:bg-gray-800">
+                                <th scope="row" class="px-6 py-4 text-xs text-gray-900 uppercase dark:text-gray-400">
+                                   Colors
+                                </th>
+                                <td class="px-6 py-4">
+                                   {{product.inventoryitemattribute_set.first.color}}
+                                </td>
+                             </tr>
+                             <tr class="bg-gray-50 dark:bg-gray-800">
+                                <th scope="row" class="px-6 py-4 text-xs text-gray-900 uppercase dark:text-gray-400">
+                                   Dimensions
+                                </th>
+                                <td class="px-6 py-4">
+                                   {{product.inventoryitemattribute_set.first.size}}
+                                </td>
+                             </tr>
+                          </tbody>
+                       </table>
+                    </div>
+                 </div>
+              </div>
+            </div>
          </div>
          {% endfor %}
-      </div>
+      </section>
    </div>
-   <div class="tab-pane fade" id="nav-swaptapproved" role="tabpanel" aria-labelledby="nav-swaptswapt-approved-tab">
-      <table id="swapt-approved-table" class="table table-bordered">
-         <thead>
-            <tr>
-               <th scope="col">Name</th>
-               <th scope="col">Description</th>
-               <th scope="col">Location</th>
-               <th scope="col">Campus Level 1</th>
-               <th scope="col">Propertyname Level 1</th>
-               <th scope="col">Campus Level 2</th>
-               <th scope="col">Propertyname Level 2</th>
-               <th scope="col">Campus Level 3</th>
-               <th scope="col">Propertyname Level 3</th>
-               <th scope="col">Buttons</th>
-            </tr>
-         </thead>
-      </table>
-   </div>
-   <div class="tab-pane fade" id="nav-swaptreported" role="tabpanel" aria-labelledby="nav-swaptswapt-reported-tab">
-      <table id="swapt-reported-table" class="table table-bordered">
-         <thead>
-            <tr>
-               <th scope="col">Name</th>
-               <th scope="col">Description</th>
-               <th scope="col">Location</th>
-               <th scope="col">Issue</th>
-               <th scope="col">Campus Level 1</th>
-               <th scope="col">Propertyname Level 1</th>
-               <th scope="col">Campus Level 2</th>
-               <th scope="col">Propertyname Level 2</th>
-               <th scope="col">Campus Level 3</th>
-               <th scope="col">Propertyname Level 3</th>
-               <th scope="col">Buttons</th>
-            </tr>
-         </thead>
-      </table>
-   </div>
-   <div class="tab-pane fade" id="nav-swaptrejected" role="tabpanel" aria-labelledby="nav-swaptswapt-rejected-tab">
-      <table id="swapt-rejected-table" class="table table-bordered">
-         <thead>
-            <tr>
-               <th scope="col">Name</th>
-               <th scope="col">Description</th>
-               <th scope="col">Location</th>
-               <th scope="col">Issue</th>
-               <th scope="col">Campus Level 1</th>
-               <th scope="col">Propertyname Level 1</th>
-               <th scope="col">Campus Level 2</th>
-               <th scope="col">Propertyname Level 2</th>
-               <th scope="col">Campus Level 3</th>
-               <th scope="col">Propertyname Level 3</th>
-               <th scope="col">Buttons</th>
-            </tr>
-         </thead>
-      </table>
-   </div>
-   {% if user.is_admin %}
-   <div class="tab-pane fade" id="nav-swapt" role="tabpanel" aria-labelledby="nav-swapt-tab">
-      <table id="swapt-table" class="table table-bordered">
-         <thead>
-            <tr>
-               <th scope="col">swapt</th>
-            </tr>
-         </thead>
-      </table>
-   </div>
-   {% endif %}
-</div>
+</main>
 {% endblock content%}

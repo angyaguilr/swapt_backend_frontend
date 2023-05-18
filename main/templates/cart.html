@@ -30,7 +30,7 @@
          {% for product_id, item in cart_data.items %}
          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
             <td class="w-32 p-4">
-               <img src="/media/{{item.image}}">
+               <img src="/media/{{item.image}}" class="object-cover">
             </td>
             <td class="px-6 py-4 font-semibold font-quicksand text-gray-900 dark:text-white">
                <a href="/product/{{item.title|slugify}}/{{product_id}}">{{item.title}}</a>
