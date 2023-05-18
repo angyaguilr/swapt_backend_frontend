@@ -666,7 +666,7 @@ class InventoryListingsConfirmationView(View):
         # The only other button that results in a post request is the cancel button, which deletes all unconfirmed cards
         else:
             listings.delete()
-            return redirect("inventory_create")['ElonNC', 'CollegeParkMD', 'BurlingtonNC', 'ColumbiaMD']
+            return redirect("inventory_create")
 
 class InventoryListingsReviewView(View):
 
@@ -1001,7 +1001,7 @@ class SwaptListingEditView(UpdateView):
         # Conditionals to make sure user has access to review page for the listing with the particular id requested
         if request.user.is_admin:
             return super().get(self, request, *args, **kwargs)
-        if listing.swaptuser != request.user.swaptuser or (request.user.is_swapt_user and listing.stage == 2):
+        if listing.swaptuser != request.user.swaptuser or (request.user.is_admin and listing.stage == 2):
             return redirect('swapt_review')
         return super().get(self, request, *args, **kwargs)
     
@@ -1011,11 +1011,10 @@ class SwaptListingEditView(UpdateView):
     def get_initial(self):
         pk = self.kwargs['pk']
         listing = SwaptListingModel.objects.get(id=pk)
-        #pairs = listing.swaptcampuspropertynamepair_set.all()
         
-        intial = {'stage': listing.stage, 'campusOne': "", 'propertynameOne': "", 'campusTwo': "", 'propertynameTwo': "", 'campusThree': "", 'propertynameThree': ""}
+        intial = {'stage': listing.stage,}
         
-        
+        counter = 1
         
         return intial
 

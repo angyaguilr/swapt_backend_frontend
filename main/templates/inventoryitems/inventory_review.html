@@ -3,6 +3,7 @@
 {% block content %}
 <main class="container mx-auto sm:px-4 my-4 pt-14">
    <div class="flex flex-wrap flex-col">
+    <h3 class="pt-14">My Inventory Items<a href="{% url 'swapt_create' %}" class="float-right inline-block align-middle text-center select-none border font-quicksand font-normal whitespace-no-wrap rounded-lg  no-underline py-1 px-2 leading-tight text-xs  bg-purple-500 text-white hover:purple-600">Create a Swapt</a></h3>
       <!-- ✅ Grid Section - Starts Here 👇 -->
       <section class="w-fit mx-auto grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
          {% for product in review %}
