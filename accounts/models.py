@@ -20,6 +20,7 @@ class User(AbstractUser):
 # SwaptUser model that's attached to user model
 class SwaptUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+ 
 
 # Learn Fresh admin model that's attached to user model
 class Swapt_admin(models.Model):

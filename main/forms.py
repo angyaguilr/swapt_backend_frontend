@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm,UserChangeForm
-from .models import InventoryItemAttribute,ProductOffers,UserAddressBook, SwaptListingModel, InventoryListing
+from .models import ProductAttribute, InventoryItemAttribute,ProductOffers,UserAddressBook, SwaptListingModel, InventoryListing
 from django.forms import ModelForm
 
 class SignupForm(UserCreationForm):
@@ -89,7 +89,15 @@ class InventoryListingAttributeCreationForm(ModelForm):
         model = InventoryItemAttribute
         fields = ("product", "color", "size", "price", "image" )
     
+class SwaptListingAttributeCreationForm(ModelForm):
+    
+    # Instead of creating a new model, just using listing model with arbitrary data for required fields
+    # Specifically, using title field for commMkt and stage=5 is for commMkt listings
 
+    class Meta:
+        model = ProductAttribute
+        fields = ("product", "price", "image" )
+    
 class ListingEditForm(ModelForm):
     CAMPUS_CHOICES = [
         ('', ''), # This is for the blank option
@@ -232,7 +240,8 @@ class InventoryListingEditForm(ModelForm):
 
    
     stage = forms.ChoiceField(choices=APPROVAL_STAGES, label="Stage", required=False)
-
+    image = forms.ImageField()
+    price = forms.IntegerField()
     # Added the campus and propertyname fields separately since they are part of a related object instead of the InventoryListing object itself
     campusOne = forms.ChoiceField(choices=CAMPUS_CHOICES, label="Campus Level 1", required=True)
     propertynameOne = forms.ChoiceField(choices=PROPERTYNAME_CHOICES, label="Propertyname Level 1", required=True)
@@ -245,7 +254,7 @@ class InventoryListingEditForm(ModelForm):
     
     class Meta:
         model = InventoryListing
-        fields = ("title", "detail",)
+        fields = ("title", "detail", "category", "condition",)
 
     def clean(self):
         data = self.cleaned_data

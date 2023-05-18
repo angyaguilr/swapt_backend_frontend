@@ -5,6 +5,7 @@
    <div class="flex flex-wrap flex-col">
       <!-- ✅ Grid Section - Starts Here 👇 -->
       <section class="w-fit mx-auto grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
+         {% include 'snippets/create_inventory_stepper.html' %}
          {% for product in inventorylistings %}
          <div class="bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
             <div

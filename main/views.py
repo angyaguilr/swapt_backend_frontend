@@ -15,7 +15,7 @@ from django.views.generic import View, UpdateView, CreateView, DetailView, ListV
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
 from django.template.loader import render_to_string
-from .forms import InventoryListingAttributeCreationForm, SignupForm, SwaptListingCreationForm, OffersAdd,AddressBookForm,ProfileForm, ListingEditForm, ListingRejectForm, InventoryListingCreationForm
+from .forms import SwaptListingAttributeCreationForm, InventoryListingAttributeCreationForm, InventoryListingEditForm, SignupForm, SwaptListingCreationForm, OffersAdd,AddressBookForm,ProfileForm, ListingEditForm, ListingRejectForm, InventoryListingCreationForm
 from .serializers import InventoryListingSerializer, SwaptListingSerializer, SwaptCampusPropertyNamePairSerializer, CampusPropertyNamePairSerializer, CampusPropertyNamePairSerializer, InventoryListingReviewSerializer, SwaptListingReviewSerializer
 from django.contrib.auth import login,authenticate
 from django.contrib.auth.decorators import login_required
@@ -566,6 +566,11 @@ class InventoryListingCreationView(CreateView):
     def form_valid(self, form):
         listing = form.save()
         listing.swaptuser = SwaptUser.objects.get(user=self.request.user) 
+        listing.confirmed= False
+        listing.isBundled= False
+        listing.selling_stage = 'Available'
+        listing.stage = 1
+        listing.delivery = 2
         listing.save()
         if self.request.user.is_swapt_user:
             listing.save()
@@ -582,15 +587,13 @@ class InventoryItemAttributeCreationView(CreateView):
 
     def form_valid(self, form):
         listing = form.save()
-        listing.swaptuser = SwaptUser.objects.get(user=self.request.user) 
-        listing.save()
         if self.request.user.is_swapt_user:
             listing.save()
 
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse("inventory_add_attribute")
+        return reverse("inventory_confirm")
         
 def InventoryListingAttributesCreation_request(request):
     if request.method == "POST":
@@ -609,6 +612,22 @@ def InventoryListingAttributesCreation_request(request):
 
     return render(request, "inventoryitems/inventory_add_attributes.html", {"form": form})
 
+def SwaptListingAttributesCreation_request(request):
+    if request.method == "POST":
+        form = SwaptListingAttributeCreationForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+
+            # Getting the current instance object to display in the template
+            img_object = form.instance
+
+            return render(
+                request, "swaptlistings/swapt_add_attributes.html", {"form": form, "img_obj": img_object}
+            )
+    else:
+        form = SwaptListingAttributeCreationForm()
+
+    return render(request, "swaptlistings/swapt_add_attributes.html", {"form": form})
 class InventoryListingsConfirmationView(View):
 
     # Returns view of swapt_user's unconfirmed listings (this page is redirected to right after the upload page if successful)
@@ -633,8 +652,9 @@ class InventoryListingsConfirmationView(View):
         if request.POST.get('status') == "confirm":
             for listing in listings:
                 listing.confirmed = True
+                listing.stage =2
 
-            InventoryListing.objects.bulk_update(listings, ['confirmed'])
+            InventoryListing.objects.bulk_update(listings, ['confirmed', 'stage'])
             return redirect("inventory_review")
 
         # If selected the delete button for a specific card, deletes that cards
@@ -691,7 +711,7 @@ class InventoryListingsReviewView(View):
         return redirect("inventory_review")
 
 class InventoryListingEditView(UpdateView):
-    form_class = ListingEditForm
+    form_class = InventoryListingEditForm
     model = InventoryListing
     template_name = 'inventoryitems/inventory_edit_form.html'
 
@@ -702,7 +722,7 @@ class InventoryListingEditView(UpdateView):
         # Conditionals to make sure user has access to review page for the listing with the particular id requested
         if request.user.is_admin:
             return super().get(self, request, *args, **kwargs)
-        if listing.swaptuser != request.user.swaptuser or (request.user.is_swapt_user and listing.stage == 2):
+        if listing.swaptuser != request.user.swaptuser or (request.user.is_admin and listing.stage == 2):
             return redirect('inventory_review')
         return super().get(self, request, *args, **kwargs)
     
@@ -713,7 +733,7 @@ class InventoryListingEditView(UpdateView):
         pk = self.kwargs['pk']
         listing = InventoryListing.objects.get(id=pk)
         
-        intial = {'stage': listing.stage, 'campusOne': "", 'propertynameOne': "", 'campusTwo': "", 'propertynameTwo': "", 'campusThree': "", 'propertynameThree': ""}
+        intial = {'stage': listing.stage,}
         
         counter = 1
         
@@ -769,7 +789,7 @@ class InventoryListingListAPIView(generics.ListAPIView):
         # Get pairs with  levels specified, then narrow down listings based on those pairs and other attributes
         pairs =  UserAddressBook.objects.filter(campus__in=campuss)
         queryset = InventoryListing.objects.filter().distinct()
-        queryset = queryset.filter(confirmed=True, stage=2, location__in=locations) # Make sure cards returned in request are approved and confirmed
+        queryset = queryset.filter(confirmed=True, stage=2) # Make sure cards returned in request are approved and confirmed
         queryset = sorted(queryset, key=lambda x: random.random()) # Randomize order as to not give same cards in same order every time to the app
         queryset = queryset[:int(int(number) * .85)] # Only give up to 85% number of cards specified
         queryset = sorted(queryset + sorted(InventoryListing.objects.filter(stage=5), key=lambda x: random.random())[:int(int(number) * .15)], key=lambda x: random.random()) # Other 15% of cards are inventory cards
@@ -1112,18 +1132,20 @@ class SwaptListingCreation(CreateView):
     model = SwaptListingModel
     form_class = SwaptListingCreationForm
     template_name ="swaptlistings/swapt_create_form.html"
-
-    def form_valid(self, form):
-        listing = form.save()
-        listing.swaptuser = SwaptUser.objects.get(user=self.request.user) 
-        listing.save()
-        if self.request.user.is_swapt_user:
-            listing.save()
-
-        return super().form_valid(form)
+    
+    def get(self, request, *args, **kwargs):
+        form = self.form_class
+        first_name = kwargs['name']
+        return render(request, self.template_name, {'form': form, "first":first_name})
+    
+    def post(self, request, *args, **kwargs):
+        form = self. form_class(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect("swapt_add_attribute")
 
     def get_success_url(self):
-        return reverse("inventory_add_attribute")
+        return reverse("swapt_add_attribute")
 
       
 class SwaptListingListView(ListView):
@@ -1172,8 +1194,7 @@ class InventoryListingsUploadedSearch(View):
         query = self.request.GET.get("q")
 
         inventory_items = InventoryListing.objects.filter(
-            Q(title__icontains=query) |
-            Q(location__icontains=query)
+            Q(title__icontains=query)
         )
 
         context = {

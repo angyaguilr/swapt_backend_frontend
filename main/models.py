@@ -314,8 +314,9 @@ class SwaptListingModel(models.Model):
   
     objects = SwaptListingManager() # Using manager above for reasons in comment
 
-    # def __str__(self):
-    #     return self.name
+    def __str__(self):
+        return self.title 
+    
     def save(self, *args, **kwargs):
         super(SwaptListingModel, self).save(*args, **kwargs) 
 
