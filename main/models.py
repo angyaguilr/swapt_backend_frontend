@@ -141,24 +141,24 @@ class InventoryListing(models.Model):
         ('Used - Decent', 'Used - Decent'),
         ('Used - Fair', 'Used - Fair'),
     ]
-    swaptuser = models.ForeignKey(SwaptUser, on_delete=CASCADE, null=True)
+    swaptuser = models.ForeignKey(SwaptUser, on_delete=CASCADE, null=True, default = None)
     title=models.CharField(max_length=200)
     slug=AutoSlugField(_('slug'), max_length=50, unique=True, populate_from=('title'))
     detail=models.TextField()
-    delivery = models.PositiveSmallIntegerField(choices=DELIVERYMETHOD_CHOICES, null=True)
+    delivery = models.PositiveSmallIntegerField(choices=DELIVERYMETHOD_CHOICES, null=True, default = 'Swapt Delivery')
     status=models.BooleanField(default=True)
     category = models.CharField(
         max_length=50,
         choices=CATEGORY_CHOICES,
-        null=True
+        null=True, default = 'Other Furniture'
     )
-    condition = models.CharField(max_length=50,choices=CONDITION_CHOICES , null=True)
+    condition = models.CharField(max_length=50,choices=CONDITION_CHOICES , null=True, default = None)
     #fields used to review listingscts
-    stage = models.PositiveSmallIntegerField(choices=APPROVAL_STAGES, null=True)
-    selling_stage = models.CharField(max_length=50,choices=SELLING_STAGES , null=True)
+    stage = models.PositiveSmallIntegerField(choices=APPROVAL_STAGES, null=True, default=1)
+    selling_stage = models.CharField(max_length=50,choices=SELLING_STAGES , null=True, default = 'Available')
     confirmed = models.BooleanField(default=False)
     isBundled = models.BooleanField(default=False)
-    issue = models.CharField(max_length=250, blank=True, null=True) # Currently only using one field for both rejected and reported issues
+    issue = models.CharField(max_length=250, blank=True, null=True, default = 'No issues') # Currently only using one field for both rejected and reported issues
     #optional
     quantity = models.IntegerField(default=1, null=True)
     tags = models.ManyToManyField(InventoryListingTag, blank=True)
@@ -265,9 +265,9 @@ class SwaptListingModel(models.Model):
         ('Burlington, NC', 'Burlington, NC'),
     ]
     #unique fields for swaptlistingsmodel
-    propertymanager = models.ForeignKey(propManager, on_delete=CASCADE, null=True)
+    propertymanager = models.ForeignKey(propManager, on_delete=CASCADE, null=True, default=1)
     #field identifying seller who posted listing
-    swaptuser = models.ForeignKey(SwaptUser, on_delete=CASCADE, null=True)
+    swaptuser = models.ForeignKey(SwaptUser, on_delete=CASCADE, null=True, default=1)
     listings = models.ManyToManyField(
         'InventoryListing', related_name='inventory_items', blank=True)
     title = models.CharField(max_length=250)
@@ -277,22 +277,22 @@ class SwaptListingModel(models.Model):
     detail=models.TextField(default="detail")
     slug=AutoSlugField(_('slug'), max_length=50, unique=True, populate_from=('title'))
     status=models.BooleanField(default=True)
-    category=models.ForeignKey(Category,on_delete=models.CASCADE)
-    brand=models.ForeignKey(Brand,on_delete=models.CASCADE)
-    condition = models.CharField(max_length=50,choices=CONDITION_CHOICES, null=True)
+    category=models.ForeignKey(Category,on_delete=models.CASCADE, null=True, default=1)
+    brand=models.ForeignKey(Brand,on_delete=models.CASCADE, null=True, default=1)
+    condition = models.CharField(max_length=50,choices=CONDITION_CHOICES, null=True, default='New')
     #mandatory location details
     location = models.CharField(
         max_length=30,
         choices=LOCATION_CHOICES,
-        null=True
+        null=True,default='Elon, NC'
     )
-    delivery = models.PositiveSmallIntegerField(choices=DELIVERYMETHOD_CHOICES, null=True)
+    delivery = models.PositiveSmallIntegerField(choices=DELIVERYMETHOD_CHOICES, null=True, default='Swapt Delivery')
     
     #fields used to review listings
-    stage = models.PositiveSmallIntegerField(choices=APPROVAL_STAGES, null=True)
-    selling_stage = models.CharField(max_length=50,choices=SELLING_STAGES , null=True)
+    stage = models.PositiveSmallIntegerField(choices=APPROVAL_STAGES, null=True, default=1)
+    selling_stage = models.CharField(max_length=50,choices=SELLING_STAGES , null=True, default=1)
     confirmed = models.BooleanField(default=False)
-    issue = models.CharField(max_length=250, blank=True, null=True) # Currently only using one field for both rejected and reported issues
+    issue = models.CharField(max_length=250, blank=True, null=True,  default='No Issues') # Currently only using one field for both rejected and reported issues
     #optional
     quantity = models.IntegerField(default=1)
     

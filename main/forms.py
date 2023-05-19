@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm,UserChangeForm
-from .models import ProductAttribute, InventoryItemAttribute,ProductOffers,UserAddressBook, SwaptListingModel, InventoryListing
+from .models import ProductAttribute, Brand, Category, InventoryItemAttribute,ProductOffers,UserAddressBook, SwaptListingModel, InventoryListing
 from django.forms import ModelForm
 
 class SignupForm(UserCreationForm):
@@ -35,7 +35,7 @@ class SwaptListingCreationForm(ModelForm):
 
     class Meta:
         model = SwaptListingModel
-        fields = ("title", "detail", "category", "condition", "move_out_date", "location", "brand", )
+        fields = ("title", "detail", "category", "brand", "condition", "move_out_date", "location",  )
     
     def save(self, commit=True):
         self.full_clean() # calls clean function
@@ -47,10 +47,8 @@ class SwaptListingCreationForm(ModelForm):
             listing.title = fields['title']
             listing.detail = fields['detail']
             #listing.listings = fields['listings']
-            listing.category = fields['category']
             listing.condition = fields['condition']
             listing.location = fields['location']
-            listing.brand = fields['brand']
             listing.move_out_date = fields['move_out_date']
         
         return listing

@@ -9,7 +9,7 @@ from django.db.models import Max,Min,Count,Avg
 from django.utils.decorators import method_decorator
 from django.shortcuts import render, get_object_or_404
 from django.core.mail import send_mail
-from accounts.models import SwaptUser
+from accounts.models import SwaptUser, propManager
 from django.db.models.functions import ExtractMonth
 from django.views.generic import View, UpdateView, CreateView, DetailView, ListView, TemplateView
 from django.views.decorators.csrf import csrf_exempt
@@ -1127,7 +1127,7 @@ class SwaptListingsUploaded(View):
         return render(request, 'swaptlistings/swapt_listings.html', context)
 
 
-class SwaptListingCreation(CreateView):
+class SwaptListingCreation(View):
     model = SwaptListingModel
     form_class = SwaptListingCreationForm
     template_name ="swaptlistings/swapt_create_form.html"
@@ -1136,7 +1136,6 @@ class SwaptListingCreation(CreateView):
         # get every item from each category
         form = self.form_class
         InventoryFurnitureItems = InventoryListing.objects.filter(swaptuser=request.user.swaptuser, stage=2, selling_stage= 1, isBundled=False, confirmed=True)
-
 
         # pass into context
         context = {
@@ -1149,16 +1148,28 @@ class SwaptListingCreation(CreateView):
     def post(self, request, *args, **kwargs):
         #"title", "listings", "detail", "category", "condition", "move_out_date", "location", "brand"
         #propertymanager=request.user.propertymanager
-        swaptuser=request.user.swaptuser
-        title = request.POST.get('title')
-        detail = request.POST.get('detail')
-        categorylist = request.POST.get('category')
-        condition = request.POST.get('condition')
-        move_out_date = request.POST.get('move_out_date')
-        location = request.POST.get('location')
-        brand = request.POST.get('brand')
+        #swaptuser=request.user.swaptuser
+        form= SwaptListingCreationForm(request.POST)
+        if form.is_valid():
+            saveForm=form.save(commit=True)
+            swaptuser_inst = SwaptUser.objects.get(user=self.request.user)
+            propmanager_inst = propManager.objects.get(user=self.request.user)
+            #category=Category.objects.get(id=cat_id)
+	        #data=SwaptListingModel.objects.filter(category=category).order_by('-id')
+            brand_id = request.POST.get('brand', 1)
+            category_id = request.POST.get('category', 1)
+            brand_inst= Brand.objects.get(id = int(brand_id))
+            category_inst = Category.objects.get(id= int(category_id))
+            saveForm.brand=brand_inst
+            saveForm.category=category_inst
+            saveForm.swaptuser= swaptuser_inst
+            saveForm.propertymanager= propmanager_inst
+            saveForm.selling_stage = 'Available'
+            saveForm.stage = 1
+            saveForm.delivery = 2
+            saveForm.confirmed= False
+            saveForm.save() 
 
-        #https://stackoverflow.com/questions/4195242/django-model-object-with-foreign-key-creation
         order_items = {
             'items': []
         }
@@ -1182,27 +1193,17 @@ class SwaptListingCreation(CreateView):
 
         for item in order_items['items']:
             item_ids.append(item['id'])
-        category = Category.objects.get(title=categorylist)
-        order = SwaptListingModel.objects.create(
-            title=title ,
-            detail=detail,
-            category=category,
-            condition=condition,
-            move_out_date=move_out_date,
-            location=location,
-            brand =brand,
-            swaptuser=swaptuser,
-            #propertymanager=propertymanager 
-        )
-        order.listings.add(*item_ids)
+
+        
+        saveForm.listings.add(*item_ids)
 
 
         context = {
             'items': order_items['items'],
             'price': price
         }
-
-        return redirect('swapt_add_attribute', pk=order.pk)
+        
+        return redirect('swapt_add_attribute')
 
       
 class SwaptListingListView(ListView):
