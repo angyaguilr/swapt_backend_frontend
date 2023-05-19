@@ -594,6 +594,21 @@ class InventoryItemAttributeCreationView(CreateView):
 
     def get_success_url(self):
         return reverse("inventory_confirm")
+    
+class SwaptListingAttributeCreationView(CreateView):
+    model = ProductAttribute
+    form_class =  SwaptListingAttributeCreationForm
+    template_name ="swaptlistings/swapt_add_attributes.html"
+
+    def form_valid(self, form):
+        listing = form.save()
+        if self.request.user.is_swapt_user:
+            listing.save()
+
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse("swapt_confirm")    
         
 def InventoryListingAttributesCreation_request(request):
     if request.method == "POST":
