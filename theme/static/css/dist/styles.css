@@ -4736,6 +4736,14 @@ html {
   margin: 3rem;
 }
 
+.m-6 {
+  margin: 1.5rem;
+}
+
+.m-4 {
+  margin: 1rem;
+}
+
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -5683,7 +5691,7 @@ html {
 
 .bg-login-bg {
   --tw-bg-opacity: 1;
-  background-color: rgb(36 33 84 / var(--tw-bg-opacity));
+  background-color: rgb(94 41 135 / var(--tw-bg-opacity));
 }
 
 .bg-purple-100 {
@@ -5981,10 +5989,6 @@ html {
 
 .pt-8 {
   padding-top: 2rem;
-}
-
-.pl-7 {
-  padding-left: 1.75rem;
 }
 
 .text-left {
@@ -7244,6 +7248,26 @@ html {
 @media (min-width: 1280px) {
   .xl\:m-16 {
     margin: 4rem;
+  }
+
+  .xl\:m-8 {
+    margin: 2rem;
+  }
+
+  .xl\:m-0 {
+    margin: 0px;
+  }
+
+  .xl\:m-6 {
+    margin: 1.5rem;
+  }
+
+  .xl\:mt-2 {
+    margin-top: 0.5rem;
+  }
+
+  .xl\:mt-0 {
+    margin-top: 0px;
   }
 
   .xl\:w-5\/12 {

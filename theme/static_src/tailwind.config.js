@@ -61,7 +61,7 @@ const {
                 "secondary-color": "#E3D6F1",
                 "button-primary-color": "#5E2987",
                 "button-second-color": "#7060AE",
-                "login-bg": "#242154",
+                "login-bg": "#5E2987",
                 "input-bg-color": "#EBEBEB",
                 "input-text-color": "#807976",
                 "background-grayec": "#ececec",

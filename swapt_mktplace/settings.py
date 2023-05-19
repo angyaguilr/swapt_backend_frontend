@@ -13,7 +13,6 @@ import os
 from pathlib import Path
 import django_on_heroku
 import dj_database_url
-from decouple import config
 from django.core.management.utils import get_random_secret_key
 from dotenv import load_dotenv
 from django.forms.renderers import TemplatesSetting
