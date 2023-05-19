@@ -76,7 +76,7 @@ def brand_list(request):
 # Swapt Listing List
 def product_list(request):
 	total_data= SwaptListingModel.objects.count()
-	data=SwaptListingModel.objects.all().order_by('-id')[:3]
+	data=SwaptListingModel.objects.all().order_by('-id')[:4]
 	min_price=ProductAttribute.objects.aggregate(Min('price'))
 	max_price=ProductAttribute.objects.aggregate(Max('price'))
 	return render(request,'product_list.html',
