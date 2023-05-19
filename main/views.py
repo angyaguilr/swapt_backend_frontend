@@ -667,6 +667,7 @@ class InventoryListingsConfirmationView(View):
         if request.POST.get('status') == "confirm":
             for listing in listings:
                 listing.confirmed = True
+                listing.isBundled=False
                 listing.stage =2
 
             InventoryListing.objects.bulk_update(listings, ['confirmed', 'stage'])
