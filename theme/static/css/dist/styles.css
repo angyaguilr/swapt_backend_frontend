@@ -4732,16 +4732,8 @@ html {
   margin: 0px;
 }
 
-.m-12 {
-  margin: 3rem;
-}
-
 .m-6 {
   margin: 1.5rem;
-}
-
-.m-4 {
-  margin: 1rem;
 }
 
 .mx-auto {
@@ -5687,11 +5679,6 @@ html {
 .bg-green-700 {
   --tw-bg-opacity: 1;
   background-color: rgb(4 108 78 / var(--tw-bg-opacity));
-}
-
-.bg-login-bg {
-  --tw-bg-opacity: 1;
-  background-color: rgb(94 41 135 / var(--tw-bg-opacity));
 }
 
 .bg-purple-100 {
@@ -7246,28 +7233,8 @@ html {
 }
 
 @media (min-width: 1280px) {
-  .xl\:m-16 {
-    margin: 4rem;
-  }
-
   .xl\:m-8 {
     margin: 2rem;
-  }
-
-  .xl\:m-0 {
-    margin: 0px;
-  }
-
-  .xl\:m-6 {
-    margin: 1.5rem;
-  }
-
-  .xl\:mt-2 {
-    margin-top: 0.5rem;
-  }
-
-  .xl\:mt-0 {
-    margin-top: 0px;
   }
 
   .xl\:w-5\/12 {
