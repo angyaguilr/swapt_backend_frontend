@@ -16,7 +16,7 @@ class SwaptUserSignUpForm(UserCreationForm):
     def save(self):
         user = super().save(commit=False)
         user.is_swapt_user = True
-        user.is_active = False
+        user.is_active = True
         user.save()
         swaptuser = SwaptUser.objects.create(user=user)
         return user
@@ -33,7 +33,7 @@ class Swapt_AdminSignUpForm(UserCreationForm):
         user = super().save(commit=False)
         user.is_admin = True
         if commit:
-            user.is_active = False
+            user.is_active = True
             user.save()
             admin = Swapt_admin.objects.create(user=user)
         return user
@@ -50,7 +50,7 @@ class propManager_SignUpForm(UserCreationForm):
         user = super().save(commit=False)
         user.is_admin = True
         if commit:
-            user.is_active = False
+            user.is_active = True
             user.save()
             propmanager = propManager.objects.create(user=user)
         return user        

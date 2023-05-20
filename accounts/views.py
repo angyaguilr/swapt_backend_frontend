@@ -63,7 +63,7 @@ class SwaptUserSignUpView(CreateView):
 
     def form_valid(self, form):
         user = form.save()
-        return sendEmail(user, form, self.request)
+        return redirect("accounts:login")  
 
 class propManager_SignUpView(CreateView):
     model = User
@@ -77,7 +77,7 @@ class propManager_SignUpView(CreateView):
 
     def form_valid(self, form):
         user = form.save()
-        return sendEmail(user, form, self.request)  
+        return redirect("accounts:login")  
 
 # Swapt Admin signup page (do need Swapt email address, don't sign up code)
 class Swapt_AdminSignUpView(CreateView):
@@ -92,7 +92,7 @@ class Swapt_AdminSignUpView(CreateView):
 
     def form_valid(self, form):
         user = form.save()
-        return sendEmail(user, form, self.request)
+        return redirect("accounts:login")  
 
 # Uses activation link sent in email to activate the user if the link is valid
 class Activate(View):

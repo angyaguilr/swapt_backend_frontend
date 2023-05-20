@@ -159,11 +159,42 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 .next/
-.env
 .venv
-env/
-venv/
-ENV/
 env.bak/
 venv.bak/
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 node_modules
+
+
+# dependencies
+/landing_page_nextjs/node_modules
+/landing_page_nextjs/.pnp
+/landing_page_nextjs/.pnp.js
+
+# testing
+/landing_page_nextjs/coverage
+
+# next.js
+/landing_page_nextjs/.next/
+/landing_page_nextjs//out/
+
+# production
+/landing_page_nextjs/build
+
+# misc
+/landing_page_nextjs/.DS_Store
+/landing_page_nextjs/*.pem
+
+# debug
+/landing_page_nextjs/npm-debug.log*
+/landing_page_nextjs/yarn-debug.log*
+/landing_page_nextjs/yarn-error.log*
+
+# local env files
+/landing_page_nextjs/.env
+/landing_page_nextjs/.env.development.local
+/landing_page_nextjs/.env.test.local
+/landing_page_nextjs/.env.production.local
+
+# vercel
+/landing_page_nextjs/.vercel

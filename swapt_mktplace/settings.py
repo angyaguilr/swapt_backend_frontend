@@ -111,6 +111,17 @@ WSGI_APPLICATION = 'swapt_mktplace.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql',
+#        'NAME': '',
+#        'USER': '',
+#        'PASSWORD': '',
+#        'HOST': '',
+#        'PORT': '',
+#    }
+#}
+
 DATABASES = {
     'default': {
     'ENGINE': 'django.db.backends.sqlite3',
@@ -182,7 +193,11 @@ JET_SIDE_MENU_COMPACT = True
 
 LOGIN_URL = '/accounts/login'
 
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = 587
 
 django_on_heroku.settings(locals(), staticfiles=False)

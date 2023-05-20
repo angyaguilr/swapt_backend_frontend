@@ -111,7 +111,7 @@ def product_detail(request,slug,id):
     addbook=UserAddressBook.objects.filter(user = product.swaptuser.user).order_by('-id')
     #colors=ProductAttribute.objects.filter(product=product).values('color__id','color__title','color__color_code').distinct()
     #sizes=ProductAttribute.objects.filter(product=product).values('size__id','size__title','price','color__id').distinct()
-    offersForm=OffersAdd()
+    #offersForm=OffersAdd()
 
 	# Check
     canAdd=True
@@ -120,6 +120,19 @@ def product_detail(request,slug,id):
         if offersCheck > 0:
              canAdd=False
 	# End
+    if request.method=='POST':
+        form=OffersAdd(request.POST)
+        if form.is_valid():
+            saveForm=form.save(commit=False)
+            offer_msg_inst= request.POST.get('offers_message', 'My offer is')
+            offer_amt_inst= request.POST.get('offers_amount', '1')
+            saveForm.user=request.user
+            saveForm.product=product
+            saveForm.offers_message = offer_msg_inst
+            saveForm.offers_amount = offer_amt_inst
+            saveForm.save()
+            msg='Data has been saved'
+    form=OffersAdd
 
 	# Fetch offers
     offers=ProductOffers.objects.filter(product=product)
@@ -129,7 +142,7 @@ def product_detail(request,slug,id):
     avg_offers=ProductOffers.objects.filter(product=product)
 	# End
     #return 'colors':colors,'sizes':sizes
-    return render(request, 'product_detail.html',{'addbook':addbook, 'data':product,'related':related_products,'offersForm':offersForm,'canAdd':canAdd,'offers':offers,'avg_offers':avg_offers})
+    return render(request, 'product_detail.html',{'addbook':addbook, 'data':product,'related':related_products,'offersForm':form,'canAdd':canAdd,'offers':offers,'avg_offers':avg_offers})
 
 # Search
 class SwaptListingsUploadedSearch(View):
@@ -417,25 +430,27 @@ def payment_canceled(request):
 
 # Save Offer
 def save_offer(request,pid):
-	product=SwaptListingModel.objects.get(pk=pid)
-	user=request.user
-	offers=ProductOffers.objects.create(
-		user=user,
-		product=product,
-		offers_message=request.POST.get('offers_message'),
-		offers_amount=request.POST.get('offers_amount'),
-		)
-	data={
+    product=SwaptListingModel.objects.get(pk=pid)
+    user=request.user
+    offer_msg_inst= request.POST.get('offers_message', 'My offer is')
+    offer_amt_inst= request.POST.get('offers_amount', '1')
+    if request.method=='POST':
+        form=OffersAdd(request.POST)
+        if form.is_valid():
+            saveForm=form.save(commit=False)
+            saveForm.user=request.user
+            saveForm.product=product
+            saveForm.offers_message = offer_msg_inst
+            saveForm.offers_amount = offer_amt_inst
+            saveForm.save()
+            msg='Data has been saved'
+    form=OffersAdd
+    data={
 		'user':user.username,
 		'offers_message':request.POST.get('offers_message'),
 		'offers_amount':request.POST.get('offers_amount')
 	}
-
-	# Fetch avg amount for offers
-	avg_offers=ProductOffers.objects.filter(product=product).aggregate(avg_amount='offers_amount')
-	# End
-
-	return JsonResponse({'bool':True,'data':data,'avg_offers':avg_offers})
+    return redirect("featured")
 
 # User Dashboard
 import calendar
