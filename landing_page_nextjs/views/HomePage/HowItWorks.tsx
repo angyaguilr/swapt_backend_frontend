@@ -34,8 +34,8 @@ const TABS = [
           'Wait for confirmation',
       },],
     imageUrl: '/image3.jpg',
-    baseColor: '249,82,120',
-    secondColor: '221,9,57',
+    baseColor: '220, 215, 2547',
+    secondColor: '74, 29, 150',
   },
   {
     title: 'Moving out',
@@ -59,8 +59,8 @@ const TABS = [
           'Wait for an offer',
       },],
     imageUrl: '/image4.jpg',
-    baseColor: '57,148,224',
-    secondColor: '99,172,232',
+    baseColor: '220, 215, 2547',
+    secondColor: '74, 29, 150',
   },
 ];
 
