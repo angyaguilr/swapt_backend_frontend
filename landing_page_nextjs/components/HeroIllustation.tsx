@@ -1,5 +1,5 @@
 export default function HeroIllustration() { return ( 
-<svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 512 512"  id="Layer_1" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" xmlSpace="preserve" width="400" height="400" viewBox="0 0 512 512">
+<svg xmlns="http://www.w3.org/2000/svg" enableBackground="new 0 0 512 512"  id="Layer_1" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" xmlSpace="preserve" width="400" height="400" viewBox="0 0 512 512">
 
 <path style={{ fill:"#E3D6F1"}} d="M509.811,222.448C493.377,96.92,386.011,0,256,0C114.615,0,0,114.615,0,256 c0,126.174,91.282,231.02,211.408,252.121L509.811,222.448z"/>
 <path style={{fill:"#532980"}} d="M55.739,352.453l155.669,155.669C225.89,510.665,240.789,512,256,512c141.384,0,256-114.616,256-256 c0-11.373-0.751-22.57-2.189-33.552l-72.987-72.987l-136.302,30.473l-22.268-22.268l-16.696-5.565L55.739,352.453z"/>

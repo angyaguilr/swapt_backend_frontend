@@ -8,9 +8,9 @@ export default function ContactPage() {
       <CookiesPolicyContainer>
         <RichText>
           <p>
-          Welcome to Swapt, an online marketplace where users can create listings and purchase other user's listings. 
-          These terms and conditions (the "Agreement") outline the terms and conditions governing your use of Swapt's website, 
-          services, and platform (collectively, the "Services"). By using the Services, you agree to be bound by this Agreement.
+          Welcome to Swapt, an online marketplace where users can create listings and purchase other user&apos;s listings. 
+          These terms and conditions (the &ldquo;Agreement&rdquo;) outline the terms and conditions governing your use of Swapt&apos;s website, 
+          services, and platform (collectively, the &ldquo;Services&rdquo;). By using the Services, you agree to be bound by this Agreement.
           </p>
           <br />
           <strong>
@@ -21,7 +21,7 @@ export default function ContactPage() {
           <strong>
           2. User Content </strong>
           <p>
-          You are solely responsible for any content you post on the Services, including but not limited to listings, images, and descriptions (collectively, "User Content"). You represent and warrant that you have the right to post all User Content and that the User Content does not infringe any third-party rights. Swapt has the right, but not the obligation, to review, edit, or remove any User Content at its sole discretion.{' '}
+          You are solely responsible for any content you post on the Services, including but not limited to listings, images, and descriptions (collectively, &ldquo;User Content&rdquo;). You represent and warrant that you have the right to post all User Content and that the User Content does not infringe any third-party rights. Swapt has the right, but not the obligation, to review, edit, or remove any User Content at its sole discretion.{' '}
           </p>
           <strong>
           3. Transactions </strong>
@@ -31,7 +31,7 @@ export default function ContactPage() {
           <strong>
           4. Swapt Fees </strong>
           <p>
-          Swapt charges a fee for completed transactions, known as a "Swapt." The Swapt fee is calculated as a percentage of the total transaction value, as determined by Swapt in its sole discretion. The current Swapt fee rate is 15% of the total transaction value. Swapt reserves the right to change the Swapt fee rate at any time without notice. By using the Services, you agree to pay the Swapt fee to Swapt for each completed transaction. The Swapt fee will be deducted from the total transaction value before any funds are disbursed to the seller. You understand and agree that Swapt has the right to withhold any funds in the event of a dispute or investigation of fraudulent or illegal activity.{' '}
+          Swapt charges a fee for completed transactions, known as a &ldquo;Swapt.&rdquo; The Swapt fee is calculated as a percentage of the total transaction value, as determined by Swapt in its sole discretion. The current Swapt fee rate is 15% of the total transaction value. Swapt reserves the right to change the Swapt fee rate at any time without notice. By using the Services, you agree to pay the Swapt fee to Swapt for each completed transaction. The Swapt fee will be deducted from the total transaction value before any funds are disbursed to the seller. You understand and agree that Swapt has the right to withhold any funds in the event of a dispute or investigation of fraudulent or illegal activity.{' '}
           </p>
           <strong>
           5. Payment Processing </strong>
@@ -46,12 +46,12 @@ export default function ContactPage() {
           <strong>
           7. Intellectual Property</strong>
           <p>
-          Swapt retains all right, title, and interest in and to the Services, including all intellectual property rights. You may not use any Swapt intellectual property without Swapt's prior written consent. {' '}
+          Swapt retains all right, title, and interest in and to the Services, including all intellectual property rights. You may not use any Swapt intellectual property without Swapt&apos;s prior written consent. {' '}
           </p>
           <strong>
           8. Disclaimer of Warranties </strong>
           <p>
-          THE SERVICES ARE PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY WARRANTY FOR INFORMATION, SERVICES, UNINTERRUPTED ACCESS, OR PRODUCTS PROVIDED THROUGH OR IN CONNECTION WITH THE SERVICES, INCLUDING WITHOUT LIMITATION THE SOFTWARE LICENSED TO YOU AND THE RESULTS OBTAINED THROUGH THE SERVICES. SPECIFICALLY, WE DISCLAIM ANY AND ALL WARRANTIES, INCLUDING WITHOUT LIMITATION: 1) ANY WARRANTIES CONCERNING THE AVAILABILITY, ACCURACY, USEFULNESS, OR CONTENT OF INFORMATION, PRODUCTS OR SERVICES AND 2) ANY WARRANTIES OF TITLE, WARRANTY OF NON-INFRINGEMENT, WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. THIS DISCLAIMER OF LIABILITY APPLIES TO ANY DAMAGES OR INJURY CAUSED BY ANY FAILURE OF PERFORMANCE, ERROR, OMISSION, INTERRUPTION, DELETION, DEFECT, DELAY IN OPERATION OR TRANSMISSION, COMPUTER VIRUS, COMMUNICATION LINE FAILURE, THEFT OR DESTRUCTION OR UNAUTHORIZED ACCESS TO, ALTERATION OF, OR USE OF RECORD, WHETHER FOR BREACH OF CONTRACT, TORTIOUS BEHAVIOR, NEGLIGENCE, OR UNDER ANY OTHER CAUSE OF ACTION.{' '}
+          THE SERVICES ARE PROVIDED &ldquo;AS IS&rdquo; AND &ldquo;AS AVAILABLE&rdquo; WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY WARRANTY FOR INFORMATION, SERVICES, UNINTERRUPTED ACCESS, OR PRODUCTS PROVIDED THROUGH OR IN CONNECTION WITH THE SERVICES, INCLUDING WITHOUT LIMITATION THE SOFTWARE LICENSED TO YOU AND THE RESULTS OBTAINED THROUGH THE SERVICES. SPECIFICALLY, WE DISCLAIM ANY AND ALL WARRANTIES, INCLUDING WITHOUT LIMITATION: 1) ANY WARRANTIES CONCERNING THE AVAILABILITY, ACCURACY, USEFULNESS, OR CONTENT OF INFORMATION, PRODUCTS OR SERVICES AND 2) ANY WARRANTIES OF TITLE, WARRANTY OF NON-INFRINGEMENT, WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. THIS DISCLAIMER OF LIABILITY APPLIES TO ANY DAMAGES OR INJURY CAUSED BY ANY FAILURE OF PERFORMANCE, ERROR, OMISSION, INTERRUPTION, DELETION, DEFECT, DELAY IN OPERATION OR TRANSMISSION, COMPUTER VIRUS, COMMUNICATION LINE FAILURE, THEFT OR DESTRUCTION OR UNAUTHORIZED ACCESS TO, ALTERATION OF, OR USE OF RECORD, WHETHER FOR BREACH OF CONTRACT, TORTIOUS BEHAVIOR, NEGLIGENCE, OR UNDER ANY OTHER CAUSE OF ACTION.{' '}
           </p>
           <strong>
           9. Limitation of Liability </strong>

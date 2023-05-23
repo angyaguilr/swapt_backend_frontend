@@ -8,7 +8,7 @@ export default function ContactPage() {
       <PrivacyPolicyContainer>
         <RichText>
           <p>
-          This Privacy Policy describes how Swapt ("we" or "our") collects, uses, and shares your personal information when you visit our website at swaptmoving.com (the “Site”) or use our services.
+          This Privacy Policy describes how Swapt (&ldquo;we&rsquo; or &ldquo;our&rsquo;) collects, uses, and shares your personal information when you visit our website at swaptmoving.com (the “Site”) or use our services.
           <br />
           <br />
           <strong>PERSONAL INFORMATION WE COLLECT  </strong><br />

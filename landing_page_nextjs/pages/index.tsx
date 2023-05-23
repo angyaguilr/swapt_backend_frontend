@@ -35,7 +35,7 @@ export default function Homepage({ posts }: InferGetStaticPropsType<typeof getSt
           <BasicSection imageUrl="/buying.svg" title="Avoid the stress of moving" overTitle="lorem ipsum" reversed>
             <p>
             Moving sucks. Avoid the heavy lifting, expensive moving companies and storage lockers, and the insane stress of the moving-process with Swapt.{' '}
-              <strong>Are you ready to sit back, relax, and let your listing do the moving for you?</strong> It's simple!
+              <strong>Are you ready to sit back, relax, and let your listing do the moving for you?</strong> It&apos;s simple!
             </p>
             <ul>
               <li>Add your images and items to your account.  </li>
