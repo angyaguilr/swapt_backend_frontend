@@ -1,0 +1,15 @@
+{
+  "/404": "pages/404.html",
+  "/_app": "pages/_app.js",
+  "/_document": "pages/_document.js",
+  "/about": "pages/about.html",
+  "/aboutcompany": "pages/aboutcompany.html",
+  "/admin/[[...tina]]": "pages/admin/[[...tina]].html",
+  "/api/sendEmail": "pages/api/sendEmail.js",
+  "/contact": "pages/contact.html",
+  "/features": "pages/features.html",
+  "/": "pages/index.js",
+  "/privacy-policy": "pages/privacy-policy.html",
+  "/terms": "pages/terms.html",
+  "/_error": "pages/_error.js"
+}
