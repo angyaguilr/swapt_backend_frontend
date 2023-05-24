@@ -33,30 +33,6 @@ from django_nextjs.render import render_nextjs_page_sync
 stripe.api_key = settings.STRIPE_SECRET_KEY
 YOUR_DOMAIN = 'http://127.0.0.1:8000' 
 
-# Next JS Landing Pages
-def index(request):
-    return render_nextjs_page_sync(request)
-
-def privacy_policy(request):
-    return render_nextjs_page_sync(request)
-
-def cookies_policy(request):
-    return render_nextjs_page_sync(request)
-
-def terms(request):
-    return render_nextjs_page_sync(request)
-
-def features(request):
-    return render_nextjs_page_sync(request)
-
-def about(request):
-    return render_nextjs_page_sync(request)
-
-def aboutcompany(request):
-    return render_nextjs_page_sync(request)
-
-def contact(request):
-    return render_nextjs_page_sync(request)
 
 def featuredListings(request):
 	banners=Banner.objects.all().order_by('-id')
