@@ -1,0 +1,19 @@
+{
+  "../components/Navbar.tsx -> ../components/ColorSwitcher": {
+    "id": 57199,
+    "files": [
+      "static/chunks/199.f5ad65c8a048cc0c.js"
+    ]
+  },
+  "_app.tsx -> tinacms": {
+    "id": 4193,
+    "files": [
+      "static/chunks/framework-25a84902f454c528.js",
+      "static/chunks/cac6166b-7a202a352be7a374.js",
+      "static/chunks/bee240a3-086f1191807efbdb.js",
+      "static/chunks/75fc9c18-0406b2450956fe26.js",
+      "static/chunks/b78f9965-66c0a1d797d890cc.js",
+      "static/chunks/198-d9855c4aad1eb7a7.js"
+    ]
+  }
+}
