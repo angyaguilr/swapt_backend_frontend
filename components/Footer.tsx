@@ -21,9 +21,9 @@ const footerItems: FooterItems = [
   {
     title: 'Explore',
     items: [
-      { title: 'All Listings', href: 'http://www.swaptmoving.com/product-list' },
-      { title: 'Listings by Category', href: 'http://www.swaptmoving.com/category-list' },
-      { title: 'Listings by Brand', href: 'http://www.swaptmoving.com/brand-list' },
+      { title: 'All Listings', href: '/product-list' },
+      { title: 'Listings by Category', href: '/category-list' },
+      { title: 'Listings by Brand', href: '/brand-list' },
     ],
   },
   {
