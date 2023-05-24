@@ -1,1 +1,1 @@
-web: gunicorn swapt_mktplace.wsgi
+web: web: bin/start-nginx gunicorn swapt_mktplace.wsgi
