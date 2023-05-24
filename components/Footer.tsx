@@ -21,9 +21,9 @@ const footerItems: FooterItems = [
   {
     title: 'Explore',
     items: [
-      { title: 'All Listings', href: '/product-list' },
-      { title: 'Listings by Category', href: '/category-list' },
-      { title: 'Listings by Brand', href: '/brand-list' },
+      { title: 'All Listings', href: 'http://www.swaptmoving.com/product-list' },
+      { title: 'Listings by Category', href: 'http://www.swaptmoving.com/category-list' },
+      { title: 'Listings by Brand', href: 'http://www.swaptmoving.com/brand-list' },
     ],
   },
   {
@@ -53,19 +53,19 @@ export default function Footer() {
         </ListContainer>
         <BottomBar>
           <ShareBar>
-            <NextLink href="https://www.twitter.com/my-saas-startup" passHref>
+            <NextLink href="https://www.twitter.com/" passHref>
               <a>
                 <TwitterIcon size={50} round={true} />
               </a>
             </NextLink>
 
-            <NextLink href="https://www.facebook.com/my-saas-startup" passHref>
+            <NextLink href="https://www.facebook.com/" passHref>
               <a>
                 <FacebookIcon size={50} round={true} />
               </a>
             </NextLink>
 
-            <NextLink href="https://www.linkedin.com/my-saas-startup" passHref>
+            <NextLink href="https://www.linkedin.com/" passHref>
               <a>
                 <LinkedinIcon size={50} round={true} />
               </a>

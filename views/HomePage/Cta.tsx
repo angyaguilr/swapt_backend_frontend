@@ -18,7 +18,7 @@ export default function Cta() {
             Whether you are moving in or moving out, Swapt has the solution to help you stress less.
           </Description>
           <ButtonGroup>
-            <NextLink href="/accounts/signup/swapt-user/" passHref>
+            <NextLink href="http://www.swaptmoving.com/accounts/signup/swapt-user" passHref>
               <Button>
                 Sign Up with Email<span>&rarr;</span>
               </Button>
