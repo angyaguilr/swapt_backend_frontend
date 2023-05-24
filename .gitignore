@@ -167,34 +167,34 @@ node_modules
 
 
 # dependencies
-/landing_page_nextjs/node_modules
-/landing_page_nextjs/.pnp
-/landing_page_nextjs/.pnp.js
+node_modules
+.pnp
+.pnp.js
 
 # testing
-/landing_page_nextjs/coverage
+coverage
 
 # next.js
-/landing_page_nextjs/.next/
-/landing_page_nextjs//out/
+.next/
+/out/
 
 # production
-/landing_page_nextjs/build
+build
 
 # misc
-/landing_page_nextjs/.DS_Store
-/landing_page_nextjs/*.pem
+.DS_Store
+*.pem
 
 # debug
-/landing_page_nextjs/npm-debug.log*
-/landing_page_nextjs/yarn-debug.log*
-/landing_page_nextjs/yarn-error.log*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
 # local env files
-/landing_page_nextjs/.env
-/landing_page_nextjs/.env.development.local
-/landing_page_nextjs/.env.test.local
-/landing_page_nextjs/.env.production.local
+.env
+.env.development.local
+.env.test.local
+.env.production.local
 
 # vercel
-/landing_page_nextjs/.vercel
+.vercel
