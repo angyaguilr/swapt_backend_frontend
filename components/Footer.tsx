@@ -21,9 +21,9 @@ const footerItems: FooterItems = [
   {
     title: 'Explore',
     items: [
-      { title: 'All Listings', href: '/product-list' },
-      { title: 'Listings by Category', href: '/category-list' },
-      { title: 'Listings by Brand', href: '/brand-list' },
+      { title: 'All Listings', href: 'http://www.swapt.it/product-list' },
+      { title: 'Listings by Category', href: 'http://www.swapt.it/category-list' },
+      { title: 'Listings by Brand', href: 'http://www.swapt.it/brand-list' },
     ],
   },
   {
