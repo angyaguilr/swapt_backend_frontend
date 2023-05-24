@@ -30,11 +30,9 @@ http {
 
       root /var/www;
       index index.html;
-      location / {
-          try_files $uri /$uri /out/index.html;
-      }     
+       
  
-      location ^~ /api {
+      location ^~ /about {
          proxy_set_header X-Real-IP $remote_addr;
          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
          proxy_set_header Host $server_name;
@@ -42,11 +40,7 @@ http {
          proxy_pass https://swapt-backend-frontend.vercel.app/;
       }
       location ^~ /terms {
-         proxy_set_header Host $http_host;
          proxy_set_header X-Real-IP $remote_addr;
-         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-         proxy_set_header X-Forwarded-Host $http_host;
-         proxy_redirect off;
          proxy_pass https://swapt-backend-frontend.vercel.app/terms;
       }
         
