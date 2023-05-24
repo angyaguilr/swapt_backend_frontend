@@ -19,7 +19,7 @@ export default function Hero() {
           Swapt is a modern online marketplace designed to help college students avoid the hassle of the college moving process
         </Description>
         <CustomButtonGroup>
-        <NextLink href="/accounts/signup/swapt-user" passHref>
+        <NextLink href="http://www.swapt.it/accounts/signup/swapt-user" passHref>
             <Button>
             Sign up with email<span>&rarr;</span>
             </Button>
