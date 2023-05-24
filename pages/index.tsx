@@ -18,7 +18,7 @@ export default function Homepage({ posts }: InferGetStaticPropsType<typeof getSt
   return (
     <>
       <Head>
-        <title>Swapt Marketplace</title>
+      <title>{EnvVars.SITE_NAME}</title>
         <meta
           name="With Swapt, you can browse for furniture items, and buy single or bundled furniture pieces directly on our site"
           content="Whether you are moving in or moving out, Swapt has the solution to help you stress less."

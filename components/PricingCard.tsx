@@ -31,7 +31,7 @@ export default function PricingCard({ title, description, benefits, isOutlined, 
           </CustomRichText>
         )}
       </PriceContainer>
-      <NextLink href="/accounts/signup/swapt-user/" passHref>
+      <NextLink href="http://www.swaptmoving.com/accounts/signup/swapt-user/" passHref>
         <Button>
           Get Started<span>&rarr;</span>
           </Button>

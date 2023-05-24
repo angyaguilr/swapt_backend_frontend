@@ -22,8 +22,8 @@ import { NavItems } from 'types';
 const navItems: NavItems = [
   { title: 'Features', href: '/features' },
   { title: 'About', href: '/about' },
-  { title: 'Log in', href: '/accounts/login' },
-  { title: 'Sign up', href: '/accounts/signup/swapt-user/', outlined: true },
+  { title: 'Log in', href: 'http://www.swaptmoving.com/accounts/login' },
+  { title: 'Sign up', href: 'http://www.swaptmoving.com/accounts/signup/swapt-user/', outlined: true },
 ];
 
 const TinaCMS = dynamic(() => import('tinacms'), { ssr: false });
