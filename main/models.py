@@ -208,6 +208,7 @@ class UserAddressBook(models.Model):
 
     class Meta:
         verbose_name_plural='Users AddressBook'
+
 # InventoryListing Attribute
 class InventoryItemAttribute(models.Model):
     product=models.ForeignKey(InventoryListing,on_delete=models.CASCADE)
@@ -350,14 +351,12 @@ AMOUNT=(
 class ProductOffers(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     product=models.ForeignKey(SwaptListingModel,on_delete=models.CASCADE)
-    offers_message=models.TextField(null=True, blank=True)
-    offers_amount=models.TextField(null=True, blank=True)
+    message=models.TextField(null=True, blank=True)
+    amount=models.TextField(null=True, blank=True)
 
     class Meta:
         verbose_name_plural='Users Offers'
 
-    def get_offers_amount(self):
-        return self.offers_amount
   
 # order 
 class CartOrderItems(models.Model):

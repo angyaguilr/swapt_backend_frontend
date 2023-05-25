@@ -49,7 +49,7 @@ admin.site.register(CartOrderItems,CartOrderItemsAdmin)
 
 
 class ProductOffersAdmin(admin.ModelAdmin):
-	list_display=('user','product','offers_message','get_offers_amount')
+	list_display=('user','product','message','amount')
 admin.site.register(ProductOffers,ProductOffersAdmin)
 
 
@@ -57,5 +57,5 @@ admin.site.register(Wishlist)
 
 
 class UserAddressBookAdmin(admin.ModelAdmin):
-	list_display=('user','address','status')
+	list_display=('user','address','campus', 'propertyname', 'status')
 admin.site.register(UserAddressBook,UserAddressBookAdmin)

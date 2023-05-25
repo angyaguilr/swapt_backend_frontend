@@ -13,7 +13,7 @@ class SignupForm(UserCreationForm):
 class OffersAdd(forms.ModelForm):
 	class Meta:
 		model=ProductOffers
-		fields=('offers_message','offers_amount')
+		fields=('message','amount')
 
 # AddressBook Add Form
 class AddressBookForm(forms.ModelForm):

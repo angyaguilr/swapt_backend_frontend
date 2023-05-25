@@ -234,7 +234,7 @@ $("#addForm").submit(function(e){
 
 				// create data for offer
 				var _html='<blockquote class="blockquote text-right">';
-				_html+='<small>'+res.data.offers_message+'</small>';
+				_html+='<small>'+res.data.message+'</small>';
 				_html+='<footer class="blockquote-footer">'+res.data.user;
 				_html+='<cite title="Source Title">';
 				_html+='</cite>';

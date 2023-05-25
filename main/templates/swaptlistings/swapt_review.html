@@ -34,6 +34,34 @@
                      >
                      {{product.detail}}
                   </p>
+                  {% for address in addbook %}
+                  <thead class="text-xs text-gray-900 uppercase dark:text-gray-400">
+                     <tr>
+                        <th scope="col" class="px-6 py-3">
+                           Address
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                           {{ address.address }}
+                        </th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr class="bg-gray-50 dark:bg-gray-800">
+                        <th scope="row" class="px-6 py-4 text-xs text-gray-900 uppercase dark:text-gray-400">
+                           Campus
+                        </th>
+                        <td class="px-6 py-4">{{ address.campus }}
+                        </td>
+                     </tr>
+                     <tr class="bg-gray-50 dark:bg-gray-800">
+                        <th scope="row" class="px-6 py-4 text-xs text-gray-900 uppercase dark:text-gray-400">
+                           Property Name
+                        </th>
+                        <td class="px-6 py-4">{{ address.propertyname }}
+                        </td>
+                     </tr>
+                  </tbody>
+                  {% endfor %}
                   <form action="" method="POST">
                      {% csrf_token %}
                      <div class="card" style="width: 18rem;">

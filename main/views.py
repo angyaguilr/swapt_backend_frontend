@@ -96,18 +96,16 @@ def product_detail(request,slug,id):
         if offersCheck > 0:
              canAdd=False
 	# End
+    #product=SwaptListingModel.objects.get(pk=pid)
+    msg=None
     if request.method=='POST':
         form=OffersAdd(request.POST)
         if form.is_valid():
             saveForm=form.save(commit=False)
-            offer_msg_inst= request.POST.get('offers_message', 'My offer is')
-            offer_amt_inst= request.POST.get('offers_amount', '1')
-            saveForm.user=request.user
             saveForm.product=product
-            saveForm.offers_message = offer_msg_inst
-            saveForm.offers_amount = offer_amt_inst
+            saveForm.user=request.user
             saveForm.save()
-            msg='Data has been saved'
+            msg='Your previous offer was saved. To make a new one, fill this form and submit again'
     form=OffersAdd
 
 	# Fetch offers
@@ -118,7 +116,7 @@ def product_detail(request,slug,id):
     avg_offers=ProductOffers.objects.filter(product=product)
 	# End
     #return 'colors':colors,'sizes':sizes
-    return render(request, 'product_detail.html',{'addbook':addbook, 'data':product,'related':related_products,'offersForm':form,'canAdd':canAdd,'offers':offers,'avg_offers':avg_offers})
+    return render(request, 'product_detail.html',{'addbook':addbook, 'data':product,'related':related_products,'offersForm':form, 'msg':msg, 'canAdd':canAdd,'offers':offers,'avg_offers':avg_offers})
 
 # Search
 class SwaptListingsUploadedSearch(View):
@@ -406,27 +404,17 @@ def payment_canceled(request):
 
 # Save Offer
 def save_offer(request,pid):
-    product=SwaptListingModel.objects.get(pk=pid)
-    user=request.user
-    offer_msg_inst= request.POST.get('offers_message', 'My offer is')
-    offer_amt_inst= request.POST.get('offers_amount', '1')
-    if request.method=='POST':
-        form=OffersAdd(request.POST)
-        if form.is_valid():
-            saveForm=form.save(commit=False)
-            saveForm.user=request.user
-            saveForm.product=product
-            saveForm.offers_message = offer_msg_inst
-            saveForm.offers_amount = offer_amt_inst
-            saveForm.save()
-            msg='Data has been saved'
-    form=OffersAdd
-    data={
-		'user':user.username,
-		'offers_message':request.POST.get('offers_message'),
-		'offers_amount':request.POST.get('offers_amount')
-	}
-    return redirect("featured")
+	product=SwaptListingModel.objects.get(pk=pid)
+	msg=None
+	if request.method=='POST':
+		form=OffersAdd(request.POST,instance=product)
+		if form.is_valid():
+			saveForm=form.save(commit=False)
+			saveForm.user=request.user
+			saveForm.save()
+			msg='Data has been saved'
+	form=OffersAdd(instance=product)
+	return render(request, 'user/update-address.html',{'form':form,'msg':msg})
 
 # User Dashboard
 import calendar

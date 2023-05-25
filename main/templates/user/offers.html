@@ -87,9 +87,6 @@
          <!-- edit form -->
          <section class="col-span-4">
             <div class="grid grid-cols-1 gap-x-4 mt-4 ">
-               {% if msg %}
-               <p class="text-green-500">{{msg}}</p>
-               {% endif %}
                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
@@ -103,10 +100,10 @@
                             Price
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            OffersText
+                            Offer Message
                         </th>
                         <th scope="col" class="px-6 py-3">
-                         OffersAmount
+                         Offer Amount
                      </th>
                     </tr>
                 </thead>
@@ -114,12 +111,12 @@
                     {% for offer in offers %}
                   <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <td class="w-32 p-4">
-                        <img width="100" src="/media/{{offers.product.productattribute_set.first.image}}" alt="{{offers.product.title}}">
+                        <img width="100" src="/media/{{offer.product.productattribute_set.first.image}}" alt="{{offer.product.title}}">
                      </td>
-                     <td class="px-6 py-4 font-semibold font-quicksand text-gray-900 dark:text-white"><a href="/product/{{offers.product.slug}}/{{offers.product.id}}">{{offers.product.title}}</a></td>
-                     <td class="px-6 py-4 font-semibold font-quicksand text-gray-900 dark:text-white">{{offers.product.productattribute_set.first.price}}</td>
-                     <td class="px-6 py-4 font-semibold font-quicksand text-gray-900 dark:text-white">{{offers.offers_message}}</td>
-                     <td class="px-6 py-4 font-semibold font-quicksand text-gray-900 dark:text-white">{{offers.offers_amount}}</td>
+                     <td class="px-6 py-4 font-semibold font-quicksand text-gray-900 dark:text-white"><a href="/product/{{offer.product.slug}}/{{offer.product.id}}">{{offer.product.title}}</a></td>
+                     <td class="px-6 py-4 font-semibold font-quicksand text-gray-900 dark:text-white">{{offer.product.productattribute_set.first.price}}</td>
+                     <td class="px-6 py-4 font-semibold font-quicksand text-gray-900 dark:text-white">{{offer.message}}</td>
+                     <td class="px-6 py-4 font-semibold font-quicksand text-gray-900 dark:text-white">{{offer.amount}}</td>
                   </tr>
                   {% endfor %}
                 </tbody>  
