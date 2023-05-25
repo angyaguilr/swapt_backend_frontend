@@ -23,7 +23,7 @@ const navItems: NavItems = [
   { title: 'Features', href: '/features' },
   { title: 'About', href: '/about' },
   { title: 'Log in', href: 'http://www.swapt.it/accounts/login' },
-  { title: 'Sign up', href: 'http://www.swapt.it/accounts/signup/swapt-user/', outlined: true },
+  { title: 'Sign up', href: 'http://www.swapt.it/accounts/signup/', outlined: true },
 ];
 
 const TinaCMS = dynamic(() => import('tinacms'), { ssr: false });
