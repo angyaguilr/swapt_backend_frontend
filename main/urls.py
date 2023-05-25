@@ -13,7 +13,7 @@ router.register(r'inventory-review', views.InventoryReviewListingsAPI)
 urlpatterns=[
     #product-lists 
     #features is the first page user sees if logged in -- if user is not logged in --> redirect to login
-    path('featured',views.featuredListings,name='featured'),
+    path('/',views.featuredListings,name='featured'),
     path('product-list',views.product_list,name='product-list'),
     path('category-list',views.category_list,name='category-list'),
     path('brand-list',views.brand_list,name='brand-list'),
