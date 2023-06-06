@@ -10,7 +10,7 @@ from .models import Swapt_admin, SwaptUser, User, Code, propManager, PropNameSig
 class SwaptUserSignUpForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ( "first_name", "last_name", "campusSignUp", "username", "email", "password1", "password2" )
+        fields = ( "first_name", "last_name", "campus", "username", "email", "password1", "password2" )
 
     @transaction.atomic
     def save(self):
