@@ -275,7 +275,7 @@ class SwaptListingModel(models.Model):
     is_paid = models.BooleanField(default=False)
     is_MoveInReady = models.BooleanField(default=False)
     #mandatory fields required with user input
-    detail=models.TextField(default="detail")
+    detail=models.TextField(null=True, blank=True)
     slug=AutoSlugField(_('slug'), max_length=50, unique=True, populate_from=('title'))
     status=models.BooleanField(default=True)
     category=models.ForeignKey(Category,on_delete=models.CASCADE, null=True, default=1)
