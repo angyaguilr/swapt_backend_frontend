@@ -86,6 +86,38 @@
    <section class="grid grid-cols-3 gap-x-6 mt-6">
       <!-- Members -->
       <section class="col-span-2">
+
+         <div class="text-xs flex items-center justify-between w-full">
+            <span class="font-semibold font-quicksand">My Swapt Listings</span>
+            <a href="/swapt-review" class="text-purple-400 font-medium font-quicksand text-xs">View all</a>
+         </div>
+         <div class="grid grid-cols-4 gap-x-4 mt-4 ">
+            <div
+               class="aspect-square rounded-2xl  w-44 h-40  bg-white flex justify-center items-center flex-col text-purple-400 text-sm
+               hover:shadow hover:text-purple-500 hover:font-medium font-quicksand cursor-pointer group">
+               <span
+                  class="bg-purple-100 rounded-full group-hover:text-purple-500  text-purple-400 p-2.5 border border-purple-300  border-dashed mb-3">
+                  <a href="/swapt-create-listing/"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor">
+                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 4v16m8-8H4" />
+                  </svg></a>
+               </span>
+               <a href="/swapt-create-listing/" class="text-purple-400 font-medium font-quicksand text-xs">Add New</a>
+            </div>
+            {% for product in data %}
+            <div
+               class="aspect-square rounded-2xl w-44 h-40  bg-white flex justify-center items-center flex-col text-purple-400 text-sm
+               hover:shadow hover:text-purple-500 hover:font-medium font-quicksand cursor-pointer group">
+               <img class="h-28 w-44 shadow-md border object-cover rounded-t-xl"
+               src="/media/{{product.productattribute_set.first.image}}" alt="{{product.title}}" srcset="">
+               <div class="flex-1 px-4 py-3 w-44">
+                  <div class="text-sm text-start text-gray-500"><a href="/product/{{product.slug}}/{{product.id}}">{{product.title}}</a></div>
+                  <div class="text-xxs text-start text-gray-400 mt-1"><a href="/product/{{product.slug}}/{{product.id}}">{{product.location}}</a></div>
+               </div>
+            </div>
+            {% endfor %}
+         </div>
          <div class="text-xs flex items-center justify-between w-full">
             <span class="font-semibold font-quicksand">My Inventory Items</span>
             <a href="/inventory-review" class="text-purple-400 font-medium font-quicksand text-xs">View all</a>
@@ -116,71 +148,6 @@
                </div>
             </div>
             {% endfor %}
-         </div>
-         <div class="grid grid-cols-5 gap-x-4 mt-6 ">
-            <!-- activities -->
-            <div class="col-span-3 ">
-               <div class="font-semibold font-quicksand text-xs ">My Purchases</div>
-               <div class="relative mt-4 bg-white w-full rounded-2xl">
-                  <div
-                     class="absolute top-4 right-4 inline-flex items-center text-xs text-gray-500 space-x-1">
-                     <span>This month</span>
-                     <span>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 stroke-gray-500"
-                           fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M19 9l-7 7-7-7" />
-                        </svg>
-                     </span>
-                  </div>
-                  <div class="px-6 pt-10 pb-6 h-72">
-                     <canvas id="myChart"></canvas>
-                  </div>
-               </div>
-            </div>
-            <!-- /activities -->
-            <!-- meetings -->
-            <div class="col-span-2">
-               <div class="font-semibold font-quicksand text-xs justify-between text-start">My Swapt Listings
-                  <a href="/swapt-review" class="text-purple-400 font-quicksand font-medium text-xs text-end">View all</a>
-               </div>
-               <div class="mt-4 flex flex-col space-y-4 overflow-hidden h-72 overflow-y-auto no-scrollbar">
-                  <div class="bg-white rounded-2xl p-5 flex space-x-4 items-center text-purple-400 text-sm font-quicksand
-                     hover:shadow hover:text-purple-500 hover: font-quicksand hover:font-medium cursor-pointer group">
-                     <span
-                        class="bg-purple-100 rounded-full group-hover:text-purple-500  text-purple-400 p-2.5 border border-purple-300  border-dashed mb-3">
-                        <a href="/swapt-create-listing/"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                           stroke="currentColor">
-                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M12 4v16m8-8H4" />
-                        </svg></a>
-                     </span>
-                     <div>Add New</div>
-                  </div>
-                  {% for product in data %}
-                  <div class="bg-white rounded-2xl p-5 flex space-x-4">
-                     <div
-                        class="flex w-10 h-10  text-center items-center justify-center bg-emerald-600 rounded-full text-white text-xs">
-                        <img class="rounded-full"
-                           src="media/userprofileimg.svg" alt="" srcset="">
-                     </div>
-                     <div class="flex-1">
-                        <div class="text-sm text-gray-500"><a href="/product/{{product.slug}}/{{product.id}}">{{product.title}}</a></div>
-                        <div class="text-xxs text-gray-400 mt-1"><a href="/product/{{product.slug}}/{{product.id}}">{{product.location}}</a></div>
-                        <div class="flex items-center justify-between mt-5">
-                           <div class="flex -space-x-1 items-center">
-                              <a href="/product/{{product.slug}}/{{product.id}}">
-                              <img class="rounded-lg h-28 w-44 object-cover shadow-lg border border-white"
-                                 src="/media/{{product.productattribute_set.first.image}}"  alt="{{product.title}}" srcset="">
-                              </a>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  {% endfor %}
-               </div>
-            </div>
-            <!-- /meetings -->
          </div>
       </section>
       <!-- /Members -->
