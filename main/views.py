@@ -420,7 +420,8 @@ def save_offer(request,pid):
 import calendar
 def my_dashboard(request):
     addbook=UserAddressBook.objects.filter(user=request.user).order_by('-id')
-    data=SwaptListingModel.objects.filter(swaptuser=request.user.swaptuser).order_by('-id')[:3]
+    data=SwaptListingModel.objects.filter(swaptuser=request.user.swaptuser).order_by('-id')
+    swaptdata= data[:3]
     inventorydata=InventoryListing.objects.filter(swaptuser=request.user.swaptuser).order_by('-id')[:3]
     #propmanagerdata=SwaptListingModel.objects.filter(propertymanager=request.user.propmanager).order_by('-id')[:3]
     orders=CartOrder.objects.annotate(month=ExtractMonth('order_dt')).values('month').annotate(count=Count('id')).values('month','count')
@@ -429,7 +430,7 @@ def my_dashboard(request):
     for d in orders:
         monthNumber.append(calendar.month_name[d['month']])
         totalOrders.append(d['count'])
-    return render(request, 'user/dashboard.html',{ 'monthNumber':monthNumber,'totalOrders':totalOrders,'inventorydata':inventorydata, 'data':data, 'addbook':addbook})
+    return render(request, 'user/dashboard.html',{ 'monthNumber':monthNumber,'totalOrders':totalOrders,'swaptdata': swaptdata,'inventorydata':inventorydata, 'data':data, 'addbook':addbook})
 
 # My Orders
 def my_orders(request):
