@@ -927,6 +927,7 @@ class SwaptListingsConfirmationView(View):
         if request.POST.get('status') == "confirm":
             for listing in listings:
                 listing.confirmed = True
+                listing.stage =2
 
             SwaptListingModel.objects.bulk_update(listings, ['confirmed'])
             return redirect("swapt_review")
@@ -963,9 +964,9 @@ class SwaptListingsReviewView(View):
             queryset = queryset | SwaptListingModel.objects.filter(stage=1, location__in=locations, confirmed=True).distinct()
 
         if request.user.is_swapt_user:
-            context = {"user": request.user, "swaptreview": queryset.filter(stage=2, confirmed=True, swaptuser=request.user.swaptuser)}
+            context = {"user": request.user, "swaptreview": queryset.filter(swaptuser=request.user.swaptuser)}
         elif request.user.is_admin:
-            context = {"user": request.user, "swaptreview": queryset.filter(stage=1, confirmed=True, propertymanager=request.user.propertymanager)} # Only show 3 at a time for admin
+            context = {"user": request.user, "swaptreview": SwaptListingModel.filter(stage=1, confirmed=True, propertymanager=request.user.propertymanager)} # Only show 3 at a time for admin
         return render(request, template, context)
 
     def post(self, request):
@@ -1131,7 +1132,7 @@ class SwaptListingCreation(View):
     def get(self, request, *args, **kwargs):
         # get every item from each category
         form = self.form_class
-        InventoryFurnitureItems = InventoryListing.objects.filter(stage=2, confirmed=True).distinct()
+        InventoryFurnitureItems = InventoryListing.objects.filter(stage=2, isBundled=False, sellingStage='Available', confirmed=True).distinct()
 
         # pass into context
         context = {

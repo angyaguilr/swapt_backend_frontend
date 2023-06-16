@@ -86,14 +86,13 @@
    <section class="grid grid-cols-3 gap-x-6 mt-6">
       <!-- Members -->
       <section class="col-span-2">
-
          <div class="text-xs flex items-center justify-between w-full">
             <span class="font-semibold font-quicksand">My Swapt Listings</span>
             <a href="/swapt-review" class="text-purple-400 font-medium font-quicksand text-xs">View all</a>
          </div>
          <div class="grid grid-cols-4 gap-x-4 mt-4 ">
             <div
-               class="aspect-square rounded-2xl  w-44 h-40  bg-white flex justify-center items-center flex-col text-purple-400 text-sm
+               class="aspect-square rounded-2xl  w-44 h-47  bg-white flex justify-center items-center flex-col text-purple-400 text-sm
                hover:shadow hover:text-purple-500 hover:font-medium font-quicksand cursor-pointer group">
                <span
                   class="bg-purple-100 rounded-full group-hover:text-purple-500  text-purple-400 p-2.5 border border-purple-300  border-dashed mb-3">
@@ -107,7 +106,7 @@
             </div>
             {% for product in swaptdata %}
             <div
-               class="aspect-square rounded-2xl w-44 h-40  bg-white flex justify-center items-center flex-col text-purple-400 text-sm
+               class="aspect-square rounded-2xl w-44 h-47  bg-white flex justify-center items-center flex-col text-purple-400 text-sm
                hover:shadow hover:text-purple-500 hover:font-medium font-quicksand cursor-pointer group">
                <img class="h-28 w-44 shadow-md border object-cover rounded-t-xl"
                src="/media/{{product.productattribute_set.first.image}}" alt="{{product.title}}" srcset="">
@@ -118,13 +117,13 @@
             </div>
             {% endfor %}
          </div>
-         <div class="text-xs flex items-center justify-between w-full">
+         <div class=" pt-8 text-xs flex items-center justify-between w-full">
             <span class="font-semibold font-quicksand">My Inventory Items</span>
             <a href="/inventory-review" class="text-purple-400 font-medium font-quicksand text-xs">View all</a>
          </div>
          <div class="grid grid-cols-4 gap-x-4 mt-4 ">
             <div
-               class="aspect-square rounded-2xl  w-44 h-40  bg-white flex justify-center items-center flex-col text-purple-400 text-sm
+               class="aspect-square rounded-2xl  w-44 h-47  bg-white flex justify-center items-center flex-col text-purple-400 text-sm
                hover:shadow hover:text-purple-500 hover:font-medium font-quicksand cursor-pointer group">
                <span
                   class="bg-purple-100 rounded-full group-hover:text-purple-500  text-purple-400 p-2.5 border border-purple-300  border-dashed mb-3">
@@ -138,7 +137,7 @@
             </div>
             {% for product in inventorydata %}
             <div
-               class="aspect-square rounded-2xl w-44 h-40  bg-white flex justify-center items-center flex-col text-purple-400 text-sm
+               class="aspect-square rounded-2xl w-44 h-47  bg-white flex justify-center items-center flex-col text-purple-400 text-sm
                hover:shadow hover:text-purple-500 hover:font-medium font-quicksand cursor-pointer group">
                <img class="h-28 w-44 shadow-md border object-cover rounded-t-xl"
                src="/media/{{product.inventoryitemattribute_set.first.image}}" alt="{{product.title}}" srcset="">
