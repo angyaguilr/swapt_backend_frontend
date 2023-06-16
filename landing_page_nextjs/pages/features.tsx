@@ -5,34 +5,75 @@ import Page from 'components/Page';
 import SectionTitle from 'components/SectionTitle';
 import YoutubeVideo from 'components/YoutubeVideo';
 import { media } from 'utils/media';
-import FeaturesGallery from 'views/HomePage/FeaturesGallery';
 
 const FEATURES = [
   {
     imageUrl: '/grid-icons/asset-1.svg',
-    title: '1',
+    title: 'Lorem ipsum dolor sit amet.',
     description:
-      'Add your furniture/items to your account',
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?',
+  },
+  {
+    imageUrl: '/grid-icons/asset-2.svg',
+    title: 'Lorem ipsum dolor sit amet.',
+    description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?',
+  },
+  {
+    imageUrl: '/grid-icons/asset-3.svg',
+    title: 'Lorem ipsum dolor sit amet.',
+    description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?',
   },
   {
     imageUrl: '/grid-icons/asset-4.svg',
-    title: '2',
+    title: 'Lorem ipsum dolor sit amet.',
     description:
-      'Create your Swapt listing​',
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?',
+  },
+  {
+    imageUrl: '/grid-icons/asset-5.svg',
+    title: 'Lorem ipsum dolor sit amet.',
+    description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?',
+  },
+  {
+    imageUrl: '/grid-icons/asset-6.svg',
+    title: 'Lorem ipsum dolor sit amet.',
+    description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?',
+  },
+  {
+    imageUrl: '/grid-icons/asset-7.svg',
+    title: 'Lorem ipsum dolor sit amet.',
+    description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?',
   },
   {
     imageUrl: '/grid-icons/asset-8.svg',
-    title: '3.',
+    title: 'Lorem ipsum dolor sit amet.',
     description:
-      'Wait for an offer',
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?',
+  },
+  {
+    imageUrl: '/grid-icons/asset-9.svg',
+    title: 'Lorem ipsum dolor sit amet.',
+    description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis error dolorem ipsa dolore facere est consequuntur aut, eos doloribus voluptate?',
   },
 ];
 
 export default function FeaturesPage() {
   return (
-    <Page title="Swapt Features" description="Moving sucks. Avoid the heavy lifting, expensive moving companies and storage lockers, and the insane stress of the moving-process with Swapt. Are you ready to sit back, relax, and let your listing do the moving for you? It's simple! Learn more below">
+    <Page title="Features" description="Elit aute do nisi Lorem id ea culpa sint duis eu tempor dolore elit.">
       <Wrapper>
-        <FeaturesGallery />
+        <SectionTitle>Check out this quick introduction</SectionTitle>
+        <YoutubeVideo url="https://www.youtube.com/watch?v=BggrpKfqh1c" />
+        <CustomAutofitGrid>
+          {FEATURES.map((singleFeature, idx) => (
+            <BasicCard key={singleFeature.title} {...singleFeature} />
+          ))}
+        </CustomAutofitGrid>
       </Wrapper>
     </Page>
   );
@@ -46,9 +87,11 @@ const Wrapper = styled.div`
 
 const CustomAutofitGrid = styled(AutofitGrid)`
   --autofit-grid-item-size: 40rem;
+
   ${media('<=tablet')} {
     --autofit-grid-item-size: 30rem;
   }
+
   ${media('<=phone')} {
     --autofit-grid-item-size: 100%;
   }

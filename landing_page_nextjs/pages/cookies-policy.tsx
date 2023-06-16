@@ -4,8 +4,8 @@ import RichText from 'components/RichText';
 
 export default function ContactPage() {
   return (
-    <Page title="Privacy policy">
-      <PrivacyPolicyContainer>
+    <Page title="Cookies policy">
+      <CookiesPolicyContainer>
         <RichText>
           <p>
             Deserunt culpa consequat non nostrud esse cillum pariatur velit consequat. Est fugiat voluptate deserunt sint culpa sint.
@@ -111,12 +111,12 @@ export default function ContactPage() {
             </tr>
           </table>
         </RichText>
-      </PrivacyPolicyContainer>
+      </CookiesPolicyContainer>
     </Page>
   );
 }
 
-const PrivacyPolicyContainer = styled.div`
+const CookiesPolicyContainer = styled.div`
   max-width: 90rem;
   margin: auto;
   overflow-x: auto;
