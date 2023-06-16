@@ -2,6 +2,8 @@ import NextImage from 'next/image';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Collapse from 'components/Collapse';
+import BasicCard from 'components/BasicCard';
+import AutofitGrid from 'components/AutofitGrid';
 import Container from 'components/Container';
 import OverTitle from 'components/OverTitle';
 import SectionTitle from 'components/SectionTitle';
@@ -10,42 +12,74 @@ import { media } from 'utils/media';
 
 const TABS = [
   {
-    title: 'Swapt saves you time and money',
-    description:
-      '<p>Moving companies and storage lockers cost hundreds of dollars; with Swapt, instead of your money going out the window, the furniture you purchase store the value, we only take a small fee.</p>',
-    imageUrl: '/whyswapt4.svg',
-    baseColor: '220, 215, 254',
+    title: 'Moving in',
+    description: [
+      {
+        imageUrl: '/grid-icons/asset-1.svg',
+        title: '1',
+        description:
+          'Search for your next apartment',
+      },
+      {
+        imageUrl: '/grid-icons/asset-5.svg',
+        title: '2',
+        description:
+          'Make an offer',
+      },
+      {
+        imageUrl: '/grid-icons/asset-7.svg',
+        title: '3',
+        description:
+          'Wait for confirmation',
+      },],
+    imageUrl: '/image3.jpg',
+    baseColor: '220, 215, 2547',
     secondColor: '74, 29, 150',
   },
   {
-    title: 'Swapt makes the moving process as smooth as possible',
-    description:
-      '<p>Swapt works with property managers at your campus to make sure your moving process is as smooth as possible.</p>',
-    imageUrl: '/whyswapt1.svg',
-    baseColor: '220, 215, 254',
-    secondColor: '74, 29, 150',
-  },
-  {
-    title: 'With Swapt, you can avoid the stress, hassle, and toll of the moving process',
-    description:
-      '<p>Moving is more than just moving day. It’s a series of complex decisions made over the course of weeks that culminate on moving day. Each decision can cause stress which may not alleviate until you’re settled in your new home.</p>',
-    imageUrl: '/whyswapt3.svg',
+    title: 'Moving out',
+    description: [
+      {
+        imageUrl: '/grid-icons/asset-1.svg',
+        title: '1',
+        description:
+          'Add your furniture/items to your account',
+      },
+      {
+        imageUrl: '/grid-icons/asset-4.svg',
+        title: '2',
+        description:
+          'Create your Swapt listing​',
+      },
+      {
+        imageUrl: '/grid-icons/asset-8.svg',
+        title: '3.',
+        description:
+          'Wait for an offer',
+      },],
+    imageUrl: '/image4.jpg',
     baseColor: '220, 215, 2547',
     secondColor: '74, 29, 150',
   },
 ];
-
-export default function FeaturesGallery() {
+export default function HowItWorksGallery() {
   const [currentTab, setCurrentTab] = useState(TABS[0]);
 
-  const imagesMarkup = TABS.map((singleTab, idx) => {
+  const sectionMarkup = TABS.map((singleTab, idx) => {
     const isActive = singleTab.title === currentTab.title;
     const isFirst = idx === 0;
+    const desc = singleTab.description
 
     return (
-      <ImageContainer key={singleTab.title} isActive={isActive}>
-        <NextImage src={singleTab.imageUrl} alt={singleTab.title} layout="fill" objectFit="contain" priority={isFirst} />
-      </ImageContainer>
+      <Collapse isOpen={isActive} duration={300}>
+      <TabContent key={singleTab.title} isActive={isActive}>
+        <CustomAutofitGrid>
+          {desc.map((singleFeature, idx) => (
+          <BasicCard key={idx} {...singleFeature} />
+          ))}
+        </CustomAutofitGrid>
+      </TabContent>
+    </Collapse>
     );
   });
 
@@ -60,11 +94,6 @@ export default function FeaturesGallery() {
           </CircleContainer>
           <h4>{singleTab.title}</h4>
         </TabTitleContainer>
-        <Collapse isOpen={isActive} duration={300}>
-          <TabContent>
-            <div dangerouslySetInnerHTML={{ __html: singleTab.description }}></div>
-          </TabContent>
-        </Collapse>
       </Tab>
     );
   });
@@ -74,19 +103,19 @@ export default function FeaturesGallery() {
   }
 
   return (
-    <FeaturesGalleryWrapper>
+    <HowItWorksGalleryWrapper>
       <Content>
-        <SectionTitle>Why use Swapt?</SectionTitle>
+        <SectionTitle>How It Works</SectionTitle>
       </Content>
       <GalleryWrapper>
-        <TabsContainer>{tabsMarkup}</TabsContainer>
-        {imagesMarkup}
+        <TabsContainer>{tabsMarkup} </TabsContainer>
+        {sectionMarkup}
       </GalleryWrapper>
-    </FeaturesGalleryWrapper>
+    </HowItWorksGalleryWrapper>
   );
 }
 
-const FeaturesGalleryWrapper = styled(Container)`
+const HowItWorksGalleryWrapper = styled(Container)`
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -111,6 +140,8 @@ const Content = styled.div`
 
 const TabsContainer = styled.div`
   flex: 1;
+  display: flex;
+  flex-direction: row;
   margin-right: 4rem;
   & > *:not(:first-child) {
     margin-top: 2rem;
@@ -149,20 +180,18 @@ const ImageContainer = styled.div<{ isActive: boolean }>`
 const Tab = styled.div<{ isActive: boolean }>`
   display: flex;
   flex-direction: column;
-  padding: 2rem 1.5rem;
+  padding: 2rem 6.5rem;
   background: rgb(var(--cardBackground));
   box-shadow: var(--shadow-md);
   opacity: ${(p) => (p.isActive ? 1 : 0.6)};
   cursor: pointer;
-  border-radius: 0.6rem;
   transition: opacity 0.2s;
   font-size: 1.6rem;
   font-weight: bold;
   ${media('<=desktop')} {
     width: 100%;
   }
-`;
-
+  `;
 const TabTitleContainer = styled.div`
   display: flex;
   align-items: center;
@@ -171,7 +200,7 @@ const TabTitleContainer = styled.div`
   }
 `;
 
-const TabContent = styled.div`
+const TabContent = styled.div<{ isActive: boolean }>`
   display: flex;
   flex-direction: column;
   font-weight: normal;
@@ -190,5 +219,14 @@ const CircleContainer = styled.div`
   flex: 0 calc(5rem + 1.5rem);
   ${media('<=tablet')} {
     flex: 0 calc(4rem + 1.25rem);
+  }
+`;
+const CustomAutofitGrid = styled(AutofitGrid)`
+  --autofit-grid-item-size: 40rem;
+  ${media('<=tablet')} {
+    --autofit-grid-item-size: 30rem;
+  }
+  ${media('<=phone')} {
+    --autofit-grid-item-size: 100%;
   }
 `;

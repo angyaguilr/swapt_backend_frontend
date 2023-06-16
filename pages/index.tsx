@@ -8,7 +8,7 @@ import { getAllPosts } from 'utils/postsFetcher';
 import Cta from 'views/HomePage/Cta';
 import Features from 'views/HomePage/Features';
 import FeaturesGallery from 'views/HomePage/FeaturesGallery';
-import HowItWorks from 'views/HomePage/HowItWorks';
+import HowItWorksGallery from 'views/HomePage/HowItWorksGallery';
 import Hero from 'views/HomePage/Hero';
 import Partners from 'views/HomePage/Partners';
 import ScrollableBlogPosts from 'views/HomePage/ScrollableBlogPosts';
@@ -47,7 +47,7 @@ export default function Homepage({ posts }: InferGetStaticPropsType<typeof getSt
         <DarkerBackgroundContainer>
           <Cta />
           <FeaturesGallery />
-          <HowItWorks />
+          <HowItWorksGallery/>
         </DarkerBackgroundContainer>
       </HomepageWrapper>
     </>
