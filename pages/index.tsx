@@ -8,7 +8,6 @@ import { getAllPosts } from 'utils/postsFetcher';
 import Cta from 'views/HomePage/Cta';
 import Features from 'views/HomePage/Features';
 import FeaturesGallery from 'views/HomePage/FeaturesGallery';
-import HowItWorks from 'views/HomePage/HowItWorks';
 import Hero from 'views/HomePage/Hero';
 import Partners from 'views/HomePage/Partners';
 import ScrollableBlogPosts from 'views/HomePage/ScrollableBlogPosts';
@@ -20,34 +19,41 @@ export default function Homepage({ posts }: InferGetStaticPropsType<typeof getSt
       <Head>
         <title>{EnvVars.SITE_NAME}</title>
         <meta
-          name="With Swapt, you can browse for furniture items, and buy single or bundled furniture pieces directly on our site"
-          content="Whether you are moving in or moving out, Swapt has the solution to help you stress less."
+          name="description"
+          content="Tempor nostrud velit fugiat nostrud duis incididunt Lorem deserunt est tempor aute dolor ad elit."
         />
       </Head>
       <HomepageWrapper>
         <WhiteBackgroundContainer>
           <Hero />
-          <BasicSection imageUrl="/selling.svg" title="Innovating the way you move" overTitle="sit amet gogo">
+          <Partners />
+          <BasicSection imageUrl="/demo-illustration-1.svg" title="Lorem ipsum dolor sit amet consectetur." overTitle="sit amet gogo">
             <p>
-            With Swapt, you can browse for furniture items listed by the current tenants of your next apartment or home. On top of that, you can buy single or bundled furniture pieces directly on our site.
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas, quidem error incidunt a doloremque voluptatem porro inventore
+              voluptate quo deleniti animi laboriosam.{' '}
+              <Link href="/help-center">Possimus ullam velit rem itaque consectetur, in distinctio?</Link> Lorem ipsum, dolor sit amet
+              consectetur adipisicing elit. Soluta repellendus quia quos obcaecati nihil. Laudantium non accusantium, voluptate eum nesciunt
+              at suscipit quis est soluta?
             </p>
           </BasicSection>
-          <BasicSection imageUrl="/buying.svg" title="Avoid the stress of moving"  overTitle="lorem ipsum" reversed>
+          <BasicSection imageUrl="/demo-illustration-2.svg" title="Lorem ipsum dolor sit." overTitle="lorem ipsum" reversed>
             <p>
-            Moving sucks. Avoid the heavy lifting, expensive moving companies and storage lockers, and the insane stress of the moving-process with Swapt.{' '}
-              <strong>Are you ready to sit back, relax, and let your listing do the moving for you?</strong> It&apos;s simple!
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas, quidem error incidunt a doloremque voluptatem porro inventore{' '}
+              <strong>voluptate quo deleniti animi laboriosam</strong>. Possimus ullam velit rem itaque consectetur, in distinctio?
             </p>
             <ul>
-              <li>Add your images and items to your account.  </li>
-              <li>Bundle them together to create your listing. </li>
-              <li>Wait for the incoming tenant to make an offer and done. Moving solved. </li>
+              <li>Professional point 1</li>
+              <li>Professional remark 2</li>
+              <li>Professional feature 3</li>
             </ul>
           </BasicSection>
         </WhiteBackgroundContainer>
         <DarkerBackgroundContainer>
           <Cta />
           <FeaturesGallery />
-          <HowItWorks />
+          <Features />
+          <Testimonials />
+          <ScrollableBlogPosts posts={posts} />
         </DarkerBackgroundContainer>
       </HomepageWrapper>
     </>

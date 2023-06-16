@@ -32,6 +32,7 @@ export default function YoutubeVideo(props: YoutubeVideoProps) {
     bottom: 0;
     margin: auto;
   }
+
   .thumbnail {
     object-fit: cover;
   }
@@ -78,6 +79,7 @@ export const VideoContainer = styled.div`
   border-radius: 20px;
   overflow: hidden;
   -webkit-mask-image: -webkit-radial-gradient(white, black);
+
   &:before {
     display: block;
     content: '';

@@ -22,6 +22,7 @@ const Container = styled.figure`
   quotes: ${`"\\201c" "\\201d" "\\2018" "\\2019"`};
   color: rgb(var(--secondary));
   margin-bottom: 3.7rem;
+
   &::before {
     content: open-quote;
     font-size: 8em;

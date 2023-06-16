@@ -40,6 +40,7 @@ const CustomButton = styled.button`
   width: 4rem;
   height: 4rem;
   background: transparent;
+
   svg {
     color: var(--logoColor);
   }

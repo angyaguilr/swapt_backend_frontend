@@ -20,10 +20,10 @@ import { NewsletterModalContextProvider, useNewsletterModalContext } from 'conte
 import { NavItems } from 'types';
 
 const navItems: NavItems = [
-  { title: 'Features', href: '/features' },
-  { title: 'About', href: '/about' },
-  { title: 'Log in', href: 'http://www.swapt.it/accounts/login' },
-  { title: 'Sign up', href: 'http://www.swapt.it/accounts/signup/', outlined: true },
+  { title: 'Awesome SaaS Features', href: '/features' },
+  { title: 'Pricing', href: '/pricing' },
+  { title: 'Contact', href: '/contact' },
+  { title: 'Sign up', href: '/sign-up', outlined: true },
 ];
 
 const TinaCMS = dynamic(() => import('tinacms'), { ssr: false });
@@ -68,6 +68,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         >
           <Component {...pageProps} />
         </TinaEditProvider>
+        <WaveCta />
         <Footer />
       </Providers>
     </>

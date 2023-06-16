@@ -17,9 +17,10 @@ export default function BasicSection({ imageUrl, title, overTitle, reversed, chi
   return (
     <BasicSectionWrapper reversed={reversed}>
       <ImageContainer>
-        <NextImage src={imageUrl} alt={title} layout="fill" objectFit="fill" />
+        <NextImage src={imageUrl} alt={title} layout="fill" objectFit="cover" />
       </ImageContainer>
       <ContentContainer>
+        <CustomOverTitle>{overTitle}</CustomOverTitle>
         <Title>{title}</Title>
         <RichText>{children}</RichText>
       </ContentContainer>
@@ -33,6 +34,7 @@ const Title = styled.h1`
   line-height: 1.1;
   margin-bottom: 4rem;
   letter-spacing: -0.03em;
+
   ${media('<=tablet')} {
     font-size: 4.6rem;
     margin-bottom: 2rem;
@@ -45,6 +47,7 @@ const CustomOverTitle = styled(OverTitle)`
 
 const ImageContainer = styled.div`
   flex: 1;
+
   position: relative;
   &:before {
     display: block;
@@ -52,6 +55,7 @@ const ImageContainer = styled.div`
     width: 100%;
     padding-top: calc((9 / 16) * 100%);
   }
+
   & > div {
     position: absolute;
     top: 0;
@@ -59,6 +63,7 @@ const ImageContainer = styled.div`
     bottom: 0;
     left: 0;
   }
+
   ${media('<=desktop')} {
     width: 100%;
   }
@@ -73,11 +78,14 @@ const BasicSectionWrapper = styled(Container)`
   display: flex;
   align-items: center;
   flex-direction: ${(p: Props) => (p.reversed ? 'row-reverse' : 'row')};
+
   ${ImageContainer} {
     margin: ${(p: Props) => (p.reversed ? '0 0 0 5rem' : '0 5rem 0 0')};
   }
+
   ${media('<=desktop')} {
     flex-direction: column;
+
     ${ImageContainer} {
       margin: 0 0 2.5rem 0;
     }
