@@ -24,11 +24,11 @@ export default function WaveCta() {
           <Title>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus delectus?</Title>
           <CustomButtonGroup>
             <Button onClick={() => setIsModalOpened(true)}>
-              Sign Up <span>&rarr;</span>
+              Subscribe to the newsletter <span>&rarr;</span>
             </Button>
             <NextLink href="/features" passHref>
               <OutlinedButton transparent>
-                Learn How Swapt Works <span>&rarr;</span>
+                Features <span>&rarr;</span>
               </OutlinedButton>
             </NextLink>
           </CustomButtonGroup>
@@ -39,16 +39,17 @@ export default function WaveCta() {
 }
 
 const CtaWrapper = styled.div`
-  background: rgb(var(--primary));
+  background: rgb(var(--secondary));
   margin-top: -1rem;
   padding-bottom: 16rem;
+
   ${media('<=tablet')} {
     padding-top: 8rem;
   }
 `;
 
 const Title = styled(SectionTitle)`
-  color: rgb(var(textSecondary));
+  color: rgb(var(--textSecondary));
   margin-bottom: 4rem;
 `;
 
@@ -56,10 +57,7 @@ const OutlinedButton = styled(Button)`
   border: 1px solid rgb(var(--textSecondary));
   color: rgb(var(--textSecondary));
 `;
-const SecondaryButton = styled(Button)`
-  border: 1px solid rgb(var(--textSecondary));
-  color: rgb(var(--textSecondary));
-`;
+
 const CustomButtonGroup = styled(ButtonGroup)`
   justify-content: center;
 `;

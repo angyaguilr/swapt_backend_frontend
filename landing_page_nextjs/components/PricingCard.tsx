@@ -2,7 +2,6 @@ import { PropsWithChildren } from 'react';
 import styled from 'styled-components';
 import { media } from 'utils/media';
 import Button from './Button';
-import NextLink from 'next/link';
 import RichText from './RichText';
 
 interface PricingCardProps {
@@ -31,11 +30,7 @@ export default function PricingCard({ title, description, benefits, isOutlined, 
           </CustomRichText>
         )}
       </PriceContainer>
-      <NextLink href="/accounts/signup/swapt-user/" passHref>
-        <Button>
-          Get Started<span>&rarr;</span>
-          </Button>
-      </NextLink>
+      <CustomButton>Get started</CustomButton>
     </Wrapper>
   );
 }
@@ -48,9 +43,11 @@ const Wrapper = styled.div<{ isOutlined?: boolean }>`
   box-shadow: ${(p) => (p.isOutlined ? 'var(--shadow-lg)' : 'var(--shadow-md)')};
   transform: ${(p) => (p.isOutlined ? 'scale(1.1)' : 'scale(1.0)')};
   text-align: center;
+
   & > *:not(:first-child) {
     margin-top: 1rem;
   }
+
   ${media('<=desktop')} {
     box-shadow: var(--shadow-md);
     transform: none;
@@ -69,6 +66,7 @@ const Description = styled.p`
 
 const PriceContainer = styled.div`
   margin: auto;
+
   & > *:not(:first-child) {
     margin-top: 2rem;
   }
@@ -81,6 +79,7 @@ const Price = styled.div`
   font-size: 4rem;
   line-height: 1;
   font-weight: bold;
+
   span {
     font-size: 2rem;
     font-weight: normal;

@@ -31,11 +31,13 @@ const ImageWrapper = styled.div`
   max-width: 90rem;
   border-radius: 0.6rem;
   overflow: hidden;
+
   &::before {
     float: left;
     padding-top: 56.25%;
     content: '';
   }
+
   &::after {
     display: block;
     content: '';
@@ -47,6 +49,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+
   &:not(:last-child) {
     margin-bottom: 3rem;
   }

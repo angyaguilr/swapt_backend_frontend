@@ -30,7 +30,7 @@ export default function ScrollableBlogPosts({ posts }: ScrollableBlogPostsProps)
       <Container>
         <Content>
           <OverTitle>features</OverTitle>
-          <SectionTitle>Why use Swapt?</SectionTitle>
+          <SectionTitle>What are you signing in for?</SectionTitle>
         </Content>
       </Container>
 
@@ -56,9 +56,11 @@ export default function ScrollableBlogPosts({ posts }: ScrollableBlogPostsProps)
 
 const Content = styled.div`
   position: relative;
+
   display: flex;
   flex-direction: column;
   align-items: center;
+
   & > *:last-child {
     margin-top: 1rem;
   }
@@ -75,9 +77,11 @@ const Section = styled.section`
 const SwiperContainer = styled(Container)`
   max-width: 250em;
   height: 46rem;
+
   & > *:first-child {
     margin-top: 4rem;
   }
+
   ${media('<=largeDesktop')} {
     max-width: 100%;
     padding: 0;

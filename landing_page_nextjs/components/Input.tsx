@@ -8,6 +8,7 @@ const Input = styled.input`
   padding: 1.8rem;
   box-shadow: var(--shadow-md);
   /* color: rgb(var(--textSecondary)); */
+
   &:focus {
     outline: none;
     box-shadow: var(--shadow-lg);

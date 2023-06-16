@@ -78,6 +78,7 @@ const Card = styled.form`
   max-width: 70rem;
   overflow: hidden;
   color: rgb(var(--text));
+
   ${media('<=tablet')} {
     padding: 7.5rem 2.5rem;
   }
@@ -87,6 +88,7 @@ const CloseIconContainer = styled.div`
   position: absolute;
   right: 2rem;
   top: 2rem;
+
   svg {
     cursor: pointer;
     width: 2rem;
@@ -100,6 +102,7 @@ const Title = styled.div`
   letter-spacing: -0.03em;
   text-align: center;
   color: rgb(var(--text));
+
   ${media('<=tablet')} {
     font-size: 2.6rem;
   }
@@ -119,6 +122,7 @@ const Row = styled.div`
   height: 100%;
   width: 100%;
   margin-top: 3rem;
+
   ${media('<=tablet')} {
     flex-direction: column;
   }
@@ -129,6 +133,7 @@ const CustomButton = styled(Button)`
   padding: 1.8rem;
   margin-left: 1.5rem;
   box-shadow: var(--shadow-lg);
+
   ${media('<=tablet')} {
     width: 100%;
     margin-left: 0;
@@ -138,6 +143,7 @@ const CustomButton = styled(Button)`
 
 const CustomInput = styled(Input)`
   width: 60%;
+
   ${media('<=tablet')} {
     width: 100%;
   }

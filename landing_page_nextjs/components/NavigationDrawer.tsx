@@ -71,6 +71,7 @@ const Wrapper = styled.div`
     transition: margin-left 0.3s cubic-bezier(0.82, 0.085, 0.395, 0.895);
     overflow: hidden;
   }
+
   .my-drawer-container {
     position: relative;
     height: 100%;
@@ -78,17 +79,21 @@ const Wrapper = styled.div`
     max-width: 70rem;
     padding: 0 1.2rem;
   }
+
   .close-icon {
     position: absolute;
     right: 2rem;
     top: 2rem;
   }
+
   .drawer-closed {
     margin-left: -100%;
   }
+
   .drawer-opened {
     margin-left: 0;
   }
+
   ul {
     height: 100%;
     display: flex;
@@ -98,6 +103,7 @@ const Wrapper = styled.div`
     padding: 0;
     margin: 0;
     list-style: none;
+
     & > *:not(:last-child) {
       margin-bottom: 3rem;
     }

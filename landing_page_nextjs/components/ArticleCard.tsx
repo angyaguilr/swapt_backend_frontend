@@ -45,6 +45,7 @@ const HoverEffectContainer = styled.div`
   transition: transform 0.3s;
   backface-visibility: hidden;
   will-change: transform;
+
   &:hover {
     border-radius: 0.6rem;
     overflow: hidden;
@@ -55,12 +56,14 @@ const HoverEffectContainer = styled.div`
 const ImageContainer = styled.div`
   position: relative;
   height: 20rem;
+
   &:before {
     display: block;
     content: '';
     width: 100%;
     padding-top: calc((9 / 16) * 100%);
   }
+
   & > div {
     position: absolute;
     top: 0;
@@ -68,6 +71,7 @@ const ImageContainer = styled.div`
     bottom: 0;
     left: 0;
   }
+
   ${media('<=desktop')} {
     width: 100%;
   }
@@ -75,6 +79,7 @@ const ImageContainer = styled.div`
 
 const Content = styled.div`
   padding: 0 2rem;
+
   & > * {
     margin-top: 2rem;
   }
@@ -82,6 +87,7 @@ const Content = styled.div`
 
 const Title = styled.h4`
   font-size: 1.8rem;
+
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -91,6 +97,7 @@ const Title = styled.h4`
 
 const Description = styled.p`
   font-size: 1.6rem;
+
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
