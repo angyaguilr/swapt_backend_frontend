@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Collapse from 'components/Collapse';
 import BasicCard from 'components/BasicCard';
+import Features from './Features';
 import AutofitGrid from 'components/AutofitGrid';
 import Container from 'components/Container';
 import OverTitle from 'components/OverTitle';
@@ -62,6 +63,9 @@ const TABS = [
     secondColor: '74, 29, 150',
   },
 ];
+
+
+
 export default function HowItWorksGallery() {
   const [currentTab, setCurrentTab] = useState(TABS[0]);
 
@@ -121,66 +125,55 @@ const HowItWorksGalleryWrapper = styled(Container)`
   flex-direction: column;
   justify-content: center;
 `;
-
 const GalleryWrapper = styled.div`
   display: flex;
   align-items: center;
   margin-top: 4rem;
+  flex-direction: column;
   ${media('<=desktop')} {
     flex-direction: column;
   }
 `;
-
 const Content = styled.div`
   & > *:not(:first-child) {
     margin-top: 1rem;
   }
   text-align: center;
 `;
-
 const TabsContainer = styled.div`
   flex: 1;
   display: flex;
   flex-direction: row;
-  margin-right: 4rem;
-  & > *:not(:first-child) {
-    margin-top: 2rem;
-  }
+
   ${media('<=desktop')} {
     margin-right: 0;
     margin-bottom: 4rem;
     width: 100%;
   }
-`;
+  `;
+const TabContent = styled.div<{ isActive: boolean }>`
+  display: flex;
+  flex-direction: column;
+  font-weight: normal;
+  margin-top: 0.5rem;
+  font-size: 1.5rem;
+  padding-left: calc(3rem + 1.5rem);
+  padding-right: calc(3rem + 1.5rem);
 
-const ImageContainer = styled.div<{ isActive: boolean }>`
-  position: relative;
-  overflow: hidden;
-  border-radius: 0.8rem;
-  flex: ${(p) => (p.isActive ? '2' : '0')};
-  box-shadow: var(--shadow-md);
-  &:before {
-    display: block;
-    content: '';
-    width: 100%;
-    padding-top: calc((9 / 16) * 100%);
+  ${media('<=tablet')} {
+    padding-left: calc(2rem + 1.25rem);
+    padding-right: calc(2rem + 1.25rem);
   }
-  & > div {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-  }
-  ${media('<=desktop')} {
-    width: ${(p) => (p.isActive ? '100%' : '0')};
+
+  p {
+    font-weight: normal;
   }
 `;
 
 const Tab = styled.div<{ isActive: boolean }>`
   display: flex;
   flex-direction: column;
-  padding: 2rem 6.5rem;
+  padding: 2rem 3.5rem;
   background: rgb(var(--cardBackground));
   box-shadow: var(--shadow-md);
   opacity: ${(p) => (p.isActive ? 1 : 0.6)};
@@ -191,30 +184,16 @@ const Tab = styled.div<{ isActive: boolean }>`
   ${media('<=desktop')} {
     width: 100%;
   }
-  `;
+`;
 const TabTitleContainer = styled.div`
   display: flex;
   align-items: center;
+  flex-wrap: nowrap;
   h4 {
     flex: 1;
+    white-space: nowrap;
   }
 `;
-
-const TabContent = styled.div<{ isActive: boolean }>`
-  display: flex;
-  flex-direction: column;
-  font-weight: normal;
-  margin-top: 0.5rem;
-  font-size: 1.5rem;
-  padding-left: calc(5rem + 1.5rem);
-  ${media('<=tablet')} {
-    padding-left: calc(4rem + 1.25rem);
-  }
-  p {
-    font-weight: normal;
-  }
-`;
-
 const CircleContainer = styled.div`
   flex: 0 calc(5rem + 1.5rem);
   ${media('<=tablet')} {
@@ -223,10 +202,12 @@ const CircleContainer = styled.div`
 `;
 const CustomAutofitGrid = styled(AutofitGrid)`
   --autofit-grid-item-size: 40rem;
-  ${media('<=tablet')} {
-    --autofit-grid-item-size: 30rem;
-  }
-  ${media('<=phone')} {
-    --autofit-grid-item-size: 100%;
-  }
-`;
+
+    ${media('<=tablet')} {
+      --autofit-grid-item-size: 30rem;
+    }
+
+    ${media('<=phone')} {
+      --autofit-grid-item-size: 100%;
+    }
+  `;
