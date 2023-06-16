@@ -15,18 +15,19 @@ export default function Hero() {
     <HeroWrapper>
       <Contents>
         <CustomOverTitle>the coolest, saas product you have ever seen</CustomOverTitle>
-        <Heading>Make your life easier with our SaaS</Heading>
+        <Heading>Your marketplace for moving</Heading>
         <Description>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis, tempora qui. Explicabo voluptate iure ipsum molestias
-          repudiandae perspiciatis nostrum praesentium, unde pariatur tempora magni rem. Necessitatibus facilis obcaecati ratione.
+        Swapt is a modern online marketplace designed to help college students avoid the hassle of the college moving process.
         </Description>
         <CustomButtonGroup>
-          <Button onClick={() => setIsModalOpened(true)}>
-            Subscribe to the newsletter <span>&rarr;</span>
-          </Button>
-          <NextLink href="#whitepaper" passHref>
+          <NextLink href="http://www.swapt.it/accounts/signup/swapt-user" passHref>
+            <Button>
+            Sign up with email<span>&rarr;</span>
+            </Button>
+          </NextLink>
+          <NextLink href="/about" passHref>
             <Button transparent>
-              Features <span>&rarr;</span>
+            Learn How Swapt Works <span>&rarr;</span>
             </Button>
           </NextLink>
         </CustomButtonGroup>
