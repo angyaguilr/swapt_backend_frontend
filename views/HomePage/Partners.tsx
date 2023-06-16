@@ -56,6 +56,7 @@ const Title = styled.h3`
   margin-bottom: 2rem;
   text-align: center;
   opacity: 0.8;
+
   ${media('<=desktop')} {
     line-height: 1.5;
   }
@@ -68,9 +69,11 @@ const PartnersWrapper = styled(Container)`
     margin-top: 0.5rem;
     user-select: none;
   }
+
   .swiper-slide {
     opacity: 0.8;
     transition: opacity 0.2s;
+
     &:hover {
       opacity: 1;
     }

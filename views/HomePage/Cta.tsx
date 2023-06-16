@@ -13,19 +13,21 @@ export default function Cta() {
     <CtaWrapper>
       <Container>
         <Stack>
-          <SectionTitle>Ready to move?</SectionTitle>
+          <OverTitle>Lorem ipsum dolor sit amet</OverTitle>
+          <SectionTitle>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus delectus?</SectionTitle>
           <Description>
-            Whether you are moving in or moving out, Swapt has the solution to help you stress less.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda beatae accusamus deleniti nihil quas tempora numquam, vitae
+            culpa.
           </Description>
           <ButtonGroup>
-            <NextLink href="http://www.swapt.it/accounts/signup/swapt-user" passHref>
+            <NextLink href="#early-access" passHref>
               <Button>
-                Sign Up with Email<span>&rarr;</span>
+                Subscribe to the newsletter <span>&rarr;</span>
               </Button>
             </NextLink>
-            <NextLink href="/about" passHref>
+            <NextLink href="#whitepaper" passHref>
               <OutlinedButton transparent>
-              Learn How Swapt Works <span>&rarr;</span>
+                Features <span>&rarr;</span>
               </OutlinedButton>
             </NextLink>
           </ButtonGroup>
@@ -37,23 +39,26 @@ export default function Cta() {
 
 const Description = styled.div`
   font-size: 1.8rem;
-  color: rgba(var(--text), 0.8);
+  color: rgba(var(--textSecondary), 0.8);
 `;
 
 const Stack = styled.div`
   display: flex;
   flex-direction: column;
   padding: 12.5rem 0;
-  color: rgb(var(--text));
+  color: rgb(var(--textSecondary));
   text-align: center;
   align-items: center;
   justify-content: center;
+
   & > *:not(:first-child) {
     max-width: 80%;
     margin-top: 4rem;
   }
+
   ${media('<=tablet')} {
     text-align: center;
+
     & > *:not(:first-child) {
       max-width: 100%;
       margin-top: 2rem;
@@ -62,9 +67,8 @@ const Stack = styled.div`
 `;
 
 const OutlinedButton = styled(Button)`
-  border: 1px solid rgb(var(--text));
-  color: rgb(var(--text));
-  background: rgb(var(--secondary));
+  border: 1px solid rgb(var(--textSecondary));
+  color: rgb(var(--textSecondary));
 `;
 
 const CtaWrapper = styled.div`
