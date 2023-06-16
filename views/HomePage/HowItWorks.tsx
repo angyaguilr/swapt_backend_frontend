@@ -2,9 +2,6 @@ import NextImage from 'next/image';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Collapse from 'components/Collapse';
-import BasicCard from 'components/BasicCard';
-import Features from './Features';
-import AutofitGrid from 'components/AutofitGrid';
 import Container from 'components/Container';
 import OverTitle from 'components/OverTitle';
 import SectionTitle from 'components/SectionTitle';
@@ -13,77 +10,42 @@ import { media } from 'utils/media';
 
 const TABS = [
   {
-    title: 'Moving in',
-    description: [
-      {
-        imageUrl: '/grid-icons/asset-1.svg',
-        title: '1',
-        description:
-          'Search for your next apartment',
-      },
-      {
-        imageUrl: '/grid-icons/asset-5.svg',
-        title: '2',
-        description:
-          'Make an offer',
-      },
-      {
-        imageUrl: '/grid-icons/asset-7.svg',
-        title: '3',
-        description:
-          'Wait for confirmation',
-      },],
-    imageUrl: '/image3.jpg',
-    baseColor: '220, 215, 2547',
+    title: 'Swapt saves you time and money',
+    description:
+      '<p>Moving companies and storage lockers cost hundreds of dollars; with Swapt, instead of your money going out the window, the furniture you purchase store the value, we only take a small fee.</p>',
+    imageUrl: '/whyswapt4.svg',
+    baseColor: '220, 215, 254',
     secondColor: '74, 29, 150',
   },
   {
-    title: 'Moving out',
-    description: [
-      {
-        imageUrl: '/grid-icons/asset-1.svg',
-        title: '1',
-        description:
-          'Add your furniture/items to your account',
-      },
-      {
-        imageUrl: '/grid-icons/asset-4.svg',
-        title: '2',
-        description:
-          'Create your Swapt listing​',
-      },
-      {
-        imageUrl: '/grid-icons/asset-8.svg',
-        title: '3.',
-        description:
-          'Wait for an offer',
-      },],
-    imageUrl: '/image4.jpg',
+    title: 'Swapt makes the moving process as smooth as possible',
+    description:
+      '<p>Swapt works with property managers at your campus to make sure your moving process is as smooth as possible.</p>',
+    imageUrl: '/whyswapt1.svg',
+    baseColor: '220, 215, 254',
+    secondColor: '74, 29, 150',
+  },
+  {
+    title: 'With Swapt, you can avoid the stress, hassle, and toll of the moving process',
+    description:
+      '<p>Moving is more than just moving day. It’s a series of complex decisions made over the course of weeks that culminate on moving day. Each decision can cause stress which may not alleviate until you’re settled in your new home.</p>',
+    imageUrl: '/whyswapt3.svg',
     baseColor: '220, 215, 2547',
     secondColor: '74, 29, 150',
   },
 ];
 
-
-
-export default function HowItWorksGallery() {
+export default function FeaturesGallery() {
   const [currentTab, setCurrentTab] = useState(TABS[0]);
 
-  const sectionMarkup = TABS.map((singleTab, idx) => {
+  const imagesMarkup = TABS.map((singleTab, idx) => {
     const isActive = singleTab.title === currentTab.title;
     const isFirst = idx === 0;
-    const desc = singleTab.description
 
     return (
-      <Collapse isOpen={isActive} duration={300}>
-      <TabContent key={singleTab.title} isActive={isActive}>
-        <CustomAutofitGrid>
-          {desc.map((singleFeature, idx) => (
-          <BasicCard key={idx} {...singleFeature} />
-          ))}
-        </CustomAutofitGrid>
-      </TabContent>
-    </Collapse>
+      <ImageContainer key={singleTab.title} isActive={isActive}>
+        <NextImage src={singleTab.imageUrl} alt={singleTab.title} layout="fill" objectFit="contain" priority={isFirst} />
+      </ImageContainer>
     );
   });
 
@@ -98,6 +60,11 @@ export default function HowItWorksGallery() {
           </CircleContainer>
           <h4>{singleTab.title}</h4>
         </TabTitleContainer>
+        <Collapse isOpen={isActive} duration={300}>
+          <TabContent>
+            <div dangerouslySetInnerHTML={{ __html: singleTab.description }}></div>
+          </TabContent>
+        </Collapse>
       </Tab>
     );
   });
@@ -107,71 +74,87 @@ export default function HowItWorksGallery() {
   }
 
   return (
-    <HowItWorksGalleryWrapper>
+    <FeaturesGalleryWrapper>
       <Content>
-        <SectionTitle>How It Works</SectionTitle>
+        <SectionTitle>Why use Swapt?</SectionTitle>
       </Content>
       <GalleryWrapper>
-        <TabsContainer>{tabsMarkup} </TabsContainer>
-        {sectionMarkup}
+        <TabsContainer>{tabsMarkup}</TabsContainer>
+        {imagesMarkup}
       </GalleryWrapper>
-    </HowItWorksGalleryWrapper>
+    </FeaturesGalleryWrapper>
   );
 }
 
-const HowItWorksGalleryWrapper = styled(Container)`
+const FeaturesGalleryWrapper = styled(Container)`
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: center;
 `;
+
 const GalleryWrapper = styled.div`
   display: flex;
   align-items: center;
   margin-top: 4rem;
-  flex-direction: column;
   ${media('<=desktop')} {
     flex-direction: column;
   }
 `;
+
 const Content = styled.div`
   & > *:not(:first-child) {
     margin-top: 1rem;
   }
   text-align: center;
 `;
+
 const TabsContainer = styled.div`
   flex: 1;
-  display: flex;
-  flex-direction: row;
   margin-right: 4rem;
+  & > *:not(:first-child) {
+    margin-top: 2rem;
+  }
   ${media('<=desktop')} {
     margin-right: 0;
     margin-bottom: 4rem;
     width: 100%;
   }
 `;
-const TabContent = styled.div<{ isActive: boolean }>`
-  display: flex;
-  flex-direction: row;
-  font-weight: normal;
-  margin-top: 1.5rem;
-  font-size: 1.5rem;
-  ${media('<=tablet')} {
-    padding-left: calc(4rem + 1.25rem);
+
+const ImageContainer = styled.div<{ isActive: boolean }>`
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.8rem;
+  flex: ${(p) => (p.isActive ? '2' : '0')};
+  box-shadow: var(--shadow-md);
+  &:before {
+    display: block;
+    content: '';
+    width: 100%;
+    padding-top: calc((9 / 16) * 100%);
   }
-  p {
-    font-weight: normal;
+  & > div {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+  ${media('<=desktop')} {
+    width: ${(p) => (p.isActive ? '100%' : '0')};
   }
 `;
+
 const Tab = styled.div<{ isActive: boolean }>`
   display: flex;
   flex-direction: column;
-  padding: 2rem 6.5rem;
+  padding: 2rem 1.5rem;
   background: rgb(var(--cardBackground));
   box-shadow: var(--shadow-md);
   opacity: ${(p) => (p.isActive ? 1 : 0.6)};
   cursor: pointer;
+  border-radius: 0.6rem;
   transition: opacity 0.2s;
   font-size: 1.6rem;
   font-weight: bold;
@@ -179,27 +162,33 @@ const Tab = styled.div<{ isActive: boolean }>`
     width: 100%;
   }
 `;
+
 const TabTitleContainer = styled.div`
   display: flex;
   align-items: center;
-  flex-wrap: nowrap;
   h4 {
     flex: 1;
-    white-space: nowrap;
   }
 `;
+
+const TabContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  font-weight: normal;
+  margin-top: 0.5rem;
+  font-size: 1.5rem;
+  padding-left: calc(5rem + 1.5rem);
+  ${media('<=tablet')} {
+    padding-left: calc(4rem + 1.25rem);
+  }
+  p {
+    font-weight: normal;
+  }
+`;
+
 const CircleContainer = styled.div`
   flex: 0 calc(5rem + 1.5rem);
   ${media('<=tablet')} {
     flex: 0 calc(4rem + 1.25rem);
-  }
-`;
-const CustomAutofitGrid = styled(AutofitGrid)`
-  --autofit-grid-item-size: 70rem;
-  ${media('<=tablet')} {
-    --autofit-grid-item-size: 50rem;
-  }
-  ${media('<=phone')} {
-    --autofit-grid-item-size: 100%;
   }
 `;
