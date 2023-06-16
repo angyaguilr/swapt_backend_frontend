@@ -11,7 +11,7 @@ admin.site.register(InventoryListingTag)
 
 
 class BannerAdmin(admin.ModelAdmin):
-	list_display=('alt_text','image_tag')
+	list_display=('altText','image_tag')
 admin.site.register(Banner,BannerAdmin)
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -23,8 +23,8 @@ class ColorAdmin(admin.ModelAdmin):
 admin.site.register(Color,ColorAdmin)
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display=('id','title','category','brand','status','is_featured')
-    list_editable=('status','is_featured')
+    list_display=('id','title','category','brand','status','isFeatured')
+    list_editable=('status','isFeatured')
 admin.site.register(SwaptListingModel,ProductAdmin)
 
 # InventoryListing Attribute
@@ -39,12 +39,12 @@ admin.site.register( InventoryItemAttribute, InventoryItemAttributeAdmin)
 
 # Order
 class CartOrderAdmin(admin.ModelAdmin):
-	list_editable=('paid_status','order_status')
-	list_display=('user','total_amt','paid_status','order_dt','order_status')
+	list_editable=('paidStatus','orderStatus')
+	list_display=('user','totalAmt','paidStatus','orderDt','orderStatus')
 admin.site.register(CartOrder,CartOrderAdmin)
 
 class CartOrderItemsAdmin(admin.ModelAdmin):
-	list_display=('invoice_no','item','image_tag','qty','price','total')
+	list_display=('invoiceNo','item','image_tag','qty','price','total')
 admin.site.register(CartOrderItems,CartOrderItemsAdmin)
 
 

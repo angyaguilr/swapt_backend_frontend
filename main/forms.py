@@ -35,11 +35,11 @@ class SwaptListingCreationForm(ModelForm):
 
     class Meta:
         model = SwaptListingModel
-        fields = ("title", "detail", "category", "brand", "condition", "move_out_date", "location",  )
+        fields = ("title", "detail", "category", "brand", "condition", "moveOutDate", "location",  )
     
     def save(self, commit=True):
         self.full_clean() # calls clean function
-        listing = SwaptListingModel(stage=2, confirmed=False, selling_stage=1, )
+        listing = SwaptListingModel(stage=2, confirmed=False, sellingStage=1, )
         exclude = ["swaptuser"]
 
         if commit:
@@ -49,7 +49,7 @@ class SwaptListingCreationForm(ModelForm):
             #listing.listings = fields['listings']
             listing.condition = fields['condition']
             listing.location = fields['location']
-            listing.move_out_date = fields['move_out_date']
+            listing.moveOutDate = fields['moveOutDate']
         
         return listing
         
@@ -66,7 +66,7 @@ class InventoryListingCreationForm(ModelForm):
     
     def save(self, commit=True):
         self.full_clean() # calls clean function
-        listing = InventoryListing(stage=2, confirmed=False, selling_stage=1, )
+        listing = InventoryListing(stage=2, confirmed=False, sellingStage=1, )
         exclude = ["swaptuser"]
 
         if commit:
@@ -122,7 +122,7 @@ class ListingEditForm(ModelForm):
     
     class Meta:
         model = SwaptListingModel
-        fields = ("title", "detail", "category", "brand", "condition", "move_out_date", "location",)
+        fields = ("title", "detail", "category", "brand", "condition", "moveOutDate", "location",)
 
     def clean(self):
         data = self.cleaned_data

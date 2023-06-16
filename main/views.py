@@ -36,7 +36,7 @@ YOUR_DOMAIN = 'http://127.0.0.1:8000'
 
 def featuredListings(request):
 	banners=Banner.objects.all().order_by('-id')
-	data=SwaptListingModel.objects.filter(is_featured=True).order_by('-id')
+	data=SwaptListingModel.objects.filter(isFeatured=True).order_by('-id')
 	return render(request,'featured_list.html',{'data':data,'banners':banners})
 
 # Category
@@ -85,7 +85,7 @@ def product_detail(request,slug,id):
     product=SwaptListingModel.objects.get(id=id)
     related_products=InventoryListing.objects.filter(isBundled=True, swaptuser__user = product.swaptuser.user)
     addbook=UserAddressBook.objects.filter(user = product.swaptuser.user).order_by('-id')
-    #colors=ProductAttribute.objects.filter(product=product).values('color__id','color__title','color__color_code').distinct()
+    #colors=ProductAttribute.objects.filter(product=product).values('color__id','color__title','color__colorCode').distinct()
     #sizes=ProductAttribute.objects.filter(product=product).values('size__id','size__title','price','color__id').distinct()
     #offersForm=OffersAdd()
 
@@ -192,13 +192,13 @@ def add_to_cart(request):
 
 # Cart List Page
 def cart_list(request):
-	total_amt=0
+	totalAmt=0
 	if 'cartdata' in request.session:
 		for p_id,item in request.session['cartdata'].items():
-			total_amt+=int(item['qty'])*float(item['price'])
-		return render(request, 'cart.html',{'cart_data':request.session['cartdata'],'totalitems':len(request.session['cartdata']),'total_amt':total_amt})
+			totalAmt+=int(item['qty'])*float(item['price'])
+		return render(request, 'cart.html',{'cart_data':request.session['cartdata'],'totalitems':len(request.session['cartdata']),'totalAmt':totalAmt})
 	else:
-		return render(request, 'cart.html',{'cart_data':'','totalitems':0,'total_amt':total_amt})
+		return render(request, 'cart.html',{'cart_data':'','totalitems':0,'totalAmt':totalAmt})
 
 
 # Delete Cart Item
@@ -209,10 +209,10 @@ def delete_cart_item(request):
 			cart_data=request.session['cartdata']
 			del request.session['cartdata'][p_id]
 			request.session['cartdata']=cart_data
-	total_amt=0
+	totalAmt=0
 	for p_id,item in request.session['cartdata'].items():
-		total_amt+=int(item['qty'])*float(item['price'])
-	t=render_to_string('ajax/cart-list.html',{'cart_data':request.session['cartdata'],'totalitems':len(request.session['cartdata']),'total_amt':total_amt})
+		totalAmt+=int(item['qty'])*float(item['price'])
+	t=render_to_string('ajax/cart-list.html',{'cart_data':request.session['cartdata'],'totalitems':len(request.session['cartdata']),'totalAmt':totalAmt})
 	return JsonResponse({'data':t,'totalitems':len(request.session['cartdata'])})
 
 # Delete Cart Item
@@ -224,10 +224,10 @@ def update_cart_item(request):
 			cart_data=request.session['cartdata']
 			cart_data[str(request.GET['id'])]['qty']=p_qty
 			request.session['cartdata']=cart_data
-	total_amt=0
+	totalAmt=0
 	for p_id,item in request.session['cartdata'].items():
-		total_amt+=int(item['qty'])*float(item['price'])
-	t=render_to_string('ajax/cart-list.html',{'cart_data':request.session['cartdata'],'totalitems':len(request.session['cartdata']),'total_amt':total_amt})
+		totalAmt+=int(item['qty'])*float(item['price'])
+	t=render_to_string('ajax/cart-list.html',{'cart_data':request.session['cartdata'],'totalitems':len(request.session['cartdata']),'totalAmt':totalAmt})
 	return JsonResponse({'data':t,'totalitems':len(request.session['cartdata'])})
 
 # Signup Form
@@ -252,8 +252,8 @@ class CreateStripeCheckoutSessionView(View):
     """
     
     def post(self, request, *args, **kwargs):
-        stripe_total_amt=0
-        total_amt=0
+        stripe_totalAmt=0
+        totalAmt=0
         totalAmt=0
         stripe_total_name=''
         if 'cartdata' in request.session:
@@ -262,15 +262,15 @@ class CreateStripeCheckoutSessionView(View):
             # Order
             order=CartOrder.objects.create(
                     user=request.user,
-                    total_amt=totalAmt
+                    totalAmt=totalAmt
                 )
             # End
             for p_id,item in request.session['cartdata'].items():
-                total_amt+=int(item['qty'])*float(item['price'])
+                totalAmt+=int(item['qty'])*float(item['price'])
                 # OrderItems
                 items=CartOrderItems.objects.create(
                     order=order,
-                    invoice_no='INV-'+str(order.id),
+                    invoiceNo='INV-'+str(order.id),
                     item=item['title'],
                     image=item['image'],
                     qty=item['qty'],
@@ -280,7 +280,7 @@ class CreateStripeCheckoutSessionView(View):
                 # End
             listing = SwaptListingModel.objects.get(id=self.kwargs["pk"])
             for p_id,item in request.session['cartdata'].items():
-                stripe_total_amt+=float(item['qty'])*float(item['price'])
+                stripe_totalAmt+=float(item['qty'])*float(item['price'])
                 stripe_total_name+= item['title']
                 stripe_total_name+= ', '
                 
@@ -290,7 +290,7 @@ class CreateStripeCheckoutSessionView(View):
                         {
                             "price_data": {
                                 "currency": "usd",
-                                "unit_amount": int(stripe_total_amt) * 100,
+                                "unit_amount": int(stripe_totalAmt) * 100,
                                 "product_data": {
                                     "name": stripe_total_name,
                                     "description": stripe_total_name,
@@ -344,14 +344,14 @@ class StripeWebhookView(View):
                 from_email="test@gmail.com",
             )
 
-            CartOrderItems.objects.create( listing=listing, payment_status="completed"
+            CartOrderItems.objects.create( listing=listing, paymentStatus="completed"
             ) # Add this
         # Can handle other events here.
 
         return HttpResponse(status=200)
 @login_required
 def checkout(request):
-	total_amt=0
+	totalAmt=0
 	totalAmt=0
 	if 'cartdata' in request.session:
 		for p_id,item in request.session['cartdata'].items():
@@ -359,15 +359,15 @@ def checkout(request):
 		# Order
 		order=CartOrder.objects.create(
 				user=request.user,
-				total_amt=totalAmt
+				totalAmt=totalAmt
 			)
 		# End
 		for p_id,item in request.session['cartdata'].items():
-			total_amt+=int(item['qty'])*float(item['price'])
+			totalAmt+=int(item['qty'])*float(item['price'])
 			# OrderItems
 			items=CartOrderItems.objects.create(
 				order=order,
-				invoice_no='INV-'+str(order.id),
+				invoiceNo='INV-'+str(order.id),
 				item=item['title'],
 				image=item['image'],
 				qty=item['qty'],
@@ -379,7 +379,7 @@ def checkout(request):
 		host = request.get_host()
 		paypal_dict = {
 		    'business': settings.PAYPAL_RECEIVER_EMAIL,
-		    'amount': total_amt,
+		    'amount': totalAmt,
 		    'item_name': 'OrderNo-'+str(order.id),
 		    'invoice': 'INV-'+str(order.id),
 		    'currency_code': 'USD',
@@ -389,7 +389,7 @@ def checkout(request):
 		}
 		form = PayPalPaymentsForm(initial=paypal_dict)
 		address=UserAddressBook.objects.filter(user=request.user,status=True).first()
-		return render(request, 'checkout.html',{'cart_data':request.session['cartdata'],'totalitems':len(request.session['cartdata']),'total_amt':total_amt,'form':form,'address':address})
+		return render(request, 'checkout.html',{'cart_data':request.session['cartdata'],'totalitems':len(request.session['cartdata']),'totalAmt':totalAmt,'form':form,'address':address})
 
 @csrf_exempt
 def payment_done(request):
@@ -424,7 +424,7 @@ def my_dashboard(request):
     swaptdata= data[:3]
     inventorydata=InventoryListing.objects.filter(swaptuser=request.user.swaptuser).order_by('-id')[:3]
     #propmanagerdata=SwaptListingModel.objects.filter(propertymanager=request.user.propmanager).order_by('-id')[:3]
-    orders=CartOrder.objects.annotate(month=ExtractMonth('order_dt')).values('month').annotate(count=Count('id')).values('month','count')
+    orders=CartOrder.objects.annotate(month=ExtractMonth('orderDt')).values('month').annotate(count=Count('id')).values('month','count')
     monthNumber=[]
     totalOrders=[]
     for d in orders:
@@ -548,7 +548,7 @@ class InventoryListingCreationView(CreateView):
         listing.swaptuser = SwaptUser.objects.get(user=self.request.user) 
         listing.confirmed= False
         listing.isBundled= False
-        listing.selling_stage = 'Available'
+        listing.sellingStage = 'Available'
         listing.stage = 1
         listing.delivery = 2
         listing.save()
@@ -1131,18 +1131,18 @@ class SwaptListingCreation(View):
     def get(self, request, *args, **kwargs):
         # get every item from each category
         form = self.form_class
-        InventoryFurnitureItems = InventoryListing.objects.filter(swaptuser=request.user.swaptuser, stage=2, selling_stage= 1, isBundled=False, confirmed=True)
+        InventoryFurnitureItems = InventoryListing.objects.filter(stage=2, confirmed=True).distinct()
 
         # pass into context
         context = {
-           'InventoryFurnitureItems': InventoryFurnitureItems, 'form': form,
+           "InventoryFurnitureItems": InventoryFurnitureItems.filter(swaptuser=request.user.swaptuser), "form": form,
         }
 
         # render the template
         return render(request, 'swaptlistings/swapt_create_form.html', context)
 
     def post(self, request, *args, **kwargs):
-        #"title", "listings", "detail", "category", "condition", "move_out_date", "location", "brand"
+        #"title", "listings", "detail", "category", "condition", "moveOutDate", "location", "brand"
         #propertymanager=request.user.propertymanager
         #swaptuser=request.user.swaptuser
         form= SwaptListingCreationForm(request.POST)
@@ -1160,7 +1160,7 @@ class SwaptListingCreation(View):
             saveForm.category=category_inst
             saveForm.swaptuser= swaptuser_inst
             saveForm.propertymanager= propmanager_inst
-            saveForm.selling_stage = 'Available'
+            saveForm.sellingStage = 'Available'
             saveForm.stage = 1
             saveForm.delivery = 2
             saveForm.confirmed= False
@@ -1233,7 +1233,7 @@ class SwaptListingConfirmation(View):
 
         if data['isPaid'] == False:
             order = SwaptListingModel.objects.get(pk=pk)
-            order.is_paid = True
+            order.isPaid = True
             order.save()
 
         return redirect('payment-confirmation')

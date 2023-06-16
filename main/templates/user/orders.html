@@ -111,9 +111,9 @@
                   {% for order in orders %}
                   <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                      <td class="px-6 py-4 font-semibold font-quicksand text-gray-900 dark:text-white"><a href="{% url 'my_order_items' order.id %}" class="inline-block align-middle text-center select-none border font-quicksand font-normal whitespace-no-wrap rounded  no-underline py-1 px-2 leading-tight text-xs  bg-gray-900 text-white hover:bg-gray-900">{{order.id}}</a></td>
-                     <td class="px-6 py-4 font-semibold font-quicksand text-gray-900 dark:text-white">{{order.total_amt}}</td>
-                     <td class="px-6 py-4 font-semibold font-quicksand text-gray-900 dark:text-white">{{order.paid_status}}</td>
-                     <td class="px-6 py-4 font-semibold font-quicksand text-gray-900 dark:text-white">{{order.order_dt}}</td>
+                     <td class="px-6 py-4 font-semibold font-quicksand text-gray-900 dark:text-white">{{order.totalAmt}}</td>
+                     <td class="px-6 py-4 font-semibold font-quicksand text-gray-900 dark:text-white">{{order.paidStatus}}</td>
+                     <td class="px-6 py-4 font-semibold font-quicksand text-gray-900 dark:text-white">{{order.orderDt}}</td>
                   </tr>
                   {% endfor %}
                 </tbody>  

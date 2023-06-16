@@ -38,8 +38,8 @@ class PropNameSignUp(models.Model):
     propertyName = models.CharField(
         max_length=100, help_text= ("Designates the name of the property.")
     )
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    createdAt = models.DateTimeField(auto_now_add=True)
+    updatedAt = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
         return self.propertyName

@@ -22,8 +22,8 @@ class InventoryListingTag(models.Model):
     name = models.CharField(
         max_length=100
     )
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    createdAt = models.DateTimeField(auto_now_add=True)
+    updatedAt = models.DateTimeField(auto_now=True)
     class Meta:
         verbose_name_plural='1A: Inventory Listing Tags'
     def __str__(self) -> str:
@@ -35,7 +35,7 @@ class InventoryListingManager(models.Manager):
     # user still can't see those listings
     def get_queryset(self):
         return super().get_queryset().filter(
-            publishing_date__gte=timezone.now()-timezone.timedelta(days=30), stage=3
+            publishingDate__gte=timezone.now()-timezone.timedelta(days=30), stage=3
         ) | super().get_queryset().filter(
             stage__in=[1,2,4,5]
         )
@@ -43,7 +43,7 @@ class InventoryListingManager(models.Manager):
 # Banner
 class Banner(models.Model):
     img=models.ImageField(upload_to="banner_imgs/")
-    alt_text=models.CharField(max_length=300)
+    altText=models.CharField(max_length=300)
 
     class Meta:
         verbose_name_plural='0: Image Banners'
@@ -52,7 +52,7 @@ class Banner(models.Model):
         return mark_safe('<img src="%s" width="100" />' % (self.img.url))
 
     def __str__(self):
-        return self.alt_text
+        return self.altText
 
 # Category
 class Category(models.Model):
@@ -82,13 +82,13 @@ class Brand(models.Model):
 # Color
 class Color(models.Model):
     title=models.CharField(max_length=100)
-    color_code=models.CharField(max_length=100)
+    colorCode=models.CharField(max_length=100)
 
     class Meta:
         verbose_name_plural='1B: Inventory Item Colors'
 
     def color_bg(self):
-        return mark_safe('<div style="width:30px; height:30px; background-color:%s"></div>' % (self.color_code))
+        return mark_safe('<div style="width:30px; height:30px; background-color:%s"></div>' % (self.colorCode))
 
     def __str__(self):
         return self.title
@@ -155,19 +155,19 @@ class InventoryListing(models.Model):
     condition = models.CharField(max_length=50,choices=CONDITION_CHOICES , null=True, default = None)
     #fields used to review listingscts
     stage = models.PositiveSmallIntegerField(choices=APPROVAL_STAGES, null=True, default=1)
-    selling_stage = models.CharField(max_length=50,choices=SELLING_STAGES , null=True, default = 'Available')
+    sellingStage = models.CharField(max_length=50,choices=SELLING_STAGES , null=True, default = 'Available')
     confirmed = models.BooleanField(default=False)
     isBundled = models.BooleanField(default=False)
     issue = models.CharField(max_length=250, blank=True, null=True, default = 'No issues') # Currently only using one field for both rejected and reported issues
     #optional
     quantity = models.IntegerField(default=1, null=True)
     tags = models.ManyToManyField(InventoryListingTag, blank=True)
-    publishing_date = models.DateTimeField(
+    publishingDate = models.DateTimeField(
         default=timezone.now,
         blank=True,
     )
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    createdAt = models.DateTimeField(auto_now_add=True)
+    updatedAt = models.DateTimeField(auto_now=True)
     class Meta:
         verbose_name_plural='1D. Inventory Items'
 
@@ -183,10 +183,10 @@ status_choice=(
     )
 class CartOrder(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
-    total_amt=models.FloatField()
-    paid_status=models.BooleanField(default=False)
-    order_dt=models.DateTimeField(auto_now_add=True)
-    order_status=models.CharField(choices=status_choice,default='process',max_length=150)
+    totalAmt=models.FloatField()
+    paidStatus=models.BooleanField(default=False)
+    orderDt=models.DateTimeField(auto_now_add=True)
+    orderStatus=models.CharField(choices=status_choice,default='process',max_length=150)
 
     class Meta:
         verbose_name_plural='Swapt Orders'
@@ -234,7 +234,7 @@ class SwaptListingManager(models.Manager):
     # user still can't see those listings
     def get_queryset(self):
         return super().get_queryset().filter(
-            publishing_date__gte=timezone.now()-timezone.timedelta(days=30), stage=3
+            publishingDate__gte=timezone.now()-timezone.timedelta(days=30), stage=3
         ) | super().get_queryset().filter(
             stage__in=[1,2,4,5]
         )
@@ -272,8 +272,8 @@ class SwaptListingModel(models.Model):
     listings = models.ManyToManyField(
         'InventoryListing', related_name='inventory_items', blank=True)
     title = models.CharField(max_length=250)
-    is_paid = models.BooleanField(default=False)
-    is_MoveInReady = models.BooleanField(default=False)
+    isPaid = models.BooleanField(default=False)
+    isMoveInReady = models.BooleanField(default=False)
     #mandatory fields required with user input
     detail=models.TextField(null=True, blank=True)
     slug=AutoSlugField(_('slug'), max_length=50, unique=True, populate_from=('title'))
@@ -291,26 +291,26 @@ class SwaptListingModel(models.Model):
     
     #fields used to review listings
     stage = models.PositiveSmallIntegerField(choices=APPROVAL_STAGES, null=True, default=1)
-    selling_stage = models.CharField(max_length=50,choices=SELLING_STAGES , null=True, default=1)
+    sellingStage = models.CharField(max_length=50,choices=SELLING_STAGES , null=True, default=1)
     confirmed = models.BooleanField(default=False)
     issue = models.CharField(max_length=250, blank=True, null=True,  default='No Issues') # Currently only using one field for both rejected and reported issues
     #optional
     quantity = models.IntegerField(default=1)
     
     #field to display listings in featured page 
-    is_featured=models.BooleanField(default=False)
+    isFeatured=models.BooleanField(default=False)
 
     #date/time fields
-    move_out_date = models.DateField(auto_now_add=False, default=date.today,)
-    publishing_date = models.DateTimeField(
+    moveOutDate = models.DateField(auto_now_add=False, default=date.today,)
+    publishingDate = models.DateTimeField(
         default=timezone.now,
         blank=True,
     )
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    createdAt = models.DateTimeField(auto_now_add=True)
+    updatedAt = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ("-created_at",)
+        ordering = ("-createdAt",)
         verbose_name_plural='2D. Swapt Listings'
   
     objects = SwaptListingManager() # Using manager above for reasons in comment
@@ -370,11 +370,11 @@ class CartOrderItems(models.Model):
         (FAILED, _("failed")),
     )
     order=models.ForeignKey(CartOrder,on_delete=models.CASCADE)
-    invoice_no=models.CharField(max_length=150)
+    invoiceNo=models.CharField(max_length=150)
     listing = models.ForeignKey(SwaptListingModel, on_delete=models.CASCADE, default=1)
     item=models.CharField(max_length=150)
     image=models.CharField(max_length=200)
-    payment_status = models.CharField(
+    paymentStatus = models.CharField(
         max_length=1, choices=STATUS_CHOICES, default=PENDING
     )
     qty=models.IntegerField()

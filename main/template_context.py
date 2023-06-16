@@ -3,7 +3,7 @@ from django.db.models import Min,Max
 def get_filters(request):
 	cats=SwaptListingModel.objects.distinct().values('category__title','category__id')
 	brands=SwaptListingModel.objects.distinct().values('brand__title','brand__id')
-	#colors=ProductAttribute.objects.distinct().values('color__title','color__id','color__color_code')
+	#colors=ProductAttribute.objects.distinct().values('color__title','color__id','color__colorCode')
 	#sizes=ProductAttribute.objects.distinct().values('size__title','size__id')
 	minMaxPrice=ProductAttribute.objects.aggregate(Min('price'),Max('price'))
 	data={

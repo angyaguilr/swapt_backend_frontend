@@ -9,7 +9,7 @@ from .models import SwaptListingModel
 # Deletes listings >= 30 days old
 def delete_rejected_listings():
     SwaptListingModel._base_manager.filter(
-        publishing_date__lt=timezone.now()-timezone.timedelta(days=30),
+        publishingDate__lt=timezone.now()-timezone.timedelta(days=30),
         stage=3
     ).delete()
 
