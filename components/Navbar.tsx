@@ -77,9 +77,6 @@ export default function Navbar({ items }: NavbarProps) {
             <NavItem key={singleItem.href} {...singleItem} />
           ))}
         </NavItemList>
-        <ColorSwitcherContainer>
-          <ColorSwitcher />
-        </ColorSwitcherContainer>
         <HamburgerMenuWrapper>
           <HamburgerIcon aria-label="Toggle menu" onClick={toggle} />
         </HamburgerMenuWrapper>
@@ -89,15 +86,6 @@ export default function Navbar({ items }: NavbarProps) {
 }
 
 function NavItem({ href, title, outlined }: SingleNavItem) {
-  const { setIsModalOpened } = useNewsletterModalContext();
-
-  function showNewsletterModal() {
-    setIsModalOpened(true);
-  }
-
-  if (outlined) {
-    return <CustomButton onClick={showNewsletterModal}>{title}</CustomButton>;
-  }
 
   return (
     <NavItemWrapper outlined={outlined}>
@@ -116,7 +104,6 @@ const CustomButton = styled(Button)`
 const NavItemList = styled.div`
   display: flex;
   list-style: none;
-
   ${media('<desktop')} {
     display: none;
   }
@@ -132,7 +119,6 @@ const LogoWrapper = styled.a`
   display: flex;
   margin-right: auto;
   text-decoration: none;
-
   color: rgb(var(--logoColor));
 `;
 
@@ -142,12 +128,10 @@ const NavItemWrapper = styled.li<Partial<SingleNavItem>>`
   font-size: 1.3rem;
   text-transform: uppercase;
   line-height: 2;
-
   &:hover {
     background-color: ${(p) => (p.outlined ? 'rgb(var(--primary), 0.8)' : 'transparent')};
     transition: background-color 0.2s;
   }
-
   a {
     display: flex;
     color: ${(p) => (p.outlined ? 'rgb(var(--textSecondary))' : 'rgb(var(--text), 0.75)')};
@@ -156,9 +140,8 @@ const NavItemWrapper = styled.li<Partial<SingleNavItem>>`
     padding: 0.75rem 1.5rem;
     font-weight: 700;
   }
-
-  &:not(:last-child) {
-    margin-right: 2rem;
+  &:not(:nth-last-child(-n+2)) {
+    margin-right: 4rem;
   }
 `;
 
@@ -170,12 +153,10 @@ const NavbarContainer = styled.div<NavbarContainerProps>`
   width: 100%;
   height: 8rem;
   z-index: var(--z-navbar);
-
   background-color: rgb(var(--navbarBackground));
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
   visibility: ${(p) => (p.hidden ? 'hidden' : 'visible')};
   transform: ${(p) => (p.hidden ? `translateY(-8rem) translateZ(0) scale(1)` : 'translateY(0) translateZ(0) scale(1)')};
-
   transition-property: transform, visibility, height, box-shadow, background-color;
   transition-duration: 0.15s;
   transition-timing-function: ease-in-out;
