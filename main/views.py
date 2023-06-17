@@ -83,7 +83,7 @@ def brand_product_list(request,brand_id):
 # Swapt Listing Detail
 def product_detail(request,slug,id):
     product=SwaptListingModel.objects.get(id=id)
-    relatedProducts=InventoryListing.objects.filter(swaptlistingmodel__title__startswith="organizer", isBundled=True, swaptuser__user = product.swaptuser.user)
+    relatedProducts=InventoryListing.objects.filter(isBundled=True, swaptuser__user = product.swaptuser.user)
     addbook=UserAddressBook.objects.filter(user = product.swaptuser.user).order_by('-id')
     #colors=ProductAttribute.objects.filter(product=product).values('color__id','color__title','color__colorCode').distinct()
     #sizes=ProductAttribute.objects.filter(product=product).values('size__id','size__title','price','color__id').distinct()
@@ -116,7 +116,7 @@ def product_detail(request,slug,id):
     avg_offers=ProductOffers.objects.filter(product=product)
 	# End
     #return 'colors':colors,'sizes':sizes
-    return render(request, 'product_detail.html',{'addbook':addbook, 'data':product,'related':allRelatedProducts,'offersForm':form, 'msg':msg, 'canAdd':canAdd,'offers':offers,'avg_offers':avg_offers})
+    return render(request, 'product_detail.html',{'addbook':addbook, 'data':product,'related':relatedProducts,'offersForm':form, 'msg':msg, 'canAdd':canAdd,'offers':offers,'avg_offers':avg_offers})
 
 # Search
 class SwaptListingsUploadedSearch(View):
