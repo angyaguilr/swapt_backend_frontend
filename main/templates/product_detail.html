@@ -246,7 +246,192 @@
          >
          This listing includes all of the following furniture items
       </p>
-      {% include 'inventory_detail.html' %}
+      <section class="w-fit mx-auto grid grid-cols-1 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
+         {% for product in related %}
+          <div class="bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
+             <div
+                class="lg:max-w-[515px] w-full bg-gray-50 lg:px-10 md:px-6 px-4 py-12"
+                >
+                <div class="relative h-48 overflow-hidden rounded-lg md:h-96">
+                   <div class="relative h-48 overflow-hidden rounded-lg md:h-96" >
+                      <img id="zoom_01" 
+                         data-zoom-image="/media/{{product.inventoryitemattribute_set.first.image}}" 
+                         src="/media/{{product.inventoryitemattribute_set.first.image}}"
+                         alt="{{product.title}}" class="object-cover absolute block rounded-lg max-w-full h-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+                   </div>
+                </div>
+                <div class="pb-6">
+                   <p
+                      class="lg:text-4xl md:text-3xl text-3xl font-semibold leading-9 text-gray-800 md:mt-6 mt-4"
+                      >
+                      {{product.title}}
+                   </p>
+                   <p
+                      class="text-2xl font-semibold leading-normal text-gray-800 md:mt-6 mt-4"
+                      >
+                      $<span class="product-price-{{product.id}}">{{product.inventoryitemattribute_set.first.price}}</span>
+                   </p>
+                   <p
+                      class="text-base leading-normal text-gray-600 mt-4 lg:max-w-[415px] w-full"
+                      >
+                      {{product.detail}}
+                   </p>
+                   <ul role="list" class="space-y-5 my-7">
+                      <li class="flex space-x-3">
+                         <!-- Icon -->
+                         <svg aria-hidden="true" class="flex-shrink-0 w-5 h-5 text-purple-600 dark:text-purple-500" fill="currentColor" viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="flex-grow-0 flex-shrink-0 w-6 h-6 relative"
+                            preserveAspectRatio="none"
+                            >
+                            <path
+                               d="M9.00016 16.1698L4.83016 11.9998L3.41016 13.4098L9.00016 18.9998L21.0002 6.99984L19.5902 5.58984L9.00016 16.1698Z"
+                               fill="#957FEF"
+                               ></path>
+                         </svg>
+                         <span class="text-base font-normal leading-tight text-gray-500 dark:text-gray-400">{{product.sellingStage}}</span>
+                      </li>
+                   </ul>
+                </div>
+                <div class="flex justify-center flex-col">
+                  <input type="hidden" type="number" value="1" class="form-control product-qty-{{product.id}}" id="productQty" />
+                  <div class="flex justify-center input-group-append">
+                     <input type="hidden" class="product-image-{{product.id}}" value="{{product.inventoryitemattribute_set.first.image}}" />
+                     <input type="hidden" class="product-id-{{product.id}}" value="{{product.id}}" />
+                     <input type="hidden" class="product-title-{{product.id}}" value="{{product.title}}" />
+                     <button class="w-full text-white bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 add-to-cart" data-index="{{product.id}}" type="button" id="addToCartBtn"> Add to Cart</button>
+                  </div>
+               </div>
+                <hr />
+                <div id="{{ product.id }}-accordion-flush" data-accordion="collapse" data-active-classes="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
+                  <h2 id="{{ product.id }}-accordion-flush-heading-1">
+                     <button type="button" class="flex items-center justify-between w-full py-5 font-semibold uppercase text-left text-base leading-none text-gray-600 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#{{ product.id }}-accordion-flush-body-1" aria-expanded="true" aria-controls="{{ product.id }}-accordion-flush-body-1">
+                        <span>Specifications</span>
+                        <svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                           <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                     </button>
+                  </h2>
+                  <div id="{{ product.id }}-accordion-flush-body-1" class="" aria-labelledby="{{ product.id }}-accordion-flush-heading-1">
+                     <div class="py-5 border-b border-gray-200 dark:border-gray-700">
+                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                           <thead class="hidden text-xs text-gray-900 uppercase dark:text-gray-400">
+                              <tr>
+                                 <th scope="col" class="px-6 py-3">
+                                    spec
+                                 </th>
+                                 <th scope="col" class="px-6 py-3">
+                                    value
+                                 </th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr class="bg-gray-50 dark:bg-gray-800">
+                                 <th scope="row" class="px-6 py-4 text-xs text-gray-900 uppercase dark:text-gray-400">
+                                    Brand
+                                 </th>
+                                 <td class="px-6 py-4">
+                                    {{product.inventoryitemattribute_set.first.brand}}
+                                 </td>
+                              </tr>
+                              <tr class="bg-gray-50 dark:bg-gray-800">
+                                 <th scope="row" class="px-6 py-4 text-xs text-gray-900 uppercase dark:text-gray-400">
+                                    Category
+                                 </th>
+                                 <td class="px-6 py-4">
+                                    {{product.category}}
+                                 </td>
+                              </tr>
+                              <tr class="bg-gray-50 dark:bg-gray-800">
+                                 <th scope="row" class="px-6 py-4 text-xs text-gray-900 uppercase dark:text-gray-400">
+                                    Condition
+                                 </th>
+                                 <td class="px-6 py-4">
+                                    {{product.condition}}
+                                 </td>
+                              </tr>
+                              <tr class="bg-gray-50 dark:bg-gray-800">
+                                 <th scope="row" class="px-6 py-4 text-xs text-gray-900 uppercase dark:text-gray-400">
+                                    Colors
+                                 </th>
+                                 <td class="px-6 py-4">
+                                    {{product.inventoryitemattribute_set.first.color}}
+                                 </td>
+                              </tr>
+                              <tr class="bg-gray-50 dark:bg-gray-800">
+                                 <th scope="row" class="px-6 py-4 text-xs text-gray-900 uppercase dark:text-gray-400">
+                                    Dimensions
+                                 </th>
+                                 <td class="px-6 py-4">
+                                    {{product.inventoryitemattribute_set.first.size}}
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                  </div>
+                  <h2 id="{{ product.id }}-accordion-flush-heading-2">
+                     <button type="button" class="flex items-center justify-between w-full py-5 font-semibold uppercase text-left text-base leading-none text-gray-600 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#{{ product.id }}-accordion-flush-body-2" aria-expanded="false" aria-controls="{{ product.id }}-accordion-flush-body-2">
+                        <span>Location Details</span>
+                        <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                           <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                     </button>
+                  </h2>
+                  <div id="{{ product.id }}-accordion-flush-body-2" class="hidden" aria-labelledby="{{ product.id }}-accordion-flush-heading-2">
+                     <div class="py-5 border-b border-gray-200 dark:border-gray-700">
+                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                           <thead class="hidden text-xs text-gray-900 uppercase dark:text-gray-400">
+                              <tr>
+                                 <th scope="col" class="px-6 py-3">
+                                    spec
+                                 </th>
+                                 <th scope="col" class="px-6 py-3">
+                                    value
+                                 </th>
+                              </tr>
+                           </thead>
+                           {% for listing in review %}
+                           <tbody>
+                              <tr class="bg-gray-50 dark:bg-gray-800">
+                                 <th scope="row" class="px-6 py-4 text-xs text-gray-900 uppercase dark:text-gray-400">
+                                    Campus
+                                 </th>
+                                 <td class="px-6 py-4">{{ listing.campus }}
+                                 </td>
+                              </tr>
+                              <tr class="bg-gray-50 dark:bg-gray-800">
+                                 <th scope="row" class="px-6 py-4 text-xs text-gray-900 uppercase dark:text-gray-400">
+                                    Property Name
+                                 </th>
+                                 <td class="px-6 py-4">{{ listing.propertyname }}
+                                 </td>
+                              </tr>
+                           </tbody>
+                           {% endfor %}
+                        </table>
+                     </div>
+                  </div>
+                  <h2 id="{{ product.id }}-accordion-flush-heading-3">
+                     <button type="button" class="flex items-center justify-between w-full py-5 font-semibold uppercase text-left text-base leading-none text-gray-600 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#{{ product.id }}-accordion-flush-body-3" aria-expanded="false" aria-controls="{{ product.id }}-accordion-flush-body-3">
+                        <span>Delivery</span>
+                        <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                           <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                     </button>
+                  </h2>
+                  <div id="{{ product.id }}-accordion-flush-body-3" class="hidden" aria-labelledby="{{ product.id }}-accordion-flush-heading-3">
+                     <div class="py-5 border-b border-gray-200 dark:border-gray-700">
+                        <p class="mb-2 text-gray-500 dark:text-gray-400">A Swapt is a listing of a tenant’s large furniture and miscellaneous items that they wish to pass on to the incoming tenant.</p>
+                        <p class="mb-2 text-gray-500 dark:text-gray-400">Learn more about Delivery <a href="/about" class="text-purple-600 dark:text-purple-500 hover:underline">here</a></p>
+                     </div>
+                  </div>
+               </div>
+             </div>
+          </div>
+          {% endfor %}
+       </section>
    </div>
    <!-- Main modal -->
    {% if user.is_authenticated %}
